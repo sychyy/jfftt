@@ -68,104 +68,6 @@
 html {
     scroll-behavior: smooth;
 }
-
-    @media print {
-    @page {
-        size: A4 portrait;
-        margin: 10mm;
-    }
-
-    html,
-    body {
-        width: 100%;
-        min-width: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        background: #fff !important;
-    }
-
-    /* Sembunyikan elemen navigasi web */
-    .no-print,
-    header,
-    nav,
-    button,
-    .print-hide {
-        display: none !important;
-    }
-
-    /* Pastikan hasil memenuhi kertas */
-    #screen-result {
-        display: block !important;
-        width: 100% !important;
-        min-height: 0 !important;
-        padding: 0 !important;
-        margin: 0 !important;
-        background: #fff !important;
-    }
-
-    .certificate-container {
-        width: 100% !important;
-        max-width: none !important;
-        margin: 0 !important;
-        padding: 12mm !important;
-
-        background: #fff !important;
-        border: 2px solid #111 !important;
-        box-shadow: none !important;
-
-        break-inside: avoid;
-        page-break-inside: avoid;
-    }
-
-    /* SCORE BAR */
-    .score-bar-container {
-        position: relative !important;
-        width: 100% !important;
-        overflow: visible !important;
-        background: #fff !important;
-    }
-
-    .score-bar-bg {
-        width: 100% !important;
-        background: linear-gradient(
-            90deg,
-            #ff6b6b 0%,
-            #ffd166 50%,
-            #58c878 100%
-        ) !important;
-
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .score-indicator {
-        position: absolute !important;
-        transform: translateX(-50%) !important;
-
-        background: #fff !important;
-        border: 3px solid #111 !important;
-        box-shadow: none !important;
-    }
-
-    /* Semua warna wajib ikut dicetak */
-    .score-bar-bg,
-    .score-bar-fill,
-    .section-bar-fill {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* Hindari section terpotong */
-    .section-bar-bg,
-    .section-bar-fill {
-        break-inside: avoid;
-    }
-
-    /* Jangan sampai teks melebar keluar halaman */
-    * {
-        max-width: 100%;
-    }
-}
     
 body {
     font-family: 'Inter', sans-serif !important;
@@ -1256,6 +1158,230 @@ label:has(input:focus-visible) {
         scroll-behavior: auto !important;
     }
 }
+
+/* =========================================================
+   PRINT MODE — CETAK HANYA HASIL JFT
+   ========================================================= */
+
+@media print {
+
+    @page {
+        size: A4 portrait;
+        margin: 8mm;
+    }
+
+    /* Sembunyikan SEMUA halaman web */
+    body * {
+        visibility: hidden !important;
+    }
+
+    /* Tampilkan hanya sertifikat */
+    #certificate-area,
+    #certificate-area * {
+        visibility: visible !important;
+    }
+
+    /* Jadikan certificate sebagai satu-satunya halaman cetak */
+    #certificate-area {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+
+        width: 100% !important;
+        max-width: none !important;
+
+        margin: 0 !important;
+        padding: 10mm !important;
+
+        background: #fff !important;
+
+        border: 2px solid #111 !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+
+        box-sizing: border-box !important;
+
+        page-break-before: avoid !important;
+        page-break-after: avoid !important;
+        break-before: avoid !important;
+        break-after: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* Jangan ikut cetak halaman kedua */
+    #screen-result > div:not(#certificate-area) {
+        display: none !important;
+    }
+
+    /* Header hasil latihan + tombol otomatis hilang
+       karena berada di luar certificate-area */
+
+    /* =====================================================
+       SCORE BAR
+       ===================================================== */
+
+    .score-bar-container {
+        position: relative !important;
+
+        width: calc(100% - 8px) !important;
+        height: 10px !important;
+
+        margin-left: 4px !important;
+        margin-right: 4px !important;
+
+        border: 2px solid #111 !important;
+        border-radius: 999px !important;
+
+        background: linear-gradient(
+            to right,
+            #ff6b6b 0%,
+            #ff9f43 35%,
+            #ffe66d 55%,
+            #a8d84e 80%,
+            #55c667 100%
+        ) !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+
+        box-sizing: border-box !important;
+
+        overflow: visible !important;
+    }
+
+    /* Marker */
+    .score-marker {
+        position: absolute !important;
+
+        top: -7px !important;
+
+        width: 2px !important;
+        height: 22px !important;
+
+        background: #111 !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .score-marker span {
+        position: absolute !important;
+
+        top: 25px !important;
+        left: 50% !important;
+
+        transform: translateX(-50%) !important;
+
+        color: #111 !important;
+
+        font-size: 10px !important;
+        font-weight: 700 !important;
+
+        white-space: nowrap !important;
+    }
+
+    /* Marker 10 */
+    .score-marker:first-child span {
+        left: 0 !important;
+        transform: translateX(0) !important;
+    }
+
+    /* Marker 250 */
+    .score-marker:last-of-type span {
+        left: 100% !important;
+        transform: translateX(-100%) !important;
+    }
+
+    /* =====================================================
+       SCORE INDICATOR
+       ===================================================== */
+
+    .score-indicator {
+        position: absolute !important;
+
+        top: 50% !important;
+
+        width: 26px !important;
+        height: 26px !important;
+
+        transform: translate(-50%, -50%) !important;
+
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+
+        background: #fff !important;
+
+        border: 3px solid #111 !important;
+        border-radius: 50% !important;
+
+        box-shadow: none !important;
+
+        z-index: 10 !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .score-indicator-value {
+        position: static !important;
+
+        transform: none !important;
+
+        background: transparent !important;
+
+        border: 0 !important;
+        box-shadow: none !important;
+
+        color: #111 !important;
+
+        font-size: 9px !important;
+        font-weight: 900 !important;
+
+        min-width: 0 !important;
+
+        white-space: nowrap !important;
+    }
+
+    /* =====================================================
+       SECTION ACCURACY
+       ===================================================== */
+
+    .section-bar-bg {
+        background: #eee !important;
+        border: 2px solid #111 !important;
+
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .section-bar-fill {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    /* =====================================================
+       FOTO
+       ===================================================== */
+
+    #user-photo-img {
+        max-width: 100% !important;
+    }
+
+    /* Hindari elemen terpotong */
+    .certificate-container,
+    .certificate-container > div {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    /* Background warna tetap dicetak */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+}
+
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
