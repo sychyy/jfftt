@@ -120,8 +120,12 @@
             .section-bar-fill { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
-                .option-label:active .option-content { transform: translate(3px,3px) !important; box-shadow: 1px 1px 0 var(--nb-black) !important; }
-                
+        .option-label:active .option-content { transform: translate(3px,3px) !important; box-shadow: 1px 1px 0 var(--nb-black) !important; }
+        .leaderboard-card { background: var(--nb-paper); border: var(--nb-border); box-shadow: var(--nb-shadow-small); transition: transform .15s ease; }
+        .leaderboard-card:hover { transform: translate(-2px, -2px); box-shadow: 5px 5px 0 var(--nb-black); }
+        .rank-badge-1 { background: #ffe45c; color: var(--nb-black); border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); }
+        .rank-badge-2 { background: #e4e0d6; color: var(--nb-black); border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); }
+        .rank-badge-3 { background: #ff9b58; color: var(--nb-black); border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); }
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -140,7 +144,6 @@
                 <button onclick="navigate('history')" class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1">
                     <i class="fa-solid fa-clock-rotate-left"></i> Riwayat
                 </button>
-                <!-- TOMBOL LOGOUT UNTUK USER -->
                 <button onclick="handleLogout()" class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1">
                     <i class="fa-solid fa-right-from-bracket"></i> Keluar
                 </button>
@@ -238,9 +241,39 @@
                         </label>
                     </div>
                 </div>
-                <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto">
+                
+                <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto mb-6">
                     Mulai Latihan <i class="fa-solid fa-arrow-right"></i>
                 </button>
+
+                <!-- TOMBOL MENU LEADERBOARD -->
+                <div class="border-t-2 border-slate-200 pt-6 mt-6">
+                    <button onclick="toggleLeaderboard()" class="w-full py-3 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-trophy text-lg text-amber-600"></i> Lihat Papan Peringkat (Leaderboard)
+                    </button>
+                    
+                    <!-- KOTAK KONTAINER LEADERBOARD -->
+                    <div id="leaderboard-container" class="hidden mt-4 text-left bg-white p-4 rounded-xl border-[2px] border-[#181818] shadow-[4px_4px_0_#181818]">
+                        <div class="flex justify-between items-center mb-3 border-b-2 border-[#181818] pb-2">
+                            <h4 class="font-black text-slate-800 text-sm uppercase flex items-center gap-2">
+                                <i class="fa-solid fa-medal text-amber-500"></i> Top Skor Siswa
+                            </h4>
+                            <button onclick="toggleLeaderboard()" class="text-xs font-bold text-slate-500 hover:text-red-500"><i class="fa-solid fa-xmark text-base"></i></button>
+                        </div>
+
+                        <!-- TAB FILTER KATEGORI JUMLAH SOAL -->
+                        <div class="grid grid-cols-4 gap-1 mb-3 text-xs font-bold">
+                            <button onclick="setLeaderboardFilter(10)" id="l-btn-10" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-center shadow-[2px_2px_0_#181818] transition-all">10 Soal</button>
+                            <button onclick="setLeaderboardFilter(20)" id="l-btn-20" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">20 Soal</button>
+                            <button onclick="setLeaderboardFilter(30)" id="l-btn-30" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">30 Soal</button>
+                            <button onclick="setLeaderboardFilter(50)" id="l-btn-50" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">50 Soal</button>
+                        </div>
+
+                        <div id="leaderboard-list" class="space-y-2.5 max-h-64 overflow-y-auto pr-1">
+                            <p class="text-center text-xs text-slate-500 py-4 font-bold">Memuat peringkat...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -295,7 +328,7 @@
                 </div>
             </div>
 
-                        <div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
+            <div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
                 <div class="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-200 pb-6 mb-6">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
@@ -343,7 +376,6 @@
                         <div class="font-medium">: <span id="res-date"></span></div>
                     </div>
                 </div>
-
 
                 <div class="border border-slate-200 p-6 bg-slate-50/50">
                     <div class="flex flex-col sm:flex-row justify-between mb-8">
@@ -398,83 +430,123 @@
             <div id="empty-history" class="text-center py-12 hidden"><p class="text-slate-500">Belum ada riwayat latihan.</p></div>
         </div>
 
-        <!-- SCREEN 5: Admin Dashboard -->
-        <div id="screen-admin" class="screen w-full max-w-5xl mt-4 mx-auto">
-            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
-                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 border-b pb-4 gap-4">
-                    <div>
-                        <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i>Admin Panel</h2>
-                        <p class="text-sm text-slate-500">Kelola pengguna dan kunci jawaban</p>
+                <!-- SCREEN 5: Admin Dashboard -->
+        <div id="screen-admin" class="screen w-full max-w-6xl mt-4 mx-auto px-2">
+            <div class="bg-[#fffdf8] p-6 sm:p-8 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] mb-12">
+                
+                <!-- HEADER ADMIN PANEL -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b-[3px] border-[#181818] pb-5 gap-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl">
+                            <i class="fa-solid fa-shield-halved text-[#181818]"></i>
+                        </div>
+                        <div>
+                            <h2 class="text-2xl font-black text-[#181818] tracking-tight">Admin Control Panel</h2>
+                            <p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Kelola Akses Pengguna & Bank Soal JFT-Basic</p>
+                        </div>
                     </div>
-                    <button onclick="handleLogout()" class="bg-red-50 text-red-600 hover:bg-red-100 px-4 py-2 rounded-lg text-sm font-medium transition">
-                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    <button onclick="handleLogout()" class="px-5 py-2.5 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-right-from-bracket"></i> Keluar Sistem
                     </button>
                 </div>
                 
-                <div class="flex gap-4 mb-6">
-                    <button onclick="switchAdminTab('users')" id="tab-users" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium"><i class="fa-solid fa-users mr-2"></i>Data Pengguna</button>
-                    <button onclick="switchAdminTab('questions')" id="tab-questions" class="bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-lg text-sm font-medium"><i class="fa-solid fa-book mr-2"></i>Kunci Jawaban</button>
+                <!-- TAB NAVIGASI ADMIN -->
+                <div class="flex gap-3 mb-6">
+                    <button onclick="switchAdminTab('users')" id="tab-users" class="px-5 py-2.5 rounded-xl text-sm font-black border-[2px] border-[#181818] bg-[#ffe45c] text-[#181818] shadow-[3px_3px_0_#181818] transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-users"></i> Data Pengguna & Sesi
+                    </button>
+                    <button onclick="switchAdminTab('questions')" id="tab-questions" class="px-5 py-2.5 rounded-xl text-sm font-black border-[2px] border-[#181818] bg-white text-slate-700 shadow-[3px_3px_0_#181818] hover:bg-slate-50 transition-all flex items-center gap-2">
+                        <i class="fa-solid fa-book-open"></i> Kunci Jawaban Soal
+                    </button>
                 </div>
 
+                <!-- VIEW 1: DATA PENGGUNA -->
                 <div id="admin-view-users" class="block">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-slate-700">Daftar Akun</h3>
-                        <button onclick="toggleAddUserForm()" class="bg-green-100 text-green-700 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-plus"></i> Tambah User</button>
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 gap-3">
+                        <div>
+                            <h3 class="font-black text-slate-800 text-lg flex items-center gap-2">
+                                <span class="w-3 h-3 bg-[#43c9bd] border-[2px] border-[#181818] rounded-full inline-block"></span> 
+                                Manajemen Akun Terdaftar
+                            </h3>
+                            <p class="text-xs text-slate-500 font-medium">Pantau perangkat aktif dan riwayat skor tiap akun siswa.</p>
+                        </div>
+                        <button onclick="toggleAddUserForm()" class="px-4 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] hover:bg-[#62bddb] transition-all flex items-center gap-2">
+                            <i class="fa-solid fa-user-plus text-sm"></i> Tambah Akun Baru
+                        </button>
                     </div>
 
-                                        <!-- FORM TAMBAH USER -->
-                    <div id="add-user-form" class="hidden bg-[#fffdf8] p-5 rounded-2xl border-[2.5px] border-[#181818] shadow-[5px_5px_0_#181818] mb-6 transition-all mt-2">
-                        <h4 class="font-bold text-slate-800 mb-4 text-sm uppercase tracking-wider border-b-2 border-[#181818] pb-2 inline-block">✨ Tambah Pengguna Baru</h4>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
-                            <input type="text" id="new-name" placeholder="Nama Lengkap" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
-                            <input type="email" id="new-email" placeholder="Email" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
-                            <input type="text" id="new-authcode" placeholder="Auth Code (mis: USER-1)" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
-                            
-                            <!-- Input Kuota -->
-                            <div class="flex gap-2">
-                                <input type="number" id="new-max-users" placeholder="Kuota (Orang)" value="1" min="1" class="w-1/2 px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-bold text-center" title="Batas jumlah perangkat yang bisa login">
-                                <select id="new-role" class="w-1/2 px-2 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-[#ffe45c] font-bold text-[#181818] cursor-pointer">
-                                    <option value="user">👤 User</option>
-                                    <option value="admin">🛡️ Admin</option>
-                                </select>
+                    <!-- FORM TAMBAH USER -->
+                    <div id="add-user-form" class="hidden bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] mb-6 transition-all mt-2">
+                        <div class="flex justify-between items-center border-b-2 border-[#181818] pb-3 mb-4">
+                            <h4 class="font-black text-slate-800 text-sm uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-circle-plus text-brand-600"></i> Form Registrasi Pengguna Baru
+                            </h4>
+                            <button onclick="toggleAddUserForm()" class="text-slate-500 hover:text-red-500 font-bold"><i class="fa-solid fa-xmark text-lg"></i></button>
+                        </div>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+                            <div>
+                                <label class="block text-xs font-black uppercase text-slate-700 mb-1">Nama Lengkap</label>
+                                <input type="text" id="new-name" placeholder="Mis: Budi Santoso" class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black uppercase text-slate-700 mb-1">Email (Opsional)</label>
+                                <input type="email" id="new-email" placeholder="budi@email.com" class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black uppercase text-slate-700 mb-1">Auth Code (Password)</label>
+                                <input type="text" id="new-authcode" placeholder="Kode Unik Login" class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-black uppercase text-slate-700 mb-1">Maks. Perangkat & Role</label>
+                                <div class="flex gap-2">
+                                    <input type="number" id="new-max-users" placeholder="Kuota" value="1" min="1" class="w-1/2 px-3 py-3 border-[2px] border-[#181818] rounded-xl text-sm font-black text-center bg-white" title="Batas perangkat">
+                                    <select id="new-role" class="w-1/2 px-2 py-3 border-[2px] border-[#181818] rounded-xl text-xs font-black bg-[#ffe45c] text-[#181818] cursor-pointer">
+                                        <option value="user">User</option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
-                        <div class="flex justify-end gap-3">
-                            <button onclick="toggleAddUserForm()" class="px-5 py-2.5 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">Batal</button>
-                            <button onclick="simpanUserBaru()" id="btn-simpan-user" class="px-5 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] hover:bg-[#62bddb] transition-all">Simpan Data</button>
+                        <div class="flex justify-end gap-3 pt-2 border-t border-slate-200">
+                            <button onclick="toggleAddUserForm()" class="px-5 py-2.5 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition-all">Batal</button>
+                            <button onclick="simpanUserBaru()" id="btn-simpan-user" class="px-6 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 hover:bg-[#62bddb] transition-all">Simpan Data Akun</button>
                         </div>
-                        <p id="add-user-msg" class="text-xs mt-2 hidden"></p>
                     </div>
 
-                    <!-- TABEL ADMIN -->
-                    <div class="overflow-x-auto border-[2px] border-[#181818] rounded-xl shadow-[4px_4px_0_#181818]">
-                        <table class="w-full text-left text-sm text-slate-700 bg-white">
-                            <thead class="bg-[#ffe45c] text-[#181818] font-black uppercase text-xs border-b-[2px] border-[#181818]">
+                    <!-- TABEL PENGGUNA (CARD / TABLE HYBRID YANG ESTETIK) -->
+                    <div class="overflow-x-auto border-[2.5px] border-[#181818] rounded-2xl shadow-[5px_5px_0_#181818] bg-white">
+                        <table class="w-full text-left text-sm text-slate-700">
+                            <thead class="bg-[#ffe45c] text-[#181818] font-black uppercase text-xs border-b-[2.5px] border-[#181818]">
                                 <tr>
-                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Nama</th>
-                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Auth Code</th>
-                                    <th class="px-4 py-3 border-r-[2px] border-[#181818] text-center">Terpakai</th>
-                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Role</th>
-                                    <th class="px-4 py-3 text-center">Aksi</th>
+                                    <th class="px-5 py-4 border-r-[2px] border-[#181818]">Informasi Akun & Perangkat</th>
+                                    <th class="px-5 py-4 border-r-[2px] border-[#181818]">Auth Code</th>
+                                    <th class="px-5 py-4 border-r-[2px] border-[#181818] text-center">Status Kuota</th>
+                                    <th class="px-5 py-4 border-r-[2px] border-[#181818]">Level Role</th>
+                                    <th class="px-5 py-4 text-center">Tindakan</th>
                                 </tr>
                             </thead>
                             <tbody id="admin-user-table" class="divide-y-[2px] divide-[#181818]">
-                                <tr><td colspan="5" class="px-4 py-8 text-center font-bold text-slate-500">Memuat data...</td></tr>
+                                <tr><td colspan="5" class="px-5 py-10 text-center font-bold text-slate-400">Memuat data dari database...</td></tr>
                             </tbody>
                         </table>
-
                     </div>
                 </div>
 
+                <!-- VIEW 2: BANK SOAL -->
                 <div id="admin-view-questions" class="hidden">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="font-bold text-slate-700">Bank Soal & Kunci Jawaban</h3>
-                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm font-medium" id="total-questions-count">0 Soal</span>
+                    <div class="flex justify-between items-center mb-5 bg-[#f0ede5] p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818]">
+                        <div>
+                            <h3 class="font-black text-slate-800 text-base">Daftar Bank Soal & Kunci Jawaban</h3>
+                            <p class="text-xs text-slate-500 font-medium">Seluruh modul pertanyaan simulasi JFT-Basic.</p>
+                        </div>
+                        <span class="bg-[#ffe45c] text-[#181818] px-3 py-1.5 rounded-lg text-xs font-black border-[2px] border-[#181818] shadow-[2px_2px_0_#181818]" id="total-questions-count">0 Soal</span>
                     </div>
                     <div class="space-y-4 max-h-[600px] overflow-y-auto pr-2" id="admin-questions-list"></div>
                 </div>
             </div>
         </div>
+
+
         <!-- CUSTOM CONFIRM MODAL (NEO-BRUTALISM) -->
         <div id="custom-confirm-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
             <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
@@ -488,7 +560,20 @@
                 </div>
             </div>
         </div>
-        
+
+        <!-- CUSTOM PROMPT MODAL (GANTI / LANJUT NAMA) -->
+        <div id="custom-name-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+            <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all">
+                <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-user-pen text-[#43c9bd]"></i> Konfirmasi Nama
+                </h3>
+                <p id="custom-name-desc" class="text-slate-700 font-medium mb-6 text-sm">Nama sebelumnya terdeteksi: <b id="modal-old-name" class="text-brand-600"></b>. Apakah Anda ingin menggunakan nama ini atau menggantinya?</p>
+                <div class="flex justify-end gap-3">
+                    <button onclick="handleNameChoice('keep')" class="px-4 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 transition-all">Lanjut Saja</button>
+                    <button onclick="handleNameChoice('change')" class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 transition-all">Ganti Nama</button>
+                </div>
+            </div>
+        </div>
     </main>
 
     <script>
@@ -499,7 +584,7 @@
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
 
-        // MOCK QUESTION BANK (50 Questions)
+        // MOCK QUESTION BANK
         const QUESTION_BANK = [
             // --- KOSA KATA & KANJI (Vocab) ---
             { id: 1, section: 'vocab', text: 'わたしは まいあさ 7じに （　　　）。', options: ['おきます', 'ねます', 'きます', 'みます'], answer: 0, explanation: 'おきます (okimasu) = bangun. "Saya bangun jam 7 setiap pagi."', period: 'sep-nov' },
@@ -953,484 +1038,484 @@
 // ==========================================
 
 // --- KOSA KATA & KANJI (Vocab) ---  
-        { id: 501, section: 'vocab', text: '「いもうと」は かんじで どう かきますか。', options: ['妹', '姉', '兄', '弟'], answer: 0, explanation: '妹 (いもうと) = adik perempuan. 姉 (kakak perempuan), 兄 (kakak laki-laki), 弟 (adik laki-laki).', period: 'random' },  
-        { id: 502, section: 'vocab', text: '「みぎ」は かんじで どう かきますか。', options: ['右', '左', '上', '下'], answer: 0, explanation: '右 (みぎ) = kanan. 左 (kiri), 上 (atas), 下 (bawah).', period: 'random' },  
-        { id: 503, section: 'vocab', text: '「そと」は かんじで どう かきますか。', options: ['外', '中', '前', '後'], answer: 0, explanation: '外 (そと) = luar. 中 (dalam), 前 (depan), 後 (belakang).', period: 'random' },  
-        { id: 504, section: 'vocab', text: 'あたまが いたい ですから、（　　　）を のみます。', options: ['くすり', 'おちゃ', 'コーヒー', 'ジュース'], answer: 0, explanation: '「くすりを のむ」= minum obat.', period: 'random' },  
-        { id: 505, section: 'vocab', text: 'めが わるいですから、（　　　）を かけます。', options: ['めがね', 'ぼうし', 'くつ', 'シャツ'], answer: 0, explanation: '「めがねを かける」= memakai kacamata.', period: 'random' },  
-        { id: 506, section: 'vocab', text: 'あめが ふっています。（　　　）を さして ください。', options: ['かさ', 'ぼうし', 'めがね', 'ドア'], answer: 0, explanation: '「かさを さす」= memakai payung.', period: 'random' },  
-        { id: 507, section: 'vocab', text: 'この（　　　）を まっすぐ いって ください。', options: ['みち', 'はし', 'かわ', 'やま'], answer: 0, explanation: '「みちを まっすぐ いく」= jalan lurus di jalan ini.', period: 'random' },  
-        { id: 508, section: 'vocab', text: '「はし」を わたって、みぎへ まがります。', options: ['橋', '駅', '店', '家'], answer: 0, explanation: '橋 (はし) = jembatan. わたる = menyeberang.', period: 'random' },  
-        { id: 509, section: 'vocab', text: 'きょうは とても（　　　）ですね。セーターを きます。', options: ['さむい', 'あつい', 'ぬるい', 'あたたかい'], answer: 0, explanation: 'Karena memakai sweater (セーター), berarti cuacanya dingin (さむい).', period: 'random' },  
-        { id: 510, section: 'vocab', text: 'テストが ありますから、きょうは（　　　）です。', options: ['いそがしい', 'ひま', 'たのしい', 'うれしい'], answer: 0, explanation: 'Karena ada ujian, berarti sibuk (いそがしい).', period: 'random' },  
-        { id: 511, section: 'vocab', text: 'にほんごの じしょを（　　　）ください。', options: ['かして', 'かりて', 'かえして', 'もって'], answer: 0, explanation: '「かして ください」= tolong pinjamkan.', period: 'random' },  
-        { id: 512, section: 'vocab', text: '「休む」は ひらがなで どう かきますか。', options: ['やすむ', 'はたらく', 'あそぶ', 'ねる'], answer: 0, explanation: '休む = やすむ (istirahat/libur).', period: 'random' },  
-        { id: 513, section: 'vocab', text: '「読む」は ひらがなで どう かきますか。', options: ['よむ', 'かく', 'きく', 'はなす'], answer: 0, explanation: '読む = よむ (membaca).', period: 'random' },  
-        { id: 514, section: 'vocab', text: 'あさ ６じに（　　　）を あびます。', options: ['シャワー', 'プール', 'おんせん', 'うみ'], answer: 0, explanation: '「シャワーを あびる」= mandi (dengan pancuran).', period: 'random' },  
-        { id: 515, section: 'vocab', text: 'スーパーで ぎゅうにゅうを（　　　）かいました。', options: ['２ほん', '２まい', '２だい', '２さつ'], answer: 0, explanation: 'Botol susu dihitung dengan satuan 本 (ほん/ぽん).', period: 'random' },  
+        { id: 501, section: 'vocab', text: '「いもうと」は かんじで どう かきますか。', options: ['妹', '姉', '兄', '弟'], answer: 0, explanation: '妹 (いもうと) = adik perempuan. 姉 (kakak perempuan), 兄 (kakak laki-laki), 弟 (adik laki-laki).', period: 'sep-nov' },  
+        { id: 502, section: 'vocab', text: '「みぎ」は かんじで どう かきますか。', options: ['右', '左', '上', '下'], answer: 0, explanation: '右 (みぎ) = kanan. 左 (kiri), 上 (atas), 下 (bawah).', period: 'sep-nov' },  
+        { id: 503, section: 'vocab', text: '「そと」は かんじで どう かきますか。', options: ['外', '中', '前', '後'], answer: 0, explanation: '外 (そと) = luar. 中 (dalam), 前 (depan), 後 (belakang).', period: 'sep-nov' },  
+        { id: 504, section: 'vocab', text: 'あたまが いたい ですから、（　　　）を のみます。', options: ['くすり', 'おちゃ', 'コーヒー', 'ジュース'], answer: 0, explanation: '「くすりを のむ」= minum obat.', period: 'sep-nov' },  
+        { id: 505, section: 'vocab', text: 'めが わるいですから、（　　　）を かけます。', options: ['めがね', 'ぼうし', 'くつ', 'シャツ'], answer: 0, explanation: '「めがねを かける」= memakai kacamata.', period: 'sep-nov' },  
+        { id: 506, section: 'vocab', text: 'あめが ふっています。（　　　）を さして ください。', options: ['かさ', 'ぼうし', 'めがね', 'ドア'], answer: 0, explanation: '「かさを さす」= memakai payung.', period: 'sep-nov' },  
+        { id: 507, section: 'vocab', text: 'この（　　　）を まっすぐ いって ください。', options: ['みち', 'はし', 'かわ', 'やま'], answer: 0, explanation: '「みちを まっすぐ いく」= jalan lurus di jalan ini.', period: 'sep-nov' },  
+        { id: 508, section: 'vocab', text: '「はし」を わたって、みぎへ まがります。', options: ['橋', '駅', '店', '家'], answer: 0, explanation: '橋 (はし) = jembatan. わたる = menyeberang.', period: 'sep-nov' },  
+        { id: 509, section: 'vocab', text: 'きょうは とても（　　　）ですね。セーターを きます。', options: ['さむい', 'あつい', 'ぬるい', 'あたたかい'], answer: 0, explanation: 'Karena memakai sweater (セーター), berarti cuacanya dingin (さむい).', period: 'sep-nov' },  
+        { id: 510, section: 'vocab', text: 'テストが ありますから、きょうは（　　　）です。', options: ['いそがしい', 'ひま', 'たのしい', 'うれしい'], answer: 0, explanation: 'Karena ada ujian, berarti sibuk (いそがしい).', period: 'sep-nov' },  
+        { id: 511, section: 'vocab', text: 'にほんごの じしょを（　　　）ください。', options: ['かして', 'かりて', 'かえして', 'もって'], answer: 0, explanation: '「かして ください」= tolong pinjamkan.', period: 'sep-nov' },  
+        { id: 512, section: 'vocab', text: '「休む」は ひらがなで どう かきますか。', options: ['やすむ', 'はたらく', 'あそぶ', 'ねる'], answer: 0, explanation: '休む = やすむ (istirahat/libur).', period: 'sep-nov' },  
+        { id: 513, section: 'vocab', text: '「読む」は ひらがなで どう かきますか。', options: ['よむ', 'かく', 'きく', 'はなす'], answer: 0, explanation: '読む = よむ (membaca).', period: 'sep-nov' },  
+        { id: 514, section: 'vocab', text: 'あさ ６じに（　　　）を あびます。', options: ['シャワー', 'プール', 'おんせん', 'うみ'], answer: 0, explanation: '「シャワーを あびる」= mandi (dengan pancuran).', period: 'sep-nov' },  
+        { id: 515, section: 'vocab', text: 'スーパーで ぎゅうにゅうを（　　　）かいました。', options: ['２ほん', '２まい', '２だい', '２さつ'], answer: 0, explanation: 'Botol susu dihitung dengan satuan 本 (ほん/ぽん).', period: 'sep-nov' },  
 
         // --- TATA BAHASA & PERCAKAPAN (Grammar) ---  
-        { id: 516, section: 'grammar', text: 'えき（　　　）あるいて いきます。', options: ['まで', 'に', 'を', 'で'], answer: 0, explanation: 'まで berarti "sampai". えきまで = sampai stasiun.', period: 'random' },  
-        { id: 517, section: 'grammar', text: 'わたしは まいあさ パン（　　　）ごはんを たべます。', options: ['か', 'を', 'に', 'が'], answer: 0, explanation: 'か digunakan untuk "atau". パンかごはん = Roti atau nasi.', period: 'random' },  
-        { id: 518, section: 'grammar', text: 'この カメラは だれ（　　　）ですか。', options: ['の', 'に', 'へ', 'と'], answer: 0, explanation: 'だれの = milik siapa.', period: 'random' },  
-        { id: 519, section: 'grammar', text: 'きのうは どこへ（　　　）いきませんでした。', options: ['も', 'が', 'を', 'に'], answer: 0, explanation: 'Kata tanya + も + negatif = tidak ~ ke mana pun/siapa pun/apa pun. (どこへも = tidak ke mana pun).', period: 'random' },  
-        { id: 520, section: 'grammar', text: 'ここに じてんしゃを（　　　）ください。', options: ['おかないで', 'おいて', 'おかない', 'おかないくて'], answer: 0, explanation: '～ないでください = tolong jangan ~. おかないでください = tolong jangan meletakkan.', period: 'random' },  
-        { id: 521, section: 'grammar', text: 'あしたは あめが ふる（　　　）おもいます。', options: ['と', 'が', 'を', 'に'], answer: 0, explanation: 'と digunakan sebelum おもいます (berpikir/berpendapat bahwa...).', period: 'random' },  
-        { id: 522, section: 'grammar', text: 'せんせいは 学生（　　　）ほんを よませます。', options: ['に', 'が', 'を', 'で'], answer: 0, explanation: 'Pola kausatif: menyuruh/membiarkan seseorang (に) melakukan sesuatu.', period: 'random' },  
-        { id: 523, section: 'grammar', text: 'A:「まどを しめましょうか。」\nB:「いいえ、あけて（　　　）ください。」', options: ['おいて', 'しまって', 'あって', 'いて'], answer: 0, explanation: '～ておきます = membiarkan dalam keadaan seperti itu. あけておいて = biarkan terbuka.', period: 'random' },  
-        { id: 524, section: 'grammar', text: 'テレビを（　　　）まま、ねて しまいました。', options: ['つけた', 'つける', 'つけ', 'つけない'], answer: 0, explanation: 'V-ta まま = dalam keadaan / membiarkan. つけたまま = dibiarkan menyala.', period: 'random' },  
-        { id: 525, section: 'grammar', text: 'もし あめが（　　　）、しあいは ありません。', options: ['ふったら', 'ふれば', 'ふると', 'ふるなら'], answer: 0, explanation: 'もし... ~たら digunakan untuk pengandaian "jika". ふったら = jika turun hujan.', period: 'random' },  
-        { id: 526, section: 'grammar', text: 'この ほんは むずかしくて、（　　　）ことが できません。', options: ['よむ', 'よんで', 'よんだ', 'よみます'], answer: 0, explanation: 'V-kamus + ことができる = bisa melakukan. よむ = membaca.', period: 'random' },  
-        { id: 527, section: 'grammar', text: 'わたしは にほんごが はなせるように（　　　）。', options: ['なりました', 'しました', 'あります', 'います'], answer: 0, explanation: '～ようになりました = perubahan keadaan (menjadi bisa).', period: 'random' },  
-        { id: 528, section: 'grammar', text: 'でんしゃに かさ を（　　　）しまいました。', options: ['わすれて', 'わすれる', 'わすれた', 'わすれ'], answer: 0, explanation: '～てしまいました menunjukkan penyesalan atau ketidaksengajaan. わすれて = lupa.', period: 'random' },  
-        { id: 529, section: 'grammar', text: 'たなかさんは もう 帰った（　　　）です。', options: ['はず', 'べき', 'ため', 'つもり'], answer: 0, explanation: 'はずです = seharusnya/pasti (keyakinan).', period: 'random' },  
-        { id: 530, section: 'grammar', text: 'おさけを（　　　）あとで、くるまを うんてんしては いけません。', options: ['のんだ', 'のむ', 'のんで', 'のまない'], answer: 0, explanation: 'V-ta + あとで = setelah melakukan.', period: 'random' },  
-        { id: 531, section: 'grammar', text: 'A:「あの ほん、もう よみましたか。」\nB:「いいえ、（　　　）よんで いません。」', options: ['まだ', 'もう', 'いつも', 'ぜんぜん'], answer: 0, explanation: 'まだ + negatif = belum.', period: 'random' },  
-        { id: 532, section: 'grammar', text: 'A:「どうしたんですか。」\nB:「おなかが（　　　）んです。」', options: ['いたい', 'いたく', 'いたかった', 'いたくて'], answer: 0, explanation: 'Kata sifat-i + んです untuk memberikan penjelasan.', period: 'random' },  
-        { id: 533, section: 'grammar', text: 'さむい ですから、ドアを（　　　）も いいですか。', options: ['しめて', 'あけて', 'けして', 'つけて'], answer: 0, explanation: 'Karena dingin (さむい), minta izin untuk menutup pintu (しめて).', period: 'random' },  
-        { id: 534, section: 'grammar', text: 'えきへ（　　　）とき、ともだちに あいました。', options: ['いく', 'いって', 'いった', 'いかない'], answer: 0, explanation: 'V-kamus + とき = saat/ketika akan melakukan.', period: 'random' },  
-        { id: 535, section: 'grammar', text: 'ごはんを（　　　）まえに、てを あらいます。', options: ['たべる', 'たべた', 'たべて', 'たべない'], answer: 0, explanation: 'V-kamus + まえに = sebelum melakukan.', period: 'random' },  
+        { id: 516, section: 'grammar', text: 'えき（　　　）あるいて いきます。', options: ['まで', 'に', 'を', 'で'], answer: 0, explanation: 'まで berarti "sampai". えきまで = sampai stasiun.', period: 'sep-nov' },  
+        { id: 517, section: 'grammar', text: 'わたしは まいあさ パン（　　　）ごはんを たべます。', options: ['か', 'を', 'に', 'が'], answer: 0, explanation: 'か digunakan untuk "atau". パンかごはん = Roti atau nasi.', period: 'sep-nov' },  
+        { id: 518, section: 'grammar', text: 'この カメラは だれ（　　　）ですか。', options: ['の', 'に', 'へ', 'と'], answer: 0, explanation: 'だれの = milik siapa.', period: 'sep-nov' },  
+        { id: 519, section: 'grammar', text: 'きのうは どこへ（　　　）いきませんでした。', options: ['も', 'が', 'を', 'に'], answer: 0, explanation: 'Kata tanya + も + negatif = tidak ~ ke mana pun/siapa pun/apa pun. (どこへも = tidak ke mana pun).', period: 'sep-nov' },  
+        { id: 520, section: 'grammar', text: 'ここに じてんしゃを（　　　）ください。', options: ['おかないで', 'おいて', 'おかない', 'おかないくて'], answer: 0, explanation: '～ないでください = tolong jangan ~. おかないでください = tolong jangan meletakkan.', period: 'sep-nov' },  
+        { id: 521, section: 'grammar', text: 'あしたは あめが ふる（　　　）おもいます。', options: ['と', 'が', 'を', 'に'], answer: 0, explanation: 'と digunakan sebelum おもいます (berpikir/berpendapat bahwa...).', period: 'sep-nov' },  
+        { id: 522, section: 'grammar', text: 'せんせいは 学生（　　　）ほんを よませます。', options: ['に', 'が', 'を', 'で'], answer: 0, explanation: 'Pola kausatif: menyuruh/membiarkan seseorang (に) melakukan sesuatu.', period: 'sep-nov' },  
+        { id: 523, section: 'grammar', text: 'A:「まどを しめましょうか。」\nB:「いいえ、あけて（　　　）ください。」', options: ['おいて', 'しまって', 'あって', 'いて'], answer: 0, explanation: '～ておきます = membiarkan dalam keadaan seperti itu. あけておいて = biarkan terbuka.', period: 'sep-nov' },  
+        { id: 524, section: 'grammar', text: 'テレビを（　　　）まま、ねて しまいました。', options: ['つけた', 'つける', 'つけ', 'つけない'], answer: 0, explanation: 'V-ta まま = dalam keadaan / membiarkan. つけたまま = dibiarkan menyala.', period: 'sep-nov' },  
+        { id: 525, section: 'grammar', text: 'もし あめが（　　　）、しあいは ありません。', options: ['ふったら', 'ふれば', 'ふると', 'ふるなら'], answer: 0, explanation: 'もし... ~たら digunakan untuk pengandaian "jika". ふったら = jika turun hujan.', period: 'sep-nov' },  
+        { id: 526, section: 'grammar', text: 'この ほんは むずかしくて、（　　　）ことが できません。', options: ['よむ', 'よんで', 'よんだ', 'よみます'], answer: 0, explanation: 'V-kamus + ことができる = bisa melakukan. よむ = membaca.', period: 'sep-nov' },  
+        { id: 527, section: 'grammar', text: 'わたしは にほんごが はなせるように（　　　）。', options: ['なりました', 'しました', 'あります', 'います'], answer: 0, explanation: '～ようになりました = perubahan keadaan (menjadi bisa).', period: 'sep-nov' },  
+        { id: 528, section: 'grammar', text: 'でんしゃに かさ を（　　　）しまいました。', options: ['わすれて', 'わすれる', 'わすれた', 'わすれ'], answer: 0, explanation: '～てしまいました menunjukkan penyesalan atau ketidaksengajaan. わすれて = lupa.', period: 'sep-nov' },  
+        { id: 529, section: 'grammar', text: 'たなかさんは もう 帰った（　　　）です。', options: ['はず', 'べき', 'ため', 'つもり'], answer: 0, explanation: 'はずです = seharusnya/pasti (keyakinan).', period: 'sep-nov' },  
+        { id: 530, section: 'grammar', text: 'おさけを（　　　）あとで、くるまを うんてんしては いけません。', options: ['のんだ', 'のむ', 'のんで', 'のまない'], answer: 0, explanation: 'V-ta + あとで = setelah melakukan.', period: 'sep-nov' },  
+        { id: 531, section: 'grammar', text: 'A:「あの ほん、もう よみましたか。」\nB:「いいえ、（　　　）よんで いません。」', options: ['まだ', 'もう', 'いつも', 'ぜんぜん'], answer: 0, explanation: 'まだ + negatif = belum.', period: 'sep-nov' },  
+        { id: 532, section: 'grammar', text: 'A:「どうしたんですか。」\nB:「おなかが（　　　）んです。」', options: ['いたい', 'いたく', 'いたかった', 'いたくて'], answer: 0, explanation: 'Kata sifat-i + んです untuk memberikan penjelasan.', period: 'sep-nov' },  
+        { id: 533, section: 'grammar', text: 'さむい ですから、ドアを（　　　）も いいですか。', options: ['しめて', 'あけて', 'けして', 'つけて'], answer: 0, explanation: 'Karena dingin (さむい), minta izin untuk menutup pintu (しめて).', period: 'sep-nov' },  
+        { id: 534, section: 'grammar', text: 'えきへ（　　　）とき、ともだちに あいました。', options: ['いく', 'いって', 'いった', 'いかない'], answer: 0, explanation: 'V-kamus + とき = saat/ketika akan melakukan.', period: 'sep-nov' },  
+        { id: 535, section: 'grammar', text: 'ごはんを（　　　）まえに、てを あらいます。', options: ['たべる', 'たべた', 'たべて', 'たべない'], answer: 0, explanation: 'V-kamus + まえに = sebelum melakukan.', period: 'sep-nov' },  
 
         // --- PENDENGARAN (Listening) ---  
-        { id: 536, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は今、何をしていますか。', audioText: '女：田中さん、今 忙しいですか。少し 手伝ってくれませんか。\n男：すみません。今、レポートを 書いているんです。あと ３０分ぐらい 待ってくれますか。', options: ['レポートを書いています', '本を読んでいます', '手伝っています', '休んでいます'], answer: 0, explanation: 'Pria itu berkata "レポートを書いているんです" (Sedang menulis laporan).', period: 'random' },  
-        { id: 537, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何時ごろ 帰りますか。', audioText: '男：映画は ６時からですね。終わるのは 何時ですか。\n女：８時です。そのあと、晩ごはんを 食べて 帰りましょう。\n男：じゃあ、帰るのは ９時ごろですね。', options: ['９時ごろ', '６時ごろ', '８時ごろ', '１０時ごろ'], answer: 0, explanation: 'Film selesai jam 8, lalu mereka makan malam. Pria itu menyimpulkan pulang jam 9 (９時ごろ).', period: 'random' },  
-        { id: 538, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どんな 靴を 買いますか。', audioText: '女：この 黒い 靴、いいですね。\n男：でも、少し 重いですよ。こちらの 白くて 軽い 靴は どうですか。\n女：そうですね。歩きやすそうですから、これに します。', options: ['白くて軽い靴', '黒くて重い靴', '白くて重い靴', '黒くて軽い靴'], answer: 0, explanation: 'Perempuan itu akhirnya memilih sepatu yang putih dan ringan (白くて軽い靴).', period: 'random' },  
-        { id: 539, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 明日 どうやって 会社へ 行きますか。', audioText: '女：明日は 電車が 止まるそうです。\n男：えっ、本当ですか。じゃあ、明日は 車で 行きます。バスは 混みますから。', options: ['車で', '電車で', 'バスで', '歩いて'], answer: 0, explanation: 'Karena kereta berhenti dan bus penuh, dia akan pergi menggunakan mobil (車で).', period: 'random' },  
-        { id: 540, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの ケーキを 食べますか。', audioText: '女：ケーキを 買ってきたんですが、どれが いいですか。チョコレートと いちごと チーズが あります。\n男：私は チョコレートは あまり 好きじゃないです。チーズを お願いします。', options: ['チーズのケーキ', 'チョコレートのケーキ', 'いちごのケーキ', '食べない'], answer: 0, explanation: 'Pria itu meminta kue keju (チーズをお願いします).', period: 'random' },  
-        { id: 541, section: 'listening', text: '【音声を聞いて答えてください】\n部屋は 今 どうなっていますか。', audioText: '男：暑いですね。窓を 開けましょうか。\n女：あ、エアコンが ついていますから、窓は 閉めておいて ください。', options: ['窓が閉まっていて、エアコンがついている', '窓が開いていて、エアコンがついている', '窓が閉まっていて、エアコンが消えている', '窓が開いていて、エアコンが消えている'], answer: 0, explanation: 'Jendelanya ditutup dan AC-nya menyala.', period: 'random' },  
-        { id: 542, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は これから まず 何を しますか。', audioText: '男：もう 昼ごはんを 食べましたか。\n女：いいえ。これから 銀行へ 行って、そのあとで 食べます。', options: ['銀行へ行きます', '昼ごはんを食べます', '買い物をします', '仕事をします'], answer: 0, explanation: 'Pertama pergi ke bank dulu (銀行へ行って), baru kemudian makan siang.', period: 'random' },  
-        { id: 543, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：あ、いけない！\n女：どうしたんですか。\n男：財布と 携帯電話は 持ってきたんですが、傘を 電車の中に 忘れてしまいました。', options: ['傘', '財布', '携帯電話', 'かばん'], answer: 0, explanation: 'Pria itu melupakan payungnya (傘) di dalam kereta.', period: 'random' },  
-        { id: 544, section: 'listening', text: '【音声を聞いて答えてください】\nテストは いつ ありますか。', audioText: '男：先生、テストは 来週の 金曜日ですか。\n女：いいえ。来週は 休みですから、再来週の 水曜日に します。', options: ['再来週の水曜日', '来週の金曜日', '来週の水曜日', '再来週の金曜日'], answer: 0, explanation: 'Ujiannya diundur ke hari Rabu dua minggu lagi (再来週の水曜日).', period: 'random' },  
-        { id: 545, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋を 探していますか。', audioText: '女：どんな 部屋が いいですか。\n男：駅から 近くて、家賃が 安い 部屋が いいです。狭くても いいです。', options: ['駅から近くて、安い部屋', '駅から遠くて、広い部屋', '駅から遠くて、安い部屋', '駅から近くて、広い部屋'], answer: 0, explanation: 'Pria itu mencari kamar yang dekat stasiun dan murah (狭くてもいいです = sempit pun tidak apa-apa).', period: 'random' },  
+        { id: 536, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は今、何をしていますか。', audioText: '女：田中さん、今 忙しいですか。少し 手伝ってくれませんか。\n男：すみません。今、レポートを 書いているんです。あと ３０分ぐらい 待ってくれますか。', options: ['レポートを書いています', '本を読んでいます', '手伝っています', '休んでいます'], answer: 0, explanation: 'Pria itu berkata "レポートを書いているんです" (Sedang menulis laporan).', period: 'sep-nov' },  
+        { id: 537, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何時ごろ 帰りますか。', audioText: '男：映画は ６時からですね。終わるのは 何時ですか。\n女：８時です。そのあと、晩ごはんを 食べて 帰りましょう。\n男：じゃあ、帰るのは ９時ごろですね。', options: ['９時ごろ', '６時ごろ', '８時ごろ', '１０時ごろ'], answer: 0, explanation: 'Film selesai jam 8, lalu mereka makan malam. Pria itu menyimpulkan pulang jam 9 (９時ごろ).', period: 'sep-nov' },  
+        { id: 538, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どんな 靴を 買いますか。', audioText: '女：この 黒い 靴、いいですね。\n男：でも、少し 重いですよ。こちらの 白くて 軽い 靴は どうですか。\n女：そうですね。歩きやすそうですから、これに します。', options: ['白くて軽い靴', '黒くて重い靴', '白くて重い靴', '黒くて軽い靴'], answer: 0, explanation: 'Perempuan itu akhirnya memilih sepatu yang putih dan ringan (白くて軽い靴).', period: 'sep-nov' },  
+        { id: 539, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 明日 どうやって 会社へ 行きますか。', audioText: '女：明日は 電車が 止まるそうです。\n男：えっ、本当ですか。じゃあ、明日は 車で 行きます。バスは 混みますから。', options: ['車で', '電車で', 'バスで', '歩いて'], answer: 0, explanation: 'Karena kereta berhenti dan bus penuh, dia akan pergi menggunakan mobil (車で).', period: 'sep-nov' },  
+        { id: 540, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの ケーキを 食べますか。', audioText: '女：ケーキを 買ってきたんですが、どれが いいですか。チョコレートと いちごと チーズが あります。\n男：私は チョコレートは あまり 好きじゃないです。チーズを お願いします。', options: ['チーズのケーキ', 'チョコレートのケーキ', 'いちごのケーキ', '食べない'], answer: 0, explanation: 'Pria itu meminta kue keju (チーズをお願いします).', period: 'sep-nov' },  
+        { id: 541, section: 'listening', text: '【音声を聞いて答えてください】\n部屋は 今 どうなっていますか。', audioText: '男：暑いですね。窓を 開けましょうか。\n女：あ、エアコンが ついていますから、窓は 閉めておいて ください。', options: ['窓が閉まっていて、エアコンがついている', '窓が開いていて、エアコンがついている', '窓が閉まっていて、エアコンが消えている', '窓が開いていて、エアコンが消えている'], answer: 0, explanation: 'Jendelanya ditutup dan AC-nya menyala.', period: 'sep-nov' },  
+        { id: 542, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は これから まず 何を しますか。', audioText: '男：もう 昼ごはんを 食べましたか。\n女：いいえ。これから 銀行へ 行って、そのあとで 食べます。', options: ['銀行へ行きます', '昼ごはんを食べます', '買い物をします', '仕事をします'], answer: 0, explanation: 'Pertama pergi ke bank dulu (銀行へ行って), baru kemudian makan siang.', period: 'sep-nov' },  
+        { id: 543, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：あ、いけない！\n女：どうしたんですか。\n男：財布と 携帯電話は 持ってきたんですが、傘を 電車の中に 忘れてしまいました。', options: ['傘', '財布', '携帯電話', 'かばん'], answer: 0, explanation: 'Pria itu melupakan payungnya (傘) di dalam kereta.', period: 'sep-nov' },  
+        { id: 544, section: 'listening', text: '【音声を聞いて答えてください】\nテストは いつ ありますか。', audioText: '男：先生、テストは 来週の 金曜日ですか。\n女：いいえ。来週は 休みですから、再来週の 水曜日に します。', options: ['再来週の水曜日', '来週の金曜日', '来週の水曜日', '再来週の金曜日'], answer: 0, explanation: 'Ujiannya diundur ke hari Rabu dua minggu lagi (再来週の水曜日).', period: 'sep-nov' },  
+        { id: 545, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋を 探していますか。', audioText: '女：どんな 部屋が いいですか。\n男：駅から 近くて、家賃が 安い 部屋が いいです。狭くても いいです。', options: ['駅から近くて、安い部屋', '駅から遠くて、広い部屋', '駅から遠くて、安い部屋', '駅から近くて、広い部屋'], answer: 0, explanation: 'Pria itu mencari kamar yang dekat stasiun dan murah (狭くてもいいです = sempit pun tidak apa-apa).', period: 'sep-nov' },  
 
         // --- MEMBACA (Reading) ---  
-        { id: 546, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\n会議の 時間が かわりました。\n午後２時から ３時半までです。\n場所は ３階の 第２会議室です。\n（鈴木）\n\n会議は いつ 終わりますか。', options: ['午後３時半', '午後２時', '午後３時', '午前３時半'], answer: 0, explanation: 'Di email tertulis "３時半までです" (Sampai jam 3.30).', period: 'random' },  
-        { id: 547, section: 'reading', text: '【メモを読んで答えてください】\n木村さんへ\n机の 上に ある 書類に 名前を 書いて、受付の 佐藤さんに 渡して ください。お願いします。\n（田中）\n\n木村さんは 名前を 書いたあと、どうしますか。', options: ['佐藤さんに 渡します', '田中に 渡します', '机の 上に 置きます', '受付で 待ちます'], answer: 0, explanation: 'Setelah menulis nama, dia harus menyerahkannya kepada Sato di resepsionis (受付の佐藤さんに渡してください).', period: 'random' },  
-        { id: 548, section: 'reading', text: '【ポスターを読んで答えてください】\n＜図書館の 使い方＞\n・本は １回に ３冊まで 借りることが できます。\n・借りる 期間は ２週間です。\n・辞書と 雑誌は 借りることが できません。\n\n雑誌を 家に 持って 帰ることが できますか。', options: ['いいえ、できません', 'はい、できます', '３冊まで できます', '２週間 できます'], answer: 0, explanation: 'Aturan ketiga menyatakan Kamus dan Majalah tidak bisa dipinjam (辞書と雑誌は借りることができません).', period: 'random' },  
-        { id: 549, section: 'reading', text: '【日記を読んで答えてください】\n１０月５日（木）\n今日は 友だちの 誕生日だった。みんなで レストランへ 行って、ケーキを 食べた。とても おいしかった。プレゼントも 喜んでくれて、うれしかった。\n\nこの人は 今日 どうして うれしかったですか。', options: ['友だちが プレゼントを 喜んでくれたから', 'ケーキが おいしかったから', 'レストランへ 行ったから', '自分の 誕生日だったから'], answer: 0, explanation: 'Dia senang karena temannya gembira menerima hadiahnya (プレゼントも喜んでくれて、うれしかった).', period: 'random' },  
-        { id: 550, section: 'reading', text: '【案内を読んで答えてください】\n＜さくら美術館＞\n開館時間：１０：００～１７：００（入館は １６：３０まで）\n休みの日：毎週 月曜日（月曜日が 祝日のときは 火曜日が 休み）\n\n午後４時４５分に 美術館に 着きました。中へ 入ることが できますか。', options: ['いいえ、できません', 'はい、できます', '月曜日なら できます', '祝日なら できます'], answer: 0, explanation: 'Batas masuk (入館) adalah jam 16:30. Karena dia tiba 16:45, dia tidak bisa masuk.', period: 'random' },
+        { id: 546, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\n会議の 時間が かわりました。\n午後２時から ３時半までです。\n場所は ３階の 第２会議室です。\n（鈴木）\n\n会議は いつ 終わりますか。', options: ['午後３時半', '午後２時', '午後３時', '午前３時半'], answer: 0, explanation: 'Di email tertulis "３時半までです" (Sampai jam 3.30).', period: 'sep-nov' },  
+        { id: 547, section: 'reading', text: '【メモを読んで答えてください】\n木村さんへ\n机の 上に ある 書類に 名前を 書いて、受付の 佐藤さんに 渡して ください。お願いします。\n（田中）\n\n木村さんは 名前を 書いたあと、どうしますか。', options: ['佐藤さんに 渡します', '田中に 渡します', '机の 上に 置きます', '受付で 待ちます'], answer: 0, explanation: 'Setelah menulis nama, dia harus menyerahkannya kepada Sato di resepsionis (受付の佐藤さんに渡してください).', period: 'sep-nov' },  
+        { id: 548, section: 'reading', text: '【ポスターを読んで答えてください】\n＜図書館の 使い方＞\n・本は １回に ３冊まで 借りることが できます。\n・借りる 期間は ２週間です。\n・辞書と 雑誌は 借りることが できません。\n\n雑誌を 家に 持って 帰ることが できますか。', options: ['いいえ、できません', 'はい、できます', '３冊まで できます', '２週間 できます'], answer: 0, explanation: 'Aturan ketiga menyatakan Kamus dan Majalah tidak bisa dipinjam (辞書と雑誌は借りることができません).', period: 'sep-nov' },  
+        { id: 549, section: 'reading', text: '【日記を読んで答えてください】\n１０月５日（木）\n今日は 友だちの 誕生日だった。みんなで レストランへ 行って、ケーキを 食べた。とても おいしかった。プレゼントも 喜んでくれて、うれしかった。\n\nこの人は 今日 どうして うれしかったですか。', options: ['友だちが プレゼントを 喜んでくれたから', 'ケーキが おいしかったから', 'レストランへ 行ったから', '自分の 誕生日だったから'], answer: 0, explanation: 'Dia senang karena temannya gembira menerima hadiahnya (プレゼントも喜んでくれて、うれしかった).', period: 'sep-nov' },  
+        { id: 550, section: 'reading', text: '【案内を読んで答えてください】\n＜さくら美術館＞\n開館時間：１０：００～１７：００（入館は １６：３０まで）\n休みの日：毎週 月曜日（月曜日が 祝日のときは 火曜日が 休み）\n\n午後４時４５分に 美術館に 着きました。中へ 入ることが できますか。', options: ['いいえ、できません', 'はい、できます', '月曜日なら できます', '祝日なら できます'], answer: 0, explanation: 'Batas masuk (入館) adalah jam 16:30. Karena dia tiba 16:45, dia tidak bisa masuk.', period: 'sep-nov' },
         // ==========================================
 // --- TAMBAHAN 100 SOAL (BATCH 3) ---
 // ==========================================
 
 // --- KOSA KATA & KANJI (Vocab) ---
 
-{ id: 551, section: 'vocab', text: '「あに」は かんじで どう かきますか。', options: ['兄', '弟', '姉', '妹'], answer: 0, explanation: '兄 (あに) = kakak laki-laki. 弟 = adik laki-laki, 姉 = kakak perempuan, 妹 = adik perempuan.', period: 'random' },
+{ id: 551, section: 'vocab', text: '「あに」は かんじで どう かきますか。', options: ['兄', '弟', '姉', '妹'], answer: 0, explanation: '兄 (あに) = kakak laki-laki. 弟 = adik laki-laki, 姉 = kakak perempuan, 妹 = adik perempuan.', period: 'sep-nov' },
 
-{ id: 552, section: 'vocab', text: '「あね」は かんじで どう かきますか。', options: ['姉', '妹', '兄', '弟'], answer: 0, explanation: '姉 (あね) = kakak perempuan.', period: 'random' },
+{ id: 552, section: 'vocab', text: '「あね」は かんじで どう かきますか。', options: ['姉', '妹', '兄', '弟'], answer: 0, explanation: '姉 (あね) = kakak perempuan.', period: 'sep-nov' },
 
-{ id: 553, section: 'vocab', text: '「おとうと」は かんじで どう かきますか。', options: ['弟', '兄', '妹', '姉'], answer: 0, explanation: '弟 (おとうと) = adik laki-laki.', period: 'random' },
+{ id: 553, section: 'vocab', text: '「おとうと」は かんじで どう かきますか。', options: ['弟', '兄', '妹', '姉'], answer: 0, explanation: '弟 (おとうと) = adik laki-laki.', period: 'sep-nov' },
 
-{ id: 554, section: 'vocab', text: '「ひだり」は かんじで どう かきますか。', options: ['左', '右', '上', '下'], answer: 0, explanation: '左 (ひだり) = kiri.', period: 'random' },
+{ id: 554, section: 'vocab', text: '「ひだり」は かんじで どう かきますか。', options: ['左', '右', '上', '下'], answer: 0, explanation: '左 (ひだり) = kiri.', period: 'sep-nov' },
 
-{ id: 555, section: 'vocab', text: '「うえ」は かんじで どう かきますか。', options: ['上', '下', '中', '外'], answer: 0, explanation: '上 (うえ) = atas.', period: 'random' },
+{ id: 555, section: 'vocab', text: '「うえ」は かんじで どう かきますか。', options: ['上', '下', '中', '外'], answer: 0, explanation: '上 (うえ) = atas.', period: 'sep-nov' },
 
-{ id: 556, section: 'vocab', text: '「した」は かんじで どう かきますか。', options: ['下', '上', '前', '後'], answer: 0, explanation: '下 (した) = bawah.', period: 'random' },
+{ id: 556, section: 'vocab', text: '「した」は かんじで どう かきますか。', options: ['下', '上', '前', '後'], answer: 0, explanation: '下 (した) = bawah.', period: 'sep-nov' },
 
-{ id: 557, section: 'vocab', text: '「まえ」は かんじで どう かきますか。', options: ['前', '後', '中', '外'], answer: 0, explanation: '前 (まえ) = depan/sebelum.', period: 'random' },
+{ id: 557, section: 'vocab', text: '「まえ」は かんじで どう かきますか。', options: ['前', '後', '中', '外'], answer: 0, explanation: '前 (まえ) = depan/sebelum.', period: 'sep-nov' },
 
-{ id: 558, section: 'vocab', text: '「うしろ」は かんじで どう かきますか。', options: ['後ろ', '前', '外', '中'], answer: 0, explanation: '後ろ (うしろ) = belakang.', period: 'random' },
+{ id: 558, section: 'vocab', text: '「うしろ」は かんじで どう かきますか。', options: ['後ろ', '前', '外', '中'], answer: 0, explanation: '後ろ (うしろ) = belakang.', period: 'sep-nov' },
 
-{ id: 559, section: 'vocab', text: '「あたらしい」は かんじで どう かきますか。', options: ['新しい', '古い', '高い', '安い'], answer: 0, explanation: '新しい (あたらしい) = baru.', period: 'random' },
+{ id: 559, section: 'vocab', text: '「あたらしい」は かんじで どう かきますか。', options: ['新しい', '古い', '高い', '安い'], answer: 0, explanation: '新しい (あたらしい) = baru.', period: 'sep-nov' },
 
-{ id: 560, section: 'vocab', text: '「ふるい」は かんじで どう かきますか。', options: ['古い', '新しい', '広い', '狭い'], answer: 0, explanation: '古い (ふるい) = lama/tua.', period: 'random' },
+{ id: 560, section: 'vocab', text: '「ふるい」は かんじで どう かきますか。', options: ['古い', '新しい', '広い', '狭い'], answer: 0, explanation: '古い (ふるい) = lama/tua.', period: 'sep-nov' },
 
-{ id: 561, section: 'vocab', text: 'この りんごは とても（　　　）です。', options: ['あまい', 'からい', 'にがい', 'しょっぱい'], answer: 0, explanation: 'あまい = manis.', period: 'random' },
+{ id: 561, section: 'vocab', text: 'この りんごは とても（　　　）です。', options: ['あまい', 'からい', 'にがい', 'しょっぱい'], answer: 0, explanation: 'あまい = manis.', period: 'sep-nov' },
 
-{ id: 562, section: 'vocab', text: 'この カレーは（　　　）です。', options: ['からい', 'あまい', 'すっぱい', 'うすい'], answer: 0, explanation: 'からい = pedas.', period: 'random' },
+{ id: 562, section: 'vocab', text: 'この カレーは（　　　）です。', options: ['からい', 'あまい', 'すっぱい', 'うすい'], answer: 0, explanation: 'からい = pedas.', period: 'sep-nov' },
 
-{ id: 563, section: 'vocab', text: 'レモンは（　　　）です。', options: ['すっぱい', 'あまい', 'からい', 'しょっぱい'], answer: 0, explanation: 'すっぱい = asam.', period: 'random' },
+{ id: 563, section: 'vocab', text: 'レモンは（　　　）です。', options: ['すっぱい', 'あまい', 'からい', 'しょっぱい'], answer: 0, explanation: 'すっぱい = asam.', period: 'sep-nov' },
 
-{ id: 564, section: 'vocab', text: 'しおを たくさん いれましたから、スープが（　　　）です。', options: ['しょっぱい', 'あまい', 'にがい', 'すっぱい'], answer: 0, explanation: 'しょっぱい = asin.', period: 'random' },
+{ id: 564, section: 'vocab', text: 'しおを たくさん いれましたから、スープが（　　　）です。', options: ['しょっぱい', 'あまい', 'にがい', 'すっぱい'], answer: 0, explanation: 'しょっぱい = asin.', period: 'sep-nov' },
 
-{ id: 565, section: 'vocab', text: 'コーヒーは さとうを いれないと（　　　）です。', options: ['にがい', 'あまい', 'からい', 'すっぱい'], answer: 0, explanation: 'にがい = pahit.', period: 'random' },
+{ id: 565, section: 'vocab', text: 'コーヒーは さとうを いれないと（　　　）です。', options: ['にがい', 'あまい', 'からい', 'すっぱい'], answer: 0, explanation: 'にがい = pahit.', period: 'sep-nov' },
 
-{ id: 566, section: 'vocab', text: 'まいにち あさごはんを（　　　）。', options: ['たべます', 'のみます', 'ききます', 'みます'], answer: 0, explanation: 'たべます = makan.', period: 'random' },
+{ id: 566, section: 'vocab', text: 'まいにち あさごはんを（　　　）。', options: ['たべます', 'のみます', 'ききます', 'みます'], answer: 0, explanation: 'たべます = makan.', period: 'sep-nov' },
 
-{ id: 567, section: 'vocab', text: 'みずを（　　　）。', options: ['のみます', 'たべます', 'よみます', 'かきます'], answer: 0, explanation: 'のみます = minum.', period: 'random' },
+{ id: 567, section: 'vocab', text: 'みずを（　　　）。', options: ['のみます', 'たべます', 'よみます', 'かきます'], answer: 0, explanation: 'のみます = minum.', period: 'sep-nov' },
 
-{ id: 568, section: 'vocab', text: 'おんがくを（　　　）。', options: ['ききます', 'みます', 'よみます', 'はなします'], answer: 0, explanation: '音楽を聞きます = mendengarkan musik.', period: 'random' },
+{ id: 568, section: 'vocab', text: 'おんがくを（　　　）。', options: ['ききます', 'みます', 'よみます', 'はなします'], answer: 0, explanation: '音楽を聞きます = mendengarkan musik.', period: 'sep-nov' },
 
-{ id: 569, section: 'vocab', text: 'テレビを（　　　）。', options: ['みます', 'ききます', 'よみます', 'かきます'], answer: 0, explanation: 'テレビを見ます = menonton televisi.', period: 'random' },
+{ id: 569, section: 'vocab', text: 'テレビを（　　　）。', options: ['みます', 'ききます', 'よみます', 'かきます'], answer: 0, explanation: 'テレビを見ます = menonton televisi.', period: 'sep-nov' },
 
-{ id: 570, section: 'vocab', text: 'しんぶんを（　　　）。', options: ['よみます', 'みます', 'ききます', 'たべます'], answer: 0, explanation: '新聞を読みます = membaca koran.', period: 'random' },
+{ id: 570, section: 'vocab', text: 'しんぶんを（　　　）。', options: ['よみます', 'みます', 'ききます', 'たべます'], answer: 0, explanation: '新聞を読みます = membaca koran.', period: 'sep-nov' },
 
-{ id: 571, section: 'vocab', text: 'てがみを（　　　）。', options: ['かきます', 'よみます', 'ききます', 'のみます'], answer: 0, explanation: '手紙を書きます = menulis surat.', period: 'random' },
+{ id: 571, section: 'vocab', text: 'てがみを（　　　）。', options: ['かきます', 'よみます', 'ききます', 'のみます'], answer: 0, explanation: '手紙を書きます = menulis surat.', period: 'sep-nov' },
 
-{ id: 572, section: 'vocab', text: 'でんわで ともだちと（　　　）。', options: ['はなします', 'よみます', 'かきます', 'ききます'], answer: 0, explanation: '話します = berbicara.', period: 'random' },
+{ id: 572, section: 'vocab', text: 'でんわで ともだちと（　　　）。', options: ['はなします', 'よみます', 'かきます', 'ききます'], answer: 0, explanation: '話します = berbicara.', period: 'sep-nov' },
 
-{ id: 573, section: 'vocab', text: 'まいばん １１じに（　　　）。', options: ['ねます', 'おきます', 'はたらきます', 'あそびます'], answer: 0, explanation: '寝ます = tidur.', period: 'random' },
+{ id: 573, section: 'vocab', text: 'まいばん １１じに（　　　）。', options: ['ねます', 'おきます', 'はたらきます', 'あそびます'], answer: 0, explanation: '寝ます = tidur.', period: 'sep-nov' },
 
-{ id: 574, section: 'vocab', text: 'まいあさ ６じに（　　　）。', options: ['おきます', 'ねます', 'かえります', 'やすみます'], answer: 0, explanation: '起きます = bangun.', period: 'random' },
+{ id: 574, section: 'vocab', text: 'まいあさ ６じに（　　　）。', options: ['おきます', 'ねます', 'かえります', 'やすみます'], answer: 0, explanation: '起きます = bangun.', period: 'sep-nov' },
 
-{ id: 575, section: 'vocab', text: 'きょうは しごとが ありません。うちで（　　　）。', options: ['やすみます', 'はたらきます', 'べんきょうします', 'かいます'], answer: 0, explanation: '休みます = beristirahat/libur.', period: 'random' },
+{ id: 575, section: 'vocab', text: 'きょうは しごとが ありません。うちで（　　　）。', options: ['やすみます', 'はたらきます', 'べんきょうします', 'かいます'], answer: 0, explanation: '休みます = beristirahat/libur.', period: 'sep-nov' },
 
 // --- TATA BAHASA & PERCAKAPAN (Grammar) ---
 
-{ id: 576, section: 'grammar', text: 'わたしは まいにち ７じ（　　　）おきます。', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'に digunakan untuk menunjukkan waktu tertentu.', period: 'random' },
+{ id: 576, section: 'grammar', text: 'わたしは まいにち ７じ（　　　）おきます。', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'に digunakan untuk menunjukkan waktu tertentu.', period: 'sep-nov' },
 
-{ id: 577, section: 'grammar', text: 'きのう ともだち（　　　）えいがを みました。', options: ['と', 'に', 'で', 'を'], answer: 0, explanation: 'と berarti bersama/dengan.', period: 'random' },
+{ id: 577, section: 'grammar', text: 'きのう ともだち（　　　）えいがを みました。', options: ['と', 'に', 'で', 'を'], answer: 0, explanation: 'と berarti bersama/dengan.', period: 'sep-nov' },
 
-{ id: 578, section: 'grammar', text: 'あした くるま（　　　）かいしゃへ いきます。', options: ['で', 'に', 'を', 'が'], answer: 0, explanation: 'で digunakan untuk alat transportasi.', period: 'random' },
+{ id: 578, section: 'grammar', text: 'あした くるま（　　　）かいしゃへ いきます。', options: ['で', 'に', 'を', 'が'], answer: 0, explanation: 'で digunakan untuk alat transportasi.', period: 'sep-nov' },
 
-{ id: 579, section: 'grammar', text: 'つくえの うえ（　　　）ほんが あります。', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'に digunakan untuk menunjukkan lokasi keberadaan benda.', period: 'random' },
+{ id: 579, section: 'grammar', text: 'つくえの うえ（　　　）ほんが あります。', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'に digunakan untuk menunjukkan lokasi keberadaan benda.', period: 'sep-nov' },
 
-{ id: 580, section: 'grammar', text: 'こうえん（　　　）こどもが あそんでいます。', options: ['で', 'に', 'を', 'へ'], answer: 0, explanation: 'で digunakan untuk tempat berlangsungnya aktivitas.', period: 'random' },
+{ id: 580, section: 'grammar', text: 'こうえん（　　　）こどもが あそんでいます。', options: ['で', 'に', 'を', 'へ'], answer: 0, explanation: 'で digunakan untuk tempat berlangsungnya aktivitas.', period: 'sep-nov' },
 
-{ id: 581, section: 'grammar', text: 'わたしは さかな（　　　）すきです。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'Pola 〜が好きです berarti menyukai sesuatu.', period: 'random' },
+{ id: 581, section: 'grammar', text: 'わたしは さかな（　　　）すきです。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'Pola 〜が好きです berarti menyukai sesuatu.', period: 'sep-nov' },
 
-{ id: 582, section: 'grammar', text: 'にほんご（　　　）わかりますか。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'わかります biasanya menggunakan partikel が.', period: 'random' },
+{ id: 582, section: 'grammar', text: 'にほんご（　　　）わかりますか。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'わかります biasanya menggunakan partikel が.', period: 'sep-nov' },
 
-{ id: 583, section: 'grammar', text: 'わたしは りんご（　　　）２つ たべました。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を menandai objek langsung.', period: 'random' },
+{ id: 583, section: 'grammar', text: 'わたしは りんご（　　　）２つ たべました。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を menandai objek langsung.', period: 'sep-nov' },
 
-{ id: 584, section: 'grammar', text: 'まいにち ８じ（　　　）５じまで はたらきます。', options: ['から', 'まで', 'より', 'しか'], answer: 0, explanation: 'から berarti mulai/dari.', period: 'random' },
+{ id: 584, section: 'grammar', text: 'まいにち ８じ（　　　）５じまで はたらきます。', options: ['から', 'まで', 'より', 'しか'], answer: 0, explanation: 'から berarti mulai/dari.', period: 'sep-nov' },
 
-{ id: 585, section: 'grammar', text: '９じ（　　　）５じまで はたらきます。', options: ['から', 'まで', 'だけ', 'しか'], answer: 1, explanation: 'まで berarti sampai/batas akhir.', period: 'random' },
+{ id: 585, section: 'grammar', text: '９じ（　　　）５じまで はたらきます。', options: ['から', 'まで', 'だけ', 'しか'], answer: 1, explanation: 'まで berarti sampai/batas akhir.', period: 'sep-nov' },
 
-{ id: 586, section: 'grammar', text: 'この りんごは １００えん（　　　）やすいです。', options: ['より', 'から', 'まで', 'しか'], answer: 0, explanation: 'より digunakan untuk perbandingan.', period: 'random' },
+{ id: 586, section: 'grammar', text: 'この りんごは １００えん（　　　）やすいです。', options: ['より', 'から', 'まで', 'しか'], answer: 0, explanation: 'より digunakan untuk perbandingan.', period: 'sep-nov' },
 
-{ id: 587, section: 'grammar', text: 'バス（　　　）でんしゃの ほうが はやいです。', options: ['より', 'から', 'まで', 'しか'], answer: 0, explanation: 'バスより電車のほうが早い = kereta lebih cepat daripada bus.', period: 'random' },
+{ id: 587, section: 'grammar', text: 'バス（　　　）でんしゃの ほうが はやいです。', options: ['より', 'から', 'まで', 'しか'], answer: 0, explanation: 'バスより電車のほうが早い = kereta lebih cepat daripada bus.', period: 'sep-nov' },
 
-{ id: 588, section: 'grammar', text: 'きょうは べんきょう（　　　）します。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'べんきょうをします = belajar.', period: 'random' },
+{ id: 588, section: 'grammar', text: 'きょうは べんきょう（　　　）します。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'べんきょうをします = belajar.', period: 'sep-nov' },
 
-{ id: 589, section: 'grammar', text: 'この へやに つくえ（　　　）いすが あります。', options: ['と', 'や', 'も', 'か'], answer: 0, explanation: 'と digunakan untuk menghubungkan daftar lengkap: meja dan kursi.', period: 'random' },
+{ id: 589, section: 'grammar', text: 'この へやに つくえ（　　　）いすが あります。', options: ['と', 'や', 'も', 'か'], answer: 0, explanation: 'と digunakan untuk menghubungkan daftar lengkap: meja dan kursi.', period: 'sep-nov' },
 
-{ id: 590, section: 'grammar', text: 'スーパーで りんご（　　　）バナナなどを かいました。', options: ['や', 'と', 'も', 'か'], answer: 0, explanation: 'や digunakan untuk menyebutkan beberapa contoh.', period: 'random' },
+{ id: 590, section: 'grammar', text: 'スーパーで りんご（　　　）バナナなどを かいました。', options: ['や', 'と', 'も', 'か'], answer: 0, explanation: 'や digunakan untuk menyebutkan beberapa contoh.', period: 'sep-nov' },
 
-{ id: 591, section: 'grammar', text: 'この かばんは だれ（　　　）ですか。', options: ['の', 'に', 'を', 'で'], answer: 0, explanation: 'だれの = milik siapa.', period: 'random' },
+{ id: 591, section: 'grammar', text: 'この かばんは だれ（　　　）ですか。', options: ['の', 'に', 'を', 'で'], answer: 0, explanation: 'だれの = milik siapa.', period: 'sep-nov' },
 
-{ id: 592, section: 'grammar', text: 'これは わたし（　　　）かさです。', options: ['の', 'に', 'を', 'で'], answer: 0, explanation: 'わたしのかさ = payung saya.', period: 'random' },
+{ id: 592, section: 'grammar', text: 'これは わたし（　　　）かさです。', options: ['の', 'に', 'を', 'で'], answer: 0, explanation: 'わたしのかさ = payung saya.', period: 'sep-nov' },
 
-{ id: 593, section: 'grammar', text: 'A:「コーヒーを のみますか。」\nB:「いいえ、（　　　）です。」', options: ['けっこう', 'だいじょうぶ', 'どうぞ', 'こちらこそ'], answer: 0, explanation: 'けっこうです dapat berarti tidak perlu/tidak mau dalam konteks tawaran.', period: 'random' },
+{ id: 593, section: 'grammar', text: 'A:「コーヒーを のみますか。」\nB:「いいえ、（　　　）です。」', options: ['けっこう', 'だいじょうぶ', 'どうぞ', 'こちらこそ'], answer: 0, explanation: 'けっこうです dapat berarti tidak perlu/tidak mau dalam konteks tawaran.', period: 'sep-nov' },
 
-{ id: 594, section: 'grammar', text: 'A:「いっしょに ひるごはんを たべませんか。」\nB:「はい、（　　　）。」', options: ['たべましょう', 'たべません', 'たべました', 'たべないでください'], answer: 0, explanation: 'たべましょう = mari makan.', period: 'random' },
+{ id: 594, section: 'grammar', text: 'A:「いっしょに ひるごはんを たべませんか。」\nB:「はい、（　　　）。」', options: ['たべましょう', 'たべません', 'たべました', 'たべないでください'], answer: 0, explanation: 'たべましょう = mari makan.', period: 'sep-nov' },
 
-{ id: 595, section: 'grammar', text: 'ここで しゃしんを（　　　）も いいですか。', options: ['とって', 'とる', 'とった', 'とらない'], answer: 0, explanation: '〜てもいいですか = bolehkah melakukan sesuatu.', period: 'random' },
+{ id: 595, section: 'grammar', text: 'ここで しゃしんを（　　　）も いいですか。', options: ['とって', 'とる', 'とった', 'とらない'], answer: 0, explanation: '〜てもいいですか = bolehkah melakukan sesuatu.', period: 'sep-nov' },
 
-{ id: 596, section: 'grammar', text: 'この へやで たばこを（　　　）は いけません。', options: ['すって', 'すう', 'すった', 'すわない'], answer: 0, explanation: '〜てはいけません = tidak boleh.', period: 'random' },
+{ id: 596, section: 'grammar', text: 'この へやで たばこを（　　　）は いけません。', options: ['すって', 'すう', 'すった', 'すわない'], answer: 0, explanation: '〜てはいけません = tidak boleh.', period: 'sep-nov' },
 
-{ id: 597, section: 'grammar', text: 'まいにち くすりを（　　　）なければ なりません。', options: ['のま', 'のんで', 'のむ', 'のまない'], answer: 0, explanation: '〜なければなりません = harus. のまなければなりません.', period: 'random' },
+{ id: 597, section: 'grammar', text: 'まいにち くすりを（　　　）なければ なりません。', options: ['のま', 'のんで', 'のむ', 'のまない'], answer: 0, explanation: '〜なければなりません = harus. のまなければなりません.', period: 'sep-nov' },
 
-{ id: 598, section: 'grammar', text: 'あした ６じに（　　　）なければ なりません。', options: ['おき', 'おきて', 'おきる', 'おきない'], answer: 0, explanation: 'おきなければなりません = harus bangun.', period: 'random' },
+{ id: 598, section: 'grammar', text: 'あした ６じに（　　　）なければ なりません。', options: ['おき', 'おきて', 'おきる', 'おきない'], answer: 0, explanation: 'おきなければなりません = harus bangun.', period: 'sep-nov' },
 
-{ id: 599, section: 'grammar', text: 'ここから えきまで あるいて １０ぷん（　　　）かかります。', options: ['ぐらい', 'しか', 'だけ', 'でも'], answer: 0, explanation: 'ぐらい berarti kira-kira/sebanyak.', period: 'random' },
+{ id: 599, section: 'grammar', text: 'ここから えきまで あるいて １０ぷん（　　　）かかります。', options: ['ぐらい', 'しか', 'だけ', 'でも'], answer: 0, explanation: 'ぐらい berarti kira-kira/sebanyak.', period: 'sep-nov' },
 
-{ id: 600, section: 'grammar', text: 'きょうは みず（　　　）のみません。', options: ['しか', 'だけ', 'ぐらい', 'まで'], answer: 0, explanation: 'しか + bentuk negatif = hanya.', period: 'random' },
+{ id: 600, section: 'grammar', text: 'きょうは みず（　　　）のみません。', options: ['しか', 'だけ', 'ぐらい', 'まで'], answer: 0, explanation: 'しか + bentuk negatif = hanya.', period: 'sep-nov' },
 
 // --- PENDENGARAN (Listening) ---
 
-{ id: 601, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 買いますか。', audioText: '男：スーパーへ 行きますが、何か 買いましょうか。\n女：じゃあ、牛乳を ２本 お願いします。それから、パンも 買ってください。\n男：はい、わかりました。', options: ['牛乳とパン', '牛乳と卵', 'パンとりんご', '卵とりんご'], answer: 0, explanation: 'Perempuan meminta susu dan roti.', period: 'random' },
+{ id: 601, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 買いますか。', audioText: '男：スーパーへ 行きますが、何か 買いましょうか。\n女：じゃあ、牛乳を ２本 お願いします。それから、パンも 買ってください。\n男：はい、わかりました。', options: ['牛乳とパン', '牛乳と卵', 'パンとりんご', '卵とりんご'], answer: 0, explanation: 'Perempuan meminta susu dan roti.', period: 'sep-nov' },
 
-{ id: 602, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時に 起きますか。', audioText: '女：毎朝 何時に 起きますか。\n男：いつも ６時に 起きます。でも、日曜日は ８時まで 寝ます。', options: ['６時', '７時', '８時', '９時'], answer: 0, explanation: 'Dia biasanya bangun jam 6.', period: 'random' },
+{ id: 602, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時に 起きますか。', audioText: '女：毎朝 何時に 起きますか。\n男：いつも ６時に 起きます。でも、日曜日は ８時まで 寝ます。', options: ['６時', '７時', '８時', '９時'], answer: 0, explanation: 'Dia biasanya bangun jam 6.', period: 'sep-nov' },
 
-{ id: 603, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 会いますか。', audioText: '男：明日、どこで 会いましょうか。\n女：駅の前は どうですか。\n男：人が 多いですから、駅の 中の 喫茶店に しましょう。', options: ['駅の中の喫茶店', '駅の前', '公園', 'レストラン'], answer: 0, explanation: 'Mereka akan bertemu di kafe yang berada di dalam stasiun.', period: 'random' },
+{ id: 603, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 会いますか。', audioText: '男：明日、どこで 会いましょうか。\n女：駅の前は どうですか。\n男：人が 多いですから、駅の 中の 喫茶店に しましょう。', options: ['駅の中の喫茶店', '駅の前', '公園', 'レストラン'], answer: 0, explanation: 'Mereka akan bertemu di kafe yang berada di dalam stasiun.', period: 'sep-nov' },
 
-{ id: 604, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を していますか。', audioText: '男：鈴木さんは どこですか。\n女：今、事務所で 電話を かけています。', options: ['電話をかけています', '本を読んでいます', '昼ごはんを食べています', '会議をしています'], answer: 0, explanation: 'Dia sedang menelepon.', period: 'random' },
+{ id: 604, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を していますか。', audioText: '男：鈴木さんは どこですか。\n女：今、事務所で 電話を かけています。', options: ['電話をかけています', '本を読んでいます', '昼ごはんを食べています', '会議をしています'], answer: 0, explanation: 'Dia sedang menelepon.', period: 'sep-nov' },
 
-{ id: 605, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どうして 病院へ 行きますか。', audioText: '女：どうしたんですか。\n男：昨日から 頭が 痛いんです。それで、病院へ 行きます。', options: ['頭が痛いから', 'おなかがすいたから', 'けがをしたから', '薬を買うから'], answer: 0, explanation: 'Dia pergi ke rumah sakit karena sakit kepala.', period: 'random' },
+{ id: 605, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どうして 病院へ 行きますか。', audioText: '女：どうしたんですか。\n男：昨日から 頭が 痛いんです。それで、病院へ 行きます。', options: ['頭が痛いから', 'おなかがすいたから', 'けがをしたから', '薬を買うから'], answer: 0, explanation: 'Dia pergi ke rumah sakit karena sakit kepala.', period: 'sep-nov' },
 
-{ id: 606, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何を 食べますか。', audioText: '女：晩ごはんは 何に しましょうか。\n男：ラーメンは どうですか。\n女：いいですね。でも、私は すしが 食べたいです。\n男：じゃあ、すしに しましょう。', options: ['すし', 'ラーメン', 'カレー', 'そば'], answer: 0, explanation: 'Mereka akhirnya memilih sushi.', period: 'random' },
+{ id: 606, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何を 食べますか。', audioText: '女：晩ごはんは 何に しましょうか。\n男：ラーメンは どうですか。\n女：いいですね。でも、私は すしが 食べたいです。\n男：じゃあ、すしに しましょう。', options: ['すし', 'ラーメン', 'カレー', 'そば'], answer: 0, explanation: 'Mereka akhirnya memilih sushi.', period: 'sep-nov' },
 
-{ id: 607, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの かばんを 買いますか。', audioText: '女：この 大きい かばんは どうですか。\n男：ちょっと 高いですね。\n女：では、こちらの 小さくて 安い かばんは？\n男：それに します。', options: ['小さくて安いかばん', '大きくて高いかばん', '大きくて安いかばん', '小さくて高いかばん'], answer: 0, explanation: 'Dia membeli tas yang kecil dan murah.', period: 'random' },
+{ id: 607, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの かばんを 買いますか。', audioText: '女：この 大きい かばんは どうですか。\n男：ちょっと 高いですね。\n女：では、こちらの 小さくて 安い かばんは？\n男：それに します。', options: ['小さくて安いかばん', '大きくて高いかばん', '大きくて安いかばん', '小さくて高いかばん'], answer: 0, explanation: 'Dia membeli tas yang kecil dan murah.', period: 'sep-nov' },
 
-{ id: 608, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は いつ 旅行しますか。', audioText: '男：夏休みに 旅行しますか。\n女：はい。８月は 仕事が ありますから、９月に 行きます。', options: ['９月', '８月', '７月', '１０月'], answer: 0, explanation: 'Dia bepergian pada bulan September.', period: 'random' },
+{ id: 608, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は いつ 旅行しますか。', audioText: '男：夏休みに 旅行しますか。\n女：はい。８月は 仕事が ありますから、９月に 行きます。', options: ['９月', '８月', '７月', '１０月'], answer: 0, explanation: 'Dia bepergian pada bulan September.', period: 'sep-nov' },
 
-{ id: 609, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 持っていきますか。', audioText: '女：明日は 雨ですから、傘を 持っていってください。\n男：はい。かばんに 入れました。', options: ['傘', '帽子', '本', '水'], answer: 0, explanation: 'Dia membawa payung.', period: 'random' },
+{ id: 609, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 持っていきますか。', audioText: '女：明日は 雨ですから、傘を 持っていってください。\n男：はい。かばんに 入れました。', options: ['傘', '帽子', '本', '水'], answer: 0, explanation: 'Dia membawa payung.', period: 'sep-nov' },
 
-{ id: 610, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どこへ 行きますか。', audioText: '男：一緒に 映画を 見ませんか。\n女：すみません。これから 銀行へ 行かなければ なりません。', options: ['銀行', '映画館', 'スーパー', '病院'], answer: 0, explanation: 'Dia harus pergi ke bank.', period: 'random' },
+{ id: 610, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どこへ 行きますか。', audioText: '男：一緒に 映画を 見ませんか。\n女：すみません。これから 銀行へ 行かなければ なりません。', options: ['銀行', '映画館', 'スーパー', '病院'], answer: 0, explanation: 'Dia harus pergi ke bank.', period: 'sep-nov' },
 
-{ id: 611, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：財布が ありません。\n女：机の 上に ありませんか。\n男：ありません。あ、車の 中に 置いてきました。', options: ['財布', '携帯電話', 'かばん', '鍵'], answer: 0, explanation: 'Dia meninggalkan dompet di dalam mobil.', period: 'random' },
+{ id: 611, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：財布が ありません。\n女：机の 上に ありませんか。\n男：ありません。あ、車の 中に 置いてきました。', options: ['財布', '携帯電話', 'かばん', '鍵'], answer: 0, explanation: 'Dia meninggalkan dompet di dalam mobil.', period: 'sep-nov' },
 
-{ id: 612, section: 'listening', text: '【音声を聞いて答えてください】\n会議は 何時からですか。', audioText: '女：会議は 何時からですか。\n男：午後２時からです。でも、１時半までに 来てください。', options: ['午後２時', '午後１時半', '午後３時', '午前２時'], answer: 0, explanation: 'Rapat dimulai pukul 2 siang.', period: 'random' },
+{ id: 612, section: 'listening', text: '【音声を聞いて答えてください】\n会議は 何時からですか。', audioText: '女：会議は 何時からですか。\n男：午後２時からです。でも、１時半までに 来てください。', options: ['午後２時', '午後１時半', '午後３時', '午前２時'], answer: 0, explanation: 'Rapat dimulai pukul 2 siang.', period: 'sep-nov' },
 
-{ id: 613, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 料理しますか。', audioText: '男：晩ごはんは 何ですか。\n女：今日は 野菜が たくさん ありますから、野菜カレーを 作ります。', options: ['野菜カレー', '魚料理', 'ラーメン', 'サンドイッチ'], answer: 0, explanation: 'Dia akan memasak kari sayur.', period: 'random' },
+{ id: 613, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 料理しますか。', audioText: '男：晩ごはんは 何ですか。\n女：今日は 野菜が たくさん ありますから、野菜カレーを 作ります。', options: ['野菜カレー', '魚料理', 'ラーメン', 'サンドイッチ'], answer: 0, explanation: 'Dia akan memasak kari sayur.', period: 'sep-nov' },
 
-{ id: 614, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どこで 働いていますか。', audioText: '女：お仕事は 何ですか。\n男：銀行で 働いています。毎日 お金を 数えます。', options: ['銀行', '学校', '病院', 'レストラン'], answer: 0, explanation: 'Dia bekerja di bank.', period: 'random' },
+{ id: 614, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どこで 働いていますか。', audioText: '女：お仕事は 何ですか。\n男：銀行で 働いています。毎日 お金を 数えます。', options: ['銀行', '学校', '病院', 'レストラン'], answer: 0, explanation: 'Dia bekerja di bank.', period: 'sep-nov' },
 
-{ id: 615, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を しなければ なりませんか。', audioText: '女：明日までに この レポートを 書かなければ なりません。\n男：大変ですね。手伝いましょうか。', options: ['レポートを書く', '本を読む', '電話をする', '買い物をする'], answer: 0, explanation: 'Dia harus menulis laporan.', period: 'random' },
+{ id: 615, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を しなければ なりませんか。', audioText: '女：明日までに この レポートを 書かなければ なりません。\n男：大変ですね。手伝いましょうか。', options: ['レポートを書く', '本を読む', '電話をする', '買い物をする'], answer: 0, explanation: 'Dia harus menulis laporan.', period: 'sep-nov' },
 
-{ id: 616, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時ごろ 帰りますか。', audioText: '女：仕事は 何時に 終わりますか。\n男：５時に 終わります。それから 買い物を しますから、６時半ごろ 帰ります。', options: ['６時半ごろ', '５時ごろ', '６時ごろ', '７時半ごろ'], answer: 0, explanation: 'Dia pulang sekitar pukul 6.30.', period: 'random' },
+{ id: 616, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時ごろ 帰りますか。', audioText: '女：仕事は 何時に 終わりますか。\n男：５時に 終わります。それから 買い物を しますから、６時半ごろ 帰ります。', options: ['６時半ごろ', '５時ごろ', '６時ごろ', '７時半ごろ'], answer: 0, explanation: 'Dia pulang sekitar pukul 6.30.', period: 'sep-nov' },
 
-{ id: 617, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 昼ごはんを 食べますか。', audioText: '男：食堂へ 行きましょうか。\n女：今日は 天気が いいですから、公園で 食べませんか。\n男：いいですね。そうしましょう。', options: ['公園', '食堂', '会社', '駅'], answer: 0, explanation: 'Mereka makan siang di taman.', period: 'random' },
+{ id: 617, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 昼ごはんを 食べますか。', audioText: '男：食堂へ 行きましょうか。\n女：今日は 天気が いいですから、公園で 食べませんか。\n男：いいですね。そうしましょう。', options: ['公園', '食堂', '会社', '駅'], answer: 0, explanation: 'Mereka makan siang di taman.', period: 'sep-nov' },
 
-{ id: 618, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋が ほしいですか。', audioText: '女：どんな 部屋が ほしいですか。\n男：明るくて、静かな 部屋が いいです。駅から 遠くても いいです。', options: ['明るくて静かな部屋', '暗くて静かな部屋', '明るくてうるさい部屋', '駅に近い部屋'], answer: 0, explanation: 'Dia mencari kamar yang terang dan tenang.', period: 'random' },
+{ id: 618, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋が ほしいですか。', audioText: '女：どんな 部屋が ほしいですか。\n男：明るくて、静かな 部屋が いいです。駅から 遠くても いいです。', options: ['明るくて静かな部屋', '暗くて静かな部屋', '明るくてうるさい部屋', '駅に近い部屋'], answer: 0, explanation: 'Dia mencari kamar yang terang dan tenang.', period: 'sep-nov' },
 
-{ id: 619, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 使いますか。', audioText: '男：鉛筆が ありません。貸して ください。\n女：すみません。鉛筆は ありませんが、ボールペンなら あります。\n男：では、それを 貸してください。', options: ['ボールペン', '鉛筆', '消しゴム', 'ノート'], answer: 0, explanation: 'Dia menggunakan pulpen.', period: 'random' },
+{ id: 619, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 使いますか。', audioText: '男：鉛筆が ありません。貸して ください。\n女：すみません。鉛筆は ありませんが、ボールペンなら あります。\n男：では、それを 貸してください。', options: ['ボールペン', '鉛筆', '消しゴム', 'ノート'], answer: 0, explanation: 'Dia menggunakan pulpen.', period: 'sep-nov' },
 
-{ id: 620, section: 'listening', text: '【音声を聞いて答えてください】\n明日は どんな 天気ですか。', audioText: '女：明日の 天気は どうですか。\n男：朝は 晴れますが、午後から 雨が 降るそうです。', options: ['午後から雨', '一日中晴れ', '朝から雪', '一日中雨'], answer: 0, explanation: 'Besok hujan mulai sore/siang setelah pagi cerah.', period: 'random' },
+{ id: 620, section: 'listening', text: '【音声を聞いて答えてください】\n明日は どんな 天気ですか。', audioText: '女：明日の 天気は どうですか。\n男：朝は 晴れますが、午後から 雨が 降るそうです。', options: ['午後から雨', '一日中晴れ', '朝から雪', '一日中雨'], answer: 0, explanation: 'Besok hujan mulai sore/siang setelah pagi cerah.', period: 'sep-nov' },
 
 // --- MEMBACA (Reading) ---
 
-{ id: 621, section: 'reading', text: '【案内を読んで答えてください】\n＜市民プール＞\n開館時間：午前９時から午後６時まで\n休み：毎週火曜日\n料金：大人５００円、子ども２００円\n\n市民プールは 何時までですか。', options: ['午後６時まで', '午前９時まで', '午後５時まで', '午後７時まで'], answer: 0, explanation: 'Kolam renang buka sampai pukul 6 sore.', period: 'random' },
+{ id: 621, section: 'reading', text: '【案内を読んで答えてください】\n＜市民プール＞\n開館時間：午前９時から午後６時まで\n休み：毎週火曜日\n料金：大人５００円、子ども２００円\n\n市民プールは 何時までですか。', options: ['午後６時まで', '午前９時まで', '午後５時まで', '午後７時まで'], answer: 0, explanation: 'Kolam renang buka sampai pukul 6 sore.', period: 'sep-nov' },
 
-{ id: 622, section: 'reading', text: '【案内を読んで答えてください】\n＜市民プール＞\n開館時間：午前９時から午後６時まで\n休み：毎週火曜日\n料金：大人５００円、子ども２００円\n\n火曜日に プールへ 行くことが できますか。', options: ['いいえ、できません', 'はい、できます', '午後だけできます', '子どもだけできます'], answer: 0, explanation: 'Selasa adalah hari libur, jadi tidak bisa pergi ke kolam renang.', period: 'random' },
+{ id: 622, section: 'reading', text: '【案内を読んで答えてください】\n＜市民プール＞\n開館時間：午前９時から午後６時まで\n休み：毎週火曜日\n料金：大人５００円、子ども２００円\n\n火曜日に プールへ 行くことが できますか。', options: ['いいえ、できません', 'はい、できます', '午後だけできます', '子どもだけできます'], answer: 0, explanation: 'Selasa adalah hari libur, jadi tidak bisa pergi ke kolam renang.', period: 'sep-nov' },
 
-{ id: 623, section: 'reading', text: '【メモを読んで答えてください】\n山田さんへ\n冷蔵庫に ケーキが あります。\n食べても いいですが、弟の ぶんを 残して おいてください。\n（お母さん）\n\nケーキを どうしますか。', options: ['弟のぶんを残します', '全部食べます', '冷蔵庫から出します', 'お母さんに渡します'], answer: 0, explanation: 'Kue boleh dimakan, tetapi bagian adik harus disisakan.', period: 'random' },
+{ id: 623, section: 'reading', text: '【メモを読んで答えてください】\n山田さんへ\n冷蔵庫に ケーキが あります。\n食べても いいですが、弟の ぶんを 残して おいてください。\n（お母さん）\n\nケーキを どうしますか。', options: ['弟のぶんを残します', '全部食べます', '冷蔵庫から出します', 'お母さんに渡します'], answer: 0, explanation: 'Kue boleh dimakan, tetapi bagian adik harus disisakan.', period: 'sep-nov' },
 
-{ id: 624, section: 'reading', text: '【メールを読んで答えてください】\n田中さんへ\nあしたの パーティーは ６時からです。\n場所は 駅の 近くの レストランです。\n飲み物は 私が 用意します。\nでは、あした。\n（佐藤）\n\nパーティーは どこで ありますか。', options: ['駅の近くのレストラン', '田中さんの家', '佐藤さんの会社', '駅の中'], answer: 0, explanation: 'Pesta diadakan di restoran dekat stasiun.', period: 'random' },
+{ id: 624, section: 'reading', text: '【メールを読んで答えてください】\n田中さんへ\nあしたの パーティーは ６時からです。\n場所は 駅の 近くの レストランです。\n飲み物は 私が 用意します。\nでは、あした。\n（佐藤）\n\nパーティーは どこで ありますか。', options: ['駅の近くのレストラン', '田中さんの家', '佐藤さんの会社', '駅の中'], answer: 0, explanation: 'Pesta diadakan di restoran dekat stasiun.', period: 'sep-nov' },
 
-{ id: 625, section: 'reading', text: '【メールを読んで答えてください】\n田中さんへ\nあしたの パーティーは ６時からです。\n場所は 駅の 近くの レストランです。\n飲み物は 私が 用意します。\nでは、あした。\n（佐藤）\n\n飲み物を 用意するのは だれですか。', options: ['佐藤さん', '田中さん', 'レストランの人', '駅の人'], answer: 0, explanation: '佐藤さんが飲み物を用意します = Sato yang menyiapkan minuman.', period: 'random' },
+{ id: 625, section: 'reading', text: '【メールを読んで答えてください】\n田中さんへ\nあしたの パーティーは ６時からです。\n場所は 駅の 近くの レストランです。\n飲み物は 私が 用意します。\nでは、あした。\n（佐藤）\n\n飲み物を 用意するのは だれですか。', options: ['佐藤さん', '田中さん', 'レストランの人', '駅の人'], answer: 0, explanation: '佐藤さんが飲み物を用意します = Sato yang menyiapkan minuman.', period: 'sep-nov' },
 
-{ id: 626, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n日本語教室は いつ ありますか。', options: ['毎週土曜日', '毎週日曜日', '毎週金曜日', '毎日'], answer: 0, explanation: 'Kelas bahasa Jepang diadakan setiap Sabtu.', period: 'random' },
+{ id: 626, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n日本語教室は いつ ありますか。', options: ['毎週土曜日', '毎週日曜日', '毎週金曜日', '毎日'], answer: 0, explanation: 'Kelas bahasa Jepang diadakan setiap Sabtu.', period: 'sep-nov' },
 
-{ id: 627, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n教室は どこですか。', options: ['公民館の２階', '学校の１階', '駅の２階', '図書館'], answer: 0, explanation: 'Tempat kelas berada di lantai dua gedung komunitas.', period: 'random' },
+{ id: 627, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n教室は どこですか。', options: ['公民館の２階', '学校の１階', '駅の２階', '図書館'], answer: 0, explanation: 'Tempat kelas berada di lantai dua gedung komunitas.', period: 'sep-nov' },
 
-{ id: 628, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n参加費は いくらですか。', options: ['無料です', '５００円です', '１０００円です', '２００円です'], answer: 0, explanation: '無料 berarti gratis.', period: 'random' },
+{ id: 628, section: 'reading', text: '【ポスターを読んで答えてください】\n＜日本語教室＞\n日時：毎週土曜日 午前１０時から１２時まで\n場所：公民館２階\n参加費：無料\n\n参加費は いくらですか。', options: ['無料です', '５００円です', '１０００円です', '２００円です'], answer: 0, explanation: '無料 berarti gratis.', period: 'sep-nov' },
 
-{ id: 629, section: 'reading', text: '【日記を読んで答えてください】\n日曜日\n朝、雨が 降っていたので、どこへも 行かなかった。\n午後、雨が やんだので、近くの スーパーへ 買い物に 行った。\n\n朝、どうして どこへも 行きませんでしたか。', options: ['雨が降っていたから', '病気だったから', '仕事があったから', '店が休みだったから'], answer: 0, explanation: 'Dia tidak pergi ke mana pun pada pagi hari karena hujan.', period: 'random' },
+{ id: 629, section: 'reading', text: '【日記を読んで答えてください】\n日曜日\n朝、雨が 降っていたので、どこへも 行かなかった。\n午後、雨が やんだので、近くの スーパーへ 買い物に 行った。\n\n朝、どうして どこへも 行きませんでしたか。', options: ['雨が降っていたから', '病気だったから', '仕事があったから', '店が休みだったから'], answer: 0, explanation: 'Dia tidak pergi ke mana pun pada pagi hari karena hujan.', period: 'sep-nov' },
 
-{ id: 630, section: 'reading', text: '【日記を読んで答えてください】\n日曜日\n朝、雨が 降っていたので、どこへも 行かなかった。\n午後、雨が やんだので、近くの スーパーへ 買い物に 行った。\n\n午後、どこへ 行きましたか。', options: ['スーパー', '病院', '学校', 'レストラン'], answer: 0, explanation: 'Sore hari dia pergi berbelanja ke supermarket.', period: 'random' },
+{ id: 630, section: 'reading', text: '【日記を読んで答えてください】\n日曜日\n朝、雨が 降っていたので、どこへも 行かなかった。\n午後、雨が やんだので、近くの スーパーへ 買い物に 行った。\n\n午後、どこへ 行きましたか。', options: ['スーパー', '病院', '学校', 'レストラン'], answer: 0, explanation: 'Sore hari dia pergi berbelanja ke supermarket.', period: 'sep-nov' },
 
-{ id: 631, section: 'reading', text: '【掲示を読んで答えてください】\n＜図書館からのお知らせ＞\n４月１０日から４月１５日まで、本の整理のため休館します。\n４月１６日から、いつもどおり開館します。\n\n図書館は いつから 開きますか。', options: ['４月１６日', '４月１０日', '４月１５日', '４月２０日'], answer: 0, explanation: 'Perpustakaan buka kembali mulai 16 April.', period: 'random' },
+{ id: 631, section: 'reading', text: '【掲示を読んで答えてください】\n＜図書館からのお知らせ＞\n４月１０日から４月１５日まで、本の整理のため休館します。\n４月１６日から、いつもどおり開館します。\n\n図書館は いつから 開きますか。', options: ['４月１６日', '４月１０日', '４月１５日', '４月２０日'], answer: 0, explanation: 'Perpustakaan buka kembali mulai 16 April.', period: 'sep-nov' },
 
-{ id: 632, section: 'reading', text: '【掲示を読んで答えてください】\n＜図書館からのお知らせ＞\n４月１０日から４月１５日まで、本の整理のため休館します。\n４月１６日から、いつもどおり開館します。\n\nどうして 休みますか。', options: ['本を整理するため', '先生が休むため', '雨が降るため', '建物を売るため'], answer: 0, explanation: '休館の理由は本の整理です.', period: 'random' },
+{ id: 632, section: 'reading', text: '【掲示を読んで答えてください】\n＜図書館からのお知らせ＞\n４月１０日から４月１５日まで、本の整理のため休館します。\n４月１６日から、いつもどおり開館します。\n\nどうして 休みますか。', options: ['本を整理するため', '先生が休むため', '雨が降るため', '建物を売るため'], answer: 0, explanation: '休館の理由は本の整理です.', period: 'sep-nov' },
 
-{ id: 633, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nりんご：１個１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週日曜日は 全部１０％引き\n\n日曜日に りんごを １個 買うと、いくらですか。', options: ['９０円', '１００円', '１１０円', '１５０円'], answer: 0, explanation: 'Harga 100 yen mendapat diskon 10%, menjadi 90 yen.', period: 'random' },
+{ id: 633, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nりんご：１個１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週日曜日は 全部１０％引き\n\n日曜日に りんごを １個 買うと、いくらですか。', options: ['９０円', '１００円', '１１０円', '１５０円'], answer: 0, explanation: 'Harga 100 yen mendapat diskon 10%, menjadi 90 yen.', period: 'sep-nov' },
 
-{ id: 634, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nりんご：１個１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週日曜日は 全部１０％引き\n\n牛乳は いくらですか。', options: ['１５０円', '１００円', '２００円', '９０円'], answer: 0, explanation: 'Harga susu adalah 150 yen sebelum diskon.', period: 'random' },
+{ id: 634, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nりんご：１個１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週日曜日は 全部１０％引き\n\n牛乳は いくらですか。', options: ['１５０円', '１００円', '２００円', '９０円'], answer: 0, explanation: 'Harga susu adalah 150 yen sebelum diskon.', period: 'sep-nov' },
 
-{ id: 635, section: 'reading', text: '【案内を読んで答えてください】\n＜駅前病院＞\n受付時間：午前８時３０分から１１時３０分まで\n午後２時から５時まで\n休診日：日曜日と祝日\n\n午後１時に 病院へ 行って、診察して もらえますか。', options: ['いいえ、できません', 'はい、できます', '日曜日ならできます', '午前だけできます'], answer: 0, explanation: 'Pukul 1 siang berada di antara jam pelayanan, jadi tidak bisa mendaftar.', period: 'random' },
+{ id: 635, section: 'reading', text: '【案内を読んで答えてください】\n＜駅前病院＞\n受付時間：午前８時３０分から１１時３０分まで\n午後２時から５時まで\n休診日：日曜日と祝日\n\n午後１時に 病院へ 行って、診察して もらえますか。', options: ['いいえ、できません', 'はい、できます', '日曜日ならできます', '午前だけできます'], answer: 0, explanation: 'Pukul 1 siang berada di antara jam pelayanan, jadi tidak bisa mendaftar.', period: 'sep-nov' },
 
-{ id: 636, section: 'reading', text: '【案内を読んで答えてください】\n＜駅前病院＞\n受付時間：午前８時３０分から１１時３０分まで\n午後２時から５時まで\n休診日：日曜日と祝日\n\n午後３時に 行くことが できますか。', options: ['はい、できます', 'いいえ、できません', '午前だけです', '日曜日だけです'], answer: 0, explanation: 'Pukul 3 sore termasuk jam pelayanan.', period: 'random' },
+{ id: 636, section: 'reading', text: '【案内を読んで答えてください】\n＜駅前病院＞\n受付時間：午前８時３０分から１１時３０分まで\n午後２時から５時まで\n休診日：日曜日と祝日\n\n午後３時に 行くことが できますか。', options: ['はい、できます', 'いいえ、できません', '午前だけです', '日曜日だけです'], answer: 0, explanation: 'Pukul 3 sore termasuk jam pelayanan.', period: 'sep-nov' },
 
-{ id: 637, section: 'reading', text: '【メモを読んで答えてください】\n今日は 早く 帰ります。\n６時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\n何時に 待っていますか。', options: ['６時', '５時', '７時', '８時'], answer: 0, explanation: 'Orang tersebut menunggu pukul 6.', period: 'random' },
+{ id: 637, section: 'reading', text: '【メモを読んで答えてください】\n今日は 早く 帰ります。\n６時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\n何時に 待っていますか。', options: ['６時', '５時', '７時', '８時'], answer: 0, explanation: 'Orang tersebut menunggu pukul 6.', period: 'sep-nov' },
 
-{ id: 638, section: 'reading', text: '【メモを読んで答えてください】\n今日は 早く 帰ります。\n６時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\nどこで 待っていますか。', options: ['駅の前', '駅の中', '学校の前', '公園'], answer: 0, explanation: 'Dia menunggu di depan stasiun.', period: 'random' },
+{ id: 638, section: 'reading', text: '【メモを読んで答えてください】\n今日は 早く 帰ります。\n６時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\nどこで 待っていますか。', options: ['駅の前', '駅の中', '学校の前', '公園'], answer: 0, explanation: 'Dia menunggu di depan stasiun.', period: 'sep-nov' },
 
-{ id: 639, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\nいつ 薬を 飲みますか。', options: ['朝と晩の食事のあと', '昼ごはんのあとだけ', '寝る前だけ', '食事のまえ'], answer: 0, explanation: 'Obat diminum pagi dan malam setelah makan.', period: 'random' },
+{ id: 639, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\nいつ 薬を 飲みますか。', options: ['朝と晩の食事のあと', '昼ごはんのあとだけ', '寝る前だけ', '食事のまえ'], answer: 0, explanation: 'Obat diminum pagi dan malam setelah makan.', period: 'sep-nov' },
 
-{ id: 640, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\n１回に 何錠 飲みますか。', options: ['１錠', '２錠', '３錠', '半分'], answer: 0, explanation: '１錠ずつ berarti satu tablet setiap kali minum.', period: 'random' },
+{ id: 640, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\n１回に 何錠 飲みますか。', options: ['１錠', '２錠', '３錠', '半分'], answer: 0, explanation: '１錠ずつ berarti satu tablet setiap kali minum.', period: 'sep-nov' },
 
-{ id: 641, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの 会議の 資料を １０部 コピーして、机の 上に 置いてください。\n会議は 午前９時からです。\n（田中）\n\n鈴木さんは 何を しますか。', options: ['資料を１０部コピーします', '会議に出ません', '資料を捨てます', '机を買います'], answer: 0, explanation: 'Suzuki harus menyalin materi rapat sebanyak 10 eksemplar.', period: 'random' },
+{ id: 641, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの 会議の 資料を １０部 コピーして、机の 上に 置いてください。\n会議は 午前９時からです。\n（田中）\n\n鈴木さんは 何を しますか。', options: ['資料を１０部コピーします', '会議に出ません', '資料を捨てます', '机を買います'], answer: 0, explanation: 'Suzuki harus menyalin materi rapat sebanyak 10 eksemplar.', period: 'sep-nov' },
 
-{ id: 642, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの 会議の 資料を １０部 コピーして、机の 上に 置いてください。\n会議は 午前９時からです。\n（田中）\n\n会議は 何時からですか。', options: ['午前９時', '午前１０時', '午後９時', '午後１０時'], answer: 0, explanation: 'Rapat dimulai pukul 9 pagi.', period: 'random' },
+{ id: 642, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの 会議の 資料を １０部 コピーして、机の 上に 置いてください。\n会議は 午前９時からです。\n（田中）\n\n会議は 何時からですか。', options: ['午前９時', '午前１０時', '午後９時', '午後１０時'], answer: 0, explanation: 'Rapat dimulai pukul 9 pagi.', period: 'sep-nov' },
 
-{ id: 643, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 掃除を しました。午後は 友だちと テニスを しました。\n\nBさんは 午後、何を しましたか。', options: ['テニスをしました', '掃除をしました', '映画を見ました', '買い物をしました'], answer: 0, explanation: 'Sore hari B bermain tenis dengan teman.', period: 'random' },
+{ id: 643, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 掃除を しました。午後は 友だちと テニスを しました。\n\nBさんは 午後、何を しましたか。', options: ['テニスをしました', '掃除をしました', '映画を見ました', '買い物をしました'], answer: 0, explanation: 'Sore hari B bermain tenis dengan teman.', period: 'sep-nov' },
 
-{ id: 644, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 掃除を しました。午後は 友だちと テニスを しました。\n\nBさんは 朝、何を しましたか。', options: ['掃除をしました', 'テニスをしました', '料理をしました', '寝ました'], answer: 0, explanation: 'Pagi hari B membersihkan rumah.', period: 'random' },
+{ id: 644, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 掃除を しました。午後は 友だちと テニスを しました。\n\nBさんは 朝、何を しましたか。', options: ['掃除をしました', 'テニスをしました', '料理をしました', '寝ました'], answer: 0, explanation: 'Pagi hari B membersihkan rumah.', period: 'sep-nov' },
 
-{ id: 645, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：８：００、８：３０、９：００、９：３０\n学校前着：８：２０、８：５０、９：２０、９：５０\n\n８時３０分の バスは 何時に 学校前に 着きますか。', options: ['８時５０分', '８時２０分', '９時', '９時２０分'], answer: 0, explanation: 'Bus pukul 8.30 tiba pukul 8.50.', period: 'random' },
+{ id: 645, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：８：００、８：３０、９：００、９：３０\n学校前着：８：２０、８：５０、９：２０、９：５０\n\n８時３０分の バスは 何時に 学校前に 着きますか。', options: ['８時５０分', '８時２０分', '９時', '９時２０分'], answer: 0, explanation: 'Bus pukul 8.30 tiba pukul 8.50.', period: 'sep-nov' },
 
-{ id: 646, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：８：００、８：３０、９：００、９：３０\n学校前着：８：２０、８：５０、９：２０、９：５０\n\n駅前を ９時に 出る バスは 何時に 着きますか。', options: ['９時２０分', '９時', '９時３０分', '９時５０分'], answer: 0, explanation: 'Bus yang berangkat pukul 9 tiba pukul 9.20.', period: 'random' },
+{ id: 646, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：８：００、８：３０、９：００、９：３０\n学校前着：８：２０、８：５０、９：２０、９：５０\n\n駅前を ９時に 出る バスは 何時に 着きますか。', options: ['９時２０分', '９時', '９時３０分', '９時５０分'], answer: 0, explanation: 'Bus yang berangkat pukul 9 tiba pukul 9.20.', period: 'sep-nov' },
 
-{ id: 647, section: 'reading', text: '【日記を読んで答えてください】\n５月３日\n今日は いい天気だったので、家族と 山へ 行った。\n昼ごはんを 食べてから、写真を たくさん 撮った。\n\nだれと 山へ 行きましたか。', options: ['家族', '友だち', '先生', '一人で'], answer: 0, explanation: 'Dia pergi ke gunung bersama keluarga.', period: 'random' },
+{ id: 647, section: 'reading', text: '【日記を読んで答えてください】\n５月３日\n今日は いい天気だったので、家族と 山へ 行った。\n昼ごはんを 食べてから、写真を たくさん 撮った。\n\nだれと 山へ 行きましたか。', options: ['家族', '友だち', '先生', '一人で'], answer: 0, explanation: 'Dia pergi ke gunung bersama keluarga.', period: 'sep-nov' },
 
-{ id: 648, section: 'reading', text: '【日記を読んで答えてください】\n５月３日\n今日は いい天気だったので、家族と 山へ 行った。\n昼ごはんを 食べてから、写真を たくさん 撮った。\n\n昼ごはんの あとで、何を しましたか。', options: ['写真を撮りました', '山へ行きました', '家へ帰りました', '料理をしました'], answer: 0, explanation: 'Setelah makan siang, dia mengambil banyak foto.', period: 'random' },
+{ id: 648, section: 'reading', text: '【日記を読んで答えてください】\n５月３日\n今日は いい天気だったので、家族と 山へ 行った。\n昼ごはんを 食べてから、写真を たくさん 撮った。\n\n昼ごはんの あとで、何を しましたか。', options: ['写真を撮りました', '山へ行きました', '家へ帰りました', '料理をしました'], answer: 0, explanation: 'Setelah makan siang, dia mengambil banyak foto.', period: 'sep-nov' },
 
-{ id: 649, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n５月２０日（金）は 会社が 休みです。\n２１日（土）と ２２日（日）も 休みです。\n仕事は ２３日（月）から 始まります。\n\n仕事は いつから 始まりますか。', options: ['２３日（月）', '２０日（金）', '２１日（土）', '２２日（日）'], answer: 0, explanation: 'Pekerjaan dimulai kembali pada Senin tanggal 23.', period: 'random' },
+{ id: 649, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n５月２０日（金）は 会社が 休みです。\n２１日（土）と ２２日（日）も 休みです。\n仕事は ２３日（月）から 始まります。\n\n仕事は いつから 始まりますか。', options: ['２３日（月）', '２０日（金）', '２１日（土）', '２２日（日）'], answer: 0, explanation: 'Pekerjaan dimulai kembali pada Senin tanggal 23.', period: 'sep-nov' },
 
-{ id: 650, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n５月２０日（金）は 会社が 休みです。\n２１日（土）と ２２日（日）も 休みです。\n仕事は ２３日（月）から 始まります。\n\n５月２１日は 会社が ありますか。', options: ['いいえ、ありません', 'はい、あります', '午後だけあります', 'わかりません'], answer: 0, explanation: 'Tanggal 21 juga merupakan hari libur.', period: 'random' },
+{ id: 650, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n５月２０日（金）は 会社が 休みです。\n２１日（土）と ２２日（日）も 休みです。\n仕事は ２３日（月）から 始まります。\n\n５月２１日は 会社が ありますか。', options: ['いいえ、ありません', 'はい、あります', '午後だけあります', 'わかりません'], answer: 0, explanation: 'Tanggal 21 juga merupakan hari libur.', period: 'sep-nov' },
 // ==========================================
 // --- TAMBAHAN 100 SOAL (BATCH 4) ---
 // ==========================================
 
 // --- KOSA KATA & KANJI (Vocab) ---
 
-{ id: 651, section: 'vocab', text: '「ともだち」は かんじで どう かきますか。', options: ['友達', '先生', '家族', '学生'], answer: 0, explanation: '友達 (ともだち) = teman.', period: 'random' },
+{ id: 651, section: 'vocab', text: '「ともだち」は かんじで どう かきますか。', options: ['友達', '先生', '家族', '学生'], answer: 0, explanation: '友達 (ともだち) = teman.', period: 'sep-nov' },
 
-{ id: 652, section: 'vocab', text: '「せんせい」は かんじで どう かきますか。', options: ['先生', '学生', '医者', '会社員'], answer: 0, explanation: '先生 (せんせい) = guru.', period: 'random' },
+{ id: 652, section: 'vocab', text: '「せんせい」は かんじで どう かきますか。', options: ['先生', '学生', '医者', '会社員'], answer: 0, explanation: '先生 (せんせい) = guru.', period: 'sep-nov' },
 
-{ id: 653, section: 'vocab', text: '「がくせい」は かんじで どう かきますか。', options: ['学生', '先生', '学校', '勉強'], answer: 0, explanation: '学生 (がくせい) = siswa/mahasiswa.', period: 'random' },
+{ id: 653, section: 'vocab', text: '「がくせい」は かんじで どう かきますか。', options: ['学生', '先生', '学校', '勉強'], answer: 0, explanation: '学生 (がくせい) = siswa/mahasiswa.', period: 'sep-nov' },
 
-{ id: 654, section: 'vocab', text: '「かいしゃいん」は かんじで どう かきますか。', options: ['会社員', '学生', '先生', '医者'], answer: 0, explanation: '会社員 (かいしゃいん) = karyawan.', period: 'random' },
+{ id: 654, section: 'vocab', text: '「かいしゃいん」は かんじで どう かきますか。', options: ['会社員', '学生', '先生', '医者'], answer: 0, explanation: '会社員 (かいしゃいん) = karyawan.', period: 'sep-nov' },
 
-{ id: 655, section: 'vocab', text: '「いしゃ」は かんじで どう かきますか。', options: ['医者', '先生', '看護師', '薬'], answer: 0, explanation: '医者 (いしゃ) = dokter.', period: 'random' },
+{ id: 655, section: 'vocab', text: '「いしゃ」は かんじで どう かきますか。', options: ['医者', '先生', '看護師', '薬'], answer: 0, explanation: '医者 (いしゃ) = dokter.', period: 'sep-nov' },
 
-{ id: 656, section: 'vocab', text: '「がっこう」は かんじで どう かきますか。', options: ['学校', '学生', '先生', '勉強'], answer: 0, explanation: '学校 (がっこう) = sekolah.', period: 'random' },
+{ id: 656, section: 'vocab', text: '「がっこう」は かんじで どう かきますか。', options: ['学校', '学生', '先生', '勉強'], answer: 0, explanation: '学校 (がっこう) = sekolah.', period: 'sep-nov' },
 
-{ id: 657, section: 'vocab', text: '「べんきょう」は かんじで どう かきますか。', options: ['勉強', '学校', '学生', '先生'], answer: 0, explanation: '勉強 (べんきょう) = belajar.', period: 'random' },
+{ id: 657, section: 'vocab', text: '「べんきょう」は かんじで どう かきますか。', options: ['勉強', '学校', '学生', '先生'], answer: 0, explanation: '勉強 (べんきょう) = belajar.', period: 'sep-nov' },
 
-{ id: 658, section: 'vocab', text: '「しごと」は かんじで どう かきますか。', options: ['仕事', '学校', '学生', '先生'], answer: 0, explanation: '仕事 (しごと) = pekerjaan.', period: 'random' },
+{ id: 658, section: 'vocab', text: '「しごと」は かんじで どう かきますか。', options: ['仕事', '学校', '学生', '先生'], answer: 0, explanation: '仕事 (しごと) = pekerjaan.', period: 'sep-nov' },
 
-{ id: 659, section: 'vocab', text: '「やすみ」は かんじで どう かきますか。', options: ['休み', '仕事', '学校', '勉強'], answer: 0, explanation: '休み (やすみ) = libur/istirahat.', period: 'random' },
+{ id: 659, section: 'vocab', text: '「やすみ」は かんじで どう かきますか。', options: ['休み', '仕事', '学校', '勉強'], answer: 0, explanation: '休み (やすみ) = libur/istirahat.', period: 'sep-nov' },
 
-{ id: 660, section: 'vocab', text: '「にちようび」は かんじで どう かきますか。', options: ['日曜日', '月曜日', '火曜日', '水曜日'], answer: 0, explanation: '日曜日 (にちようび) = Minggu.', period: 'random' },
+{ id: 660, section: 'vocab', text: '「にちようび」は かんじで どう かきますか。', options: ['日曜日', '月曜日', '火曜日', '水曜日'], answer: 0, explanation: '日曜日 (にちようび) = Minggu.', period: 'sep-nov' },
 
-{ id: 661, section: 'vocab', text: '「げつようび」は かんじで どう かきますか。', options: ['月曜日', '火曜日', '水曜日', '木曜日'], answer: 0, explanation: '月曜日 (げつようび) = Senin.', period: 'random' },
+{ id: 661, section: 'vocab', text: '「げつようび」は かんじで どう かきますか。', options: ['月曜日', '火曜日', '水曜日', '木曜日'], answer: 0, explanation: '月曜日 (げつようび) = Senin.', period: 'sep-nov' },
 
-{ id: 662, section: 'vocab', text: '「かようび」は かんじで どう かきますか。', options: ['火曜日', '水曜日', '木曜日', '金曜日'], answer: 0, explanation: '火曜日 (かようび) = Selasa.', period: 'random' },
+{ id: 662, section: 'vocab', text: '「かようび」は かんじで どう かきますか。', options: ['火曜日', '水曜日', '木曜日', '金曜日'], answer: 0, explanation: '火曜日 (かようび) = Selasa.', period: 'sep-nov' },
 
-{ id: 663, section: 'vocab', text: '「すいようび」は かんじで どう かきますか。', options: ['水曜日', '木曜日', '金曜日', '土曜日'], answer: 0, explanation: '水曜日 (すいようび) = Rabu.', period: 'random' },
+{ id: 663, section: 'vocab', text: '「すいようび」は かんじで どう かきますか。', options: ['水曜日', '木曜日', '金曜日', '土曜日'], answer: 0, explanation: '水曜日 (すいようび) = Rabu.', period: 'sep-nov' },
 
-{ id: 664, section: 'vocab', text: '「もくようび」は かんじで どう かきますか。', options: ['木曜日', '金曜日', '土曜日', '日曜日'], answer: 0, explanation: '木曜日 (もくようび) = Kamis.', period: 'random' },
+{ id: 664, section: 'vocab', text: '「もくようび」は かんじで どう かきますか。', options: ['木曜日', '金曜日', '土曜日', '日曜日'], answer: 0, explanation: '木曜日 (もくようび) = Kamis.', period: 'sep-nov' },
 
-{ id: 665, section: 'vocab', text: '「きんようび」は かんじで どう かきますか。', options: ['金曜日', '土曜日', '日曜日', '月曜日'], answer: 0, explanation: '金曜日 (きんようび) = Jumat.', period: 'random' },
+{ id: 665, section: 'vocab', text: '「きんようび」は かんじで どう かきますか。', options: ['金曜日', '土曜日', '日曜日', '月曜日'], answer: 0, explanation: '金曜日 (きんようび) = Jumat.', period: 'sep-nov' },
 
-{ id: 666, section: 'vocab', text: '「どようび」は かんじで どう かきますか。', options: ['土曜日', '日曜日', '月曜日', '火曜日'], answer: 0, explanation: '土曜日 (どようび) = Sabtu.', period: 'random' },
+{ id: 666, section: 'vocab', text: '「どようび」は かんじで どう かきますか。', options: ['土曜日', '日曜日', '月曜日', '火曜日'], answer: 0, explanation: '土曜日 (どようび) = Sabtu.', period: 'sep-nov' },
 
-{ id: 667, section: 'vocab', text: '「いちがつ」は かんじで どう かきますか。', options: ['一月', '二月', '三月', '四月'], answer: 0, explanation: '一月 (いちがつ) = Januari.', period: 'random' },
+{ id: 667, section: 'vocab', text: '「いちがつ」は かんじで どう かきますか。', options: ['一月', '二月', '三月', '四月'], answer: 0, explanation: '一月 (いちがつ) = Januari.', period: 'sep-nov' },
 
-{ id: 668, section: 'vocab', text: '「にがつ」は かんじで どう かきますか。', options: ['二月', '三月', '四月', '五月'], answer: 0, explanation: '二月 (にがつ) = Februari.', period: 'random' },
+{ id: 668, section: 'vocab', text: '「にがつ」は かんじで どう かきますか。', options: ['二月', '三月', '四月', '五月'], answer: 0, explanation: '二月 (にがつ) = Februari.', period: 'sep-nov' },
 
-{ id: 669, section: 'vocab', text: '「さんがつ」は かんじで どう かきますか。', options: ['三月', '四月', '五月', '六月'], answer: 0, explanation: '三月 (さんがつ) = Maret.', period: 'random' },
+{ id: 669, section: 'vocab', text: '「さんがつ」は かんじで どう かきますか。', options: ['三月', '四月', '五月', '六月'], answer: 0, explanation: '三月 (さんがつ) = Maret.', period: 'sep-nov' },
 
-{ id: 670, section: 'vocab', text: '「しがつ」は かんじで どう かきますか。', options: ['四月', '五月', '六月', '七月'], answer: 0, explanation: '四月 (しがつ) = April.', period: 'random' },
+{ id: 670, section: 'vocab', text: '「しがつ」は かんじで どう かきますか。', options: ['四月', '五月', '六月', '七月'], answer: 0, explanation: '四月 (しがつ) = April.', period: 'sep-nov' },
 
-{ id: 671, section: 'vocab', text: '「ごがつ」は かんじで どう かきますか。', options: ['五月', '六月', '七月', '八月'], answer: 0, explanation: '五月 (ごがつ) = Mei.', period: 'random' },
+{ id: 671, section: 'vocab', text: '「ごがつ」は かんじで どう かきますか。', options: ['五月', '六月', '七月', '八月'], answer: 0, explanation: '五月 (ごがつ) = Mei.', period: 'sep-nov' },
 
-{ id: 672, section: 'vocab', text: '「ろくがつ」は かんじで どう かきますか。', options: ['六月', '七月', '八月', '九月'], answer: 0, explanation: '六月 (ろくがつ) = Juni.', period: 'random' },
+{ id: 672, section: 'vocab', text: '「ろくがつ」は かんじで どう かきますか。', options: ['六月', '七月', '八月', '九月'], answer: 0, explanation: '六月 (ろくがつ) = Juni.', period: 'sep-nov' },
 
-{ id: 673, section: 'vocab', text: '「しちがつ」は かんじで どう かきますか。', options: ['七月', '八月', '九月', '十月'], answer: 0, explanation: '七月 (しちがつ) = Juli.', period: 'random' },
+{ id: 673, section: 'vocab', text: '「しちがつ」は かんじで どう かきますか。', options: ['七月', '八月', '九月', '十月'], answer: 0, explanation: '七月 (しちがつ) = Juli.', period: 'sep-nov' },
 
-{ id: 674, section: 'vocab', text: '「はちがつ」は かんじで どう かきますか。', options: ['八月', '九月', '十月', '十一月'], answer: 0, explanation: '八月 (はちがつ) = Agustus.', period: 'random' },
+{ id: 674, section: 'vocab', text: '「はちがつ」は かんじで どう かきますか。', options: ['八月', '九月', '十月', '十一月'], answer: 0, explanation: '八月 (はちがつ) = Agustus.', period: 'sep-nov' },
 
-{ id: 675, section: 'vocab', text: '「くがつ」は かんじで どう かきますか。', options: ['九月', '十月', '十一月', '十二月'], answer: 0, explanation: '九月 (くがつ) = September.', period: 'random' },
+{ id: 675, section: 'vocab', text: '「くがつ」は かんじで どう かきますか。', options: ['九月', '十月', '十一月', '十二月'], answer: 0, explanation: '九月 (くがつ) = September.', period: 'sep-nov' },
 
 // --- TATA BAHASA & PERCAKAPAN (Grammar) ---
 
-{ id: 676, section: 'grammar', text: 'わたしは まいにち 学校（　　　）いきます。', options: ['へ', 'で', 'を', 'が'], answer: 0, explanation: 'へ menunjukkan arah/tujuan.', period: 'random' },
+{ id: 676, section: 'grammar', text: 'わたしは まいにち 学校（　　　）いきます。', options: ['へ', 'で', 'を', 'が'], answer: 0, explanation: 'へ menunjukkan arah/tujuan.', period: 'sep-nov' },
 
-{ id: 677, section: 'grammar', text: 'きのう ともだち（　　　）あいました。', options: ['に', 'を', 'で', 'が'], answer: 0, explanation: 'に digunakan dengan 会います (bertemu).', period: 'random' },
+{ id: 677, section: 'grammar', text: 'きのう ともだち（　　　）あいました。', options: ['に', 'を', 'で', 'が'], answer: 0, explanation: 'に digunakan dengan 会います (bertemu).', period: 'sep-nov' },
 
-{ id: 678, section: 'grammar', text: 'まいあさ コーヒー（　　　）のみます。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を menandai objek langsung.', period: 'random' },
+{ id: 678, section: 'grammar', text: 'まいあさ コーヒー（　　　）のみます。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を menandai objek langsung.', period: 'sep-nov' },
 
-{ id: 679, section: 'grammar', text: 'この ほんは おもしろ（　　　）です。', options: ['い', 'く', 'に', 'な'], answer: 0, explanation: 'おもしろい adalah kata sifat-i.', period: 'random' },
+{ id: 679, section: 'grammar', text: 'この ほんは おもしろ（　　　）です。', options: ['い', 'く', 'に', 'な'], answer: 0, explanation: 'おもしろい adalah kata sifat-i.', period: 'sep-nov' },
 
-{ id: 680, section: 'grammar', text: 'この へやは しずか（　　　）です。', options: ['だ', 'な', 'に', 'い'], answer: 0, explanation: 'しずかだ adalah kata sifat-na.', period: 'random' },
+{ id: 680, section: 'grammar', text: 'この へやは しずか（　　　）です。', options: ['だ', 'な', 'に', 'い'], answer: 0, explanation: 'しずかだ adalah kata sifat-na.', period: 'sep-nov' },
 
-{ id: 681, section: 'grammar', text: 'きのうは とても（　　　）でした。', options: ['あつかった', 'あつい', 'あつく', 'あつくて'], answer: 0, explanation: 'Bentuk lampau kata sifat-i: あつかった.', period: 'random' },
+{ id: 681, section: 'grammar', text: 'きのうは とても（　　　）でした。', options: ['あつかった', 'あつい', 'あつく', 'あつくて'], answer: 0, explanation: 'Bentuk lampau kata sifat-i: あつかった.', period: 'sep-nov' },
 
-{ id: 682, section: 'grammar', text: 'きのうは（　　　）でした。', options: ['さむかった', 'さむい', 'さむく', 'さむくて'], answer: 0, explanation: 'Bentuk lampau kata sifat-i: さむかった.', period: 'random' },
+{ id: 682, section: 'grammar', text: 'きのうは（　　　）でした。', options: ['さむかった', 'さむい', 'さむく', 'さむくて'], answer: 0, explanation: 'Bentuk lampau kata sifat-i: さむかった.', period: 'sep-nov' },
 
-{ id: 683, section: 'grammar', text: 'この レストランの りょうりは（　　　）。', options: ['おいしいです', 'おいしいでした', 'おいしかったですた', 'おいしくでした'], answer: 0, explanation: 'Bentuk sopan sekarang: おいしいです.', period: 'random' },
+{ id: 683, section: 'grammar', text: 'この レストランの りょうりは（　　　）。', options: ['おいしいです', 'おいしいでした', 'おいしかったですた', 'おいしくでした'], answer: 0, explanation: 'Bentuk sopan sekarang: おいしいです.', period: 'sep-nov' },
 
-{ id: 684, section: 'grammar', text: 'きのうの テストは（　　　）。', options: ['むずかしかったです', 'むずかしいでした', 'むずかしくでした', 'むずかしかったでした'], answer: 0, explanation: 'Bentuk lampau sopan: むずかしかったです.', period: 'random' },
+{ id: 684, section: 'grammar', text: 'きのうの テストは（　　　）。', options: ['むずかしかったです', 'むずかしいでした', 'むずかしくでした', 'むずかしかったでした'], answer: 0, explanation: 'Bentuk lampau sopan: むずかしかったです.', period: 'sep-nov' },
 
-{ id: 685, section: 'grammar', text: 'あしたは（　　　）でしょう。', options: ['あめ', 'あめの', 'あめな', 'あめい'], answer: 0, explanation: 'Kata benda + でしょう = mungkin hujan.', period: 'random' },
+{ id: 685, section: 'grammar', text: 'あしたは（　　　）でしょう。', options: ['あめ', 'あめの', 'あめな', 'あめい'], answer: 0, explanation: 'Kata benda + でしょう = mungkin hujan.', period: 'sep-nov' },
 
-{ id: 686, section: 'grammar', text: 'あしたは（　　　）でしょう。', options: ['あつい', 'あついの', 'あつな', 'あつだ'], answer: 0, explanation: 'Kata sifat-i + でしょう = mungkin panas.', period: 'random' },
+{ id: 686, section: 'grammar', text: 'あしたは（　　　）でしょう。', options: ['あつい', 'あついの', 'あつな', 'あつだ'], answer: 0, explanation: 'Kata sifat-i + でしょう = mungkin panas.', period: 'sep-nov' },
 
-{ id: 687, section: 'grammar', text: 'まいにち ７じ（　　　）おきて、８じ（　　　）がっこうへ いきます。', options: ['に／へ', 'で／に', 'を／で', 'が／を'], answer: 0, explanation: 'に untuk waktu, へ untuk arah.', period: 'random' },
+{ id: 687, section: 'grammar', text: 'まいにち ７じ（　　　）おきて、８じ（　　　）がっこうへ いきます。', options: ['に／へ', 'で／に', 'を／で', 'が／を'], answer: 0, explanation: 'に untuk waktu, へ untuk arah.', period: 'sep-nov' },
 
-{ id: 688, section: 'grammar', text: 'わたしは 日本ご（　　　）はなす ことが できます。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'が digunakan dengan ことができます.', period: 'random' },
+{ id: 688, section: 'grammar', text: 'わたしは 日本ご（　　　）はなす ことが できます。', options: ['が', 'を', 'に', 'で'], answer: 0, explanation: 'が digunakan dengan ことができます.', period: 'sep-nov' },
 
-{ id: 689, section: 'grammar', text: 'まいにち 日本語（　　　）べんきょうして います。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を digunakan dengan 勉強します.', period: 'random' },
+{ id: 689, section: 'grammar', text: 'まいにち 日本語（　　　）べんきょうして います。', options: ['を', 'が', 'に', 'で'], answer: 0, explanation: 'を digunakan dengan 勉強します.', period: 'sep-nov' },
 
-{ id: 690, section: 'grammar', text: 'いま 何を して いますか。', options: ['べんきょうして います', 'べんきょうします', 'べんきょうしました', 'べんきょうする'], answer: 0, explanation: '〜ています untuk aktivitas yang sedang berlangsung.', period: 'random' },
+{ id: 690, section: 'grammar', text: 'いま 何を して いますか。', options: ['べんきょうして います', 'べんきょうします', 'べんきょうしました', 'べんきょうする'], answer: 0, explanation: '〜ています untuk aktivitas yang sedang berlangsung.', period: 'sep-nov' },
 
-{ id: 691, section: 'grammar', text: 'まいあさ ６じに おきて いますか。', options: ['いいえ、おきて いません', 'はい、おきます', 'いいえ、おきません', 'はい、おきました'], answer: 0, explanation: '〜ていません untuk menyangkal kebiasaan/keadaan.', period: 'random' },
+{ id: 691, section: 'grammar', text: 'まいあさ ６じに おきて いますか。', options: ['いいえ、おきて いません', 'はい、おきます', 'いいえ、おきません', 'はい、おきました'], answer: 0, explanation: '〜ていません untuk menyangkal kebiasaan/keadaan.', period: 'sep-nov' },
 
-{ id: 692, section: 'grammar', text: 'きのう 何を しましたか。', options: ['えいがを みました', 'えいがを みます', 'えいがを みて います', 'えいがを みる'], answer: 0, explanation: 'Bentuk lampau: みました.', period: 'random' },
+{ id: 692, section: 'grammar', text: 'きのう 何を しましたか。', options: ['えいがを みました', 'えいがを みます', 'えいがを みて います', 'えいがを みる'], answer: 0, explanation: 'Bentuk lampau: みました.', period: 'sep-nov' },
 
-{ id: 693, section: 'grammar', text: 'あした 何を しますか。', options: ['ともだちと あそびます', 'ともだちと あそびました', 'ともだちと あそんで います', 'ともだちと あそぶ'], answer: 0, explanation: 'Bentuk sekarang/akan datang: あそびます.', period: 'random' },
+{ id: 693, section: 'grammar', text: 'あした 何を しますか。', options: ['ともだちと あそびます', 'ともだちと あそびました', 'ともだちと あそんで います', 'ともだちと あそぶ'], answer: 0, explanation: 'Bentuk sekarang/akan datang: あそびます.', period: 'sep-nov' },
 
-{ id: 694, section: 'grammar', text: 'もう 昼ごはんを（　　　）か。', options: ['たべました', 'たべます', 'たべて います', 'たべる'], answer: 0, explanation: 'もう + bentuk lampau untuk menanyakan apakah sudah.', period: 'random' },
+{ id: 694, section: 'grammar', text: 'もう 昼ごはんを（　　　）か。', options: ['たべました', 'たべます', 'たべて います', 'たべる'], answer: 0, explanation: 'もう + bentuk lampau untuk menanyakan apakah sudah.', period: 'sep-nov' },
 
-{ id: 695, section: 'grammar', text: 'いいえ、（　　　）たべて いません。', options: ['まだ', 'もう', 'いつも', 'よく'], answer: 0, explanation: 'まだ + negatif = belum.', period: 'random' },
+{ id: 695, section: 'grammar', text: 'いいえ、（　　　）たべて いません。', options: ['まだ', 'もう', 'いつも', 'よく'], answer: 0, explanation: 'まだ + negatif = belum.', period: 'sep-nov' },
 
-{ id: 696, section: 'grammar', text: 'この 本を（　　　）も いいですか。', options: ['よんで', 'よむ', 'よんだ', 'よまない'], answer: 0, explanation: '〜てもいいですか = bolehkah.', period: 'random' },
+{ id: 696, section: 'grammar', text: 'この 本を（　　　）も いいですか。', options: ['よんで', 'よむ', 'よんだ', 'よまない'], answer: 0, explanation: '〜てもいいですか = bolehkah.', period: 'sep-nov' },
 
-{ id: 697, section: 'grammar', text: 'ここで 写真を（　　　）は いけません。', options: ['とって', 'とる', 'とった', 'とらない'], answer: 0, explanation: '〜てはいけません = tidak boleh.', period: 'random' },
+{ id: 697, section: 'grammar', text: 'ここで 写真を（　　　）は いけません。', options: ['とって', 'とる', 'とった', 'とらない'], answer: 0, explanation: '〜てはいけません = tidak boleh.', period: 'sep-nov' },
 
-{ id: 698, section: 'grammar', text: 'まいにち 薬を（　　　）なければ なりません。', options: ['のま', 'のんで', 'のむ', 'のまない'], answer: 0, explanation: '〜なければなりません = harus.', period: 'random' },
+{ id: 698, section: 'grammar', text: 'まいにち 薬を（　　　）なければ なりません。', options: ['のま', 'のんで', 'のむ', 'のまない'], answer: 0, explanation: '〜なければなりません = harus.', period: 'sep-nov' },
 
-{ id: 699, section: 'grammar', text: 'あしたは 早く（　　　）なくても いいです。', options: ['おき', 'おきて', 'おきる', 'おきない'], answer: 0, explanation: '〜なくてもいいです = tidak perlu.', period: 'random' },
+{ id: 699, section: 'grammar', text: 'あしたは 早く（　　　）なくても いいです。', options: ['おき', 'おきて', 'おきる', 'おきない'], answer: 0, explanation: '〜なくてもいいです = tidak perlu.', period: 'sep-nov' },
 
-{ id: 700, section: 'grammar', text: 'この 本は（　　　）おもしろいです。', options: ['とても', 'あまり', 'ぜんぜん', 'まだ'], answer: 0, explanation: 'とても + positif = sangat.', period: 'random' },
+{ id: 700, section: 'grammar', text: 'この 本は（　　　）おもしろいです。', options: ['とても', 'あまり', 'ぜんぜん', 'まだ'], answer: 0, explanation: 'とても + positif = sangat.', period: 'sep-nov' },
 
 // --- PENDENGARAN (Listening) ---
 
-{ id: 701, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を しますか。', audioText: '女：田中さん、レポートは 終わりましたか。\n男：いいえ、まだです。今夜 書きます。', options: ['今夜レポートを書きます', 'もうレポートを書きました', 'レポートを書きません', '明日レポートを書きます'], answer: 0, explanation: 'Dia akan menulis laporan malam ini.', period: 'random' },
+{ id: 701, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を しますか。', audioText: '女：田中さん、レポートは 終わりましたか。\n男：いいえ、まだです。今夜 書きます。', options: ['今夜レポートを書きます', 'もうレポートを書きました', 'レポートを書きません', '明日レポートを書きます'], answer: 0, explanation: 'Dia akan menulis laporan malam ini.', period: 'sep-nov' },
 
-{ id: 702, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何時に 起きますか。', audioText: '男：毎朝 何時に 起きますか。\n女：７時に 起きます。でも、日曜日は ９時です。', options: ['平日は７時', '毎日７時', '毎日９時', '平日は９時'], answer: 0, explanation: 'Dia bangun jam 7 pada hari biasa.', period: 'random' },
+{ id: 702, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何時に 起きますか。', audioText: '男：毎朝 何時に 起きますか。\n女：７時に 起きます。でも、日曜日は ９時です。', options: ['平日は７時', '毎日７時', '毎日９時', '平日は９時'], answer: 0, explanation: 'Dia bangun jam 7 pada hari biasa.', period: 'sep-nov' },
 
-{ id: 703, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこへ 行きますか。', audioText: '男：一緒に 昼ごはんを 食べませんか。\n女：いいですね。どこへ 行きますか。\n男：駅の 前の レストランへ 行きましょう。', options: ['駅前のレストラン', '公園', 'スーパー', '映画館'], answer: 0, explanation: 'Mereka akan pergi ke restoran di depan stasiun.', period: 'random' },
+{ id: 703, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこへ 行きますか。', audioText: '男：一緒に 昼ごはんを 食べませんか。\n女：いいですね。どこへ 行きますか。\n男：駅の 前の レストランへ 行きましょう。', options: ['駅前のレストラン', '公園', 'スーパー', '映画館'], answer: 0, explanation: 'Mereka akan pergi ke restoran di depan stasiun.', period: 'sep-nov' },
 
-{ id: 704, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 買いますか。', audioText: '女：何を買いますか。\n男：りんごと バナナを 買います。それから、牛乳も お願いします。', options: ['りんごとバナナと牛乳', 'りんごだけ', 'バナナだけ', '牛乳だけ'], answer: 0, explanation: 'Dia membeli apel, pisang, dan susu.', period: 'random' },
+{ id: 704, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 買いますか。', audioText: '女：何を買いますか。\n男：りんごと バナナを 買います。それから、牛乳も お願いします。', options: ['りんごとバナナと牛乳', 'りんごだけ', 'バナナだけ', '牛乳だけ'], answer: 0, explanation: 'Dia membeli apel, pisang, dan susu.', period: 'sep-nov' },
 
-{ id: 705, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を していますか。', audioText: '男：鈴木さんは 今 何を していますか。\n女：事務所で 電話を かけて います。', options: ['電話をかけています', '本を読んでいます', '昼ごはんを食べています', '会議をしています'], answer: 0, explanation: 'Dia sedang menelepon di kantor.', period: 'random' },
+{ id: 705, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を していますか。', audioText: '男：鈴木さんは 今 何を していますか。\n女：事務所で 電話を かけて います。', options: ['電話をかけています', '本を読んでいます', '昼ごはんを食べています', '会議をしています'], answer: 0, explanation: 'Dia sedang menelepon di kantor.', period: 'sep-nov' },
 
-{ id: 706, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どうして 病院へ 行きますか。', audioText: '女：どうしたんですか。\n男：おなかが 痛いんです。それで、病院へ 行きます。', options: ['おなかが痛いから', '頭が痛いから', 'けがをしたから', '薬を買うから'], answer: 0, explanation: 'Dia pergi ke rumah sakit karena sakit perut.', period: 'random' },
+{ id: 706, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どうして 病院へ 行きますか。', audioText: '女：どうしたんですか。\n男：おなかが 痛いんです。それで、病院へ 行きます。', options: ['おなかが痛いから', '頭が痛いから', 'けがをしたから', '薬を買うから'], answer: 0, explanation: 'Dia pergi ke rumah sakit karena sakit perut.', period: 'sep-nov' },
 
-{ id: 707, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何を 食べますか。', audioText: '女：晩ごはんは 何に しましょうか。\n男：そばは どうですか。\n女：いいですね。でも、私は うどんが 食べたいです。\n男：じゃあ、うどんに しましょう。', options: ['うどん', 'そば', 'ラーメン', 'カレー'], answer: 0, explanation: 'Mereka akhirnya memilih udon.', period: 'random' },
+{ id: 707, section: 'listening', text: '【音声を聞いて答えてください】\n二人は 何を 食べますか。', audioText: '女：晩ごはんは 何に しましょうか。\n男：そばは どうですか。\n女：いいですね。でも、私は うどんが 食べたいです。\n男：じゃあ、うどんに しましょう。', options: ['うどん', 'そば', 'ラーメン', 'カレー'], answer: 0, explanation: 'Mereka akhirnya memilih udon.', period: 'sep-nov' },
 
-{ id: 708, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの かばんを 買いますか。', audioText: '女：この 小さい かばんは どうですか。\n男：ちょっと 高いですね。\n女：では、こちらの 大きくて 安い かばんは？\n男：それに します。', options: ['大きくて安いかばん', '小さくて高いかばん', '大きくて高いかばん', '小さくて安いかばん'], answer: 0, explanation: 'Dia membeli tas yang besar dan murah.', period: 'random' },
+{ id: 708, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どの かばんを 買いますか。', audioText: '女：この 小さい かばんは どうですか。\n男：ちょっと 高いですね。\n女：では、こちらの 大きくて 安い かばんは？\n男：それに します。', options: ['大きくて安いかばん', '小さくて高いかばん', '大きくて高いかばん', '小さくて安いかばん'], answer: 0, explanation: 'Dia membeli tas yang besar dan murah.', period: 'sep-nov' },
 
-{ id: 709, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は いつ 旅行しますか。', audioText: '男：夏休みに 旅行しますか。\n女：はい。７月は 仕事が ありますから、８月に 行きます。', options: ['８月', '７月', '９月', '１０月'], answer: 0, explanation: 'Dia bepergian pada bulan Agustus.', period: 'random' },
+{ id: 709, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は いつ 旅行しますか。', audioText: '男：夏休みに 旅行しますか。\n女：はい。７月は 仕事が ありますから、８月に 行きます。', options: ['８月', '７月', '９月', '１０月'], answer: 0, explanation: 'Dia bepergian pada bulan Agustus.', period: 'sep-nov' },
 
-{ id: 710, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 持っていきますか。', audioText: '女：明日は 雨ですから、傘を 持っていってください。\n男：はい。かばんに 入れました。', options: ['傘', '帽子', '本', '水'], answer: 0, explanation: 'Dia membawa payung.', period: 'random' },
+{ id: 710, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 持っていきますか。', audioText: '女：明日は 雨ですから、傘を 持っていってください。\n男：はい。かばんに 入れました。', options: ['傘', '帽子', '本', '水'], answer: 0, explanation: 'Dia membawa payung.', period: 'sep-nov' },
 
-{ id: 711, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どこへ 行きますか。', audioText: '男：一緒に 映画を 見ませんか。\n女：すみません。これから 病院へ 行かなければ なりません。', options: ['病院', '映画館', 'スーパー', '学校'], answer: 0, explanation: 'Dia harus pergi ke rumah sakit.', period: 'random' },
+{ id: 711, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は どこへ 行きますか。', audioText: '男：一緒に 映画を 見ませんか。\n女：すみません。これから 病院へ 行かなければ なりません。', options: ['病院', '映画館', 'スーパー', '学校'], answer: 0, explanation: 'Dia harus pergi ke rumah sakit.', period: 'sep-nov' },
 
-{ id: 712, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：鍵が ありません。\n女：机の 上に ありませんか。\n男：ありません。あ、車の 中に 置いてきました。', options: ['鍵', '財布', 'かばん', '携帯電話'], answer: 0, explanation: 'Dia meninggalkan kunci di dalam mobil.', period: 'random' },
+{ id: 712, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何を 忘れましたか。', audioText: '男：鍵が ありません。\n女：机の 上に ありませんか。\n男：ありません。あ、車の 中に 置いてきました。', options: ['鍵', '財布', 'かばん', '携帯電話'], answer: 0, explanation: 'Dia meninggalkan kunci di dalam mobil.', period: 'sep-nov' },
 
-{ id: 713, section: 'listening', text: '【音声を聞いて答えてください】\n会議は 何時からですか。', audioText: '女：会議は 何時からですか。\n男：午後３時からです。でも、２時半までに 来てください。', options: ['午後３時', '午後２時半', '午後４時', '午前３時'], answer: 0, explanation: 'Rapat dimulai pukul 3 sore.', period: 'random' },
+{ id: 713, section: 'listening', text: '【音声を聞いて答えてください】\n会議は 何時からですか。', audioText: '女：会議は 何時からですか。\n男：午後３時からです。でも、２時半までに 来てください。', options: ['午後３時', '午後２時半', '午後４時', '午前３時'], answer: 0, explanation: 'Rapat dimulai pukul 3 sore.', period: 'sep-nov' },
 
-{ id: 714, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 料理しますか。', audioText: '男：晩ごはんは 何ですか。\n女：今日は 魚が たくさん ありますから、魚料理を 作ります。', options: ['魚料理', '野菜カレー', 'ラーメン', 'サンドイッチ'], answer: 0, explanation: 'Dia akan memasak hidangan ikan.', period: 'random' },
+{ id: 714, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 料理しますか。', audioText: '男：晩ごはんは 何ですか。\n女：今日は 魚が たくさん ありますから、魚料理を 作ります。', options: ['魚料理', '野菜カレー', 'ラーメン', 'サンドイッチ'], answer: 0, explanation: 'Dia akan memasak hidangan ikan.', period: 'sep-nov' },
 
-{ id: 715, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どこで 働いていますか。', audioText: '女：お仕事は 何ですか。\n男：学校で 働いています。毎日 子供と 遊びます。', options: ['学校', '病院', '銀行', 'レストラン'], answer: 0, explanation: 'Dia bekerja di sekolah.', period: 'random' },
+{ id: 715, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どこで 働いていますか。', audioText: '女：お仕事は 何ですか。\n男：学校で 働いています。毎日 子供と 遊びます。', options: ['学校', '病院', '銀行', 'レストラン'], answer: 0, explanation: 'Dia bekerja di sekolah.', period: 'sep-nov' },
 
-{ id: 716, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を しなければ なりませんか。', audioText: '女：明日までに この 手紙を 書かなければ なりません。\n男：大変ですね。手伝いましょうか。', options: ['手紙を書く', '本を読む', '電話をする', '買い物をする'], answer: 0, explanation: 'Dia harus menulis surat.', period: 'random' },
+{ id: 716, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を しなければ なりませんか。', audioText: '女：明日までに この 手紙を 書かなければ なりません。\n男：大変ですね。手伝いましょうか。', options: ['手紙を書く', '本を読む', '電話をする', '買い物をする'], answer: 0, explanation: 'Dia harus menulis surat.', period: 'sep-nov' },
 
-{ id: 717, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時ごろ 帰りますか。', audioText: '女：仕事は 何時に 終わりますか。\n男：６時に 終わります。それから 買い物を しますから、７時半ごろ 帰ります。', options: ['７時半ごろ', '６時ごろ', '７時ごろ', '８時半ごろ'], answer: 0, explanation: 'Dia pulang sekitar pukul 7.30.', period: 'random' },
+{ id: 717, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は 何時ごろ 帰りますか。', audioText: '女：仕事は 何時に 終わりますか。\n男：６時に 終わります。それから 買い物を しますから、７時半ごろ 帰ります。', options: ['７時半ごろ', '６時ごろ', '７時ごろ', '８時半ごろ'], answer: 0, explanation: 'Dia pulang sekitar pukul 7.30.', period: 'sep-nov' },
 
-{ id: 718, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 昼ごはんを 食べますか。', audioText: '男：食堂へ 行きましょうか。\n女：今日は 天気が いいですから、公園で 食べませんか。\n男：いいですね。そうしましょう。', options: ['公園', '食堂', '会社', '駅'], answer: 0, explanation: 'Mereka makan siang di taman.', period: 'random' },
+{ id: 718, section: 'listening', text: '【音声を聞いて答えてください】\n二人は どこで 昼ごはんを 食べますか。', audioText: '男：食堂へ 行きましょうか。\n女：今日は 天気が いいですから、公園で 食べませんか。\n男：いいですね。そうしましょう。', options: ['公園', '食堂', '会社', '駅'], answer: 0, explanation: 'Mereka makan siang di taman.', period: 'sep-nov' },
 
-{ id: 719, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋が ほしいですか。', audioText: '女：どんな 部屋が ほしいですか。\n男：大きくて、明るい 部屋が いいです。駅から 近くなくても いいです。', options: ['大きくて明るい部屋', '小さくて暗い部屋', '大きくて暗い部屋', '駅に近い部屋'], answer: 0, explanation: 'Dia mencari kamar yang besar dan terang.', period: 'random' },
+{ id: 719, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は どんな 部屋が ほしいですか。', audioText: '女：どんな 部屋が ほしいですか。\n男：大きくて、明るい 部屋が いいです。駅から 近くなくても いいです。', options: ['大きくて明るい部屋', '小さくて暗い部屋', '大きくて暗い部屋', '駅に近い部屋'], answer: 0, explanation: 'Dia mencari kamar yang besar dan terang.', period: 'sep-nov' },
 
-{ id: 720, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 使いますか。', audioText: '男：消しゴムが ありません。貸して ください。\n女：すみません。消しゴムは ありませんが、鉛筆なら あります。\n男：では、それを 貸してください。', options: ['鉛筆', '消しゴム', 'ボールペン', 'ノート'], answer: 0, explanation: 'Dia menggunakan pensil.', period: 'random' },
+{ id: 720, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は 何を 使いますか。', audioText: '男：消しゴムが ありません。貸して ください。\n女：すみません。消しゴムは ありませんが、鉛筆なら あります。\n男：では、それを 貸してください。', options: ['鉛筆', '消しゴム', 'ボールペン', 'ノート'], answer: 0, explanation: 'Dia menggunakan pensil.', period: 'sep-nov' },
 
 // --- MEMBACA (Reading) ---
 
-{ id: 721, section: 'reading', text: '【案内を読んで答えてください】\n＜市民図書館＞\n開館時間：午前１０時から午後７時まで\n休み：毎週月曜日\n料金：無料\n\n市民図書館は 何時までですか。', options: ['午後７時まで', '午前１０時まで', '午後６時まで', '午後８時まで'], answer: 0, explanation: 'Perpustakaan buka sampai pukul 7 malam.', period: 'random' },
+{ id: 721, section: 'reading', text: '【案内を読んで答えてください】\n＜市民図書館＞\n開館時間：午前１０時から午後７時まで\n休み：毎週月曜日\n料金：無料\n\n市民図書館は 何時までですか。', options: ['午後７時まで', '午前１０時まで', '午後６時まで', '午後８時まで'], answer: 0, explanation: 'Perpustakaan buka sampai pukul 7 malam.', period: 'sep-nov' },
 
-{ id: 722, section: 'reading', text: '【案内を読んで答えてください】\n＜市民図書館＞\n開館時間：午前１０時から午後７時まで\n休み：毎週月曜日\n料金：無料\n\n月曜日に 図書館へ 行くことが できますか。', options: ['いいえ、できません', 'はい、できます', '午後だけできます', '午前だけできます'], answer: 0, explanation: 'Senin adalah hari libur, jadi tidak bisa pergi.', period: 'random' },
+{ id: 722, section: 'reading', text: '【案内を読んで答えてください】\n＜市民図書館＞\n開館時間：午前１０時から午後７時まで\n休み：毎週月曜日\n料金：無料\n\n月曜日に 図書館へ 行くことが できますか。', options: ['いいえ、できません', 'はい、できます', '午後だけできます', '午前だけできます'], answer: 0, explanation: 'Senin adalah hari libur, jadi tidak bisa pergi.', period: 'sep-nov' },
 
-{ id: 723, section: 'reading', text: '【メモを読んで答えてください】\n佐藤さんへ\n冷蔵庫に ケーキが あります。\n食べても いいですが、妹の ぶんを 残して おいてください。\n（お母さん）\n\nケーキを どうしますか。', options: ['妹のぶんを残します', '全部食べます', '冷蔵庫から出します', 'お母さんに渡します'], answer: 0, explanation: 'Kue boleh dimakan, tetapi bagian adik perempuan harus disisakan.', period: 'random' },
+{ id: 723, section: 'reading', text: '【メモを読んで答えてください】\n佐藤さんへ\n冷蔵庫に ケーキが あります。\n食べても いいですが、妹の ぶんを 残して おいてください。\n（お母さん）\n\nケーキを どうしますか。', options: ['妹のぶんを残します', '全部食べます', '冷蔵庫から出します', 'お母さんに渡します'], answer: 0, explanation: 'Kue boleh dimakan, tetapi bagian adik perempuan harus disisakan.', period: 'sep-nov' },
 
-{ id: 724, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの パーティーは ７時からです。\n場所は 駅の 近くの カフェです。\n飲み物は 私が 用意します。\nでは、あした。\n（田中）\n\nパーティーは どこで ありますか。', options: ['駅近くのカフェ', '鈴木さんの家', '田中さんの会社', '駅の中'], answer: 0, explanation: 'Pesta diadakan di kafe dekat stasiun.', period: 'random' },
+{ id: 724, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの パーティーは ７時からです。\n場所は 駅の 近くの カフェです。\n飲み物は 私が 用意します。\nでは、あした。\n（田中）\n\nパーティーは どこで ありますか。', options: ['駅近くのカフェ', '鈴木さんの家', '田中さんの会社', '駅の中'], answer: 0, explanation: 'Pesta diadakan di kafe dekat stasiun.', period: 'sep-nov' },
 
-{ id: 725, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの パーティーは ７時からです。\n場所は 駅の 近くの カフェです。\n飲み物は 私が 用意します。\nでは、あした。\n（田中）\n\n飲み物を 用意するのは だれですか。', options: ['田中さん', '鈴木さん', 'カフェの人', '駅の人'], answer: 0, explanation: '田中さんが飲み物を用意します = Tanaka yang menyiapkan minuman.', period: 'random' },
+{ id: 725, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\nあしたの パーティーは ７時からです。\n場所は 駅の 近くの カフェです。\n飲み物は 私が 用意します。\nでは、あした。\n（田中）\n\n飲み物を 用意するのは だれですか。', options: ['田中さん', '鈴木さん', 'カフェの人', '駅の人'], answer: 0, explanation: '田中さんが飲み物を用意します = Tanaka yang menyiapkan minuman.', period: 'sep-nov' },
 
-{ id: 726, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n英語教室は いつ ありますか。', options: ['毎週日曜日', '毎週土曜日', '毎週金曜日', '毎日'], answer: 0, explanation: 'Kelas bahasa Inggris diadakan setiap Minggu.', period: 'random' },
+{ id: 726, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n英語教室は いつ ありますか。', options: ['毎週日曜日', '毎週土曜日', '毎週金曜日', '毎日'], answer: 0, explanation: 'Kelas bahasa Inggris diadakan setiap Minggu.', period: 'sep-nov' },
 
-{ id: 727, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n教室は どこですか。', options: ['公民館の１階', '学校の２階', '駅の１階', '図書館'], answer: 0, explanation: 'Tempat kelas berada di lantai satu gedung komunitas.', period: 'random' },
+{ id: 727, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n教室は どこですか。', options: ['公民館の１階', '学校の２階', '駅の１階', '図書館'], answer: 0, explanation: 'Tempat kelas berada di lantai satu gedung komunitas.', period: 'sep-nov' },
 
-{ id: 728, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n参加費は いくらですか。', options: ['無料です', '５００円です', '１０００円です', '２００円です'], answer: 0, explanation: '無料 berarti gratis.', period: 'random' },
+{ id: 728, section: 'reading', text: '【ポスターを読んで答えてください】\n＜英語教室＞\n日時：毎週日曜日 午後２時から４時まで\n場所：公民館１階\n参加費：無料\n\n参加費は いくらですか。', options: ['無料です', '５００円です', '１０００円です', '２００円です'], answer: 0, explanation: '無料 berarti gratis.', period: 'sep-nov' },
 
-{ id: 729, section: 'reading', text: '【日記を読んで答えてください】\n土曜日\n朝、雪が 降っていたので、どこへも 行かなかった。\n午後、雪が やんだので、近くの 店へ 買い物に 行った。\n\n朝、どうして どこへも 行きませんでしたか。', options: ['雪が降っていたから', '病気だったから', '仕事があったから', '店が休みだったから'], answer: 0, explanation: 'Dia tidak pergi ke mana pun pada pagi hari karena salju.', period: 'random' },
+{ id: 729, section: 'reading', text: '【日記を読んで答えてください】\n土曜日\n朝、雪が 降っていたので、どこへも 行かなかった。\n午後、雪が やんだので、近くの 店へ 買い物に 行った。\n\n朝、どうして どこへも 行きませんでしたか。', options: ['雪が降っていたから', '病気だったから', '仕事があったから', '店が休みだったから'], answer: 0, explanation: 'Dia tidak pergi ke mana pun pada pagi hari karena salju.', period: 'sep-nov' },
 
-{ id: 730, section: 'reading', text: '【日記を読んで答えてください】\n土曜日\n朝、雪が 降っていたので、どこへも 行かなかった。\n午後、雪が やんだので、近くの 店へ 買い物に 行った。\n\n午後、どこへ 行きましたか。', options: ['店', '病院', '学校', 'レストラン'], answer: 0, explanation: 'Sore hari dia pergi berbelanja ke toko.', period: 'random' },
+{ id: 730, section: 'reading', text: '【日記を読んで答えてください】\n土曜日\n朝、雪が 降っていたので、どこへも 行かなかった。\n午後、雪が やんだので、近くの 店へ 買い物に 行った。\n\n午後、どこへ 行きましたか。', options: ['店', '病院', '学校', 'レストラン'], answer: 0, explanation: 'Sore hari dia pergi berbelanja ke toko.', period: 'sep-nov' },
 
-{ id: 731, section: 'reading', text: '【掲示を読んで答えてください】\n＜学校からのお知らせ＞\n５月１０日から５月１５日まで、建物の修理のため休校します。\n５月１６日から、いつもどおり授業があります。\n\n学校は いつから 始まりますか。', options: ['５月１６日', '５月１０日', '５月１５日', '５月２０日'], answer: 0, explanation: 'Sekolah dimulai kembali mulai 16 Mei.', period: 'random' },
+{ id: 731, section: 'reading', text: '【掲示を読んで答えてください】\n＜学校からのお知らせ＞\n５月１０日から５月１５日まで、建物の修理のため休校します。\n５月１６日から、いつもどおり授業があります。\n\n学校は いつから 始まりますか。', options: ['５月１６日', '５月１０日', '５月１５日', '５月２０日'], answer: 0, explanation: 'Sekolah dimulai kembali mulai 16 Mei.', period: 'sep-nov' },
 
-{ id: 732, section: 'reading', text: '【掲示を読んで答えてください】\n＜学校からのお知らせ＞\n５月１０日から５月１５日まで、建物の修理のため休校します。\n５月１６日から、いつもどおり授業があります。\n\nどうして 休みますか。', options: ['建物を修理するため', '先生が休むため', '雪が降るため', '生徒がいないため'], answer: 0, explanation: 'Alasan libur adalah perbaikan gedung.', period: 'random' },
+{ id: 732, section: 'reading', text: '【掲示を読んで答えてください】\n＜学校からのお知らせ＞\n５月１０日から５月１５日まで、建物の修理のため休校します。\n５月１６日から、いつもどおり授業があります。\n\nどうして 休みますか。', options: ['建物を修理するため', '先生が休むため', '雪が降るため', '生徒がいないため'], answer: 0, explanation: 'Alasan libur adalah perbaikan gedung.', period: 'sep-nov' },
 
-{ id: 733, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nたまご：１パック１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週土曜日は 全部１０％引き\n\n土曜日に たまごを １パック 買うと、いくらですか。', options: ['９０円', '１００円', '１１０円', '１５０円'], answer: 0, explanation: 'Harga 100 yen mendapat diskon 10%, menjadi 90 yen.', period: 'random' },
+{ id: 733, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nたまご：１パック１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週土曜日は 全部１０％引き\n\n土曜日に たまごを １パック 買うと、いくらですか。', options: ['９０円', '１００円', '１１０円', '１５０円'], answer: 0, explanation: 'Harga 100 yen mendapat diskon 10%, menjadi 90 yen.', period: 'sep-nov' },
 
-{ id: 734, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nたまご：１パック１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週土曜日は 全部１０％引き\n\nパンは いくらですか。', options: ['２００円', '１００円', '１５０円', '９０円'], answer: 0, explanation: 'Harga roti adalah 200 yen sebelum diskon.', period: 'random' },
+{ id: 734, section: 'reading', text: '【広告を読んで答えてください】\n＜スーパーさくら＞\nたまご：１パック１００円\n牛乳：１本１５０円\nパン：１袋２００円\n毎週土曜日は 全部１０％引き\n\nパンは いくらですか。', options: ['２００円', '１００円', '１５０円', '９０円'], answer: 0, explanation: 'Harga roti adalah 200 yen sebelum diskon.', period: 'sep-nov' },
 
-{ id: 735, section: 'reading', text: '【案内を読んで答えてください】\n＜中央病院＞\n受付時間：午前８時から１１時まで\n午後１時から４時まで\n休診日：日曜日と祝日\n\n午後１２時に 病院へ 行って、診察して もらえますか。', options: ['いいえ、できません', 'はい、できます', '日曜日ならできます', '午前だけできます'], answer: 0, explanation: 'Pukul 12 siang berada di antara jam pelayanan, jadi tidak bisa mendaftar.', period: 'random' },
+{ id: 735, section: 'reading', text: '【案内を読んで答えてください】\n＜中央病院＞\n受付時間：午前８時から１１時まで\n午後１時から４時まで\n休診日：日曜日と祝日\n\n午後１２時に 病院へ 行って、診察して もらえますか。', options: ['いいえ、できません', 'はい、できます', '日曜日ならできます', '午前だけできます'], answer: 0, explanation: 'Pukul 12 siang berada di antara jam pelayanan, jadi tidak bisa mendaftar.', period: 'sep-nov' },
 
-{ id: 736, section: 'reading', text: '【案内を読んで答えてください】\n＜中央病院＞\n受付時間：午前８時から１１時まで\n午後１時から４時まで\n休診日：日曜日と祝日\n\n午後３時に 行くことが できますか。', options: ['はい、できます', 'いいえ、できません', '午前だけです', '日曜日だけです'], answer: 0, explanation: 'Pukul 3 sore termasuk jam pelayanan.', period: 'random' },
+{ id: 736, section: 'reading', text: '【案内を読んで答えてください】\n＜中央病院＞\n受付時間：午前８時から１１時まで\n午後１時から４時まで\n休診日：日曜日と祝日\n\n午後３時に 行くことが できますか。', options: ['はい、できます', 'いいえ、できません', '午前だけです', '日曜日だけです'], answer: 0, explanation: 'Pukul 3 sore termasuk jam pelayanan.', period: 'sep-nov' },
 
-{ id: 737, section: 'reading', text: '【メモを読んで答えてください】\n今日は 遅く 帰ります。\n７時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\n何時に 待っていますか。', options: ['７時', '６時', '８時', '９時'], answer: 0, explanation: 'Orang tersebut menunggu pukul 7.', period: 'random' },
+{ id: 737, section: 'reading', text: '【メモを読んで答えてください】\n今日は 遅く 帰ります。\n７時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\n何時に 待っていますか。', options: ['７時', '６時', '８時', '９時'], answer: 0, explanation: 'Orang tersebut menunggu pukul 7.', period: 'sep-nov' },
 
-{ id: 738, section: 'reading', text: '【メモを読んで答えてください】\n今日は 遅く 帰ります。\n７時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\nどこで 待っていますか。', options: ['駅の前', '駅の中', '学校の前', '公園'], answer: 0, explanation: 'Dia menunggu di depan stasiun.', period: 'random' },
+{ id: 738, section: 'reading', text: '【メモを読んで答えてください】\n今日は 遅く 帰ります。\n７時に 駅の 前で 待っています。\n遅れるときは 電話してください。\n\nどこで 待っていますか。', options: ['駅の前', '駅の中', '学校の前', '公園'], answer: 0, explanation: 'Dia menunggu di depan stasiun.', period: 'sep-nov' },
 
-{ id: 739, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と昼と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\nいつ 薬を 飲みますか。', options: ['朝と昼と晩の食事のあと', '昼ごはんのあとだけ', '寝る前だけ', '食事のまえ'], answer: 0, explanation: 'Obat diminum pagi, siang, dan malam setelah makan.', period: 'random' },
+{ id: 739, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と昼と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\nいつ 薬を 飲みますか。', options: ['朝と昼と晩の食事のあと', '昼ごはんのあとだけ', '寝る前だけ', '食事のまえ'], answer: 0, explanation: 'Obat diminum pagi, siang, dan malam setelah makan.', period: 'sep-nov' },
 
-{ id: 740, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と昼と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\n１回に 何錠 飲みますか。', options: ['１錠', '２錠', '３錠', '半分'], answer: 0, explanation: '１錠ずつ berarti satu tablet setiap kali minum.', period: 'random' },
+{ id: 740, section: 'reading', text: '【説明を読んで答えてください】\nこの薬は 朝と昼と晩に １錠ずつ 飲んでください。\n食事の あとに 飲んでください。\n\n１回に 何錠 飲みますか。', options: ['１錠', '２錠', '３錠', '半分'], answer: 0, explanation: '１錠ずつ berarti satu tablet setiap kali minum.', period: 'sep-nov' },
 
-{ id: 741, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\nあしたの 会議の 資料を ５部 コピーして、机の 上に 置いてください。\n会議は 午後２時からです。\n（佐藤）\n\n山田さんは 何を しますか。', options: ['資料を５部コピーします', '会議に出ません', '資料を捨てます', '机を買います'], answer: 0, explanation: 'Yamada harus menyalin materi rapat sebanyak 5 eksemplar.', period: 'random' },
+{ id: 741, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\nあしたの 会議の 資料を ５部 コピーして、机の 上に 置いてください。\n会議は 午後２時からです。\n（佐藤）\n\n山田さんは 何を しますか。', options: ['資料を５部コピーします', '会議に出ません', '資料を捨てます', '机を買います'], answer: 0, explanation: 'Yamada harus menyalin materi rapat sebanyak 5 eksemplar.', period: 'sep-nov' },
 
-{ id: 742, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\nあしたの 会議の 資料を ５部 コピーして、机の 上に 置いてください。\n会議は 午後２時からです。\n（佐藤）\n\n会議は 何時からですか。', options: ['午後２時', '午後１時', '午後３時', '午前２時'], answer: 0, explanation: 'Rapat dimulai pukul 2 siang.', period: 'random' },
+{ id: 742, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\nあしたの 会議の 資料を ５部 コピーして、机の 上に 置いてください。\n会議は 午後２時からです。\n（佐藤）\n\n会議は 何時からですか。', options: ['午後２時', '午後１時', '午後３時', '午前２時'], answer: 0, explanation: 'Rapat dimulai pukul 2 siang.', period: 'sep-nov' },
 
-{ id: 743, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 料理を しました。午後は 友だちと サッカーを しました。\n\nBさんは 午後、何を しましたか。', options: ['サッカーをしました', '料理をしました', '映画を見ました', '買い物をしました'], answer: 0, explanation: 'Sore hari B bermain sepak bola dengan teman.', period: 'random' },
+{ id: 743, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 料理を しました。午後は 友だちと サッカーを しました。\n\nBさんは 午後、何を しましたか。', options: ['サッカーをしました', '料理をしました', '映画を見ました', '買い物をしました'], answer: 0, explanation: 'Sore hari B bermain sepak bola dengan teman.', period: 'sep-nov' },
 
-{ id: 744, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 料理を しました。午後は 友だちと サッカーを しました。\n\nBさんは 朝、何を しましたか。', options: ['料理をしました', 'サッカーをしました', '掃除をしました', '寝ました'], answer: 0, explanation: 'Pagi hari B memasak.', period: 'random' },
+{ id: 744, section: 'reading', text: '【会話を読んで答えてください】\nA：きのう 何を しましたか。\nB：朝は 料理を しました。午後は 友だちと サッカーを しました。\n\nBさんは 朝、何を しましたか。', options: ['料理をしました', 'サッカーをしました', '掃除をしました', '寝ました'], answer: 0, explanation: 'Pagi hari B memasak.', period: 'sep-nov' },
 
-{ id: 745, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：９：００、９：３０、１０：００、１０：３０\n学校前着：９：２０、９：５０、１０：２０、１０：５０\n\n９時３０分の バスは 何時に 学校前に 着きますか。', options: ['９時５０分', '９時２０分', '１０時', '１０時２０分'], answer: 0, explanation: 'Bus pukul 9.30 tiba pukul 9.50.', period: 'random' },
+{ id: 745, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：９：００、９：３０、１０：００、１０：３０\n学校前着：９：２０、９：５０、１０：２０、１０：５０\n\n９時３０分の バスは 何時に 学校前に 着きますか。', options: ['９時５０分', '９時２０分', '１０時', '１０時２０分'], answer: 0, explanation: 'Bus pukul 9.30 tiba pukul 9.50.', period: 'sep-nov' },
 
-{ id: 746, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：９：００、９：３０、１０：００、１０：３０\n学校前着：９：２０、９：５０、１０：２０、１０：５０\n\n駅前を １０時に 出る バスは 何時に 着きますか。', options: ['１０時２０分', '１０時', '１０時３０分', '１０時５０分'], answer: 0, explanation: 'Bus yang berangkat pukul 10 tiba pukul 10.20.', period: 'random' },
+{ id: 746, section: 'reading', text: '【案内を読んで答えてください】\n＜バスの時間＞\n駅前発：９：００、９：３０、１０：００、１０：３０\n学校前着：９：２０、９：５０、１０：２０、１０：５０\n\n駅前を １０時に 出る バスは 何時に 着きますか。', options: ['１０時２０分', '１０時', '１０時３０分', '１０時５０分'], answer: 0, explanation: 'Bus yang berangkat pukul 10 tiba pukul 10.20.', period: 'sep-nov' },
 
-{ id: 747, section: 'reading', text: '【日記を読んで答えてください】\n６月５日\n今日は いい天気だったので、家族と 海へ 行った。\n昼ごはんを 食べてから、泳いだ。\n\nだれと 海へ 行きましたか。', options: ['家族', '友だち', '先生', '一人で'], answer: 0, explanation: 'Dia pergi ke laut bersama keluarga.', period: 'random' },
+{ id: 747, section: 'reading', text: '【日記を読んで答えてください】\n６月５日\n今日は いい天気だったので、家族と 海へ 行った。\n昼ごはんを 食べてから、泳いだ。\n\nだれと 海へ 行きましたか。', options: ['家族', '友だち', '先生', '一人で'], answer: 0, explanation: 'Dia pergi ke laut bersama keluarga.', period: 'sep-nov' },
 
-{ id: 748, section: 'reading', text: '【日記を読んで答えてください】\n６月５日\n今日は いい天気だったので、家族と 海へ 行った。\n昼ごはんを 食べてから、泳いだ。\n\n昼ごはんの あとで、何を しましたか。', options: ['泳いだ', '海へ行きました', '家へ帰りました', '料理をしました'], answer: 0, explanation: 'Setelah makan siang, dia berenang.', period: 'random' },
+{ id: 748, section: 'reading', text: '【日記を読んで答えてください】\n６月５日\n今日は いい天気だったので、家族と 海へ 行った。\n昼ごはんを 食べてから、泳いだ。\n\n昼ごはんの あとで、何を しましたか。', options: ['泳いだ', '海へ行きました', '家へ帰りました', '料理をしました'], answer: 0, explanation: 'Setelah makan siang, dia berenang.', period: 'sep-nov' },
 
-{ id: 749, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n６月１０日（水）は 会社が 休みです。\n１１日（木）と １２日（金）も 休みです。\n仕事は １５日（月）から 始まります。\n\n仕事は いつから 始まりますか。', options: ['１５日（月）', '１０日（水）', '１１日（木）', '１２日（金）'], answer: 0, explanation: 'Pekerjaan dimulai kembali pada Senin tanggal 15.', period: 'random' },
+{ id: 749, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n６月１０日（水）は 会社が 休みです。\n１１日（木）と １２日（金）も 休みです。\n仕事は １５日（月）から 始まります。\n\n仕事は いつから 始まりますか。', options: ['１５日（月）', '１０日（水）', '１１日（木）', '１２日（金）'], answer: 0, explanation: 'Pekerjaan dimulai kembali pada Senin tanggal 15.', period: 'sep-nov' },
 
-{ id: 750, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n６月１０日（水）は 会社が 休みです。\n１１日（木）と １２日（金）も 休みです。\n仕事は １５日（月）から 始まります。\n\n６月１１日は 会社が ありますか。', options: ['いいえ、ありません', 'はい、あります', '午後だけあります', 'わかりません'], answer: 0, explanation: 'Tanggal 11 juga merupakan hari libur.', period: 'random' }
+{ id: 750, section: 'reading', text: '【お知らせを読んで答えてください】\n＜会社のお知らせ＞\n６月１０日（水）は 会社が 休みです。\n１１日（木）と １２日（金）も 休みです。\n仕事は １５日（月）から 始まります。\n\n６月１１日は 会社が ありますか。', options: ['いいえ、ありません', 'はい、あります', '午後だけあります', 'わかりません'], answer: 0, explanation: 'Tanggal 11 juga merupakan hari libur.', period: 'sep-nov' }
         ];
 
         let state = {
@@ -1454,7 +1539,6 @@
             
             const header = document.getElementById('main-header');
             if (header) {
-                // Header (termasuk tombol Logout) disembunyikan di layar login dan admin
                 if (screenId === 'auth' || screenId === 'admin') {
                     header.classList.add('hidden');
                 } else {
@@ -1468,7 +1552,6 @@
             state.currentScreen = screenId;
         }
 
-                // --- DEVICE FINGERPRINT LOGIC ---
         function getOrCreateDeviceId() {
             let deviceId = localStorage.getItem('jft_device_id');
             if (!deviceId) {
@@ -1477,9 +1560,18 @@
             }
             return deviceId;
         }
+        
+        let currentLeaderboardFilter = 10;
 
-        // --- FUNGSI LOGIN DENGAN SISTEM KUOTA ---
-        async function handleLogin() {
+        function toggleLeaderboard() {
+            const container = document.getElementById('leaderboard-container');
+            container.classList.toggle('hidden');
+            if (!container.classList.contains('hidden')) {
+                loadLeaderboardData(currentLeaderboardFilter);
+            }
+        }
+        
+                async function handleLogin() {
             const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value.trim();
             const btnLogin = document.getElementById('btn-login');
@@ -1512,7 +1604,6 @@
                     btnLogin.disabled = false; return;
                 }
 
-                // CEK KUOTA (Hanya untuk User, Admin bebas)
                 if (user.role !== 'admin') {
                     const deviceId = getOrCreateDeviceId();
                     let devices = user.registered_devices || [];
@@ -1526,22 +1617,38 @@
                             btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
                             btnLogin.disabled = false; return;
                         } else {
-                            // Daftarkan perangkat baru ke Supabase
                             devices.push(deviceId);
                             await window.supabaseClient.from('Jft-Basic').update({ registered_devices: devices }).eq('id', user.id);
                         }
                     }
                 }
 
-                // Lolos masuk
                 localStorage.setItem('jft_user_id', user.id);
                 localStorage.setItem('jft_user_name', user.name.toUpperCase());
                 localStorage.setItem('jft_user_role', user.role);
 
-                if (user.role === 'admin') navigate('admin');
-                else {
-                    document.getElementById('user-name-input').value = user.name.toUpperCase();
+                if (user.role === 'admin') {
+                    navigate('admin');
+                } else {
                     navigate('home');
+
+                    // ==========================================
+                    // CEK NAMA TERDETEKSI TEPAT SETELAH BERHASIL LOGIN
+                    // ==========================================
+                    const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+                    const defaultAccountName = user.name.toUpperCase();
+
+                    if (savedDeviceName) {
+                        document.getElementById('modal-old-name').textContent = savedDeviceName;
+                        document.getElementById('user-name-input').value = savedDeviceName;
+                        
+                        const nameModal = document.getElementById('custom-name-modal');
+                        nameModal.classList.remove('hidden');
+                        nameModal.classList.add('flex');
+                    } else {
+                        document.getElementById('user-name-input').value = defaultAccountName;
+                        localStorage.setItem('jft_device_custom_name', defaultAccountName);
+                    }
                 }
             } catch (err) {
                 errorMsg.innerHTML = `❌ Error: ${err.message}`;
@@ -1551,11 +1658,138 @@
             btnLogin.disabled = false;
         }
 
-        // --- FUNGSI TAMPIL DATA ADMIN ---
-        
 
-        // --- FUNGSI SIMPAN USER BARU DENGAN KUOTA ---
-                // --- 1. UPDATE FUNGSI KELAR KUIS (Menyimpan Skor ke Supabase) ---
+        function setLeaderboardFilter(count) {
+            currentLeaderboardFilter = count;
+            [10, 20, 30, 50].forEach(n => {
+                const btn = document.getElementById(`l-btn-${n}`);
+                if (n === count) {
+                    btn.className = "py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-center shadow-[2px_2px_0_#181818] font-black";
+                } else {
+                    btn.className = "py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] font-bold text-slate-600";
+                }
+            });
+            loadLeaderboardData(count);
+        }
+
+        async function loadLeaderboardData(filterCount) {
+            const listEl = document.getElementById('leaderboard-list');
+            listEl.innerHTML = '<p class="text-center text-xs text-slate-500 py-4 font-bold">Mengambil data peringkat...</p>';
+
+            const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*');
+            if (error) {
+                listEl.innerHTML = `<p class="text-center text-xs text-red-500 py-2">Gagal memuat: ${error.message}</p>`;
+                return;
+            }
+
+            let allScores = [];
+            data.forEach(user => {
+                let scores = user.device_scores || {};
+                if (typeof scores === 'string') scores = JSON.parse(scores);
+                
+                Object.values(scores).forEach(s => {
+                    if (s && s.score !== undefined) {
+                        const sCount = s.qCount || 10;
+                        if (sCount === filterCount) {
+                            allScores.push({
+                                name: s.name || user.name || 'Siswa',
+                                score: s.score,
+                                level: s.level || '-',
+                                duration: s.duration || '-',
+                                os: s.os || 'Lainnya'
+                            });
+                        }
+                    }
+                });
+            });
+
+            allScores.sort((a, b) => b.score - a.score);
+
+            if (allScores.length === 0) {
+                listEl.innerHTML = `<p class="text-center text-xs text-slate-400 py-4 font-medium italic">Belum ada data untuk kategori ${filterCount} soal.</p>`;
+                return;
+            }
+
+            listEl.innerHTML = '';
+            allScores.slice(0, 15).forEach((item, index) => {
+                let rankClass = 'bg-slate-100 text-slate-700';
+                let rankIcon = `<span class="font-black text-xs">#${index + 1}</span>`;
+                
+                if (index === 0) {
+                    rankClass = 'rank-badge-1';
+                    rankIcon = '<i class="fa-solid fa-crown text-amber-600 text-xs"></i> 1';
+                } else if (index === 1) {
+                    rankClass = 'rank-badge-2';
+                    rankIcon = '<i class="fa-solid fa-medal text-slate-600 text-xs"></i> 2';
+                } else if (index === 2) {
+                    rankClass = 'rank-badge-3';
+                    rankIcon = '<i class="fa-solid fa-medal text-amber-800 text-xs"></i> 3';
+                }
+
+                listEl.innerHTML += `
+                    <div class="leaderboard-card p-2.5 rounded-xl flex items-center justify-between text-xs bg-white">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-black ${rankClass}">
+                                ${rankIcon}
+                            </div>
+                            <div>
+                                <div class="font-black text-slate-800 uppercase">${item.name}</div>
+                                <div class="text-[10px] text-slate-500"><i class="fa-solid fa-mobile-screen-button"></i> ${item.os} • <i class="fa-regular fa-clock"></i> ${item.duration}</div>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-black text-brand-600 text-sm">${item.score} <span class="text-[10px] text-slate-400">Pts</span></div>
+                            <div class="text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">${item.level}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        async function clearAllDevices(userId) {
+            showCustomConfirm("Yakin ingin mereset dan menghapus SEMUA perangkat yang terhubung ke akun ini?", async () => {
+                const { error } = await window.supabaseClient.from('Jft-Basic').update({
+                    registered_devices: [],
+                    device_scores: {}
+                }).eq('id', userId);
+
+                if (error) {
+                    showCustomConfirm("Gagal mereset: " + error.message, null, "Oke");
+                } else {
+                    loadAdminData(); 
+                }
+            }, "Reset Semua");
+        }
+        
+        async function removeDeviceSession(userId, deviceId) {
+            showCustomConfirm("Yakin ingin menghapus perangkat ini dari akun?", async () => {
+                const { data: user, error } = await window.supabaseClient.from('Jft-Basic').select('*').eq('id', userId).single();
+                if (error) {
+                    showCustomConfirm("Gagal mengambil data: " + error.message, null, "Oke");
+                    return;
+                }
+
+                let devices = user.registered_devices || [];
+                if (typeof devices === 'string') devices = JSON.parse(devices);
+                devices = devices.filter(d => d !== deviceId);
+
+                let scores = user.device_scores || {};
+                if (typeof scores === 'string') scores = JSON.parse(scores);
+                delete scores[deviceId];
+
+                const { error: updateError } = await window.supabaseClient.from('Jft-Basic').update({
+                    registered_devices: devices,
+                    device_scores: scores
+                }).eq('id', userId);
+
+                if (updateError) {
+                    showCustomConfirm("Gagal menghapus: " + updateError.message, null, "Oke");
+                } else {
+                    loadAdminData(); 
+                }
+            }, "Hapus Perangkat");
+        }
+
         function finishQuiz() {
             clearInterval(state.timerInterval);
             let cor = 0, mis = [];
@@ -1568,7 +1802,6 @@
             hist.unshift({id: Date.now(), date: new Date().toISOString(), score, level: lvl, correct: cor, total: state.questions.length});
             localStorage.setItem('jft_history', JSON.stringify(hist.slice(0,20)));
             
-            // Render Result
             document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
             document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
             const currentUserName = localStorage.getItem('jft_user_name') || "SISWA";
@@ -1613,9 +1846,6 @@
             if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
             mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
             
-                        // =========================================================
-            // SIMPAN SKOR TERBARU, NAMA, & WAKTU KE SUPABASE UNTUK ADMIN
-            // =========================================================
             const userId = localStorage.getItem('jft_user_id');
             const deviceId = localStorage.getItem('jft_device_id');
             if (userId && deviceId) {
@@ -1633,32 +1863,32 @@
                     let scores = data?.device_scores || {};
                     if(typeof scores === 'string') scores = JSON.parse(scores);
                     
-                    // Menyimpan Skor, Durasi, OS, dan NAMA ASLI yang diinput siswa
                     scores[deviceId] = { 
                         name: currentUserName, 
                         score: score, 
                         level: lvl, 
                         duration: durationText, 
-                        os: os 
+                        os: os,
+                        qCount: state.questions.length 
                     };
                     
                     window.supabaseClient.from('Jft-Basic').update({ device_scores: scores }).eq('id', userId).then();
                 });
             }
-            // =========================================================
-
 
             navigate('result');
         }
 
-        // --- 2. UPDATE FUNGSI TAMPIL ADMIN (Menampilkan Skor di Tabel) ---
-        async function loadAdminData() {
+                async function loadAdminData() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center font-bold">Memuat...</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="5" class="px-5 py-10 text-center font-black text-slate-400"><i class="fa-solid fa-spinner fa-spin mr-2"></i> Memuat data akun...</td></tr>';
             
             const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*').order('created_at', { ascending: false });
-            if (error) { tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-red-500">${error.message}</td></tr>`; return; }
+            if (error) { 
+                tbody.innerHTML = `<tr><td colspan="5" class="px-5 py-6 text-center text-red-500 font-bold">Gagal memuat data: ${error.message}</td></tr>`; 
+                return; 
+            }
             
             tbody.innerHTML = '';
             data.forEach(user => {
@@ -1671,50 +1901,76 @@
                 const max = user.max_users || 1;
                 const isFull = devices.length >= max;
                 
-                let quotaBadge = `<span class="px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold">${devices.length} / ${max}</span>`;
-                if (isFull && user.role !== 'admin') quotaBadge = `<span class="px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded font-bold">${devices.length} / ${max} (Penuh)</span>`;
-                if (user.role === 'admin') quotaBadge = `<span class="text-slate-400 font-bold">-</span>`;
+                let quotaBadge = `<div class="flex flex-col items-center gap-1.5"><span class="px-2.5 py-1 bg-emerald-100 text-emerald-800 border-[2px] border-emerald-400 rounded-lg text-xs font-black shadow-[2px_2px_0_#181818]">${devices.length} / ${max} Aktif</span>`;
+                if (isFull && user.role !== 'admin') {
+                    quotaBadge = `<div class="flex flex-col items-center gap-1.5"><span class="px-2.5 py-1 bg-rose-100 text-rose-800 border-[2px] border-rose-400 rounded-lg text-xs font-black shadow-[2px_2px_0_#181818]">Penuh (${devices.length}/${max})</span>`;
+                }
+                if (user.role === 'admin') {
+                    quotaBadge = `<span class="text-slate-400 font-bold text-xs bg-slate-100 px-2 py-1 rounded border">Unlimited</span>`;
+                } else if (devices.length > 0) {
+                    quotaBadge += `<button onclick="clearAllDevices('${user.id}')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 border-[1.5px] border-rose-300 rounded-md text-[10px] font-bold transition shadow-sm" title="Hapus semua sesi perangkat"><i class="fa-solid fa-rotate-left mr-1"></i> Reset Sesi</button>`;
+                }
+                quotaBadge += `</div>`;
 
-                // LOGIKA UNTUK MENAMPILKAN PERANGKAT & SKOR TEPAT DI BAWAH NAMA
-                                let scoreHTML = '';
+                let scoreHTML = '';
                 if (user.role !== 'admin') {
                     if (devices.length === 0) {
-                        scoreHTML = `<div class="text-[11px] text-slate-400 italic mt-2">Belum ada percobaan.</div>`;
+                        scoreHTML = `<div class="text-[11px] text-slate-400 italic mt-1.5 bg-slate-50 p-2 rounded-lg border border-dashed border-slate-300">Belum ada perangkat/siswa yang login.</div>`;
                     } else {
-                        scoreHTML = `<div class="mt-2 flex flex-col gap-1.5">`;
+                        scoreHTML = `<div class="mt-2.5 space-y-2">`;
                         devices.forEach((dev, idx) => {
                             const s = scores[dev];
-                            if (s) {
-                                scoreHTML += `
-                                <div class="text-[11px] bg-slate-50 p-2 rounded-lg border border-slate-200 shadow-sm">
-                                    <div class="font-bold text-slate-800 mb-0.5"><i class="fa-solid fa-user-pen mr-1 text-brand-600"></i> ${s.name || 'Tanpa Nama'}</div>
-                                    <div class="text-slate-500 text-[10px] mb-1"><i class="fa-solid fa-mobile-screen-button mr-1"></i> ${s.os}</div>
-                                    <div class="flex items-center gap-2">
-                                        <span class="bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded font-black border border-brand-200">Skor: ${s.score}</span>
-                                        <span class="text-slate-500 font-medium"><i class="fa-regular fa-clock"></i> ${s.duration}</span>
+                            // Di sinilah nama yang diketik siswa saat latihan (seperti "Raihan Fitri") akan muncul rapi!
+                            const activeName = s ? s.name : `Perangkat #${idx + 1}`;
+                            const deviceOs = s ? s.os : 'Web Browser';
+                            const userScore = s ? s.score : '-';
+                            const duration = s ? s.duration : '-';
+
+                            scoreHTML += `
+                            <div class="text-xs bg-[#f8f3e8] p-2.5 rounded-xl border-[2px] border-[#181818] shadow-[2px_2px_0_#181818] flex justify-between items-center">
+                                <div class="space-y-0.5">
+                                    <div class="font-black text-[#181818] flex items-center gap-1.5">
+                                        <i class="fa-solid fa-user-tag text-brand-600"></i> <span class="uppercase">${activeName}</span>
                                     </div>
-                                </div>`;
-                            } else {
-                                scoreHTML += `<div class="text-[11px] bg-slate-50 text-slate-400 p-2 rounded-lg border border-slate-100"><i class="fa-solid fa-mobile-screen-button mr-1"></i> Perangkat ${idx+1}: Belum tes</div>`;
-                            }
+                                    <div class="text-slate-500 text-[10px] font-bold">
+                                        <i class="fa-solid fa-mobile-screen-button text-slate-400 mr-0.5"></i> ${deviceOs} &bull; <i class="fa-regular fa-clock ml-1"></i> ${duration}
+                                    </div>
+                                    <div class="pt-1 flex items-center gap-2">
+                                        <span class="bg-[#ffe45c] text-[#181818] px-2 py-0.5 rounded font-black text-[10px] border border-[#181818]">Skor: ${userScore} Pts</span>
+                                    </div>
+                                </div>
+                                <button onclick="removeDeviceSession('${user.id}', '${dev}')" class="text-rose-600 hover:text-rose-800 p-2 bg-white border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition-all text-xs" title="Hapus sesi perangkat ini">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </button>
+                            </div>`;
                         });
                         scoreHTML += `</div>`;
                     }
                 }
 
-
                 tbody.innerHTML += `
-                    <tr class="hover:bg-[#fffdf8] transition">
-                        <td class="px-4 py-3 border-r-[2px] border-b-[2px] border-[#181818] align-top w-1/3">
-                            <div class="font-bold text-sm text-[#181818]">${user.name}</div>
+                    <tr class="hover:bg-[#fffcf4] transition">
+                        <td class="px-5 py-4 border-r-[2px] border-b-[2px] border-[#181818] align-top w-2/5">
+                            <div class="font-black text-base text-[#181818] flex items-center gap-2">
+                                <i class="fa-solid fa-id-card text-brand-500"></i> ${user.name}
+                            </div>
+                            <div class="text-xs text-slate-500 font-medium mb-1">${user.email && user.email !== '-' ? user.email : 'Tanpa email terdaftar'}</div>
                             ${scoreHTML}
                         </td>
-                        <td class="px-4 py-3 font-mono text-brand-600 font-black border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${user.auth_code}</td>
-                        <td class="px-4 py-3 text-center text-xs border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${quotaBadge}</td>
-                        <td class="px-4 py-3 uppercase text-xs font-bold border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${user.role}</td>
-                        <td class="px-4 py-3 text-center border-b-[2px] border-[#181818] align-top pt-3">
-                            <button onclick="deleteUser('${user.id}')" class="text-red-500 hover:text-red-700 hover:scale-110 transition p-1" title="Hapus User">
-                                <i class="fa-solid fa-trash-can text-lg"></i>
+                        <td class="px-5 py-4 font-mono text-brand-700 font-black border-r-[2px] border-b-[2px] border-[#181818] align-top pt-5 text-sm">
+                            <span class="bg-slate-100 px-2.5 py-1 rounded-lg border border-slate-300">${user.auth_code}</span>
+                        </td>
+                        <td class="px-5 py-4 text-center border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">
+                            ${quotaBadge}
+                        </td>
+                        <td class="px-5 py-4 uppercase text-xs font-black border-r-[2px] border-b-[2px] border-[#181818] align-top pt-5">
+                            <span class="px-2.5 py-1 rounded-lg border-[2px] border-[#181818] ${user.role === 'admin' ? 'bg-[#ff7373] text-white shadow-[2px_2px_0_#181818]' : 'bg-[#43c9bd] text-[#181818] shadow-[2px_2px_0_#181818]'}">
+                                ${user.role}
+                            </span>
+                        </td>
+                        <td class="px-5 py-4 text-center border-b-[2px] border-[#181818] align-top pt-5">
+                            <button onclick="deleteUser('${user.id}')" class="px-3 py-2 bg-rose-500 text-white border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 hover:bg-rose-600 transition-all text-xs font-black flex items-center justify-center gap-1.5 mx-auto" title="Hapus Akun">
+                                <i class="fa-solid fa-trash-can"></i> Hapus
                             </button>
                         </td>
                     </tr>
@@ -1722,7 +1978,7 @@
             });
         }
 
-        // --- 3. UPDATE FUNGSI SIMPAN USER BARU (Mempersiapkan Kolom JSONB) ---
+
         async function simpanUserBaru() {
             const name = document.getElementById('new-name').value.trim();
             const email = document.getElementById('new-email').value.trim();
@@ -1747,7 +2003,7 @@
                 status: 'active',
                 max_users: maxUsers,
                 registered_devices: [],
-                device_scores: {} // Memastikan kolom ini siap menerima skor
+                device_scores: {} 
             }]);
             
             if (error) {
@@ -1761,36 +2017,41 @@
             btn.innerHTML = 'Simpan Data';
         }
 
-
-
-        
-
                 function checkSession() {
             const userId = localStorage.getItem('jft_user_id');
             if (userId) {
                 const role = localStorage.getItem('jft_user_role');
-                
-                // Jangan paksakan nama akun master, biarkan siswa input nama mereka sendiri di form
-                const savedName = localStorage.getItem('jft_user_name');
-                if (savedName && role === 'admin') {
-                    document.getElementById('user-name-input').value = savedName;
+                if (role === 'admin') {
+                    navigate('admin');
+                } else {
+                    navigate('home');
+                    // Jika sudah login sebelumnya dan merefresh halaman, 
+                    // ambil nama yang tersimpan di perangkat secara otomatis tanpa memunculkan modal lagi.
+                    const savedDeviceName = localStorage.getItem('jft_device_custom_name') || localStorage.getItem('jft_user_name') || "";
+                    document.getElementById('user-name-input').value = savedDeviceName;
                 }
-                
-                if (role === 'admin') navigate('admin');
-                else navigate('home');
             } else {
                 navigate('auth');
             }
         }
 
 
-        // --- ADMIN FUNCTIONS ---
+        function handleNameChoice(choice) {
+            const nameModal = document.getElementById('custom-name-modal');
+            nameModal.classList.remove('flex');
+            nameModal.classList.add('hidden');
+
+            if (choice === 'keep') {
+                const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+                document.getElementById('user-name-input').value = savedDeviceName;
+            } else {
+                document.getElementById('user-name-input').value = '';
+                document.getElementById('user-name-input').focus();
+            }
+        }
 
         function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
         
-        
-
-                // --- CUSTOM MODAL LOGIC ---
         let confirmCallback = null;
 
         function showCustomConfirm(message, callback, okText = "Ya") {
@@ -1813,7 +2074,6 @@
             setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 200);
         }
 
-        // --- REPLACE FUNGSI LAMA ---
         function deleteUser(uid) {
             showCustomConfirm("Yakin ingin menghapus user ini?", async () => {
                 await window.supabaseClient.from('Jft-Basic').delete().eq('id', uid);
@@ -1844,10 +2104,8 @@
             }, "Hapus Semua");
         }
 
-
-                // --- ADMIN PAGINATION LOGIC ---
         let adminQuestionPage = 1;
-        const questionsPerPage = 50; // Tampilkan 15 soal per halaman agar ringan
+        const questionsPerPage = 50;
 
         function switchAdminTab(tabName) {
             const vUsers = document.getElementById('admin-view-users');
@@ -1864,7 +2122,7 @@
                 bUsers.className = "bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium transition";
                 bQs.className = "bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
                 
-                adminQuestionPage = 1; // Reset ke halaman 1 setiap kali tab dibuka
+                adminQuestionPage = 1;
                 renderAdminQuestions();
             }
         }
@@ -1873,15 +2131,12 @@
             const qContainer = document.getElementById('admin-questions-list');
             document.getElementById('total-questions-count').textContent = `${QUESTION_BANK.length} Soal`;
             
-            // Hitung halaman
             const totalPages = Math.ceil(QUESTION_BANK.length / questionsPerPage);
             const startIdx = (adminQuestionPage - 1) * questionsPerPage;
             const endIdx = startIdx + questionsPerPage;
             
-            // Potong data soal sesuai halaman saat ini
             const currentQs = QUESTION_BANK.slice(startIdx, endIdx);
 
-            // Render soal sekaligus (tanpa looping innerHTML agar tidak lag)
             let html = currentQs.map(q => `
                 <div class="bg-slate-50 border p-4 rounded-xl shadow-sm mb-3">
                     <div class="flex justify-between mb-2">
@@ -1896,7 +2151,6 @@
                 </div>
             `).join('');
 
-            // Tambahkan tombol navigasi halaman (Sticky di bawah)
             html += `
                 <div class="flex justify-between items-center mt-6 bg-white p-3 rounded-xl border-[2px] border-slate-200 sticky bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
                     <button onclick="changeQuestionPage(-1)" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-sm font-bold transition disabled:opacity-30 disabled:cursor-not-allowed" ${adminQuestionPage === 1 ? 'disabled' : ''}>
@@ -1910,7 +2164,7 @@
             `;
 
             qContainer.innerHTML = html;
-            qContainer.scrollTop = 0; // Otomatis scroll ke atas saat ganti halaman
+            qContainer.scrollTop = 0;
         }
 
         function changeQuestionPage(direction) {
@@ -1918,8 +2172,6 @@
             renderAdminQuestions();
         }
 
-
-        // --- QUIZ FUNCTIONS ---
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
@@ -1930,12 +2182,18 @@
         }
 
         function startQuiz() {
-            let userName = document.getElementById('user-name-input').value.trim() || "SISWA";
+            let userName = document.getElementById('user-name-input').value.trim();
+            if(!userName) {
+                showCustomConfirm("Silakan masukkan nama Anda terlebih dahulu!", null, "Oke");
+                return;
+            }
+
+            localStorage.setItem('jft_device_custom_name', userName.toUpperCase());
             localStorage.setItem('jft_user_name', userName.toUpperCase());
 
-            const reqCount = parseInt(document.querySelector('input[name="q_count"]:checked').value);
-            
-            // Logic Prioritas
+            const qCountRadio = document.querySelector('input[name="q_count"]:checked');
+            const reqCount = qCountRadio ? parseInt(qCountRadio.value) : 10;
+
             const qStats = JSON.parse(localStorage.getItem('jft_question_stats') || '{}');
             let wBank = [...QUESTION_BANK].map(q => ({ ...q, weight: (qStats[q.id]||0) + Math.random() }));
             wBank.sort((a, b) => a.weight - b.weight);
@@ -1949,14 +2207,14 @@
             const selIds = new Set(selected.map(q => q.id));
             let remain = wBank.filter(q => !selIds.has(q.id));
             selected.push(...remain.slice(0, Math.max(0, reqCount - selected.length)));
-            
+
             selected.forEach(q => qStats[q.id] = (qStats[q.id]||0) + 1);
             localStorage.setItem('jft_question_stats', JSON.stringify(qStats));
-            
+
             state.questions = shuffleArray(selected);
             state.currentQuestionIndex = 0;
             state.userAnswers = new Array(state.questions.length).fill(null);
-            
+
             navigate('quiz');
             state.startTime = Date.now();
             state.timerInterval = setInterval(() => {
@@ -1990,45 +2248,32 @@
                 };
             }
 
-                        const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
+            const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
             
-            // Cek apakah opsi sudah diacak sebelumnya. Jika belum, acak dan simpan.
             if (!q.shuffledOptions) {
                 q.shuffledOptions = shuffleArray(q.options.map((t,i)=>({t,i})));
             }
             
-            // Gunakan opsi yang sudah diacak dan disimpan
-                        // Gunakan opsi yang sudah diacak dan disimpan
             q.shuffledOptions.forEach((opt, idx) => {
                 const isChecked = state.userAnswers[state.currentQuestionIndex] === opt.i ? 'checked' : '';
                 opts.innerHTML += `<label class="option-label block"><input type="radio" name="qo" value="${opt.i}" class="option-input peer sr-only" onchange="pilihJawaban(${opt.i})" ${isChecked}><div class="option-content flex items-center p-4 border rounded-xl hover:bg-slate-50 cursor-pointer transition-all"><div class="radio-letter w-8 h-8 flex items-center justify-center rounded bg-slate-100 font-bold mr-3">${['A','B','C','D'][idx]}</div><span class="text-lg japanese-text">${opt.t}</span></div></label>`;
             });
-
-
         }
         
-                function pilihJawaban(val) {
-            // Simpan jawaban tanpa me-refresh seluruh UI pertanyaan
+        function pilihJawaban(val) {
             state.userAnswers[state.currentQuestionIndex] = val;
-            
-            // Aktifkan tombol Selanjutnya
             const btnNext = document.getElementById('btn-next-question');
             btnNext.disabled = false;
             btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
         }
         
-        
         function showTranscript() { document.getElementById('audio-transcript-fallback').classList.remove('hidden'); document.getElementById('btn-show-transcript').classList.add('hidden'); }
-        
         
         function nextQuestion() {
             if(window.speechSynthesis) window.speechSynthesis.cancel();
             if (state.currentQuestionIndex < state.questions.length - 1) { state.currentQuestionIndex++; renderQuestion(); window.scrollTo(0,0); }
             else finishQuiz();
         }
-
-                
-
 
         function renderHistory() {
             const h = JSON.parse(localStorage.getItem('jft_history')||'[]');
@@ -2039,7 +2284,6 @@
                 h.forEach(i => c.innerHTML += `<div class="bg-white p-4 border rounded shadow-sm mb-3 flex justify-between"><div class="text-sm"><div>${new Date(i.date).toLocaleString('id-ID')}</div><div class="font-bold">Skor: ${i.score}</div></div><div class="text-right font-bold text-brand-600">${i.level}<div class="text-xs text-slate-500">${i.correct}/${i.total} Benar</div></div></div>`);
             }
         }
-        
         
         function editName() { const n = prompt("Nama:", document.getElementById('res-name').textContent); if(n) { document.getElementById('res-name').textContent = n.toUpperCase(); localStorage.setItem('jft_user_name', n.toUpperCase()); document.getElementById('user-name-input').value = n.toUpperCase(); } }
         function handlePhotoUpload(e) { if(e.target.files[0]) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('user-photo-img').src=ev.target.result; document.getElementById('user-photo-img').classList.remove('hidden'); localStorage.setItem('jft_user_photo', ev.target.result); }; r.readAsDataURL(e.target.files[0]); } }
