@@ -295,7 +295,7 @@
                 </div>
             </div>
 
-            <div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
+                        <div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
                 <div class="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-200 pb-6 mb-6">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
@@ -324,14 +324,26 @@
                     <div class="flex-grow text-sm grid grid-cols-[120px_1fr] gap-y-2 gap-x-4 items-center">
                         <div class="text-slate-500 japanese-text">受験番号<br><span class="text-[10px] block -mt-1">Registration Number</span></div>
                         <div class="font-medium">: <span id="res-reg-num"></span></div>
+                        
                         <div class="text-slate-500 japanese-text">氏名<br><span class="text-[10px] block -mt-1">Name</span></div>
-                        <div class="font-medium text-lg flex items-center gap-2">: <span id="res-name"></span></div>
+                        <div class="font-medium text-lg flex items-center gap-2">
+                            : <span id="res-name"></span>
+                            <button onclick="editName()" class="text-slate-400 hover:text-brand-600 transition p-1 bg-slate-50 hover:bg-slate-100 rounded" title="Edit Nama">
+                                <i class="fa-solid fa-pen text-xs"></i>
+                            </button>
+                        </div>
+
                         <div class="text-slate-500 japanese-text">国籍<br><span class="text-[10px] block -mt-1">Nationality</span></div>
                         <div class="font-medium">: Indonesia</div>
+
+                        <div class="text-slate-500 japanese-text">受験地<br><span class="text-[10px] block -mt-1">Test Location</span></div>
+                        <div class="font-medium">: Practice Online</div>
+
                         <div class="text-slate-500 japanese-text">受験日<br><span class="text-[10px] block -mt-1">Test Date</span></div>
                         <div class="font-medium">: <span id="res-date"></span></div>
                     </div>
                 </div>
+
 
                 <div class="border border-slate-200 p-6 bg-slate-50/50">
                     <div class="flex flex-col sm:flex-row justify-between mb-8">
@@ -959,7 +971,7 @@
             else finishQuiz();
         }
 
-        function finishQuiz() {
+                function finishQuiz() {
             clearInterval(state.timerInterval);
             let cor = 0, mis = [];
             state.questions.forEach((q, i) => { if(state.userAnswers[i] === q.answer) cor++; else mis.push({q, a: state.userAnswers[i], n: i+1}); });
@@ -974,7 +986,11 @@
             // Render Result
             document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
             document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
-            document.getElementById('res-name').textContent = localStorage.getItem('jft_user_name');
+            
+            // Ambil nama sesuai input akun yang login
+            const currentUserName = localStorage.getItem('jft_user_name') || "SISWA";
+            document.getElementById('res-name').textContent = currentUserName;
+            
             document.getElementById('res-total-score').textContent = score;
             document.getElementById('res-level').textContent = lvl;
             document.getElementById('res-score-indicator').style.left = `${((score-10)/240)*100}%`;
@@ -985,12 +1001,42 @@
             document.getElementById('eval-wrong').textContent = mis.length;
             document.getElementById('eval-accuracy').textContent = `${Math.round((cor/state.questions.length)*100)}%`;
             
+            // --- BAGIAN INI YANG MEMBUAT 4 SECTION BAR MUNCUL KEMBALI ---
+            const secStats = {};
+            SECTIONS.forEach(s => secStats[s.id] = { total: 0, correct: 0 });
+            state.questions.forEach((q, i) => {
+                if(secStats[q.section]) {
+                    secStats[q.section].total++;
+                    if(state.userAnswers[i] === q.answer) secStats[q.section].correct++;
+                }
+            });
+
+            const sContainer = document.getElementById('res-sections-container');
+            sContainer.innerHTML = '';
+            SECTIONS.forEach(s => {
+                const st = secStats[s.id];
+                const pct = st.total > 0 ? Math.round((st.correct / st.total) * 100) : 0;
+                sContainer.innerHTML += `
+                    <div class="flex items-center justify-between gap-4 text-sm">
+                        <div class="w-1/3">
+                            <div class="font-bold text-slate-800 japanese-text">${s.nameJP}</div>
+                            <div class="text-[11px] text-slate-500">${s.nameEN}</div>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="section-bar-bg"><div class="section-bar-fill" style="width: ${pct}%"></div></div>
+                        </div>
+                        <div class="w-12 text-right font-bold text-slate-800">${pct}%</div>
+                    </div>`;
+            });
+            // -------------------------------------------------------------
+
             const mC = document.getElementById('mistakes-container'); mC.innerHTML = '';
             if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
             mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
             
             navigate('result');
         }
+
 
         function renderHistory() {
             const h = JSON.parse(localStorage.getItem('jft_history')||'[]');
