@@ -1628,28 +1628,29 @@
                 localStorage.setItem('jft_user_role', user.role);
 
                 if (user.role === 'admin') {
-                    navigate('admin');
-                } else {
-                    navigate('home');
+    navigate('admin');
+} else {
+    navigate('home');
 
-                    // ==========================================
-                    // CEK NAMA TERDETEKSI TEPAT SETELAH BERHASIL LOGIN
-                    // ==========================================
-                    const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-                    const defaultAccountName = user.name.toUpperCase();
+    // --- CEK NAMA TERDETEKSI SETELAH BERHASIL LOGIN ---
+    const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+    const defaultAccountName = user.name.toUpperCase();
 
-                    if (savedDeviceName) {
-                        document.getElementById('modal-old-name').textContent = savedDeviceName;
-                        document.getElementById('user-name-input').value = savedDeviceName;
-                        
-                        const nameModal = document.getElementById('custom-name-modal');
-                        nameModal.classList.remove('hidden');
-                        nameModal.classList.add('flex');
-                    } else {
-                        document.getElementById('user-name-input').value = defaultAccountName;
-                        localStorage.setItem('jft_device_custom_name', defaultAccountName);
-                    }
-                }
+    if (savedDeviceName) {
+        // Jika nama perangkat sudah pernah tersimpan, tampilkan modal
+        document.getElementById('modal-old-name').textContent = savedDeviceName;
+        document.getElementById('user-name-input').value = savedDeviceName;
+        
+        const nameModal = document.getElementById('custom-name-modal');
+        nameModal.classList.remove('hidden');
+        nameModal.classList.add('flex');
+    } else {
+        // Jika baru pertama kali login di perangkat ini
+        document.getElementById('user-name-input').value = defaultAccountName;
+        localStorage.setItem('jft_device_custom_name', defaultAccountName);
+    }
+}
+
             } catch (err) {
                 errorMsg.innerHTML = `❌ Error: ${err.message}`;
                 errorMsg.classList.remove('hidden');
@@ -2017,38 +2018,51 @@
             btn.innerHTML = 'Simpan Data';
         }
 
-                function checkSession() {
+        function checkSession() {
             const userId = localStorage.getItem('jft_user_id');
             if (userId) {
                 const role = localStorage.getItem('jft_user_role');
                 if (role === 'admin') {
                     navigate('admin');
-                } else {
-                    navigate('home');
-                    // Jika sudah login sebelumnya dan merefresh halaman, 
-                    // ambil nama yang tersimpan di perangkat secara otomatis tanpa memunculkan modal lagi.
-                    const savedDeviceName = localStorage.getItem('jft_device_custom_name') || localStorage.getItem('jft_user_name') || "";
+                    return;
+                }
+
+                navigate('home');
+
+                const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+                const defaultAccountName = localStorage.getItem('jft_user_name') || "";
+
+                if (savedDeviceName) {
+                    document.getElementById('modal-old-name').textContent = savedDeviceName;
                     document.getElementById('user-name-input').value = savedDeviceName;
+                    
+                    const nameModal = document.getElementById('custom-name-modal');
+                    nameModal.classList.remove('hidden');
+                    nameModal.classList.add('flex');
+                } else {
+                    document.getElementById('user-name-input').value = defaultAccountName;
                 }
             } else {
                 navigate('auth');
             }
         }
 
-
         function handleNameChoice(choice) {
-            const nameModal = document.getElementById('custom-name-modal');
-            nameModal.classList.remove('flex');
-            nameModal.classList.add('hidden');
+    const nameModal = document.getElementById('custom-name-modal');
+    nameModal.classList.remove('flex');
+    nameModal.classList.add('hidden');
 
-            if (choice === 'keep') {
-                const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-                document.getElementById('user-name-input').value = savedDeviceName;
-            } else {
-                document.getElementById('user-name-input').value = '';
-                document.getElementById('user-name-input').focus();
-            }
-        }
+    if (choice === 'keep') {
+        // Menggunakan nama lama yang tersimpan di perangkat
+        const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+        document.getElementById('user-name-input').value = savedDeviceName;
+    } else {
+        // Mengosongkan input agar pengguna bisa mengetik nama baru
+        document.getElementById('user-name-input').value = '';
+        document.getElementById('user-name-input').focus();
+    }
+}
+
 
         function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
         
@@ -2182,14 +2196,18 @@
         }
 
         function startQuiz() {
-            let userName = document.getElementById('user-name-input').value.trim();
-            if(!userName) {
-                showCustomConfirm("Silakan masukkan nama Anda terlebih dahulu!", null, "Oke");
-                return;
-            }
+    let userName = document.getElementById('user-name-input').value.trim();
+    if(!userName) {
+        showCustomConfirm("Silakan masukkan nama Anda terlebih dahulu!", null, "Oke");
+        return;
+    }
 
-            localStorage.setItem('jft_device_custom_name', userName.toUpperCase());
-            localStorage.setItem('jft_user_name', userName.toUpperCase());
+    // Simpan nama terbaru ke perangkat
+    localStorage.setItem('jft_device_custom_name', userName.toUpperCase());
+    localStorage.setItem('jft_user_name', userName.toUpperCase());
+
+    // ... (lanjutan kode kuis Anda)
+
 
             const qCountRadio = document.querySelector('input[name="q_count"]:checked');
             const reqCount = qCountRadio ? parseInt(qCountRadio.value) : 10;
