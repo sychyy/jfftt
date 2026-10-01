@@ -6,1388 +6,126 @@
     <title>JFT-Basic Practice</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
-                        jp: ['"Noto Sans JP"', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                        }
-                    }
+                    fontFamily: { sans: ['Inter', 'sans-serif'], jp: ['"Noto Sans JP"', 'sans-serif'] },
+                    colors: { brand: { 50: '#f0f9ff', 100: '#e0f2fe', 500: '#0ea5e9', 600: '#0284c7', 700: '#0369a1' } }
                 }
             }
         }
     </script>
     <style>
-/* =========================================================
-   JFT-BASIC
-   NEO-BRUTALISM INSPIRED THEME
-   Theme only — HTML & JavaScript tetap aman
-   ========================================================= */
-
-:root {
-    --nb-bg: #f8f3e8;
-    --nb-paper: #fffdf8;
-    --nb-black: #181818;
-
-    --nb-yellow: #ffe45c;
-    --nb-coral: #ff7373;
-    --nb-purple: #9b82f3;
-    --nb-teal: #43c9bd;
-    --nb-blue: #62bddb;
-
-    --nb-gray: #f0ede5;
-    --nb-muted: #66625b;
-
-    --nb-border: 2.5px solid var(--nb-black);
-
-    --nb-shadow: 5px 5px 0 var(--nb-black);
-    --nb-shadow-small: 3px 3px 0 var(--nb-black);
-
-    --nb-radius: 14px;
-}
-
-/* =========================================================
-   BASE
-   ========================================================= */
-
-* {
-    box-sizing: border-box;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-    
-body {
-    font-family: 'Inter', sans-serif !important;
-
-    color: var(--nb-black) !important;
-
-    background:
-        radial-gradient(
-            circle at 15% 15%,
-            rgba(255,228,92,.18),
-            transparent 22%
-        ),
-        radial-gradient(
-            circle at 85% 20%,
-            rgba(67,201,189,.13),
-            transparent 20%
-        ),
-        var(--nb-bg) !important;
-
-    -webkit-tap-highlight-color: transparent;
-}
-
-/* subtle paper texture */
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    z-index: -1;
-
-    opacity: .18;
-
-    background-image:
-        radial-gradient(
-            rgba(24,24,24,.18) .7px,
-            transparent .7px
-        );
-
-    background-size: 7px 7px;
-}
-
-.japanese-text {
-    font-family: 'Noto Sans JP', sans-serif !important;
-}
-
-/* =========================================================
-   SCREEN SYSTEM
-   PENTING — JANGAN DIHAPUS
-   ========================================================= */
-
-.screen {
-    display: none;
-    animation: nbScreenIn .28s ease-out;
-}
-
-.screen.active {
-    display: block;
-}
-
-@keyframes nbScreenIn {
-    from {
-        opacity: 0;
-        transform: translateY(8px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* =========================================================
-   GENERAL CARDS
-   ========================================================= */
-
-.bg-white {
-    background-color: var(--nb-paper) !important;
-}
-
-/* Jangan terlalu agresif ke semua rounded Tailwind.
-   Hanya memberi sedikit karakter pada card utama. */
-
-#screen-home > .bg-white,
-#screen-history > .bg-white {
-    border: var(--nb-border) !important;
-    box-shadow: var(--nb-shadow) !important;
-}
-
-/* =========================================================
-   HOME
-   ========================================================= */
-
-#screen-home {
-    color: var(--nb-black);
-}
-
-#screen-home .bg-blue-50 {
-    background: #fff4a8 !important;
-    color: var(--nb-black) !important;
-
-    border: var(--nb-border);
-    box-shadow: var(--nb-shadow-small);
-}
-
-#screen-home input[type="text"] {
-    background: var(--nb-paper) !important;
-
-    border: var(--nb-border) !important;
-
-    box-shadow: var(--nb-shadow-small);
-
-    transition:
-        transform .18s ease,
-        box-shadow .18s ease,
-        background .18s ease;
-}
-
-#screen-home input[type="text"]:focus {
-    outline: none !important;
-
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        6px 6px 0 var(--nb-black),
-        0 0 0 3px rgba(255,228,92,.65);
-
-    background: #fffef9 !important;
-}
-
-/* =========================================================
-   HOME — QUESTION COUNT
-   ========================================================= */
-
-#screen-home label:has(input[name="q_count"]) {
-    border: var(--nb-border) !important;
-    background: var(--nb-paper) !important;
-
-    box-shadow: var(--nb-shadow-small);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        background .15s ease;
-}
-
-#screen-home label:has(input[name="q_count"]):hover {
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        5px 5px 0 var(--nb-black);
-}
-
-#screen-home label:has(input[name="q_count"]:checked) {
-    background: var(--nb-yellow) !important;
-
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        6px 6px 0 var(--nb-black);
-}
-
-/* =========================================================
-   MAIN BUTTON
-   ========================================================= */
-
-#screen-home button.bg-brand-600,
-#screen-result button.bg-brand-600,
-#btn-next-question {
-    position: relative;
-
-    background: var(--nb-black) !important;
-    color: white !important;
-
-    border: var(--nb-border) !important;
-
-    border-radius: 10px !important;
-
-    box-shadow: var(--nb-shadow);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        background .15s ease;
-}
-
-#screen-home button.bg-brand-600:hover,
-#screen-result button.bg-brand-600:hover,
-#btn-next-question:hover:not(:disabled) {
-    background: var(--nb-coral) !important;
-    color: var(--nb-black) !important;
-
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        7px 7px 0 var(--nb-black);
-}
-
-#screen-home button.bg-brand-600:active,
-#screen-result button.bg-brand-600:active,
-#btn-next-question:active:not(:disabled) {
-    transform: translate(3px,3px);
-
-    box-shadow:
-        2px 2px 0 var(--nb-black);
-}
-
-/* =========================================================
-   QUIZ — MAIN CONTAINER
-   ========================================================= */
-
-/* top progress panel */
-
-#screen-quiz > div:first-child {
-    background: var(--nb-paper) !important;
-
-    border:
-        var(--nb-border) !important;
-
-    border-bottom-width: 0 !important;
-
-    border-radius:
-        var(--nb-radius)
-        var(--nb-radius)
-        0
-        0 !important;
-
-    box-shadow:
-        5px 0 0 var(--nb-black),
-        -2px 0 0 var(--nb-black);
-}
-
-/* question panel */
-
-#screen-quiz > div:nth-child(2) {
-    background: var(--nb-paper) !important;
-
-    border:
-        var(--nb-border) !important;
-
-    border-top-width: 0 !important;
-
-    border-radius:
-        0
-        0
-        var(--nb-radius)
-        var(--nb-radius) !important;
-
-    box-shadow: var(--nb-shadow);
-
-    min-height: 430px !important;
-}
-
-/* =========================================================
-   QUIZ — SECTION BADGE
-   ========================================================= */
-
-#quiz-section-badge {
-    background: var(--nb-yellow) !important;
-
-    color: var(--nb-black) !important;
-
-    border: 2px solid var(--nb-black);
-
-    box-shadow: 2px 2px 0 var(--nb-black);
-
-    border-radius: 7px !important;
-
-    font-weight: 800 !important;
-
-    padding-left: 10px !important;
-    padding-right: 10px !important;
-}
-
-/* =========================================================
-   QUIZ — PROGRESS
-   ========================================================= */
-
-#quiz-progress-text {
-    color: var(--nb-black) !important;
-
-    font-weight: 800 !important;
-}
-
-/* progress background */
-
-#quiz-progress-bar {
-    background:
-        repeating-linear-gradient(
-            135deg,
-            var(--nb-coral) 0,
-            var(--nb-coral) 8px,
-            #ff8585 8px,
-            #ff8585 16px
-        ) !important;
-
-    border-right: 2px solid var(--nb-black);
-
-    transition:
-        width .35s ease !important;
-}
-
-/* progress wrapper */
-
-#screen-quiz > div:first-child .w-full.sm\:w-1\/2 {
-    border: 2px solid var(--nb-black);
-
-    background: var(--nb-gray) !important;
-
-    height: 13px !important;
-
-    box-shadow: 2px 2px 0 var(--nb-black);
-}
-
-/* =========================================================
-   QUIZ — TIMER
-   ========================================================= */
-
-#quiz-timer {
-    color: var(--nb-black) !important;
-
-    background: var(--nb-yellow);
-
-    border: 2px solid var(--nb-black);
-
-    padding: 6px 10px;
-
-    border-radius: 8px;
-
-    box-shadow: 2px 2px 0 var(--nb-black);
-
-    font-weight: 800 !important;
-}
-
-/* =========================================================
-   QUIZ — INSTRUCTION
-   ========================================================= */
-
-#quiz-instruction {
-    display: inline-block;
-
-    color: var(--nb-black) !important;
-
-    background: #f0ede5;
-
-    border-left: 5px solid var(--nb-purple);
-
-    padding: 7px 10px;
-
-    font-weight: 600;
-
-    border-radius: 5px;
-}
-
-/* =========================================================
-   QUIZ — QUESTION
-   ========================================================= */
-
-#quiz-question {
-    color: var(--nb-black) !important;
-
-    font-weight: 650 !important;
-
-    line-height: 1.9 !important;
-
-    background:
-        linear-gradient(
-            135deg,
-            rgba(255,228,92,.16),
-            transparent 55%
-        );
-
-    padding: 18px;
-
-    border-left: 5px solid var(--nb-teal);
-
-    border-radius: 5px;
-}
-
-/* =========================================================
-   QUIZ — ANSWER OPTIONS
-   ========================================================= */
-
-.option-label {
-    cursor: pointer;
-
-    transition:
-        transform .15s ease;
-}
-
-.option-content {
-    position: relative;
-
-    background: var(--nb-paper) !important;
-
-    color: var(--nb-black) !important;
-
-    border:
-        var(--nb-border) !important;
-
-    border-radius: 10px !important;
-
-    box-shadow:
-        3px 3px 0 var(--nb-black);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease,
-        background .15s ease;
-}
-
-/* hover */
-
-.option-label:hover .option-content {
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        6px 6px 0 var(--nb-black);
-
-    background: #fff8c9 !important;
-}
-
-/* selected */
-
-.option-input:checked + .option-content {
-    background: var(--nb-teal) !important;
-
-    border-color: var(--nb-black) !important;
-
-    color: var(--nb-black) !important;
-
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        6px 6px 0 var(--nb-black);
-}
-
-.option-input:checked + .option-content .radio-letter {
-    background: var(--nb-black) !important;
-
-    color: white !important;
-
-    border-color: var(--nb-black) !important;
-}
-
-/* =========================================================
-   OPTION LETTER
-   ========================================================= */
-
-.radio-letter {
-    background: var(--nb-yellow) !important;
-
-    color: var(--nb-black) !important;
-
-    border:
-        2px solid var(--nb-black) !important;
-
-    border-radius: 7px !important;
-
-    box-shadow:
-        2px 2px 0 var(--nb-black);
-
-    transition:
-        transform .15s ease,
-        background .15s ease;
-}
-
-.option-label:hover .radio-letter {
-    transform: rotate(-3deg) scale(1.05);
-}
-
-.option-content .text-lg {
-    color: var(--nb-black) !important;
-
-    font-weight: 600;
-}
-
-/* =========================================================
-   AUDIO BUTTON
-   ========================================================= */
-
-#btn-play-audio {
-    background: var(--nb-blue) !important;
-
-    color: var(--nb-black) !important;
-
-    border: var(--nb-border) !important;
-
-    border-radius: 9px !important;
-
-    box-shadow: var(--nb-shadow-small);
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
-}
-
-#btn-play-audio:hover {
-    transform: translate(-2px,-2px);
-
-    box-shadow: 5px 5px 0 var(--nb-black);
-}
-
-#btn-show-transcript {
-    color: var(--nb-black) !important;
-
-    font-weight: 600;
-}
-
-/* transcript */
-
-#audio-transcript-fallback {
-    background: #fff8c9 !important;
-
-    color: var(--nb-black) !important;
-
-    border: var(--nb-border) !important;
-
-    box-shadow: var(--nb-shadow-small);
-}
-
-/* =========================================================
-   NEXT BUTTON
-   ========================================================= */
-
-#btn-next-question {
-    border-radius: 9px !important;
-}
-
-#btn-next-question:disabled {
-    background: #d7d3ca !important;
-
-    color: #77736b !important;
-
-    border-color: #77736b !important;
-
-    box-shadow: 2px 2px 0 #77736b;
-
-    transform: none !important;
-}
-
-/* =========================================================
-   QUIT
-   ========================================================= */
-
-#screen-quiz > button:last-child {
-    color: #77736b !important;
-
-    font-weight: 600;
-
-    transition:
-        color .15s ease,
-        transform .15s ease;
-}
-
-#screen-quiz > button:last-child:hover {
-    color: var(--nb-coral) !important;
-
-    transform: translateY(-2px);
-}
-
-/* =========================================================
-   RESULT HEADER
-   ========================================================= */
-
-#screen-result > .flex.justify-between {
-    background: transparent;
-}
-
-#screen-result > .flex.justify-between h2 {
-    color: var(--nb-black) !important;
-
-    font-size: 1.5rem;
-
-    font-weight: 900;
-
-    text-transform: uppercase;
-}
-
-/* home button */
-
-#screen-result > .flex.justify-between button:first-child {
-    background: var(--nb-paper) !important;
-
-    color: var(--nb-black) !important;
-
-    border: var(--nb-border) !important;
-
-    box-shadow: var(--nb-shadow-small);
-
-    border-radius: 8px !important;
-}
-
-#screen-result > .flex.justify-between button:first-child:hover {
-    background: var(--nb-yellow) !important;
-}
-
-/* =========================================================
-   RESULT — CERTIFICATE
-   ========================================================= */
-
-.certificate-container {
-    position: relative;
-
-    background: var(--nb-paper) !important;
-
-    border:
-        var(--nb-border) !important;
-
-    border-top:
-        9px solid var(--nb-yellow) !important;
-
-    border-radius: 14px !important;
-
-    box-shadow:
-        7px 7px 0 var(--nb-black) !important;
-
-    overflow: visible;
-}
-
-/* decorative color strip */
-
-.certificate-container::before {
-    content: "";
-
-    position: absolute;
-
-    width: 70px;
-    height: 12px;
-
-    top: -9px;
-    left: 28px;
-
-    background: var(--nb-coral);
-
-    border-left: 2px solid var(--nb-black);
-    border-right: 2px solid var(--nb-black);
-}
-
-/* =========================================================
-   RESULT — MAIN SCORE AREA
-   ========================================================= */
-
-.certificate-container .border.border-slate-200 {
-    background: #fffaf0 !important;
-
-    border:
-        var(--nb-border) !important;
-
-    box-shadow: var(--nb-shadow-small);
-}
-
-/* total score */
-
-#res-total-score {
-    color: var(--nb-black) !important;
-
-    font-weight: 900 !important;
-
-    letter-spacing: -.04em;
-}
-
-/* result level */
-
-#res-level {
-    color: var(--nb-black) !important;
-
-    font-weight: 900 !important;
-}
-
-/* =========================================================
-   SCORE BAR
-   ========================================================= */
-
-.score-bar-container {
-    position: relative;
-
-    height: 15px;
-
-    margin-top: 2.5rem;
-    margin-bottom: 3.8rem;
-
-    /* ruang aman supaya indicator tidak terpotong */
-    margin-left: 12px;
-    margin-right: 12px;
-
-    border:
-        2px solid var(--nb-black);
-
-    border-radius: 999px;
-
-    background:
-        linear-gradient(
-            to right,
-            var(--nb-coral) 0%,
-            #ff9b58 28%,
-            var(--nb-yellow) 52%,
-            #a9d83e 75%,
-            #53c96b 100%
-        );
-
-    box-shadow:
-        3px 3px 0 var(--nb-black);
-}
-
-/* =========================================================
-   SCORE MARKERS
-   ========================================================= */
-
-.score-marker {
-    position: absolute;
-
-    top: -7px;
-
-    width: 3px;
-    height: 29px;
-
-    background: var(--nb-black);
-
-    z-index: 2;
-}
-
-/* default marker label */
-
-.score-marker span {
-    position: absolute;
-
-    top: 34px;
-
-    left: 50%;
-
-    transform: translateX(-50%);
-
-    font-size: .75rem;
-
-    font-weight: 800;
-
-    color: var(--nb-black);
-
-    white-space: nowrap;
-
-    text-align: center;
-}
-
-/* FIX 10 — jangan sampai keluar kiri */
-
-.score-marker:nth-child(1) span {
-    left: 0;
-
-    transform: none;
-
-    text-align: left;
-}
-
-/* FIX 250 — jangan sampai keluar kanan */
-
-.score-marker:nth-child(5) span {
-    left: auto;
-
-    right: 0;
-
-    transform: none;
-
-    text-align: right;
-}
-
-/* =========================================================
-   SCORE INDICATOR
-   ========================================================= */
-
-/* =========================================================
-   FIX RESULT INDICATORS
-   ========================================================= */
-
-/* Score 58 — jadikan indicator tetap lingkaran yang bersih */
-.score-indicator {
-    position: absolute !important;
-
-    width: 28px !important;
-    height: 28px !important;
-
-    background: var(--nb-paper) !important;
-
-    border: 3px solid var(--nb-black) !important;
-    border-radius: 50% !important;
-
-    box-shadow: 3px 3px 0 var(--nb-black) !important;
-
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-
-    /*
-       JANGAN kasih left di sini.
-       left akan diatur oleh JavaScript.
-    */
-
-    top: 50% !important;
-
-    transform: translate(-50%, -50%) !important;
-
-    z-index: 10 !important;
-
-    transition:
-        left 1s ease-out !important;
-}
-
-.score-indicator-value {
-    position: static !important;
-
-    transform: none !important;
-
-    background: transparent !important;
-
-    border: 0 !important;
-    box-shadow: none !important;
-
-    color: var(--nb-black) !important;
-
-    min-width: 0 !important;
-
-    font-size: 12px !important;
-    font-weight: 900 !important;
-
-    white-space: nowrap;
-}
-
-/* Section indicator — HILANGKAN kotak kuning */
-.section-bar-indicator {
-    display: none !important;
-}
-
-/* =========================================================
-   SECTION RESULTS
-   ========================================================= */
-
-#res-sections-container {
-    gap: 18px !important;
-}
-
-.section-bar-bg {
-    height: 15px;
-
-    background: #e4e0d6 !important;
-
-    border:
-        2px solid var(--nb-black);
-
-    border-radius: 999px;
-
-    box-shadow:
-        2px 2px 0 var(--nb-black);
-}
-
-.section-bar-fill {
-    height: 100%;
-
-    background:
-        linear-gradient(
-            90deg,
-            var(--nb-purple),
-            var(--nb-teal)
-        ) !important;
-
-    border-radius: 999px;
-
-    transition:
-        width 1s cubic-bezier(.2,.8,.2,1) !important;
-}
-
-.section-bar-indicator {
-    width: 19px !important;
-    height: 19px !important;
-
-    background: var(--nb-yellow) !important;
-
-    border:
-        2px solid var(--nb-black) !important;
-
-    box-shadow:
-        2px 2px 0 var(--nb-black) !important;
-}
-
-/* =========================================================
-   RESULT DETAIL CARDS
-   ========================================================= */
-
-#screen-result .bg-slate-50,
-#screen-result .bg-green-50,
-#screen-result .bg-red-50 {
-    border: 2px solid var(--nb-black);
-
-    box-shadow: 3px 3px 0 var(--nb-black);
-}
-
-/* =========================================================
-   HISTORY
-   ========================================================= */
-
-#history-container > div {
-    background: var(--nb-paper) !important;
-
-    border:
-        var(--nb-border) !important;
-
-    box-shadow:
-        var(--nb-shadow-small) !important;
-
-    transition:
-        transform .15s ease,
-        box-shadow .15s ease;
-}
-
-#history-container > div:hover {
-    transform: translate(-2px,-2px);
-
-    box-shadow:
-        5px 5px 0 var(--nb-black) !important;
-}
-
-/* =========================================================
-   SCROLLBAR
-   ========================================================= */
-
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-::-webkit-scrollbar-track {
-    background: #e9e4d8;
-}
-
-::-webkit-scrollbar-thumb {
-    background: var(--nb-black);
-
-    border: 2px solid #e9e4d8;
-
-    border-radius: 999px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: var(--nb-purple);
-}
-
-/* =========================================================
-   SELECTION
-   ========================================================= */
-
-::selection {
-    background: var(--nb-yellow);
-    color: var(--nb-black);
-}
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 640px) {
-
-    body {
-        background-color: var(--nb-bg) !important;
-    }
-
-    /* quiz */
-
-    #screen-quiz {
-        margin-top: 10px !important;
-    }
-
-    #screen-quiz > div:first-child {
-        border-radius: 11px 11px 0 0 !important;
-
-        box-shadow:
-            3px 0 0 var(--nb-black),
-            -2px 0 0 var(--nb-black);
-    }
-
-    #screen-quiz > div:nth-child(2) {
-        padding: 18px !important;
-
-        min-height: 420px !important;
-
-        border-radius: 0 0 11px 11px !important;
-
-        box-shadow:
-            4px 4px 0 var(--nb-black);
-    }
-
-    #quiz-question {
-        font-size: 1.15rem !important;
-
-        padding: 14px;
-    }
-
-    .option-content {
-        padding: 13px !important;
-
-        min-height: 58px;
-
-        box-shadow:
-            3px 3px 0 var(--nb-black);
-    }
-
-    .option-label:hover .option-content {
-        box-shadow:
-            4px 4px 0 var(--nb-black);
-    }
-
-    .radio-letter {
-        width: 34px !important;
-        height: 34px !important;
-
-        min-width: 34px;
-
-        margin-right: 10px !important;
-    }
-
-    /* result */
-
-    .certificate-container {
-        padding: 18px !important;
-
-        border-radius: 11px !important;
-
-        box-shadow:
-            5px 5px 0 var(--nb-black) !important;
-    }
-
-    .score-bar-container {
-        margin-left: 12px;
-        margin-right: 12px;
-
-        margin-top: 2.7rem;
-        margin-bottom: 4.2rem;
-    }
-
-    .score-marker span {
-        font-size: .68rem;
-    }
-
-    .score-indicator {
-        width: 30px;
-        height: 30px;
-    }
-
-    .score-indicator-value {
-        font-size: .75rem;
-    }
-
-    #screen-result .flex.flex-col.sm\:flex-row {
-        gap: 18px !important;
-    }
-
-    /* section result */
-
-    #res-sections-container > div {
-        gap: 10px !important;
-    }
-
-    #res-sections-container .w-1\/3 {
-        min-width: 105px !important;
-    }
-}
-
-/* =========================================================
-   ACCESSIBILITY
-   ========================================================= */
-
-button:focus-visible,
-input:focus-visible,
-label:has(input:focus-visible) {
-    outline: 3px solid var(--nb-purple);
-
-    outline-offset: 3px;
-}
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-/* =========================================================
-   PRINT MODE — CETAK HANYA HASIL JFT
-   ========================================================= */
-
-@media print {
-
-    @page {
-        size: A4 portrait;
-        margin: 8mm;
-    }
-
-    /* Sembunyikan SEMUA halaman web */
-    body * {
-        visibility: hidden !important;
-    }
-
-    /* Tampilkan hanya sertifikat */
-    #certificate-area,
-    #certificate-area * {
-        visibility: visible !important;
-    }
-
-    /* Jadikan certificate sebagai satu-satunya halaman cetak */
-    #certificate-area {
-        position: absolute !important;
-        left: 0 !important;
-        top: 0 !important;
-
-        width: 100% !important;
-        max-width: none !important;
-
-        margin: 0 !important;
-        padding: 10mm !important;
-
-        background: #fff !important;
-
-        border: 2px solid #111 !important;
-        border-radius: 0 !important;
-        box-shadow: none !important;
-
-        box-sizing: border-box !important;
-
-        page-break-before: avoid !important;
-        page-break-after: avoid !important;
-        break-before: avoid !important;
-        break-after: avoid !important;
-        break-inside: avoid !important;
-    }
-
-    /* Jangan ikut cetak halaman kedua */
-    #screen-result > div:not(#certificate-area) {
-        display: none !important;
-    }
-
-    /* Header hasil latihan + tombol otomatis hilang
-       karena berada di luar certificate-area */
-
-    /* =====================================================
-       SCORE BAR
-       ===================================================== */
-
-    .score-bar-container {
-        position: relative !important;
-
-        width: calc(100% - 8px) !important;
-        height: 10px !important;
-
-        margin-left: 4px !important;
-        margin-right: 4px !important;
-
-        border: 2px solid #111 !important;
-        border-radius: 999px !important;
-
-        background: linear-gradient(
-            to right,
-            #ff6b6b 0%,
-            #ff9f43 35%,
-            #ffe66d 55%,
-            #a8d84e 80%,
-            #55c667 100%
-        ) !important;
-
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-
-        box-sizing: border-box !important;
-
-        overflow: visible !important;
-    }
-
-    /* Marker */
-    .score-marker {
-        position: absolute !important;
-
-        top: -7px !important;
-
-        width: 2px !important;
-        height: 22px !important;
-
-        background: #111 !important;
-
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .score-marker span {
-        position: absolute !important;
-
-        top: 25px !important;
-        left: 50% !important;
-
-        transform: translateX(-50%) !important;
-
-        color: #111 !important;
-
-        font-size: 10px !important;
-        font-weight: 700 !important;
-
-        white-space: nowrap !important;
-    }
-
-    /* Marker 10 */
-    .score-marker:first-child span {
-        left: 0 !important;
-        transform: translateX(0) !important;
-    }
-
-    /* Marker 250 */
-    .score-marker:last-of-type span {
-        left: 100% !important;
-        transform: translateX(-100%) !important;
-    }
-
-    /* =====================================================
-       SCORE INDICATOR
-       ===================================================== */
-
-    .score-indicator {
-        position: absolute !important;
-
-        top: 50% !important;
-
-        width: 26px !important;
-        height: 26px !important;
-
-        transform: translate(-50%, -50%) !important;
-
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-
-        background: #fff !important;
-
-        border: 3px solid #111 !important;
-        border-radius: 50% !important;
-
-        box-shadow: none !important;
-
-        z-index: 10 !important;
-
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .score-indicator-value {
-        position: static !important;
-
-        transform: none !important;
-
-        background: transparent !important;
-
-        border: 0 !important;
-        box-shadow: none !important;
-
-        color: #111 !important;
-
-        font-size: 9px !important;
-        font-weight: 900 !important;
-
-        min-width: 0 !important;
-
-        white-space: nowrap !important;
-    }
-
-    /* =====================================================
-       SECTION ACCURACY
-       ===================================================== */
-
-    .section-bar-bg {
-        background: #eee !important;
-        border: 2px solid #111 !important;
-
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    .section-bar-fill {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-
-    /* =====================================================
-       FOTO
-       ===================================================== */
-
-    #user-photo-img {
-        max-width: 100% !important;
-    }
-
-    /* Hindari elemen terpotong */
-    .certificate-container,
-    .certificate-container > div {
-        break-inside: avoid !important;
-        page-break-inside: avoid !important;
-    }
-
-    /* Background warna tetap dicetak */
-    * {
-        -webkit-print-color-adjust: exact !important;
-        print-color-adjust: exact !important;
-    }
-}
-
-</style>
+        :root { --nb-bg: #f8f3e8; --nb-paper: #fffdf8; --nb-black: #181818; --nb-yellow: #ffe45c; --nb-coral: #ff7373; --nb-purple: #9b82f3; --nb-teal: #43c9bd; --nb-blue: #62bddb; --nb-gray: #f0ede5; --nb-border: 2.5px solid var(--nb-black); --nb-shadow: 5px 5px 0 var(--nb-black); --nb-shadow-small: 3px 3px 0 var(--nb-black); --nb-radius: 14px; }
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif !important; color: var(--nb-black) !important; background: radial-gradient(circle at 15% 15%, rgba(255,228,92,.18), transparent 22%), radial-gradient(circle at 85% 20%, rgba(67,201,189,.13), transparent 20%), var(--nb-bg) !important; -webkit-tap-highlight-color: transparent; }
+        body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .18; background-image: radial-gradient(rgba(24,24,24,.18) .7px, transparent .7px); background-size: 7px 7px; }
+        .japanese-text { font-family: 'Noto Sans JP', sans-serif !important; }
+        .screen { display: none; animation: nbScreenIn .28s ease-out; }
+        .screen.active { display: block; }
+        @keyframes nbScreenIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .bg-white { background-color: var(--nb-paper) !important; }
+        #screen-home > .bg-white, #screen-history > .bg-white { border: var(--nb-border) !important; box-shadow: var(--nb-shadow) !important; }
+        #screen-home .bg-blue-50 { background: #fff4a8 !important; color: var(--nb-black) !important; border: var(--nb-border); box-shadow: var(--nb-shadow-small); }
+        #screen-home input[type="text"] { background: var(--nb-paper) !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small); transition: transform .18s ease, box-shadow .18s ease, background .18s ease; }
+        #screen-home input[type="text"]:focus { outline: none !important; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--nb-black), 0 0 0 3px rgba(255,228,92,.65); background: #fffef9 !important; }
+        #screen-home label:has(input[name="q_count"]) { border: var(--nb-border) !important; background: var(--nb-paper) !important; box-shadow: var(--nb-shadow-small); transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+        #screen-home label:has(input[name="q_count"]):hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--nb-black); }
+        #screen-home label:has(input[name="q_count"]:checked) { background: var(--nb-yellow) !important; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--nb-black); }
+        button.bg-brand-600, #btn-next-question { position: relative; background: var(--nb-black) !important; color: white !important; border: var(--nb-border) !important; border-radius: 10px !important; box-shadow: var(--nb-shadow); transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+        button.bg-brand-600:hover, #btn-next-question:hover:not(:disabled) { background: var(--nb-coral) !important; color: var(--nb-black) !important; transform: translate(-2px,-2px); box-shadow: 7px 7px 0 var(--nb-black); }
+        button.bg-brand-600:active, #btn-next-question:active:not(:disabled) { transform: translate(3px,3px); box-shadow: 2px 2px 0 var(--nb-black); }
+        #screen-quiz > div:first-child { background: var(--nb-paper) !important; border: var(--nb-border) !important; border-bottom-width: 0 !important; border-radius: var(--nb-radius) var(--nb-radius) 0 0 !important; box-shadow: 5px 0 0 var(--nb-black), -2px 0 0 var(--nb-black); }
+        #screen-quiz > div:nth-child(2) { background: var(--nb-paper) !important; border: var(--nb-border) !important; border-top-width: 0 !important; border-radius: 0 0 var(--nb-radius) var(--nb-radius) !important; box-shadow: var(--nb-shadow); min-height: 430px !important; }
+        #quiz-section-badge { background: var(--nb-yellow) !important; color: var(--nb-black) !important; border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); border-radius: 7px !important; font-weight: 800 !important; }
+        #quiz-progress-text { color: var(--nb-black) !important; font-weight: 800 !important; }
+        #quiz-progress-bar { background: repeating-linear-gradient(135deg, var(--nb-coral) 0, var(--nb-coral) 8px, #ff8585 8px, #ff8585 16px) !important; border-right: 2px solid var(--nb-black); transition: width .35s ease !important; }
+        #screen-quiz > div:first-child .w-full.sm\:w-1\/2 { border: 2px solid var(--nb-black); background: var(--nb-gray) !important; height: 13px !important; box-shadow: 2px 2px 0 var(--nb-black); }
+        #quiz-timer { color: var(--nb-black) !important; background: var(--nb-yellow); border: 2px solid var(--nb-black); padding: 6px 10px; border-radius: 8px; box-shadow: 2px 2px 0 var(--nb-black); font-weight: 800 !important; }
+        #quiz-instruction { display: inline-block; color: var(--nb-black) !important; background: #f0ede5; border-left: 5px solid var(--nb-purple); padding: 7px 10px; font-weight: 600; border-radius: 5px; }
+        #quiz-question { color: var(--nb-black) !important; font-weight: 650 !important; line-height: 1.9 !important; background: linear-gradient(135deg, rgba(255,228,92,.16), transparent 55%); padding: 18px; border-left: 5px solid var(--nb-teal); border-radius: 5px; }
+        .option-label { cursor: pointer; transition: transform .15s ease; }
+        .option-content { position: relative; background: var(--nb-paper) !important; color: var(--nb-black) !important; border: var(--nb-border) !important; border-radius: 10px !important; box-shadow: 3px 3px 0 var(--nb-black); transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
+        .option-label:hover .option-content { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--nb-black); background: #fff8c9 !important; }
+        .option-input:checked + .option-content { background: var(--nb-teal) !important; border-color: var(--nb-black) !important; color: var(--nb-black) !important; transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--nb-black); }
+        .option-input:checked + .option-content .radio-letter { background: var(--nb-black) !important; color: white !important; border-color: var(--nb-black) !important; }
+        .radio-letter { background: var(--nb-yellow) !important; color: var(--nb-black) !important; border: 2px solid var(--nb-black) !important; border-radius: 7px !important; box-shadow: 2px 2px 0 var(--nb-black); transition: transform .15s ease, background .15s ease; }
+        .option-label:hover .radio-letter { transform: rotate(-3deg) scale(1.05); }
+        .option-content .text-lg { color: var(--nb-black) !important; font-weight: 600; }
+        #btn-play-audio { background: var(--nb-blue) !important; color: var(--nb-black) !important; border: var(--nb-border) !important; border-radius: 9px !important; box-shadow: var(--nb-shadow-small); transition: transform .15s ease, box-shadow .15s ease; }
+        #btn-play-audio:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--nb-black); }
+        #btn-show-transcript { color: var(--nb-black) !important; font-weight: 600; }
+        #audio-transcript-fallback { background: #fff8c9 !important; color: var(--nb-black) !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small); }
+        #btn-next-question:disabled { background: #d7d3ca !important; color: #77736b !important; border-color: #77736b !important; box-shadow: 2px 2px 0 #77736b; transform: none !important; }
+        #screen-quiz > button:last-child { color: #77736b !important; font-weight: 600; transition: color .15s ease, transform .15s ease; }
+        #screen-quiz > button:last-child:hover { color: var(--nb-coral) !important; transform: translateY(-2px); }
+        .certificate-container { position: relative; background: var(--nb-paper) !important; border: var(--nb-border) !important; border-top: 9px solid var(--nb-yellow) !important; border-radius: 14px !important; box-shadow: 7px 7px 0 var(--nb-black) !important; overflow: visible; }
+        .certificate-container::before { content: ""; position: absolute; width: 70px; height: 12px; top: -9px; left: 28px; background: var(--nb-coral); border-left: 2px solid var(--nb-black); border-right: 2px solid var(--nb-black); }
+        .certificate-container .border.border-slate-200 { background: #fffaf0 !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small); }
+        #res-total-score, #res-level { color: var(--nb-black) !important; font-weight: 900 !important; }
+        .score-bar-container { position: relative; height: 15px; margin-top: 2.5rem; margin-bottom: 3.8rem; margin-left: 12px; margin-right: 12px; border: 2px solid var(--nb-black); border-radius: 999px; background: linear-gradient(to right, var(--nb-coral) 0%, #ff9b58 28%, var(--nb-yellow) 52%, #a9d83e 75%, #53c96b 100%); box-shadow: 3px 3px 0 var(--nb-black); }
+        .score-marker { position: absolute; top: -7px; width: 3px; height: 29px; background: var(--nb-black); z-index: 2; }
+        .score-marker span { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); font-size: .75rem; font-weight: 800; color: var(--nb-black); white-space: nowrap; text-align: center; }
+        .score-marker:nth-child(1) span { left: 0; transform: none; text-align: left; }
+        .score-marker:nth-child(5) span { left: auto; right: 0; transform: none; text-align: right; }
+        .score-indicator { position: absolute !important; width: 28px !important; height: 28px !important; background: var(--nb-paper) !important; border: 3px solid var(--nb-black) !important; border-radius: 50% !important; box-shadow: 3px 3px 0 var(--nb-black) !important; display: flex !important; align-items: center !important; justify-content: center !important; top: 50% !important; transform: translate(-50%, -50%) !important; z-index: 10 !important; transition: left 1s ease-out !important; }
+        .score-indicator-value { position: static !important; transform: none !important; background: transparent !important; border: 0 !important; box-shadow: none !important; color: var(--nb-black) !important; min-width: 0 !important; font-size: 12px !important; font-weight: 900 !important; white-space: nowrap; }
+        .section-bar-indicator { display: none !important; }
+        #res-sections-container { gap: 18px !important; }
+        .section-bar-bg { height: 15px; background: #e4e0d6 !important; border: 2px solid var(--nb-black); border-radius: 999px; box-shadow: 2px 2px 0 var(--nb-black); }
+        .section-bar-fill { height: 100%; background: linear-gradient(90deg, var(--nb-purple), var(--nb-teal)) !important; border-radius: 999px; transition: width 1s cubic-bezier(.2,.8,.2,1) !important; }
+        #screen-result .bg-slate-50, #screen-result .bg-green-50, #screen-result .bg-red-50 { border: 2px solid var(--nb-black); box-shadow: 3px 3px 0 var(--nb-black); }
+        #history-container > div { background: var(--nb-paper) !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small) !important; transition: transform .15s ease, box-shadow .15s ease; }
+        #history-container > div:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--nb-black) !important; }
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #e9e4d8; }
+        ::-webkit-scrollbar-thumb { background: var(--nb-black); border: 2px solid #e9e4d8; border-radius: 999px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--nb-purple); }
+        ::selection { background: var(--nb-yellow); color: var(--nb-black); }
+        @media (max-width: 640px) {
+            body { background-color: var(--nb-bg) !important; }
+            #screen-quiz { margin-top: 10px !important; }
+            #screen-quiz > div:first-child { border-radius: 11px 11px 0 0 !important; box-shadow: 3px 0 0 var(--nb-black), -2px 0 0 var(--nb-black); }
+            #screen-quiz > div:nth-child(2) { padding: 18px !important; min-height: 420px !important; border-radius: 0 0 11px 11px !important; box-shadow: 4px 4px 0 var(--nb-black); }
+            #quiz-question { font-size: 1.15rem !important; padding: 14px; }
+            .option-content { padding: 13px !important; min-height: 58px; box-shadow: 3px 3px 0 var(--nb-black); }
+            .option-label:hover .option-content { box-shadow: 4px 4px 0 var(--nb-black); }
+            .radio-letter { width: 34px !important; height: 34px !important; min-width: 34px; margin-right: 10px !important; }
+            .certificate-container { padding: 18px !important; border-radius: 11px !important; box-shadow: 5px 5px 0 var(--nb-black) !important; }
+            .score-bar-container { margin-left: 12px; margin-right: 12px; margin-top: 2.7rem; margin-bottom: 4.2rem; }
+            .score-marker span { font-size: .68rem; }
+            .score-indicator { width: 30px; height: 30px; }
+            .score-indicator-value { font-size: .75rem; }
+            #screen-result .flex.flex-col.sm\:flex-row { gap: 18px !important; }
+            #res-sections-container > div { gap: 10px !important; }
+            #res-sections-container .w-1\/3 { min-width: 105px !important; }
+        }
+        button:focus-visible, input:focus-visible, label:has(input:focus-visible) { outline: 3px solid var(--nb-purple); outline-offset: 3px; }
+        @media print {
+            @page { size: A4 portrait; margin: 8mm; }
+            body * { visibility: hidden !important; }
+            #certificate-area, #certificate-area * { visibility: visible !important; }
+            #certificate-area { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 10mm !important; background: #fff !important; border: 2px solid #111 !important; border-radius: 0 !important; box-shadow: none !important; box-sizing: border-box !important; }
+            #screen-result > div:not(#certificate-area) { display: none !important; }
+            .score-bar-container { position: relative !important; width: calc(100% - 8px) !important; height: 10px !important; margin-left: 4px !important; margin-right: 4px !important; border: 2px solid #111 !important; background: linear-gradient(to right, #ff6b6b 0%, #ff9f43 35%, #ffe66d 55%, #a8d84e 80%, #55c667 100%) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .score-marker { position: absolute !important; top: -7px !important; width: 2px !important; height: 22px !important; background: #111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .score-marker span { position: absolute !important; top: 25px !important; color: #111 !important; font-size: 10px !important; }
+            .score-indicator { border: 3px solid #111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .score-indicator-value { color: #111 !important; }
+            .section-bar-bg { background: #eee !important; border: 2px solid #111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .section-bar-fill { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+        }
+    </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
-    <!-- Header -->
-    <header class="bg-white shadow-sm sticky top-0 z-50">
+    <!-- Header & Navigasi -->
+    <header id="main-header" class="bg-white shadow-sm sticky top-0 z-50 hidden">
         <div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
             <div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
                 <i class="fa-solid fa-language text-brand-600 text-2xl"></i>
@@ -1396,9 +134,13 @@ label:has(input:focus-visible) {
                     <p class="text-xs text-slate-500 hidden sm:block">Simulasi Latihan Bahasa Jepang</p>
                 </div>
             </div>
-            <nav>
+            <nav class="flex items-center gap-4">
                 <button onclick="navigate('history')" class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1">
                     <i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+                </button>
+                <!-- TOMBOL LOGOUT UNTUK USER -->
+                <button onclick="handleLogout()" class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1">
+                    <i class="fa-solid fa-right-from-bracket"></i> Keluar
                 </button>
             </nav>
         </div>
@@ -1407,8 +149,29 @@ label:has(input:focus-visible) {
     <!-- Main Content Area -->
     <main class="flex-grow flex flex-col items-center p-4 max-w-4xl mx-auto w-full">
 
-        <!-- SCREEN 1: Home -->
-        <div id="screen-home" class="screen active w-full max-w-2xl mt-8">
+        <!-- SCREEN 0: Login / Auth -->
+        <div id="screen-auth" class="screen active w-full max-w-md mt-12 mx-auto">
+            <div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+                <i class="fa-solid fa-lock text-brand-500 text-4xl mb-4"></i>
+                <h2 class="text-2xl font-bold text-slate-800 mb-2">Masuk ke JFT-Basic</h2>
+                <p class="text-slate-500 mb-6 text-sm">Silakan login untuk mengakses simulasi latihan atau hubungi admin jika belum terdaftar.</p>
+                <div class="text-left mb-4">
+                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 block">Email</label>
+                    <input type="email" id="login-email" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition" placeholder="email@contoh.com">
+                </div>
+                <div class="text-left mb-6">
+                    <label class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 block">Password (Auth Code)</label>
+                    <input type="password" id="login-password" class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition" placeholder="••••••••">
+                </div>
+                <button onclick="handleLogin()" id="btn-login" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
+                    Masuk <i class="fa-solid fa-right-to-bracket"></i>
+                </button>
+                <p id="login-error" class="text-red-500 text-sm mt-3 hidden">Email atau password salah.</p>
+            </div>
+        </div>
+
+        <!-- SCREEN 1: Home (Menu Latihan) -->
+        <div id="screen-home" class="screen w-full max-w-2xl mt-8"> 
             <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
                 <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-50 text-brand-600 mb-4">
                     <i class="fa-solid fa-graduation-cap text-3xl"></i>
@@ -1416,14 +179,13 @@ label:has(input:focus-visible) {
                 <h2 class="text-2xl font-bold text-slate-800 mb-2">Siap untuk Latihan?</h2>
                 <p class="text-slate-600 mb-8">Pilih mode simulasi dan jumlah soal untuk memulai latihan.</p>
 
-                <!-- Input Nama -->
                 <div class="text-left mb-6">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap</h3>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <i class="fa-regular fa-user text-slate-400"></i>
                         </div>
-                        <input type="text" id="user-name-input" class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 focus:ring-1 focus:ring-brand-500 transition text-slate-700 font-medium uppercase" placeholder="Masukkan nama Anda..." value="PRAYUDA EKA SYACH PUTRA">
+                        <input type="text" id="user-name-input" class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition text-slate-700 font-medium uppercase" placeholder="Masukkan nama Anda..." readonly>
                     </div>
                 </div>
 
@@ -1438,7 +200,6 @@ label:has(input:focus-visible) {
                                 <span class="text-xs text-slate-500">Simulasi pola JFT-Basic</span>
                             </div>
                         </label>
-
                         <label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition">
                             <input type="radio" name="period" value="random" class="peer sr-only" />
                             <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-xl absolute inset-0 pointer-events-none transition"></div>
@@ -1453,35 +214,29 @@ label:has(input:focus-visible) {
                 <div class="text-left mb-8">
                     <h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">2. Jumlah Soal</h3>
                     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition text-center justify-center">
+                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
                             <input type="radio" name="q_count" value="10" class="peer sr-only" checked />
                             <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
                             <span class="font-semibold text-slate-700 z-10">10 Soal</span>
                         </label>
-                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition text-center justify-center">
+                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
                             <input type="radio" name="q_count" value="20" class="peer sr-only" />
                             <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
                             <span class="font-semibold text-slate-700 z-10">20 Soal</span>
                         </label>
-                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition text-center justify-center">
+                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
                             <input type="radio" name="q_count" value="30" class="peer sr-only" />
                             <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
                             <span class="font-semibold text-slate-700 z-10">30 Soal</span>
                         </label>
-                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition text-center justify-center">
+                        <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
                             <input type="radio" name="q_count" value="50" class="peer sr-only" />
                             <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
                             <span class="font-semibold text-slate-700 z-10">50 Soal</span>
                         </label>
                     </div>
                 </div>
-
-                <div class="bg-blue-50 text-blue-800 text-sm p-4 rounded-lg text-left mb-6 flex items-start gap-3">
-                    <i class="fa-solid fa-circle-info mt-0.5"></i>
-                    <p>Soal ini adalah simulasi yang disusun menyerupai format dan tingkat kesulitan JFT-Basic. Bukan bocoran soal resmi.</p>
-                </div>
-
-                <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 mx-auto">
+                <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto">
                     Mulai Latihan <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
@@ -1489,7 +244,6 @@ label:has(input:focus-visible) {
 
         <!-- SCREEN 2: Quiz -->
         <div id="screen-quiz" class="screen w-full mt-4">
-            <!-- Progress Top Bar -->
             <div class="bg-white p-4 rounded-t-2xl border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
                 <div class="flex items-center gap-3 w-full sm:w-auto">
                     <span id="quiz-section-badge" class="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-semibold japanese-text">文字と語彙</span>
@@ -1503,41 +257,25 @@ label:has(input:focus-visible) {
                 </div>
             </div>
 
-            <!-- Question Area -->
             <div class="bg-white p-6 sm:p-8 rounded-b-2xl shadow-sm border border-t-0 border-slate-100 min-h-[400px] flex flex-col">
-                
                 <div class="mb-6">
                     <p id="quiz-instruction" class="text-sm text-slate-500 mb-2 japanese-text">つぎの ぶんの （　　　）に なにを いれますか。</p>
-                    
-                    <!-- Audio Button (Hidden by default, shown for listening) -->
                     <button id="btn-play-audio" class="hidden mb-4 bg-brand-100 hover:bg-brand-200 text-brand-700 py-2 px-4 rounded-lg flex items-center gap-2 transition font-medium" onclick="playQuestionAudio()">
                         <i class="fa-solid fa-volume-high"></i> Putar Audio
                     </button>
-
-                    <!-- Fallback Transcript (Jika suara gagal di HP pengguna) -->
                     <button id="btn-show-transcript" class="hidden mb-4 text-sm text-slate-500 hover:text-brand-600 underline transition" onclick="showTranscript()">
                         Audio tidak berbunyi? Klik untuk melihat teks percakapan
                     </button>
                     <div id="audio-transcript-fallback" class="hidden mb-4 p-4 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 japanese-text whitespace-pre-wrap text-sm leading-relaxed"></div>
-
-                    <h3 id="quiz-question" class="text-xl sm:text-2xl font-medium text-slate-800 japanese-text leading-relaxed whitespace-pre-wrap">
-                        <!-- Question text injected here -->
-                    </h3>
+                    <h3 id="quiz-question" class="text-xl sm:text-2xl font-medium text-slate-800 japanese-text leading-relaxed whitespace-pre-wrap"></h3>
                 </div>
-
-                <!-- Options -->
-                <div id="quiz-options" class="flex-grow flex flex-col gap-3">
-                    <!-- Options injected by JS -->
-                </div>
-
-                <!-- Action Bar -->
+                <div id="quiz-options" class="flex-grow flex flex-col gap-3"></div>
                 <div class="mt-8 flex justify-end gap-3">
                     <button id="btn-next-question" onclick="nextQuestion()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 opacity-50 cursor-not-allowed" disabled>
                         Selanjutnya <i class="fa-solid fa-angle-right"></i>
                     </button>
                 </div>
             </div>
-            
             <button onclick="confirmQuit()" class="mt-4 text-slate-400 hover:text-red-500 text-sm transition flex items-center gap-1 mx-auto">
                 <i class="fa-solid fa-xmark"></i> Akhiri latihan lebih awal
             </button>
@@ -1545,23 +283,17 @@ label:has(input:focus-visible) {
 
         <!-- SCREEN 3: Results -->
         <div id="screen-result" class="screen w-full mt-4">
-            
             <div class="flex justify-between items-center mb-4 px-2">
                 <h2 class="text-xl font-bold text-slate-800">Hasil Latihan</h2>
                 <div class="flex gap-2">
-                    <button onclick="navigate('home')" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition">
-                        Beranda
-                    </button>
+                    <button onclick="navigate('home')" class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition">Beranda</button>
                     <button onclick="window.print()" class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2">
                         <i class="fa-solid fa-print"></i> Cetak
                     </button>
                 </div>
             </div>
 
-            <!-- Certificate Mockup inspired by reference -->
             <div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
-                
-                <!-- Header part -->
                 <div class="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-200 pb-6 mb-6">
                     <div>
                         <div class="flex items-center gap-2 mb-2">
@@ -1571,166 +303,163 @@ label:has(input:focus-visible) {
                         <h1 class="text-lg font-bold text-slate-800 japanese-text">模擬試験 判定結果通知書</h1>
                         <h2 class="text-sm text-slate-600">Japan Foundation Test for Basic Japanese Practice Assessment Result</h2>
                     </div>
-                    <!-- Mock Logo/Foundation -->
                     <div class="mt-4 sm:mt-0 flex flex-col items-end text-brand-700 opacity-80">
                         <i class="fa-brands fa-pagelines text-3xl mb-1"></i>
                         <span class="text-xs font-semibold">JAPAN FOUNDATION</span>
                     </div>
                 </div>
 
-                <!-- Identity part -->
                 <div class="flex flex-col sm:flex-row gap-6 mb-8">
-                    <!-- Photo placeholder (Clickable) -->
                     <div class="w-32 h-40 bg-slate-100 flex flex-col items-center justify-center text-slate-300 border border-slate-200 mx-auto sm:mx-0 shrink-0 relative cursor-pointer group overflow-hidden" onclick="document.getElementById('photo-upload').click()" title="Klik untuk mengubah foto">
                         <img id="user-photo-img" src="" class="w-full h-full object-cover hidden absolute inset-0 z-10" alt="User Photo">
                         <div id="photo-placeholder" class="flex flex-col items-center p-2 text-center z-0">
                             <i class="fa-solid fa-camera text-4xl mb-2 text-slate-400"></i>
                             <span class="text-[10px] text-slate-500 font-medium leading-tight">Klik untuk<br>pasang foto</span>
                         </div>
-                        <div class="absolute inset-0 bg-black/40 hidden group-hover:flex items-center justify-center z-20 transition-all">
-                            <i class="fa-solid fa-pen text-white text-xl"></i>
-                        </div>
                         <input type="file" id="photo-upload" class="hidden" accept="image/*" onchange="handlePhotoUpload(event)">
                     </div>
                     
-                    <!-- Details -->
                     <div class="flex-grow text-sm grid grid-cols-[120px_1fr] gap-y-2 gap-x-4 items-center">
                         <div class="text-slate-500 japanese-text">受験番号<br><span class="text-[10px] block -mt-1">Registration Number</span></div>
-                        <div class="font-medium">: <span id="res-reg-num">PRACTICE-000001</span></div>
-                        
+                        <div class="font-medium">: <span id="res-reg-num"></span></div>
                         <div class="text-slate-500 japanese-text">氏名<br><span class="text-[10px] block -mt-1">Name</span></div>
-                        <div class="font-medium text-lg flex items-center gap-2">
-                            : <span id="res-name">PRAYUDA EKA SYACH PUTRA</span>
-                            <button onclick="editName()" class="text-slate-400 hover:text-brand-600 transition p-1 bg-slate-50 hover:bg-brand-50 rounded" title="Edit Nama">
-                                <i class="fa-solid fa-pen text-xs"></i>
-                            </button>
-                        </div>
-                        
+                        <div class="font-medium text-lg flex items-center gap-2">: <span id="res-name"></span></div>
                         <div class="text-slate-500 japanese-text">国籍<br><span class="text-[10px] block -mt-1">Nationality</span></div>
                         <div class="font-medium">: Indonesia</div>
-                        
-                        <div class="text-slate-500 japanese-text">受験地<br><span class="text-[10px] block -mt-1">Test Location</span></div>
-                        <div class="font-medium">: Practice Online</div>
-                        
                         <div class="text-slate-500 japanese-text">受験日<br><span class="text-[10px] block -mt-1">Test Date</span></div>
-                        <div class="font-medium">: <span id="res-date">2026/09/29</span></div>
+                        <div class="font-medium">: <span id="res-date"></span></div>
                     </div>
                 </div>
 
-                <!-- Score Container Box -->
                 <div class="border border-slate-200 p-6 bg-slate-50/50">
-                    
                     <div class="flex flex-col sm:flex-row justify-between mb-8">
                         <div class="flex gap-12">
                             <div>
                                 <div class="text-slate-500 text-sm japanese-text">総合得点:<br><span class="text-xs block">Total Score</span></div>
-                                <div class="text-4xl font-bold text-slate-800 mt-2" id="res-total-score">234</div>
+                                <div class="text-4xl font-bold text-slate-800 mt-2" id="res-total-score"></div>
                             </div>
                             <div>
                                 <div class="text-slate-500 text-sm japanese-text">判定結果:<br><span class="text-xs block">Assessment Results</span></div>
-                                <div class="text-3xl font-bold text-slate-800 mt-2" id="res-level">A2.2(A2)</div>
+                                <div class="text-3xl font-bold text-slate-800 mt-2" id="res-level"></div>
                             </div>
                         </div>
-                        <div class="mt-4 sm:mt-0 text-right text-xs text-slate-500">
-                            得点範囲: 10-250<br>Range of Scores<br><br>
-                            判定基準点 A1: 145, A2.1: 175, A2.2(A2): 200<br>Passing Score
-                        </div>
                     </div>
-
-                    <!-- Main Score Bar -->
                     <div class="score-bar-container">
-                        <!-- Markers -->
                         <div class="score-marker" style="left: 0%;"><span>10</span></div>
                         <div class="score-marker" style="left: 56.25%;"><span>145<br><span class="text-[10px] font-normal">A1</span></span></div>
                         <div class="score-marker" style="left: 68.75%;"><span>175<br><span class="text-[10px] font-normal">A2.1</span></span></div>
                         <div class="score-marker" style="left: 79.16%;"><span>200<br><span class="text-[10px] font-normal">A2.2(A2)</span></span></div>
                         <div class="score-marker" style="left: 100%;"><span>250</span></div>
-                        
-                        <!-- Indicator Point -->
-                        <div id="res-score-indicator" class="score-indicator" style="left: 10%;">
-                            <span id="res-score-val-float" class="score-indicator-value">10</span>
-                        </div>
+                        <div id="res-score-indicator" class="score-indicator" style="left: 10%;"><span id="res-score-val-float" class="score-indicator-value">10</span></div>
                     </div>
-
-                    <!-- Sections Percentage -->
                     <div class="mt-16 border-t border-slate-200 pt-6">
-                        <div class="text-slate-600 text-sm font-medium mb-6 japanese-text">
-                            セクション毎の正答率：<br>
-                            <span class="text-xs font-normal">Percentage of Correct Answers for Each Section</span>
-                        </div>
-
-                        <div class="grid gap-4" id="res-sections-container">
-                            <!-- Injected by JS -->
-                        </div>
+                        <div class="grid gap-4" id="res-sections-container"></div>
                     </div>
-                </div>
-
-                <div class="text-center mt-6 text-xs text-slate-400">
-                    *This is a practice result and not an official certificate.
                 </div>
             </div>
 
-            <!-- Review Details Section -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-8">
                 <h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Detail Evaluasi</h3>
                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
-                    <div class="bg-slate-50 p-3 rounded-lg text-center">
-                        <div class="text-xs text-slate-500 uppercase tracking-wide">Total Soal</div>
-                        <div class="text-xl font-bold text-slate-700" id="eval-total">20</div>
-                    </div>
-                    <div class="bg-green-50 p-3 rounded-lg text-center">
-                        <div class="text-xs text-green-600 uppercase tracking-wide">Benar</div>
-                        <div class="text-xl font-bold text-green-700" id="eval-correct">15</div>
-                    </div>
-                    <div class="bg-red-50 p-3 rounded-lg text-center">
-                        <div class="text-xs text-red-600 uppercase tracking-wide">Salah</div>
-                        <div class="text-xl font-bold text-red-700" id="eval-wrong">5</div>
-                    </div>
-                    <div class="bg-blue-50 p-3 rounded-lg text-center">
-                        <div class="text-xs text-blue-600 uppercase tracking-wide">Akurasi</div>
-                        <div class="text-xl font-bold text-blue-700" id="eval-accuracy">75%</div>
-                    </div>
+                    <div class="bg-slate-50 p-3 rounded-lg text-center"><div class="text-xs text-slate-500">Total Soal</div><div class="text-xl font-bold" id="eval-total">0</div></div>
+                    <div class="bg-green-50 p-3 rounded-lg text-center"><div class="text-xs text-green-600">Benar</div><div class="text-xl font-bold text-green-700" id="eval-correct">0</div></div>
+                    <div class="bg-red-50 p-3 rounded-lg text-center"><div class="text-xs text-red-600">Salah</div><div class="text-xl font-bold text-red-700" id="eval-wrong">0</div></div>
+                    <div class="bg-blue-50 p-3 rounded-lg text-center"><div class="text-xs text-blue-600">Akurasi</div><div class="text-xl font-bold text-blue-700" id="eval-accuracy">0%</div></div>
                 </div>
-
                 <h4 class="font-medium text-slate-700 mb-3">Review Jawaban yang Salah</h4>
-                <div id="mistakes-container" class="space-y-4">
-                    <!-- Mistakes injected by JS -->
-                </div>
+                <div id="mistakes-container" class="space-y-4"></div>
             </div>
-
         </div>
 
         <!-- SCREEN 4: History -->
         <div id="screen-history" class="screen w-full max-w-2xl mt-4">
             <div class="flex items-center justify-between mb-6">
-    <div class="flex items-center gap-4">
-        <button onclick="navigate('home')" class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50 transition">
-            <i class="fa-solid fa-arrow-left"></i>
-        </button>
-        <h2 class="text-2xl font-bold text-slate-800">Riwayat Latihan</h2>
-    </div>
-    
-    <!-- Tombol Hapus Riwayat Baru -->
-    <button onclick="clearHistory()" class="text-sm font-medium text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-lg transition flex items-center gap-2 border border-red-100">
-        <i class="fa-solid fa-trash-can"></i> <span class="hidden sm:inline">Hapus Semua</span>
-    </button>
-</div>
-
-
-            <div id="history-container" class="space-y-4">
-                <!-- History items injected by JS -->
+                <div class="flex items-center gap-4">
+                    <button onclick="navigate('home')" class="w-10 h-10 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-600 hover:bg-slate-50"><i class="fa-solid fa-arrow-left"></i></button>
+                    <h2 class="text-2xl font-bold text-slate-800">Riwayat Latihan</h2>
+                </div>
+                <button onclick="clearHistory()" class="text-sm font-medium text-red-600 bg-red-50 px-4 py-2 rounded-lg flex items-center gap-2 border border-red-100"><i class="fa-solid fa-trash-can"></i> Hapus Semua</button>
             </div>
-            
-            <div id="empty-history" class="text-center py-12 hidden">
-                <i class="fa-solid fa-box-open text-4xl text-slate-300 mb-4"></i>
-                <p class="text-slate-500">Belum ada riwayat latihan.</p>
-            </div>
+            <div id="history-container" class="space-y-4"></div>
+            <div id="empty-history" class="text-center py-12 hidden"><p class="text-slate-500">Belum ada riwayat latihan.</p></div>
         </div>
 
+        <!-- SCREEN 5: Admin Dashboard -->
+        <div id="screen-admin" class="screen w-full max-w-5xl mt-4 mx-auto">
+            <div class="bg-white p-6 rounded-2xl shadow-sm border border-slate-100">
+                <div class="flex flex-col sm:flex-row justify-between items-center mb-6 border-b pb-4 gap-4">
+                    <div>
+                        <h2 class="text-2xl font-bold text-slate-800"><i class="fa-solid fa-shield-halved text-brand-600 mr-2"></i>Admin Panel</h2>
+                        <p class="text-sm text-slate-500">Kelola pengguna dan kunci jawaban</p>
+                    </div>
+                    <button onclick="handleLogout()" class="bg-red-50 text-red-600 hover:bg-red-100 px-4 py-2 rounded-lg text-sm font-medium transition">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </button>
+                </div>
+                
+                <div class="flex gap-4 mb-6">
+                    <button onclick="switchAdminTab('users')" id="tab-users" class="bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium"><i class="fa-solid fa-users mr-2"></i>Data Pengguna</button>
+                    <button onclick="switchAdminTab('questions')" id="tab-questions" class="bg-slate-100 text-slate-600 hover:bg-slate-200 px-4 py-2 rounded-lg text-sm font-medium"><i class="fa-solid fa-book mr-2"></i>Kunci Jawaban</button>
+                </div>
+
+                <div id="admin-view-users" class="block">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-slate-700">Daftar Akun</h3>
+                        <button onclick="toggleAddUserForm()" class="bg-green-100 text-green-700 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-plus"></i> Tambah User</button>
+                    </div>
+
+                    <div id="add-user-form" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
+                            <input type="text" id="new-name" placeholder="Nama Lengkap" class="px-3 py-2 border rounded-lg text-sm">
+                            <input type="email" id="new-email" placeholder="Email" class="px-3 py-2 border rounded-lg text-sm">
+                            <input type="text" id="new-authcode" placeholder="Auth Code (mis: USER-1)" class="px-3 py-2 border rounded-lg text-sm">
+                            <select id="new-role" class="px-3 py-2 border rounded-lg text-sm bg-white"><option value="user">User</option><option value="admin">Admin</option></select>
+                        </div>
+                        <div class="flex justify-end gap-2">
+                            <button onclick="toggleAddUserForm()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm">Batal</button>
+                            <button onclick="simpanUserBaru()" id="btn-simpan-user" class="px-4 py-2 bg-brand-600 text-white rounded-lg text-sm">Simpan</button>
+                        </div>
+                        <p id="add-user-msg" class="text-xs mt-2 hidden"></p>
+                    </div>
+
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl">
+                        <table class="w-full text-left text-sm text-slate-600">
+                            <thead class="bg-slate-50 text-slate-700 font-bold uppercase text-xs">
+                                <tr><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Email</th><th class="px-4 py-3">Auth Code</th><th class="px-4 py-3">Role</th><th class="px-4 py-3">Aksi</th></tr>
+                            </thead>
+                            <tbody id="admin-user-table" class="divide-y divide-slate-100">
+                                <tr><td colspan="5" class="px-4 py-8 text-center">Memuat data...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="admin-view-questions" class="hidden">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="font-bold text-slate-700">Bank Soal & Kunci Jawaban</h3>
+                        <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded text-sm font-medium" id="total-questions-count">0 Soal</span>
+                    </div>
+                    <div class="space-y-4 max-h-[600px] overflow-y-auto pr-2" id="admin-questions-list"></div>
+                </div>
+            </div>
+        </div>
+        <!-- CUSTOM CONFIRM MODAL (NEO-BRUTALISM) -->
+        <div id="custom-confirm-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+            <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
+                <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
+                </h3>
+                <p id="custom-confirm-msg" class="text-slate-700 font-medium mb-6">Pesan di sini</p>
+                <div class="flex justify-end gap-3">
+                    <button onclick="hideCustomConfirm()" class="px-4 py-2 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">Batal</button>
+                    <button id="btn-confirm-ok" class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">Ya</button>
+                </div>
+            </div>
+        </div>
+        
     </main>
 
     <script>
-        // --- DATA & STATE ---
         const SECTIONS = [
             { id: 'vocab', nameJP: '文字と語彙', nameEN: 'Script and Vocabulary' },
             { id: 'grammar', nameJP: '会話と表現', nameEN: 'Conversation and Expression' },
@@ -1738,454 +467,64 @@ label:has(input:focus-visible) {
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
 
-        // Mock Question Bank (Diperluas menjadi 50 Soal JFT-Basic)
+        // MOCK QUESTION BANK (50 Questions)
         const QUESTION_BANK = [
-            // --- KOSA KATA & KANJI (Vocab) ---
-            { id: 1, section: 'vocab', text: 'わたしは まいあさ 7じに （　　　）。', options: ['おきます', 'ねます', 'きます', 'みます'], answer: 0, explanation: 'おきます (okimasu) = bangun. "Saya bangun jam 7 setiap pagi."', period: 'sep-nov' },
-            { id: 2, section: 'vocab', text: 'きのうは とても （　　　）です。', options: ['あつかった', 'あつい', 'あつくて', 'あつくない'], answer: 0, explanation: 'Karena merujuk ke kemarin (きのう), gunakan bentuk lampau: あつかった (atsukatta).', period: 'sep-nov' },
-            { id: 3, section: 'vocab', text: '「えき」は かんじで どう かきますか。', options: ['駅', '家', '店', '車'], answer: 0, explanation: '駅 (eki) = stasiun. 家(rumah), 店(toko), 車(mobil).', period: 'sep-nov' },
-            { id: 4, section: 'vocab', text: 'つくえの うえに ほんが （　　　） あります。', options: ['さんこ', 'さんまい', 'さんさつ', 'さんぼん'], answer: 2, explanation: 'Untuk menghitung benda berjilid (seperti buku), gunakan satuan ~さつ (satsu).', period: 'sep-nov' },
-            { id: 5, section: 'vocab', text: 'あめが ふっていますから、（　　　）を もって いきます。', options: ['かさ', 'かばん', 'くつ', 'ぼうし'], answer: 0, explanation: 'かさ (kasa) = payung. Karena hujan, bawa payung.', period: 'sep-nov' },
-            { id: 14, section: 'vocab', text: 'きのう、スーパーで りんごを （　　　）。', options: ['かいました', 'のみました', 'みました', 'ききました'], answer: 0, explanation: '「かいました」berarti "membeli", cocok dengan apel dan supermarket.', period: 'sep-nov' },
-            { id: 16, section: 'vocab', text: '「あたらしい」は かんじで どう かきますか。', options: ['新しい', '古い', '高い', '安い'], answer: 0, explanation: '新しい (atarashii) = baru. 古い(lama/tua), 高い(tinggi/mahal), 安い(murah).', period: 'sep-nov' },
-            { id: 17, section: 'vocab', text: 'かぜを ひいたので、（　　　）へ いきます。', options: ['びょういん', 'としょかん', 'ゆうびんきょく', 'ぎんこう'], answer: 0, explanation: 'Karena masuk angin/sakit (かぜを ひいた), maka pergi ke rumah sakit (びょういん).', period: 'sep-nov' },
-            { id: 22, section: 'vocab', text: 'のどが かわきました。（　　　）を のみたいです。', options: ['みず', 'パン', 'ごはん', 'にく'], answer: 0, explanation: 'のどが かわきました = haus. Maka ingin minum air (みず).', period: 'sep-nov' },
-            { id: 23, section: 'vocab', text: '「食べる」は ひらがなで どう かきますか。', options: ['たべる', 'のむ', 'みる', 'かく'], answer: 0, explanation: '食べる (taberu) = makan.', period: 'sep-nov' },
-            { id: 24, section: 'vocab', text: 'まいあさ、はを （　　　）。', options: ['みがきます', 'あらいます', 'あびます', 'ぬぎます'], answer: 0, explanation: 'はを みがきます = menggosok gigi.', period: 'sep-nov' },
-            { id: 25, section: 'vocab', text: 'この くるまは とても （　　　）です。', options: ['はやい', 'おそく', 'はやく', 'はやかった'], answer: 0, explanation: 'Kata sifat-i sebagai predikat kalimat positif sekarang menggunakan bentuk dasar (はやい - cepat).', period: 'sep-nov' },
-            { id: 26, section: 'vocab', text: 'へやが くらいですね。（　　　）を つけてください。', options: ['でんき', 'テレビ', 'エアコン', 'ドア'], answer: 0, explanation: 'へやが くらい (kamarnya gelap). Maka nyalakan lampu (でんき).', period: 'sep-nov' },
-            { id: 27, section: 'vocab', text: '「車」は ひらがなで どう かきますか。', options: ['くるま', 'でんしゃ', 'じてんしゃ', 'ひこうき'], answer: 0, explanation: '車 dibaca くるま (kuruma) = mobil.', period: 'sep-nov' },
-            { id: 28, section: 'vocab', text: 'カメラで しゃしんを （　　　）。', options: ['とります', 'つくります', 'かきます', 'します'], answer: 0, explanation: 'しゃしんを とります = memotret / mengambil foto.', period: 'sep-nov' },
-            // --- KOSA KATA & KANJI (Vocab) ---
-
-{ id: 101, section: 'vocab', text: 'まいにち 6じに （　　　）を します。', options: ['べんきょう', 'あさごはん', 'でんしゃ', 'しごと'], answer: 0, explanation: '「べんきょうをします」= belajar.', period: 'sep-nov' },
-
-{ id: 102, section: 'vocab', text: 'わたしは まいばん 11じに （　　　）。', options: ['ねます', 'おきます', 'あそびます', 'はたらきます'], answer: 0, explanation: '「ねます」= tidur. Jam 11 malam biasanya tidur.', period: 'sep-nov' },
-
-{ id: 103, section: 'vocab', text: 'あさごはんに パンと たまごを （　　　）。', options: ['たべます', 'のみます', 'ききます', 'よみます'], answer: 0, explanation: '「たべます」= makan, digunakan untuk makanan.', period: 'sep-nov' },
-
-{ id: 104, section: 'vocab', text: 'まいにち みずを たくさん （　　　）。', options: ['のみます', 'たべます', 'かいます', 'かきます'], answer: 0, explanation: '「のみます」= minum.', period: 'sep-nov' },
-
-{ id: 105, section: 'vocab', text: 'でんしゃに （　　　）まえに、きっぷを かいます。', options: ['のる', 'たべる', 'みる', 'ねる'], answer: 0, explanation: '「でんしゃに のる」= naik kereta.', period: 'sep-nov' },
-
-{ id: 106, section: 'vocab', text: 'スーパーで くだものを （　　　）。', options: ['かいます', 'うります', 'つかいます', 'およぎます'], answer: 0, explanation: '「かいます」= membeli.', period: 'sep-nov' },
-
-{ id: 107, section: 'vocab', text: 'この かばんは 5000えんです。ちょっと （　　　）です。', options: ['たかい', 'やすい', 'ちいさい', 'おもしろい'], answer: 0, explanation: '「たかい」= mahal/tinggi. Harga 5000 yen dianggap mahal dalam konteks soal.', period: 'sep-nov' },
-
-{ id: 108, section: 'vocab', text: 'この りんごは 100えんです。とても （　　　）です。', options: ['やすい', 'たかい', 'おそい', 'くらい'], answer: 0, explanation: '「やすい」= murah.', period: 'sep-nov' },
-
-{ id: 109, section: 'vocab', text: 'きょうは てんきが （　　　）です。', options: ['いい', 'おおきい', 'ながい', 'おもい'], answer: 0, explanation: '「てんきが いい」= cuacanya bagus.', period: 'sep-nov' },
-
-{ id: 110, section: 'vocab', text: 'きょうは あめです。そとが （　　　）です。', options: ['さむい', 'あつい', 'あかるい', 'ひろい'], answer: 0, explanation: '「さむい」= dingin. Hujan sering digunakan sebagai konteks cuaca dingin.', period: 'sep-nov' },
-
-{ id: 111, section: 'vocab', text: 'この へやは 10にん います。とても （　　　）です。', options: ['せまい', 'ひろい', 'あたらしい', 'あまい'], answer: 0, explanation: '「せまい」= sempit.', period: 'sep-nov' },
-
-{ id: 112, section: 'vocab', text: 'こうえんで ともだちと （　　　）。', options: ['あそびます', 'はたらきます', 'ねます', 'かいます'], answer: 0, explanation: '「あそびます」= bermain.', period: 'sep-nov' },
-
-{ id: 113, section: 'vocab', text: 'まいにち 7じから 4じまで （　　　）。', options: ['はたらきます', 'あそびます', 'ねます', 'およぎます'], answer: 0, explanation: '「はたらきます」= bekerja.', period: 'sep-nov' },
-
-{ id: 114, section: 'vocab', text: 'しごとの あとで、うちへ （　　　）。', options: ['かえります', 'いきます', 'きます', 'はいります'], answer: 0, explanation: '「かえります」= pulang/kembali ke rumah.', period: 'sep-nov' },
-
-{ id: 115, section: 'vocab', text: 'あした 8じに がっこうへ （　　　）。', options: ['いきます', 'かえります', 'きます', 'ねます'], answer: 0, explanation: '「いきます」= pergi.', period: 'sep-nov' },
-
-{ id: 116, section: 'vocab', text: 'せんせいが きょうしつに （　　　）。', options: ['きます', 'いきます', 'かえります', 'ねます'], answer: 0, explanation: '「きます」= datang ke tempat pembicara/tujuan yang menjadi acuan.', period: 'sep-nov' },
-
-{ id: 117, section: 'vocab', text: 'ともだちに メールを （　　　）。', options: ['おくります', 'あらいます', 'つくります', 'あびます'], answer: 0, explanation: '「メールを おくります」= mengirim email.', period: 'sep-nov' },
-
-{ id: 118, section: 'vocab', text: 'でんわで ははと （　　　）。', options: ['はなします', 'よみます', 'かきます', 'ききます'], answer: 0, explanation: '「はなします」= berbicara.', period: 'sep-nov' },
-
-{ id: 119, section: 'vocab', text: 'まいにち にほんごの ほんを （　　　）。', options: ['よみます', 'のみます', 'ききます', 'あびます'], answer: 0, explanation: '「よみます」= membaca.', period: 'sep-nov' },
-
-{ id: 120, section: 'vocab', text: 'おんがくを （　　　）が すきです。', options: ['きく', 'たべる', 'かう', 'あらう'], answer: 0, explanation: '「おんがくを きく」= mendengarkan musik.', period: 'sep-nov' },
-
-{ id: 121, section: 'vocab', text: 'てがみを （　　　）。', options: ['かきます', 'ききます', 'のみます', 'はいります'], answer: 0, explanation: '「かきます」= menulis.', period: 'sep-nov' },
-
-{ id: 122, section: 'vocab', text: 'シャワーを （　　　）から、ねます。', options: ['あびて', 'のんで', 'たべて', 'よんで'], answer: 0, explanation: '「シャワーを あびる」= mandi dengan shower.', period: 'sep-nov' },
-
-{ id: 123, section: 'vocab', text: 'てを （　　　）から、ごはんを たべます。', options: ['あらって', 'みがいて', 'きいて', 'あけて'], answer: 0, explanation: '「てを あらう」= mencuci tangan.', period: 'sep-nov' },
-
-{ id: 124, section: 'vocab', text: 'ドアを （　　　）ください。', options: ['しめて', 'たべて', 'のんで', 'きいて'], answer: 0, explanation: '「ドアを しめてください」= tolong tutup pintunya.', period: 'sep-nov' },
-
-{ id: 125, section: 'vocab', text: 'まどを （　　　）ください。', options: ['あけて', 'しめて', 'たべて', 'ねて'], answer: 0, explanation: '「まどを あけてください」= tolong buka jendelanya.', period: 'sep-nov' },
-
-{ id: 126, section: 'vocab', text: 'ここに なまえを （　　　）ください。', options: ['かいて', 'よんで', 'きいて', 'のんで'], answer: 0, explanation: '「なまえを かいてください」= tolong tulis nama.', period: 'sep-nov' },
-
-{ id: 127, section: 'vocab', text: 'えきは どこですか。あの みぎの （　　　）です。', options: ['たてもの', 'たべもの', 'のみもの', 'のりもの'], answer: 0, explanation: '「たてもの」= gedung/bangunan.', period: 'sep-nov' },
-
-{ id: 128, section: 'vocab', text: 'コンビニで おにぎりを （　　　）。', options: ['かいました', 'つくりました', 'およぎました', 'ねました'], answer: 0, explanation: '「かいました」= membeli.', period: 'sep-nov' },
-
-{ id: 129, section: 'vocab', text: 'きのう ともだちと えいがを （　　　）。', options: ['みました', 'ききました', 'よみました', 'かきました'], answer: 0, explanation: '「えいがを みます」= menonton film.', period: 'sep-nov' },
-
-{ id: 130, section: 'vocab', text: 'きのう こうえんで サッカーを （　　　）。', options: ['しました', 'のみました', 'かいました', 'よみました'], answer: 0, explanation: '「サッカーを します」= bermain sepak bola.', period: 'sep-nov' },
-
-{ id: 131, section: 'vocab', text: '「学校」は ひらがなで どう かきますか。', options: ['がっこう', 'がくせい', 'せんせい', 'きょうしつ'], answer: 0, explanation: '学校 = がっこう = sekolah.', period: 'sep-nov' },
-
-{ id: 132, section: 'vocab', text: '「先生」は ひらがなで どう かきますか。', options: ['せんせい', 'がくせい', 'ともだち', 'かいしゃ'], answer: 0, explanation: '先生 = せんせい = guru.', period: 'sep-nov' },
-
-{ id: 133, section: 'vocab', text: '「学生」は ひらがなで どう かきますか。', options: ['がくせい', 'せんせい', 'がっこう', 'せいと'], answer: 0, explanation: '学生 = がくせい = siswa/mahasiswa.', period: 'sep-nov' },
-
-{ id: 134, section: 'vocab', text: '「友達」は ひらがなで どう かきますか。', options: ['ともだち', 'かぞく', 'せんせい', 'きょうだい'], answer: 0, explanation: '友達 = ともだち = teman.', period: 'sep-nov' },
-
-{ id: 135, section: 'vocab', text: '「会社」は ひらがなで どう かきますか。', options: ['かいしゃ', 'がっこう', 'びょういん', 'ぎんこう'], answer: 0, explanation: '会社 = かいしゃ = perusahaan/kantor.', period: 'sep-nov' },
-
-{ id: 136, section: 'vocab', text: '「病院」は ひらがなで どう かきますか。', options: ['びょういん', 'ぎんこう', 'ゆうびんきょく', 'としょかん'], answer: 0, explanation: '病院 = びょういん = rumah sakit.', period: 'sep-nov' },
-
-{ id: 137, section: 'vocab', text: '「銀行」は ひらがなで どう かきますか。', options: ['ぎんこう', 'びょういん', 'えき', 'こうえん'], answer: 0, explanation: '銀行 = ぎんこう = bank.', period: 'sep-nov' },
-
-{ id: 138, section: 'vocab', text: '「電話」は ひらがなで どう かきますか。', options: ['でんわ', 'でんしゃ', 'てがみ', 'しんぶん'], answer: 0, explanation: '電話 = でんわ = telepon.', period: 'sep-nov' },
-
-{ id: 139, section: 'vocab', text: '「新聞」は ひらがなで どう かきますか。', options: ['しんぶん', 'ざっし', 'てがみ', 'ほん'], answer: 0, explanation: '新聞 = しんぶん = koran.', period: 'sep-nov' },
-
-{ id: 140, section: 'vocab', text: '「電車」は ひらがなで どう かきますか。', options: ['でんしゃ', 'でんわ', 'じてんしゃ', 'くるま'], answer: 0, explanation: '電車 = でんしゃ = kereta listrik.', period: 'sep-nov' },
-
-{ id: 141, section: 'vocab', text: '「自転車」は ひらがなで どう かきますか。', options: ['じてんしゃ', 'でんしゃ', 'くるま', 'ひこうき'], answer: 0, explanation: '自転車 = じてんしゃ = sepeda.', period: 'sep-nov' },
-
-{ id: 142, section: 'vocab', text: '「大きい」は はんたいの いみは なんですか。', options: ['小さい', '新しい', '古い', '長い'], answer: 0, explanation: '大きい = besar, lawannya 小さい = kecil.', period: 'sep-nov' },
-
-{ id: 143, section: 'vocab', text: '「新しい」は はんたいの いみは なんですか。', options: ['古い', '高い', '安い', '近い'], answer: 0, explanation: '新しい = baru, lawannya 古い = lama/tua.', period: 'sep-nov' },
-
-{ id: 144, section: 'vocab', text: '「暑い」は はんたいの いみは なんですか。', options: ['寒い', '暖かい', '明るい', '涼しい'], answer: 0, explanation: '暑い = panas, lawannya 寒い = dingin.', period: 'sep-nov' },
-
-{ id: 145, section: 'vocab', text: '「長い」は はんたいの いみは なんですか。', options: ['短い', '大きい', '重い', '高い'], answer: 0, explanation: '長い = panjang, lawannya 短い = pendek.', period: 'sep-nov' },
-
-{ id: 146, section: 'vocab', text: '「近い」は はんたいの いみは なんですか。', options: ['遠い', '早い', '遅い', '広い'], answer: 0, explanation: '近い = dekat, lawannya 遠い = jauh.', period: 'sep-nov' },
-
-{ id: 147, section: 'vocab', text: 'あしたは （　　　）です。しごとが ありません。', options: ['やすみ', 'しごと', 'べんきょう', 'でんしゃ'], answer: 0, explanation: '「やすみ」= libur.', period: 'sep-nov' },
-
-{ id: 148, section: 'vocab', text: 'きょうは つかれました。はやく （　　　）たいです。', options: ['ね', 'たべ', 'いき', 'かき'], answer: 0, explanation: '「ねたい」 berasal dari ねる = ingin tidur.', period: 'sep-nov' },
-
-{ id: 149, section: 'vocab', text: 'おなかが すきました。なにか （　　　）たいです。', options: ['たべ', 'のみ', 'み', 'きき'], answer: 0, explanation: '「たべたい」= ingin makan.', period: 'sep-nov' },
-
-{ id: 150, section: 'vocab', text: 'のどが かわきました。おちゃを （　　　）たいです。', options: ['のみ', 'たべ', 'み', 'よみ'], answer: 0, explanation: '「のみたい」= ingin minum.', period: 'sep-nov' },
-
-{ id: 151, section: 'vocab', text: 'あした ともだちと えいがを （　　　）たいです。', options: ['み', 'きき', 'よみ', 'かき'], answer: 0, explanation: '「みたい」= ingin menonton/melihat.', period: 'sep-nov' },
-
-{ id: 152, section: 'vocab', text: '「一日」は なんと よみますか。', options: ['ついたち', 'ふつか', 'みっか', 'よっか'], answer: 0, explanation: '一日 sebagai tanggal dibaca ついたち.', period: 'sep-nov' },
-
-{ id: 153, section: 'vocab', text: '「二日」は なんと よみますか。', options: ['ふつか', 'ついたち', 'みっか', 'いつか'], answer: 0, explanation: '二日 = ふつか.', period: 'sep-nov' },
-
-{ id: 154, section: 'vocab', text: '「三日」は なんと よみますか。', options: ['みっか', 'ふつか', 'よっか', 'いつか'], answer: 0, explanation: '三日 = みっか.', period: 'sep-nov' },
-
-{ id: 155, section: 'vocab', text: '「五人」は なんと よみますか。', options: ['ごにん', 'ごひと', 'いつにん', 'ごじん'], answer: 0, explanation: '五人 = ごにん = lima orang.', period: 'sep-nov' },
-
-{ id: 156, section: 'vocab', text: '「毎日」は なんと よみますか。', options: ['まいにち', 'まいげつ', 'まいしゅう', 'まいとし'], answer: 0, explanation: '毎日 = まいにち = setiap hari.', period: 'sep-nov' },
-
-{ id: 157, section: 'vocab', text: '「今週」は なんと よみますか。', options: ['こんしゅう', 'せんしゅう', 'らいしゅう', 'こんげつ'], answer: 0, explanation: '今週 = こんしゅう = minggu ini.', period: 'sep-nov' },
-
-{ id: 158, section: 'vocab', text: '「来週」は なんと よみますか。', options: ['らいしゅう', 'せんしゅう', 'こんしゅう', 'まいしゅう'], answer: 0, explanation: '来週 = らいしゅう = minggu depan.', period: 'sep-nov' },
-
-{ id: 159, section: 'vocab', text: '「去年」は なんと よみますか。', options: ['きょねん', 'ことし', 'らいねん', 'せんげつ'], answer: 0, explanation: '去年 = きょねん = tahun lalu.', period: 'sep-nov' },
-
-{ id: 160, section: 'vocab', text: '「今年」は なんと よみますか。', options: ['ことし', 'きょねん', 'らいねん', 'こんげつ'], answer: 0, explanation: '今年 = ことし = tahun ini.', period: 'sep-nov' },
-
-{ id: 161, section: 'vocab', text: '「来年」は なんと よみますか。', options: ['らいねん', 'ことし', 'きょねん', 'らいげつ'], answer: 0, explanation: '来年 = らいねん = tahun depan.', period: 'sep-nov' },
-
-{ id: 162, section: 'vocab', text: 'あさ、コーヒーを （　　　）ながら、テレビを みます。', options: ['のみ', 'たべ', 'よみ', 'かき'], answer: 0, explanation: '「のみながら」= sambil minum.', period: 'sep-nov' },
-
-{ id: 163, section: 'vocab', text: 'でんしゃの なかで おんがくを （　　　）。', options: ['ききます', 'たべます', 'つくります', 'あらいます'], answer: 0, explanation: '「おんがくを ききます」= mendengarkan musik.', period: 'sep-nov' },
-
-{ id: 164, section: 'vocab', text: 'しごとの ひるやすみに おべんとうを （　　　）。', options: ['たべます', 'ききます', 'みます', 'かきます'], answer: 0, explanation: '「おべんとうを たべます」= makan bekal.', period: 'sep-nov' },
-
-{ id: 165, section: 'vocab', text: 'あついですね。エアコンを （　　　）ましょう。', options: ['つけ', 'けし', 'あけ', 'しめ'], answer: 0, explanation: '「エアコンを つけましょう」= mari nyalakan AC.', period: 'sep-nov' },
-
-{ id: 166, section: 'vocab', text: 'へやを でるとき、でんきを （　　　）ください。', options: ['けして', 'つけて', 'あけて', 'いれて'], answer: 0, explanation: '「でんきを けす」= mematikan lampu.', period: 'sep-nov' },
-
-{ id: 167, section: 'vocab', text: 'ここに くるまを （　　　）も いいですか。', options: ['とめて', 'のって', 'はしって', 'つかって'], answer: 0, explanation: '「くるまを とめる」= memarkir/menghentikan mobil.', period: 'sep-nov' },
-
-{ id: 168, section: 'vocab', text: 'この へやで たばこを （　　　）は いけません。', options: ['すって', 'たべて', 'のんで', 'みて'], answer: 0, explanation: '「たばこを すう」= merokok.', period: 'sep-nov' },
-
-{ id: 169, section: 'vocab', text: 'あした 8じに ここへ （　　　）ください。', options: ['きて', 'いって', 'かえって', 'ねて'], answer: 0, explanation: '「きてください」= silakan datang.', period: 'sep-nov' },
-
-{ id: 170, section: 'vocab', text: 'この ことばの いみを （　　　）ください。', options: ['おしえて', 'あそんで', 'あらって', 'つかって'], answer: 0, explanation: '「おしえてください」= tolong beri tahu/jelaskan.', period: 'sep-nov' },
-
-            // --- TATABAHASA & PERCAKAPAN (Grammar) ---
-            { id: 6, section: 'grammar', text: 'A: 「すみません、しおを とって ください。」\nB: 「はい、（　　　）。」', options: ['どうぞ', 'どうも', 'ありがとう', 'ごめん'], answer: 0, explanation: 'どうぞ (douzo) digunakan saat memberikan atau mempersilakan sesuatu kepada orang lain.', period: 'sep-nov' },
-            { id: 7, section: 'grammar', text: 'にほんへ （　　　） ことがありますか。', options: ['いく', 'いった', 'いかない', 'いって'], answer: 1, explanation: 'Pola ~たことがあります berarti "pernah melakukan". Gunakan kata kerja bentuk TA (いった).', period: 'sep-nov' },
-            { id: 8, section: 'grammar', text: 'あしたは やすみ（　　　）、どこへも いきません。', options: ['から', 'だから', 'ですが', 'ので'], answer: 1, explanation: 'やすみ (libur) adalah kata benda, jadi gunakan だから (dakara) untuk "karena".', period: 'sep-nov' },
-            { id: 9, section: 'grammar', text: 'A: 「コーヒーと こうちゃ、どちらが いいですか。」\nB: 「コーヒー（　　　） おねがいします。」', options: ['が', 'を', 'に', 'は'], answer: 1, explanation: 'コーヒーをお願いします = Tolong kopinya. Partikel を menandakan objek.', period: 'sep-nov' },
-            { id: 15, section: 'grammar', text: 'A:「あの うみは きれいですね。」\nB:「ええ、でも （　　　） およがないで くださいね。あぶないですから。」', options: ['とても', 'ぜんぜん', 'ぜったいに', 'たいへん'], answer: 2, explanation: 'ぜったいに ~ないでください digunakan untuk melarang keras (Sama sekali jangan...).', period: 'sep-nov' },
-            { id: 18, section: 'grammar', text: 'この ケーキは おいしい（　　　）、やすいです。', options: ['し', 'から', 'けれども', 'と'], answer: 0, explanation: 'Pola ~し digunakan untuk menyebutkan beberapa karakteristik (Enak, dan juga murah).', period: 'sep-nov' },
-            { id: 19, section: 'grammar', text: 'A:「にもつを もちましょうか。」\nB:「（　　　）。」', options: ['いいえ、けっこうです', 'はい、そうです', 'いいえ、ちがいます', 'はい、もちます'], answer: 0, explanation: 'Menolak tawaran secara sopan: "いいえ、けっこうです" (Tidak, terima kasih).', period: 'sep-nov' },
-            { id: 29, section: 'grammar', text: 'わたしは 日本語（　　　） はなせます。', options: ['が', 'を', 'で', 'に'], answer: 0, explanation: 'Kata kerja potensial (はなせます - bisa berbicara) umumnya menggunakan partikel が untuk objeknya.', period: 'sep-nov' },
-            { id: 30, section: 'grammar', text: 'A: 「ここで タバコを （　　　） いいですか。」\nB: 「いいえ、ここでは すわないで ください。」', options: ['すっても', 'すうと', 'すえば', 'すっては'], answer: 0, explanation: 'Meminta izin menggunakan pola ~てもいいですか (~temo ii desu ka).', period: 'sep-nov' },
-            { id: 31, section: 'grammar', text: 'きのうは あめが （　　　）。', options: ['ふりました', 'ふります', 'ふって', 'ふらない'], answer: 0, explanation: 'Karena keterangan waktu adalah "kemarin" (きのう), gunakan bentuk lampau (ふりました).', period: 'sep-nov' },
-            { id: 32, section: 'grammar', text: 'この ほんは むずかしく（　　　）。', options: ['ないです', 'ありませんでした', 'です', 'くありません'], answer: 0, explanation: 'Bentuk negatif dari kata sifat-i (むずかしい) adalah むずかしくないです atau むずかしくありません.', period: 'sep-nov' },
-            { id: 33, section: 'grammar', text: 'わたしは じてんしゃ（　　　） がっこうへ いきます。', options: ['で', 'に', 'へ', 'と'], answer: 0, explanation: 'Partikel で (de) digunakan untuk menunjukkan alat/kendaraan (dengan sepeda).', period: 'sep-nov' },
-            { id: 34, section: 'grammar', text: 'もっと べんきょうした ほう（　　　） いいですよ。', options: ['が', 'を', 'に', 'は'], answer: 0, explanation: 'Memberikan saran menggunakan pola ~たほうがいいです (~ta hou ga ii desu).', period: 'sep-nov' },
-            { id: 35, section: 'grammar', text: 'A: 「いっしょに えいがを みに いきませんか。」\nB: 「いいですね。（　　　）。」', options: ['いきましょう', 'いきません', 'いきました', 'いってください'], answer: 0, explanation: 'Menyetujui ajakan menggunakan bentuk ~ましょう (Ikima shou - Ayo pergi).', period: 'sep-nov' },
-            { id: 36, section: 'grammar', text: 'スーパーへ パンを （　　　）に いきます。', options: ['かい', 'かう', 'かって', 'かった'], answer: 0, explanation: 'Pergi untuk suatu tujuan: Kata kerja bentuk Masu (coret masu) + に 行きます。 (買いに行きます).', period: 'sep-nov' },
-            // --- TATABAHASA & PERCAKAPAN (Grammar) ---
-
-{ id: 201, section: 'grammar', text: 'まいあさ 7じ（　　　）おきます。', options: ['に', 'で', 'を', 'が'], answer: 0, explanation: 'Partikel に digunakan untuk menunjukkan waktu tertentu. 7じにおきます = bangun jam 7.', period: 'sep-nov' },
-
-{ id: 202, section: 'grammar', text: 'わたしは まいにち バス（　　　）がっこうへ いきます。', options: ['で', 'に', 'を', 'が'], answer: 0, explanation: 'Partikel で menunjukkan alat atau kendaraan yang digunakan. バスで = dengan bus.', period: 'sep-nov' },
-
-{ id: 203, section: 'grammar', text: 'きのう ともだち（　　　）えいがを みました。', options: ['と', 'で', 'に', 'を'], answer: 0, explanation: 'と digunakan untuk menunjukkan melakukan sesuatu bersama seseorang. ともだちと = bersama teman.', period: 'sep-nov' },
-
-{ id: 204, section: 'grammar', text: 'つくえの うえ（　　　）ほんが あります。', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'に digunakan untuk menunjukkan tempat keberadaan sesuatu. つくえのうえに = di atas meja.', period: 'sep-nov' },
-
-{ id: 205, section: 'grammar', text: 'わたしは まいにち にほんご（　　　）べんきょうします。', options: ['を', 'に', 'で', 'と'], answer: 0, explanation: 'Partikel を menandai objek dari kata kerja. 日本語を勉強します = belajar bahasa Jepang.', period: 'sep-nov' },
-
-{ id: 206, section: 'grammar', text: 'きょうは あまり さむく（　　　）。', options: ['ないです', 'ありません', 'です', 'でした'], answer: 0, explanation: 'Untuk kata sifat-i, bentuk negatifnya adalah ～くないです. あまり～ない = tidak terlalu.', period: 'sep-nov' },
-
-{ id: 207, section: 'grammar', text: 'この へやは きれい（　　　）ひろいです。', options: ['で', 'くて', 'な', 'に'], answer: 0, explanation: 'Untuk menyambungkan dua kata sifat-na, gunakan で. きれいでひろい = bersih dan luas.', period: 'sep-nov' },
-
-{ id: 208, section: 'grammar', text: 'この りんごは あまり （　　　）。', options: ['おいしくないです', 'おいしいです', 'おいしかったです', 'おいしくてです'], answer: 0, explanation: 'あまり biasanya digunakan bersama bentuk negatif. あまりおいしくない = tidak terlalu enak.', period: 'sep-nov' },
-
-{ id: 209, section: 'grammar', text: 'きのうは いそがしかった（　　　）、きょうは ひまです。', options: ['ですが', 'から', 'ので', 'と'], answer: 0, explanation: 'ですが digunakan untuk menunjukkan kontras: kemarin sibuk, tetapi hari ini senggang.', period: 'sep-nov' },
-
-{ id: 210, section: 'grammar', text: 'あした しごとが あります（　　　）、はやく ねます。', options: ['から', 'でも', 'が', 'と'], answer: 0, explanation: 'から menunjukkan alasan. Karena besok ada kerja, tidur lebih awal.', period: 'sep-nov' },
-
-{ id: 211, section: 'grammar', text: 'あめが ふっています（　　　）、かさを もって いきます。', options: ['から', 'でも', 'し', 'と'], answer: 0, explanation: 'から digunakan untuk menyatakan alasan: karena hujan, membawa payung.', period: 'sep-nov' },
-
-{ id: 212, section: 'grammar', text: 'ここに なまえを （　　　）ください。', options: ['かいて', 'かきて', 'かく', 'かいた'], answer: 0, explanation: 'Permintaan sopan menggunakan pola ～てください. かく → かいて.', period: 'sep-nov' },
-
-{ id: 213, section: 'grammar', text: 'ちょっと まって （　　　）。', options: ['ください', 'います', 'あります', 'しまいます'], answer: 0, explanation: '～てください digunakan untuk meminta seseorang melakukan sesuatu. まってください = tolong tunggu.', period: 'sep-nov' },
-
-{ id: 214, section: 'grammar', text: 'ここで しゃしんを （　　　）も いいですか。', options: ['とって', 'とる', 'とった', 'とり'], answer: 0, explanation: 'Pola ～てもいいですか digunakan untuk meminta izin. しゃしんをとってもいいですか = boleh mengambil foto?', period: 'sep-nov' },
-
-{ id: 215, section: 'grammar', text: 'この へやに はいって（　　　）いけません。', options: ['は', 'も', 'を', 'に'], answer: 0, explanation: 'Pola ～てはいけません berarti tidak boleh melakukan sesuatu.', period: 'sep-nov' },
-
-{ id: 216, section: 'grammar', text: 'ここで およいで（　　　）いけません。', options: ['は', 'も', 'が', 'を'], answer: 0, explanation: '～てはいけません = tidak boleh. およいではいけません = tidak boleh berenang.', period: 'sep-nov' },
-
-{ id: 217, section: 'grammar', text: 'まどを （　　　）ください。さむいですから。', options: ['しめて', 'しめる', 'しめた', 'しめない'], answer: 0, explanation: '～てください digunakan untuk permintaan. まどをしめてください = tolong tutup jendela.', period: 'sep-nov' },
-
-{ id: 218, section: 'grammar', text: 'A:「いっしょに ひるごはんを たべませんか。」\nB:「すみません。きょうは （　　　）。」', options: ['ちょっと…', 'そうです', 'どうぞ', 'こちらこそ'], answer: 0, explanation: 'ちょっと… sering digunakan untuk menolak ajakan secara halus dan sopan.', period: 'sep-nov' },
-
-{ id: 219, section: 'grammar', text: 'A:「これ、どうぞ。」\nB:「（　　　）。」', options: ['ありがとうございます', 'いただきます', 'いってきます', 'おかえりなさい'], answer: 0, explanation: 'Saat menerima sesuatu dari orang lain, gunakan ありがとうございます = terima kasih.', period: 'sep-nov' },
-
-{ id: 220, section: 'grammar', text: 'A:「ただいま。」\nB:「（　　　）。」', options: ['おかえりなさい', 'いってらっしゃい', 'いただきます', 'おやすみなさい'], answer: 0, explanation: 'ただいま dijawab dengan おかえりなさい ketika seseorang pulang.', period: 'sep-nov' },
-
-{ id: 221, section: 'grammar', text: 'A:「いってきます。」\nB:「（　　　）。」', options: ['いってらっしゃい', 'おかえりなさい', 'ただいま', 'いただきます'], answer: 0, explanation: 'いってきます dijawab dengan いってらっしゃい.', period: 'sep-nov' },
-
-{ id: 222, section: 'grammar', text: 'A:「おさきに しつれいします。」\nB:「（　　　）。」', options: ['おつかれさまでした', 'いただきます', 'おかえりなさい', 'いってきます'], answer: 0, explanation: 'Di tempat kerja, おさきにしつれいします dapat dijawab dengan おつかれさまでした.', period: 'sep-nov' },
-
-{ id: 223, section: 'grammar', text: 'A:「すみません、えきは どこですか。」\nB:「（　　　）です。」', options: ['あそこ', 'あの', 'あれ', 'あのひと'], answer: 0, explanation: 'あそこ digunakan untuk menunjukkan tempat yang jauh dari pembicara dan lawan bicara.', period: 'sep-nov' },
-
-{ id: 224, section: 'grammar', text: 'A:「これは だれの かばんですか。」\nB:「（　　　）です。」', options: ['わたしの', 'わたし', 'わたしを', 'わたしが'], answer: 0, explanation: 'わたしの berarti milik saya. Kata benda setelah の dapat dihilangkan jika sudah jelas.', period: 'sep-nov' },
-
-{ id: 225, section: 'grammar', text: 'A:「どんな たべものが すきですか。」\nB:「（　　　）たべものが すきです。」', options: ['からい', 'からく', 'からいな', 'からいに'], answer: 0, explanation: 'どんな + kata benda digunakan untuk menanyakan jenis atau sifat sesuatu. からいたべもの = makanan pedas.', period: 'sep-nov' },
-
-{ id: 226, section: 'grammar', text: 'わたしは にほんへ （　　　）たいです。', options: ['いき', 'いく', 'いって', 'いった'], answer: 0, explanation: 'Bentuk ～たい digunakan untuk menyatakan keinginan. いく → いきたい = ingin pergi.', period: 'sep-nov' },
-
-{ id: 227, section: 'grammar', text: 'にほんで しごとを （　　　）たいです。', options: ['し', 'する', 'して', 'した'], answer: 0, explanation: 'する → したい. Pola ～たい menyatakan ingin melakukan sesuatu.', period: 'sep-nov' },
-
-{ id: 228, section: 'grammar', text: 'いま ごはんを （　　　）います。', options: ['たべて', 'たべ', 'たべる', 'たべた'], answer: 0, explanation: '～ています digunakan untuk kegiatan yang sedang berlangsung. たべています = sedang makan.', period: 'sep-nov' },
-
-{ id: 229, section: 'grammar', text: 'たなかさんは いま でんわを （　　　）います。', options: ['して', 'し', 'する', 'した'], answer: 0, explanation: '電話をしています = sedang menelepon/bertelepon.', period: 'sep-nov' },
-
-{ id: 230, section: 'grammar', text: 'ちちは いま しごとを （　　　）います。', options: ['して', 'し', 'する', 'した'], answer: 0, explanation: 'している menunjukkan aktivitas yang sedang dilakukan. しごとをしています = sedang bekerja.', period: 'sep-nov' },
-
-{ id: 231, section: 'grammar', text: 'まいにち にほんごを （　　　）なければなりません。', options: ['べんきょうし', 'べんきょうする', 'べんきょうして', 'べんきょうした'], answer: 0, explanation: '～なければなりません berarti harus. べんきょうしなければなりません = harus belajar.', period: 'sep-nov' },
-
-{ id: 232, section: 'grammar', text: 'あした 8じまでに 会社へ （　　　）なければなりません。', options: ['いか', 'いき', 'いって', 'いった'], answer: 0, explanation: 'いく → いかない → いかなければなりません. Artinya harus pergi.', period: 'sep-nov' },
-
-{ id: 233, section: 'grammar', text: 'ここで くつを （　　　）なければなりませんか。', options: ['ぬが', 'ぬぎ', 'ぬいで', 'ぬいだ'], answer: 0, explanation: 'ぬぐ → ぬがない → ぬがなければなりません = harus melepas.', period: 'sep-nov' },
-
-{ id: 234, section: 'grammar', text: 'きょうは しごとが （　　　）から、うちで やすみます。', options: ['ありません', 'ないです', 'ありませんでした', 'なかったです'], answer: 0, explanation: 'ありません digunakan untuk menyatakan tidak ada. しごとがありません = tidak ada pekerjaan.', period: 'sep-nov' },
-
-{ id: 235, section: 'grammar', text: 'わたしは すしを （　　　）ことが あります。', options: ['たべた', 'たべる', 'たべて', 'たべない'], answer: 0, explanation: '～たことがあります = pernah melakukan sesuatu. たべたことがあります = pernah makan.', period: 'sep-nov' },
-
-{ id: 236, section: 'grammar', text: 'にほんの おまつりを （　　　）ことが ありますか。', options: ['みた', 'みる', 'みて', 'みない'], answer: 0, explanation: 'Untuk pengalaman pernah melakukan sesuatu, gunakan bentuk た + ことがあります.', period: 'sep-nov' },
-
-{ id: 237, section: 'grammar', text: 'ここから えきまで あるいて 10ぷん（　　　）です。', options: ['ぐらい', 'だけ', 'しか', 'まで'], answer: 0, explanation: 'ぐらい digunakan untuk menyatakan perkiraan jumlah atau waktu. 10ぷんぐらい = sekitar 10 menit.', period: 'sep-nov' },
-
-{ id: 238, section: 'grammar', text: 'きょうは 2じ（　　　）べんきょうしました。', options: ['ぐらい', 'だけ', 'しか', 'ごろ'], answer: 0, explanation: 'ぐらい dapat menunjukkan durasi perkiraan. 2じぐらい = sekitar 2 jam.', period: 'sep-nov' },
-
-{ id: 239, section: 'grammar', text: 'まいにち 8じ（　　　）しごとを はじめます。', options: ['ごろ', 'ぐらい', 'だけ', 'しか'], answer: 0, explanation: 'ごろ digunakan untuk perkiraan waktu tertentu. 8じごろ = sekitar jam 8.', period: 'sep-nov' },
-
-{ id: 240, section: 'grammar', text: 'りんごを 3（　　　）かいました。', options: ['つ', 'ほん', 'まい', 'だい'], answer: 0, explanation: '～つ digunakan sebagai penghitung umum untuk benda. 3つ = みっつ.', period: 'sep-nov' },
-
-{ id: 241, section: 'grammar', text: 'ペットボトルを 2（　　　）ください。', options: ['ほん', 'まい', 'だい', 'さつ'], answer: 0, explanation: '本（ほん） digunakan untuk benda panjang seperti botol. 2本 = にほん.', period: 'sep-nov' },
-
-{ id: 242, section: 'grammar', text: 'シャツを 2（　　　）かいました。', options: ['まい', 'ほん', 'さつ', 'だい'], answer: 0, explanation: '枚（まい） digunakan untuk benda tipis seperti pakaian atau kertas.', period: 'sep-nov' },
-
-{ id: 243, section: 'grammar', text: 'わたしの へやは あには （　　　）ひろいです。', options: ['より', 'ほど', 'しか', 'だけ'], answer: 0, explanation: 'AはBより～ digunakan untuk membandingkan. Kamar saya lebih luas daripada kamar kakak.', period: 'sep-nov' },
-
-{ id: 244, section: 'grammar', text: 'バスと でんしゃと （　　　）が はやいですか。', options: ['どちら', 'どこ', 'だれ', 'なに'], answer: 0, explanation: 'どちら digunakan untuk menanyakan pilihan antara dua hal.', period: 'sep-nov' },
-
-{ id: 245, section: 'grammar', text: 'この まちで （　　　）が いちばん おおきいですか。', options: ['どこ', 'どちら', 'だれ', 'いつ'], answer: 0, explanation: 'どこ digunakan untuk menanyakan tempat. いちばんおおきい = paling besar.', period: 'sep-nov' },
-
-{ id: 246, section: 'grammar', text: 'にほんごと えいごと、（　　　）が むずかしいですか。', options: ['どちら', 'どこ', 'だれ', 'いつ'], answer: 0, explanation: 'どちら digunakan ketika memilih atau membandingkan dua hal.', period: 'sep-nov' },
-
-{ id: 247, section: 'grammar', text: 'A:「あした いっしょに べんきょうしませんか。」\nB:「（　　　）。なんじですか。」', options: ['いいですね', 'いいえ、ちがいます', 'どういたしまして', 'おめでとう'], answer: 0, explanation: 'いいですね digunakan untuk menyetujui atau merespons positif suatu ajakan.', period: 'sep-nov' },
-
-{ id: 248, section: 'grammar', text: 'A:「この かさ、つかっても いいですか。」\nB:「はい、（　　　）。」', options: ['どうぞ', 'どうも', 'ごめんなさい', 'そうですか'], answer: 0, explanation: 'どうぞ digunakan saat memberikan izin atau mempersilakan seseorang mengambil/menggunakan sesuatu.', period: 'sep-nov' },
-
-{ id: 249, section: 'grammar', text: 'A:「すみません。ちょっと てつだって ください。」\nB:「はい、（　　　）。」', options: ['わかりました', 'いただきます', 'おかえりなさい', 'どういたしまして'], answer: 0, explanation: 'わかりました = baik, saya mengerti/mengerti permintaannya.', period: 'sep-nov' },
-
-{ id: 250, section: 'grammar', text: 'A:「すみません、トイレは どこですか。」\nB:「あそこ（　　　）あります。」', options: ['に', 'で', 'を', 'へ'], answer: 0, explanation: 'あります untuk benda/tempat menggunakan に untuk menunjukkan lokasi keberadaan.', period: 'sep-nov' },
-
-{ id: 251, section: 'grammar', text: 'A:「これは なんですか。」\nB:「にほんごの （　　　）です。」', options: ['ほん', 'ほんを', 'ほんが', 'ほんに'], answer: 0, explanation: 'Setelah の digunakan kata benda untuk menunjukkan hubungan kepemilikan/jenis: 日本語の本 = buku bahasa Jepang.', period: 'sep-nov' },
-
-{ id: 252, section: 'grammar', text: 'あした しごとが あります（　　　）、きょうは はやく ねます。', options: ['から', 'まで', 'でも', 'しか'], answer: 0, explanation: 'から menyatakan alasan: karena besok bekerja, hari ini tidur lebih awal.', period: 'sep-nov' },
-
-{ id: 253, section: 'grammar', text: 'わたしは コーヒー（　　　）おちゃも すきです。', options: ['も', 'が', 'を', 'へ'], answer: 0, explanation: 'も berarti juga. コーヒーもおちゃもすきです = suka kopi dan teh juga.', period: 'sep-nov' },
-
-{ id: 254, section: 'grammar', text: 'にちようび（　　　）どこへも いきませんでした。', options: ['は', 'を', 'が', 'で'], answer: 0, explanation: 'は digunakan untuk menandai topik. にちようびは = pada hari Minggu.', period: 'sep-nov' },
-
-{ id: 255, section: 'grammar', text: 'わたしは くだもの（　　　）すきです。', options: ['が', 'を', 'で', 'へ'], answer: 0, explanation: '好きです biasanya menggunakan が untuk hal yang disukai. くだものがすきです.', period: 'sep-nov' },
-
-{ id: 256, section: 'grammar', text: 'きょうは どこ（　　　）いきません。', options: ['へも', 'へが', 'へを', 'へで'], answer: 0, explanation: 'どこへも + bentuk negatif berarti tidak pergi ke mana pun.', period: 'sep-nov' },
-
-{ id: 257, section: 'grammar', text: 'きのうは なにも （　　　）。', options: ['たべませんでした', 'たべました', 'たべます', 'たべたいです'], answer: 0, explanation: 'なにも + bentuk negatif berarti tidak melakukan/makan apa pun.', period: 'sep-nov' },
-
-{ id: 258, section: 'grammar', text: 'わたしは まだ ひるごはんを （　　　）。', options: ['たべていません', 'たべました', 'たべています', 'たべたいでした'], answer: 0, explanation: 'まだ～ていません berarti belum melakukan sesuatu. まだたべていません = belum makan.', period: 'sep-nov' },
-
-{ id: 259, section: 'grammar', text: 'もう しゅくだいを （　　　）。', options: ['しました', 'していません', 'しませんでした', 'するでしょう'], answer: 0, explanation: 'もう + bentuk lampau berarti sudah. もうしました = sudah mengerjakannya.', period: 'sep-nov' },
-
-{ id: 260, section: 'grammar', text: 'A:「もう ばんごはんを たべましたか。」\nB:「いいえ、（　　　）。」', options: ['まだです', 'もうです', 'そうです', 'どうぞ'], answer: 0, explanation: 'まだです digunakan untuk menjawab bahwa sesuatu belum dilakukan.', period: 'sep-nov' },
-
-{ id: 261, section: 'grammar', text: 'あした うちへ （　　　）まえに、スーパーへ いきます。', options: ['かえる', 'かえって', 'かえった', 'かえり'], answer: 0, explanation: 'Pola V bentuk kamus + まえに berarti sebelum melakukan sesuatu. かえるまえに = sebelum pulang.', period: 'sep-nov' },
-
-{ id: 262, section: 'grammar', text: 'ねる （　　　）に、はを みがきます。', options: ['まえ', 'あと', 'とき', 'ながら'], answer: 0, explanation: 'V bentuk kamus + まえに = sebelum melakukan sesuatu. Sebelum tidur, menggosok gigi.', period: 'sep-nov' },
-
-{ id: 263, section: 'grammar', text: 'ごはんを たべた （　　　）、くすりを のみます。', options: ['あとで', 'まえに', 'ながら', 'まで'], answer: 0, explanation: 'V bentuk lampau + あとで berarti setelah melakukan sesuatu.', period: 'sep-nov' },
-
-{ id: 264, section: 'grammar', text: 'しごとの （　　　）、ともだちと ごはんを たべました。', options: ['あとで', 'まえに', 'ながら', 'だけ'], answer: 0, explanation: 'Nのあとで = setelah sesuatu. しごとのあとで = setelah bekerja.', period: 'sep-nov' },
-
-{ id: 265, section: 'grammar', text: 'テレビを （　　　）ながら、ごはんを たべます。', options: ['み', 'みて', 'みる', 'みた'], answer: 0, explanation: 'Bentuk ます tanpa ます + ながら berarti melakukan dua aktivitas bersamaan.', period: 'sep-nov' },
-
-{ id: 266, section: 'grammar', text: 'おんがくを きき（　　　）、べんきょうします。', options: ['ながら', 'まで', 'ので', 'から'], answer: 0, explanation: '～ながら berarti sambil. Mendengarkan musik sambil belajar.', period: 'sep-nov' },
-
-{ id: 267, section: 'grammar', text: 'あしたは あめが （　　　）と おもいます。', options: ['ふる', 'ふって', 'ふった', 'ふり'], answer: 0, explanation: 'と思います digunakan untuk menyatakan pendapat/prediksi. Sebelum と gunakan bentuk biasa: ふる.', period: 'sep-nov' },
-
-{ id: 268, section: 'grammar', text: 'たなかさんは あした こない（　　　）おもいます。', options: ['と', 'が', 'を', 'に'], answer: 0, explanation: 'Pola ～と思います menggunakan partikel と sebelum 思います.', period: 'sep-nov' },
-
-{ id: 269, section: 'grammar', text: 'この くるまは ちょっと （　　　）と おもいます。', options: ['たかい', 'たかく', 'たかいな', 'たかさ'], answer: 0, explanation: 'Kata sifat-i bentuk biasa langsung diikuti とおもいます. たかいとおもいます = saya pikir mahal.', period: 'sep-nov' },
-
-{ id: 270, section: 'grammar', text: 'にほんへ いった（　　　）があります。', options: ['こと', 'もの', 'ところ', 'とき'], answer: 0, explanation: '～たことがあります menyatakan pengalaman pernah melakukan sesuatu.', period: 'sep-nov' },
-
-            // --- PENDENGARAN (Listening) ---
-            { id: 10, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はこれからどこへ行きますか。', audioText: '男：あ、もう５時ですね。スーパーへ買い物に行かなくちゃ。\n女：あれ？今日は銀行へ行くと言っていませんでしたか。\n男：あ、そうでした。じゃあ、先にあそこへ寄ってから、買い物に行きます。', options: ['銀行', 'スーパー', '会社', '家'], answer: 0, explanation: 'Pria itu ingat dia harus ke Bank (銀行 / あそこ) dulu sebelum belanja (スーパー).', period: 'sep-nov' },
-            { id: 11, section: 'listening', text: '【音声を聞いて答えてください】\n天気はどうなりますか。', audioText: '明日は午前中は晴れますが、午後からくもりになり、夜には雨が降るでしょう。', options: ['晴れのちくもり、夜は雨', '晴れのち雨', '雨のち晴れ', 'ずっと晴れ'], answer: 0, explanation: 'Pagi cerah (晴れます), siang mendung (くもりになり), malam hujan (雨が降る).', period: 'sep-nov' },
-            { id: 20, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何を買いますか。', audioText: '女：すみません、りんごを３つと、みかんを５つください。\n男：はい、りんご３つとみかん５つですね。', options: ['りんご３つ、みかん５つ', 'りんご５つ、みかん３つ', 'りんご３つだけ', 'みかん５つだけ'], answer: 0, explanation: 'Perempuan itu meminta "りんごを３つ" (Apel 3 buah) dan "みかんを５つ" (Jeruk 5).', period: 'sep-nov' },
-            { id: 37, section: 'listening', text: '【音声を聞いて答えてください】\n会議は何時からですか。', audioText: '男：明日の会議は、１０時からですか。\n女：いいえ、１時間遅れて、１１時からになりました。\n男：わかりました。', options: ['１１時', '１０時', '１時', '１２時'], answer: 0, explanation: 'Awalnya jam 10, lalu mundur 1 jam (１時間遅れて) menjadi jam 11.', period: 'sep-nov' },
-            { id: 38, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はどうやって会社へ行きますか。', audioText: '女：山田さんは、いつも電車で会社へ行きますか。\n男：いいえ、家から会社まで近いですから、いつも自転車で行きます。雨の日はバスに乗ります。', options: ['自転車', '電車', 'バス', '車'], answer: 0, explanation: 'Pria itu biasanya pergi dengan sepeda (自転車で行きます) karena dekat.', period: 'sep-nov' },
-            { id: 39, section: 'listening', text: '【音声を聞いて答えてください】\n今、何時ですか。', audioText: '女：すみません、今何時ですか。\n男：えーと、４時半です。\n女：ありがとうございます。', options: ['４時半', '３時半', '４時', '５時半'], answer: 0, explanation: 'Pria itu menjawab "４時半です" (Jam setengah lima).', period: 'sep-nov' },
-            { id: 40, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を飲みますか。', audioText: '女：飲み物は何がいいですか。\n男：そうですね。コーヒーをお願いします。あ、冷たいコーヒーがいいです。', options: ['冷たいコーヒー', '温かいコーヒー', '冷たいお茶', '水'], answer: 0, explanation: 'Pria itu meminta es kopi / kopi dingin (冷たいコーヒー).', period: 'sep-nov' },
-            { id: 41, section: 'listening', text: '【音声を聞いて答えてください】\n二人はいつ会いますか。', audioText: '男：今週の日曜日に、映画を見に行きませんか。\n女：日曜日はちょっと用事があります。土曜日はどうですか。\n男：いいですよ。じゃあ、土曜日にしましょう。', options: ['土曜日', '日曜日', '金曜日', '月曜日'], answer: 0, explanation: 'Mereka sepakat untuk bertemu hari Sabtu (土曜日).', period: 'sep-nov' },
-            // --- PENDENGARAN (Listening) ---
-
-{ id: 301, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を買いますか。', audioText: '女：スーパーで何を買いますか。\n男：牛乳とパンを買います。卵は買いません。', options: ['牛乳とパン', 'パンと卵', '牛乳と卵', '卵だけ'], answer: 0, explanation: 'Pria itu membeli susu (牛乳) dan roti (パン), tetapi tidak membeli telur.', period: 'sep-nov' },
-
-{ id: 302, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何時に起きますか。', audioText: '男：毎朝何時に起きますか。\n女：いつも６時に起きます。でも、日曜日は７時です。', options: ['６時', '７時', '５時', '８時'], answer: 0, explanation: 'Dia biasanya bangun jam 6. Pertanyaan tidak menyebut hari Minggu, jadi jawabannya ６時.', period: 'sep-nov' },
-
-{ id: 303, section: 'listening', text: '【音声を聞いて答えてください】\n二人はどこで昼ごはんを食べますか。', audioText: '男：昼ごはん、どこで食べますか。\n女：今日はレストランに行きませんか。\n男：いいですね。そうしましょう。', options: ['レストラン', '会社', 'スーパー', '家'], answer: 0, explanation: 'Mereka memutuskan makan siang di restoran (レストラン).', period: 'sep-nov' },
-
-{ id: 304, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何をしますか。', audioText: '女：田中さん、今日の仕事は終わりましたか。\n男：まだです。これからこの書類を書きます。', options: ['書類を書きます', '家に帰ります', 'ごはんを食べます', '電話をします'], answer: 0, explanation: 'Pria itu mengatakan akan menulis dokumen (書類を書きます).', period: 'sep-nov' },
-
-{ id: 305, section: 'listening', text: '【音声を聞いて答えてください】\n女の人はどうやって学校へ行きますか。', audioText: '男：毎日どうやって学校へ行きますか。\n女：歩いて行きます。学校は家から近いです。', options: ['歩いて', '電車で', 'バスで', '自転車で'], answer: 0, explanation: 'Dia pergi ke sekolah dengan berjalan kaki (歩いて行きます).', period: 'sep-nov' },
-
-{ id: 306, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はいつ宿題をしますか。', audioText: '女：宿題はいつしますか。\n男：晩ごはんを食べてから、します。', options: ['晩ごはんのあと', '朝ごはんのあと', '学校へ行くまえ', '昼ごはんのあと'], answer: 0, explanation: 'Pria itu mengerjakan PR setelah makan malam (晩ごはんを食べてから).', period: 'sep-nov' },
-
-{ id: 307, section: 'listening', text: '【音声を聞いて答えてください】\n雨が降りますか。', audioText: '男：明日の天気はどうですか。\n女：午前は晴れます。でも、午後は雨が降るでしょう。', options: ['午後は雨が降ります', '一日中晴れます', '午前は雨が降ります', '一日中雨です'], answer: 0, explanation: 'Ramalan mengatakan sore/siang setelah 午後 akan turun hujan.', period: 'sep-nov' },
-
-{ id: 308, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何を食べませんか。', audioText: '男：朝ごはんに何を食べましたか。\n女：パンと卵を食べました。ごはんは食べませんでした。', options: ['ごはん', 'パン', '卵', 'パンと卵'], answer: 0, explanation: 'Perempuan itu tidak makan nasi (ごはんは食べませんでした).', period: 'sep-nov' },
-
-{ id: 309, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はどこにかばんを置きますか。', audioText: '女：かばんはどこに置きますか。\n男：机の上に置きます。', options: ['机の上', 'いすの下', 'ドアの前', 'ベッドの上'], answer: 0, explanation: 'Tas diletakkan di atas meja (机の上).', period: 'sep-nov' },
-
-{ id: 310, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何をしていますか。', audioText: '男：山田さん、今何をしていますか。\n女：音楽を聞きながら、勉強しています。', options: ['音楽を聞きながら勉強しています', 'テレビを見ています', '本を読んでいます', '寝ています'], answer: 0, explanation: 'Perempuan itu sedang belajar sambil mendengarkan musik.', period: 'sep-nov' },
-
-{ id: 311, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を忘れましたか。', audioText: '女：どうしたんですか。\n男：家に財布を忘れました。', options: ['財布', 'かばん', '携帯電話', '傘'], answer: 0, explanation: 'Pria itu lupa membawa dompet (財布) di rumah.', period: 'sep-nov' },
-
-{ id: 312, section: 'listening', text: '【音声を聞いて答えてください】\n二人は何時に会いますか。', audioText: '男：明日、何時に会いましょうか。\n女：１０時はどうですか。\n男：いいですね。１０時に駅で会いましょう。', options: ['１０時', '９時', '１１時', '１２時'], answer: 0, explanation: 'Mereka sepakat bertemu jam 10 di stasiun.', period: 'sep-nov' },
-
-{ id: 313, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はどこへ行きたいですか。', audioText: '女：次の休みにどこへ行きたいですか。\n男：京都へ行きたいです。古いお寺を見たいです。', options: ['京都', '東京', '大阪', '北海道'], answer: 0, explanation: 'Pria itu ingin pergi ke Kyoto (京都) untuk melihat kuil lama.', period: 'sep-nov' },
-
-{ id: 314, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何をしますか。', audioText: '男：この荷物、重いですね。\n女：じゃあ、私が持ちます。', options: ['荷物を持ちます', '荷物を買います', '荷物を送ります', '荷物を開けます'], answer: 0, explanation: 'Perempuan itu mengatakan bahwa dia akan membawa barang tersebut (持ちます).', period: 'sep-nov' },
-
-{ id: 315, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はなぜ会社を休みますか。', audioText: '女：今日は会社に来ないんですか。\n男：はい。熱がありますから、休みます。', options: ['熱がありますから', '仕事がありませんから', '旅行しますから', '雨ですから'], answer: 0, explanation: 'Dia tidak masuk kerja karena demam (熱があります).', period: 'sep-nov' },
-
-{ id: 316, section: 'listening', text: '【音声を聞いて答えてください】\n何を持ってきますか。', audioText: '男：明日のパーティーに何を持ってきますか。\n女：私はケーキを持ってきます。\n男：じゃあ、私はジュースを持ってきます。', options: ['ジュース', 'ケーキ', 'パン', 'お茶'], answer: 0, explanation: 'Pria itu akan membawa jus (ジュース).', period: 'sep-nov' },
-
-{ id: 317, section: 'listening', text: '【音声を聞いて答えてください】\n女の人はどの服を買いますか。', audioText: '男：この白いシャツはどうですか。\n女：きれいですね。でも、少し高いです。あの青いシャツにします。', options: ['青いシャツ', '白いシャツ', '黒いシャツ', '赤いシャツ'], answer: 0, explanation: 'Dia memilih kemeja biru (青いシャツ) karena kemeja putih agak mahal.', period: 'sep-nov' },
-
-{ id: 318, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を探していますか。', audioText: '女：何を探しているんですか。\n男：かぎがありません。机の上を見てください。', options: ['かぎ', '財布', '時計', '本'], answer: 0, explanation: 'Pria itu sedang mencari kunci (かぎ).', period: 'sep-nov' },
-
-{ id: 319, section: 'listening', text: '【音声を聞いて答えてください】\n二人はどこで会いますか。', audioText: '男：明日、どこで会いますか。\n女：駅の前はどうですか。\n男：わかりました。駅の前で会いましょう。', options: ['駅の前', '学校の前', 'レストラン', '会社'], answer: 0, explanation: 'Mereka sepakat bertemu di depan stasiun (駅の前).', period: 'sep-nov' },
-
-{ id: 320, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を飲みませんか。', audioText: '女：お茶とコーヒーがあります。どちらがいいですか。\n男：コーヒーをお願いします。お茶は飲みません。', options: ['お茶', 'コーヒー', '水', 'ジュース'], answer: 0, explanation: 'Pria itu memilih kopi dan mengatakan tidak minum teh (お茶は飲みません).', period: 'sep-nov' },
-
-{ id: 321, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何をしなければなりませんか。', audioText: '男：明日のテストはありますか。\n女：はい。ですから、今日は勉強しなければなりません。', options: ['勉強します', '遊びます', '旅行します', '寝ます'], answer: 0, explanation: 'Karena ada ujian besok, dia harus belajar (勉強しなければなりません).', period: 'sep-nov' },
-
-{ id: 322, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はいつ帰りますか。', audioText: '女：今日は何時に帰りますか。\n男：仕事が終わってから帰ります。たぶん８時ごろです。', options: ['８時ごろ', '６時ごろ', '７時ごろ', '９時ごろ'], answer: 0, explanation: 'Dia memperkirakan pulang sekitar jam 8 (８時ごろ).', period: 'sep-nov' },
-
-{ id: 323, section: 'listening', text: '【音声を聞いて答えてください】\n何を予約しましたか。', audioText: '男：ホテルは予約しましたか。\n女：はい。東京のホテルを予約しました。', options: ['東京のホテル', '大阪のホテル', '東京のレストラン', '大阪のレストラン'], answer: 0, explanation: 'Perempuan itu memesan hotel di Tokyo (東京のホテル).', period: 'sep-nov' },
-
-{ id: 324, section: 'listening', text: '【音声を聞いて答えてください】\n男の人はどうして電車に乗りませんか。', audioText: '女：どうして電車に乗らないんですか。\n男：今日は駅まで歩きたいです。それに、天気がいいですから。', options: ['歩きたいから', '雨だから', '電車がないから', '駅が遠いから'], answer: 0, explanation: 'Dia tidak naik kereta karena ingin berjalan kaki (歩きたい).', period: 'sep-nov' },
-
-{ id: 325, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何をしていますか。', audioText: '男：今、何をしていますか。\n女：部屋を掃除しています。', options: ['部屋を掃除しています', '料理しています', '寝ています', 'テレビを見ています'], answer: 0, explanation: 'Perempuan itu sedang membersihkan kamar (部屋を掃除しています).', period: 'sep-nov' },
-
-{ id: 326, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何を買いませんでしたか。', audioText: '女：買い物はどうでしたか。\n男：野菜と肉を買いました。でも、魚は買いませんでした。', options: ['魚', '野菜', '肉', '野菜と肉'], answer: 0, explanation: 'Dia membeli sayur dan daging, tetapi tidak membeli ikan (魚).', period: 'sep-nov' },
-
-{ id: 327, section: 'listening', text: '【音声を聞いて答えてください】\n女の人はどこへ行く前に何をしますか。', audioText: '男：出かける前に何をしますか。\n女：シャワーを浴びます。それから、出かけます。', options: ['シャワーを浴びます', '朝ごはんを食べます', '寝ます', 'テレビを見ます'], answer: 0, explanation: 'Sebelum keluar, dia mandi (シャワーを浴びます).', period: 'sep-nov' },
-
-{ id: 328, section: 'listening', text: '【音声を聞いて答えてください】\n男の人は何が好きですか。', audioText: '女：スポーツが好きですか。\n男：はい。サッカーが一番好きです。', options: ['サッカー', '野球', 'テニス', '水泳'], answer: 0, explanation: 'Olahraga yang paling disukai pria itu adalah sepak bola (サッカー).', period: 'sep-nov' },
-
-{ id: 329, section: 'listening', text: '【音声を聞いて答えてください】\n女の人は何を持っていますか。', audioText: '男：そのかばんの中に何がありますか。\n女：本が３冊とペンが２本あります。', options: ['本３冊とペン２本', '本２冊とペン３本', '本３冊だけ', 'ペン２本だけ'], answer: 0, explanation: 'Tas berisi 3 buku (本３冊) dan 2 pulpen (ペン２本).', period: 'sep-nov' },
-
-{ id: 330, section: 'listening', text: '【音声を聞いて答えてください】\n二人は何を見ますか。', audioText: '女：今晩、映画を見ませんか。\n男：いいですね。何の映画ですか。\n女：日本の映画です。\n男：じゃあ、それを見ましょう。', options: ['日本の映画', 'アメリカの映画', 'スポーツ', 'ニュース'], answer: 0, explanation: 'Mereka memutuskan menonton film Jepang (日本の映画).', period: 'sep-nov' },
-
-            // --- MEMBACA (Reading) ---
-            { id: 12, section: 'reading', text: '【手紙を読んで答えてください】\n山田さんへ\nきのうは ありがとうございました。とても たのしかったです。\nまた らいげつ、いっしょに しょくじを しましょう。\n\nだれが この てがみを かきましたか。', options: ['山田さんのともだち', '山田さん', 'わからない', 'せんせい'], answer: 0, explanation: 'Surat ditujukan kepada Yamada (山田さんへ), jadi yang menulis adalah orang lain (temannya).', period: 'sep-nov' },
-            { id: 13, section: 'reading', text: '【お知らせ】\nとしょかんは げつようびが やすみです。かようびから にちようびまで ９じから ５じまで あいています。\n\nすいようびの ６じに としょかんへ いきます。ほんを かりることが できますか。', options: ['いいえ、できません。', 'はい、できます。', 'わかりません。', 'げつようびは できます。'], answer: 0, explanation: 'Perpustakaan buka sampai jam 5. Hari Rabu jam 6 sudah tutup, jadi tidak bisa.', period: 'sep-nov' },
-            { id: 21, section: 'reading', text: '【メモを読んで答えてください】\n田中さんへ\nさきほど、木村さんから電話がありました。あしたの会議は午後２時からに変更になったそうです。資料を準備しておいてください。\n（佐藤より）\n\n会議は何時からですか。', options: ['午後２時', '午前２時', 'あした', 'わかりません'], answer: 0, explanation: 'Di dalam memo tertulis "午後２時から" (Mulai jam 2 siang).', period: 'sep-nov' },
-            { id: 42, section: 'reading', text: '【メールを読んで答えてください】\nアリさんへ\nあしたの パーティーですが、飲み物は わたしが 買いますから、アリさんは おかしを お願いします。\n（鈴木）\n\nアリさんは 何を 買いますか。', options: ['おかし', '飲み物', 'ケーキ', '何も買わない'], answer: 0, explanation: 'Suzuki meminta Ari untuk mengurus camilan (アリさんは おかしを お願いします).', period: 'sep-nov' },
-            { id: 43, section: 'reading', text: '【ポスターを読んで答えてください】\n＜セールのお知らせ＞\nスーパー「さくら」\n水曜日：野菜が 20% オフ\n金曜日：お肉が 20% オフ\n\n金曜日に 安く なるのは 何ですか。', options: ['お肉', '野菜', '魚', '果物'], answer: 0, explanation: 'Pada hari Jumat (金曜日), yang diskon adalah daging (お肉).', period: 'sep-nov' },
-            { id: 44, section: 'reading', text: '【文を読んで答えてください】\nわたしの まちは 小さいですが、とても しずかで きれいです。ゆうめいな おてらが あります。えきから バスで 10分ぐらいです。\n\nこの まちは どんな まちですか。', options: ['小さくて きれいな まち', '大きくて にぎやかな まち', 'えきから 遠い まち', 'おてらが ない まち'], answer: 0, explanation: 'Ditulis bahwa kotanya kecil tapi tenang dan indah (小さいですが... きれいです).', period: 'sep-nov' },
-            { id: 45, section: 'reading', text: '【日記を読んで答えてください】\n７月１５日（土）\nきょうは 友だちと デパートへ 行った。シャツを 買いたかったが、高いもの しか なかったので、買わなかった。そのあと、レストランで カレーを 食べた。\n\nこの人は デパートで 何を 買いましたか。', options: ['何も買わなかった', 'シャツ', 'カレー', '高いもの'], answer: 0, explanation: 'Karena hanya ada yang mahal, dia tidak membeli kemeja (買わなかった).', period: 'sep-nov' },
-            // --- MEMBACA (Reading) ---
-
-{ id: 331, section: 'reading', text: '【お知らせを読んで答えてください】\nスーパー「さくら」\n営業時間：午前９時から午後８時まで\n月曜日は休みです。\n\n日曜日の午後９時にスーパーへ行きます。どうですか。', options: ['いいえ、閉まっています。', 'はい、開いています。', '月曜日だけ開いています。', '午前９時からです。'], answer: 0, explanation: 'スーパーは午後８時までなので、午後９時はもう閉まっています。', period: 'sep-nov' },
-
-{ id: 332, section: 'reading', text: '【メモを読んで答えてください】\n田中さんへ\nあしたは９時に駅の前で会いましょう。\n忘れないでください。\n\n（山田）\n\n二人はどこで会いますか。', options: ['駅の前', '会社の前', '学校の前', 'レストラン'], answer: 0, explanation: 'メモに「９時に駅の前で会いましょう」とあります。', period: 'sep-nov' },
-
-{ id: 333, section: 'reading', text: '【メールを読んで答えてください】\nみなさんへ\nあしたは雨のよほうです。\nサッカーはありません。\n午後３時に学校で日本語の勉強をします。\n\nあした、何をしますか。', options: ['日本語を勉強します', 'サッカーをします', '買い物をします', '映画を見ます'], answer: 0, explanation: '雨なのでサッカーはなく、午後３時に日本語を勉強します。', period: 'sep-nov' },
-
-{ id: 334, section: 'reading', text: '【メニューを読んで答えてください】\nレストラン「さくら」\nカレー　　６００円\nラーメン　７００円\nうどん　　５００円\nジュース　２００円\n\nいちばん安い食べ物は何ですか。', options: ['うどん', 'カレー', 'ラーメン', 'ジュース'], answer: 0, explanation: '食べ物の中では、うどんが５００円でいちばん安いです。', period: 'sep-nov' },
-
-{ id: 335, section: 'reading', text: '【手紙を読んで答えてください】\n鈴木さんへ\nこんにちは。\n土曜日に一緒に映画を見ませんか。\n午後２時に駅で会いましょう。\n\n（アリ）\n\nアリさんは何をしたいですか。', options: ['映画を見たいです', '買い物をしたいです', 'ごはんを作りたいです', '勉強したいです'], answer: 0, explanation: '「一緒に映画を見ませんか」と書いてあるので、映画を見る予定です。', period: 'sep-nov' },
-
-{ id: 336, section: 'reading', text: '【ポスターを読んで答えてください】\n＜スポーツセンター＞\n月曜日～金曜日：９：００～２０：００\n土曜日：９：００～１７：００\n日曜日：休み\n\n日曜日にスポーツセンターへ行くことができますか。', options: ['いいえ、できません。', 'はい、できます。', '午前中だけできます。', '午後だけできます。'], answer: 0, explanation: '日曜日は「休み」なので、行くことができません。', period: 'sep-nov' },
-
-{ id: 337, section: 'reading', text: '【日記を読んで答えてください】\nきょうは朝７時に起きました。\n朝ごはんを食べて、８時に家を出ました。\n電車で会社へ行きました。\n\nこの人は何時に家を出ましたか。', options: ['８時', '７時', '９時', '６時'], answer: 0, explanation: '「８時に家を出ました」と書いてあります。', period: 'sep-nov' },
-
-{ id: 338, section: 'reading', text: '【案内を読んで答えてください】\n駅からホテルまで\n駅を出て、右へ曲がってください。\nコンビニの前をまっすぐ行きます。\n５分ぐらいでホテルがあります。\n\n駅を出て、どうしますか。', options: ['右へ曲がります', '左へ曲がります', '電車に乗ります', 'コンビニに入ります'], answer: 0, explanation: '駅を出たあと、「右へ曲がってください」と書いてあります。', period: 'sep-nov' },
-
-{ id: 339, section: 'reading', text: '【お知らせを読んで答えてください】\n図書館からのお知らせ\n本を借りる人は、カードを持ってきてください。\n一人５冊まで借りることができます。\n\n本を借りるとき、何が必要ですか。', options: ['カード', 'お金', 'パスポート', '写真'], answer: 0, explanation: '本を借りるときはカードが必要です。', period: 'sep-nov' },
-
-{ id: 340, section: 'reading', text: '【メールを読んで答えてください】\n山田さんへ\nきょうは仕事が６時まであります。\nそのあと、スーパーへ行きます。\n７時ごろ家に帰ります。\n\n山田さんは何時ごろ家に帰りますか。', options: ['７時ごろ', '６時ごろ', '８時ごろ', '５時ごろ'], answer: 0, explanation: '「７時ごろ家に帰ります」と書いてあります。', period: 'sep-nov' },
-
-{ id: 341, section: 'reading', text: '【文を読んで答えてください】\nわたしは毎朝コーヒーを飲みます。\nでも、今日はコーヒーがありませんでした。\nですから、お茶を飲みました。\n\n今日は何を飲みましたか。', options: ['お茶', 'コーヒー', '水', 'ジュース'], answer: 0, explanation: '今日はコーヒーがなかったので、お茶を飲みました。', period: 'sep-nov' },
-
-{ id: 342, section: 'reading', text: '【メモを読んで答えてください】\n母へ\n冷蔵庫にりんごが３つあります。\n牛乳はありません。\n帰るとき、牛乳を買ってきてください。\n\n何を買いますか。', options: ['牛乳', 'りんご', 'パン', '卵'], answer: 0, explanation: 'メモには「牛乳を買ってきてください」とあります。', period: 'sep-nov' },
-
-{ id: 343, section: 'reading', text: '【広告を読んで答えてください】\n＜春のセール＞\nシャツ　３０００円 → ２０００円\nくつ　　５０００円 → ４０００円\nかばん　４０００円 → ３０００円\n\nシャツはいくらですか。', options: ['２０００円', '３０００円', '４０００円', '５０００円'], answer: 0, explanation: 'セールでシャツは３０００円から２０００円になっています。', period: 'sep-nov' },
-
-{ id: 344, section: 'reading', text: '【日記を読んで答えてください】\n土曜日\n朝、部屋を掃除しました。\n昼は友だちとラーメンを食べました。\n午後は家で映画を見ました。\n\n昼に何をしましたか。', options: ['ラーメンを食べました', '部屋を掃除しました', '映画を見ました', '買い物をしました'], answer: 0, explanation: '昼は友だちとラーメンを食べました。', period: 'sep-nov' },
-
-{ id: 345, section: 'reading', text: '【お知らせを読んで答えてください】\n会社のお知らせ\nあしたの会議は１０時からです。\n場所は３階の会議室です。\n９時５０分までに来てください。\n\n会議はどこでありますか。', options: ['３階の会議室', '２階の会議室', '１階のロビー', '３階の食堂'], answer: 0, explanation: '会議の場所は「３階の会議室」です。', period: 'sep-nov' },
-
-{ id: 346, section: 'reading', text: '【メールを読んで答えてください】\nアリさんへ\n日曜日に公園へ行きませんか。\n天気がよかったら、いっしょにサッカーをしましょう。\n雨だったら、映画を見ましょう。\n\n雨だったら、二人は何をしますか。', options: ['映画を見ます', 'サッカーをします', '公園へ行きます', '家で勉強します'], answer: 0, explanation: '「雨だったら、映画を見ましょう」と書いてあります。', period: 'sep-nov' },
-
-{ id: 347, section: 'reading', text: '【案内を読んで答えてください】\nバスの時間\n１番バス　８：００\n２番バス　８：３０\n３番バス　９：００\n\n８時４０分に来た人は、次にどのバスに乗りますか。', options: ['３番バス', '１番バス', '２番バス', '４番バス'], answer: 0, explanation: '８時４０分には２番バスが出たあとです。次は９時の３番バスです。', period: 'sep-nov' },
-
-{ id: 348, section: 'reading', text: '【メッセージを読んで答えてください】\nごめんなさい。今日は仕事が忙しいので、約束の時間に行くことができません。\nまた今度お願いします。\n\nこの人はどうして行くことができませんか。', options: ['仕事が忙しいから', '病気だから', 'お金がないから', '雨だから'], answer: 0, explanation: '行くことができない理由は「仕事が忙しいから」です。', period: 'sep-nov' },
-
-{ id: 349, section: 'reading', text: '【文を読んで答えてください】\nわたしの家には犬が１匹と猫が２匹います。\n犬は大きくて、猫は小さいです。\n毎朝、犬と一緒に公園へ行きます。\n\n猫は何匹いますか。', options: ['２匹', '１匹', '３匹', '４匹'], answer: 0, explanation: '文に「猫が２匹います」と書いてあります。', period: 'sep-nov' },
-
-{ id: 350, section: 'reading', text: '【お知らせを読んで答えてください】\n病院のお知らせ\n午前：９時～１２時\n午後：２時～５時\n土曜日と日曜日は休みです。\n\n土曜日の午前１０時に病院へ行きます。どうですか。', options: ['休みです', '開いています', '午後だけ開いています', '１２時から開きます'], answer: 0, explanation: '土曜日は休みなので、午前１０時でも開いていません。', period: 'sep-nov' },
-
-{ id: 351, section: 'reading', text: '【手紙を読んで答えてください】\n田中さんへ\n先週、田中さんから本を借りました。\nとてもおもしろかったです。\n来週、学校へ持っていきます。\n\n何を持っていきますか。', options: ['本', 'かばん', 'ペン', 'お金'], answer: 0, explanation: '先週借りた本を、来週学校へ持っていきます。', period: 'sep-nov' },
-
-{ id: 352, section: 'reading', text: '【メールを読んで答えてください】\n鈴木さんへ\n明日の朝、８時に駅で会いましょう。\n私は白いシャツを着ています。\n駅の前で待っています。\n\n鈴木さんは何を着ていますか。', options: ['白いシャツ', '黒いシャツ', '白いズボン', '青いシャツ'], answer: 0, explanation: '「白いシャツを着ています」と書いてあります。', period: 'sep-nov' },
-
-{ id: 353, section: 'reading', text: '【メニューを読んで答えてください】\n＜ランチメニュー＞\nA：カレー＋サラダ　７００円\nB：ラーメン＋ぎょうざ　８００円\nC：うどん＋おにぎり　６００円\n\nいちばん安いランチはどれですか。', options: ['C', 'A', 'B', '全部同じです'], answer: 0, explanation: 'Cランチは６００円で、３つの中でいちばん安いです。', period: 'sep-nov' },
-
-{ id: 354, section: 'reading', text: '【日記を読んで答えてください】\nきのうは雨でした。\nどこにも行きませんでした。\n家で音楽を聞いたり、本を読んだりしました。\n\nきのう、どこへ行きましたか。', options: ['どこにも行きませんでした', '公園へ行きました', '学校へ行きました', 'スーパーへ行きました'], answer: 0, explanation: '「どこにも行きませんでした」なので、どこにも行っていません。', period: 'sep-nov' },
-
-{ id: 355, section: 'reading', text: '【案内を読んで答えてください】\n駅前の店\nパン：１００円\nおにぎり：１２０円\nジュース：１５０円\n\n２００円で買えるものはどれですか。', options: ['パン', 'パンとおにぎり', 'おにぎりとジュース', '全部'], answer: 0, explanation: 'パンは１００円なので、２００円で買うことができます。', period: 'sep-nov' }
+            { id: 1, section: 'vocab', text: 'わたしは まいあさ 7じに （　　　）。', options: ['おきます', 'ねます', 'きます', 'みます'], answer: 0, explanation: 'おきます (okimasu) = bangun.', period: 'sep-nov' },
+            { id: 2, section: 'vocab', text: 'きのうは とても （　　　）です。', options: ['あつかった', 'あつい', 'あつくて', 'あつくない'], answer: 0, explanation: 'Bentuk lampau: あつかった.', period: 'sep-nov' },
+            { id: 3, section: 'vocab', text: '「えき」は かんじで どう かきますか。', options: ['駅', '家', '店', '車'], answer: 0, explanation: '駅 (eki) = stasiun.', period: 'sep-nov' },
+            { id: 4, section: 'vocab', text: 'つくえの うえに ほんが （　　　） あります。', options: ['さんこ', 'さんまい', 'さんさつ', 'さんぼん'], answer: 2, explanation: 'Buku = ~さつ (satsu).', period: 'sep-nov' },
+            { id: 5, section: 'vocab', text: 'あめが ふっていますから、（　　　）を もって いきます。', options: ['かさ', 'かばん', 'くつ', 'ぼうし'], answer: 0, explanation: 'かさ = payung.', period: 'sep-nov' },
+            { id: 14, section: 'vocab', text: 'きのう、スーパーで りんごを （　　　）。', options: ['かいました', 'のみました', 'みました', 'ききました'], answer: 0, explanation: 'かいました = membeli.', period: 'sep-nov' },
+            { id: 16, section: 'vocab', text: '「あたらしい」は かんじで どう かきますか。', options: ['新しい', '古い', '高い', '安い'], answer: 0, explanation: '新しい = baru.', period: 'sep-nov' },
+            { id: 17, section: 'vocab', text: 'かぜを ひいたので、（　　　）へ いきます。', options: ['びょういん', 'としょかん', 'ゆうびんきょく', 'ぎんこう'], answer: 0, explanation: 'びょういん = rumah sakit.', period: 'sep-nov' },
+            { id: 22, section: 'vocab', text: 'のどが かわきました。（　　　）を のみたいです。', options: ['みず', 'パン', 'ごはん', 'にく'], answer: 0, explanation: 'みず = air.', period: 'sep-nov' },
+            { id: 23, section: 'vocab', text: '「食べる」は ひらがなで どう かきますか。', options: ['たべる', 'のむ', 'みる', 'かく'], answer: 0, explanation: 'たべる = makan.', period: 'sep-nov' },
+            { id: 24, section: 'vocab', text: 'まいあさ、はを （　　　）。', options: ['みがきます', 'あらいます', 'あびます', 'ぬぎます'], answer: 0, explanation: 'みがきます = menggosok.', period: 'sep-nov' },
+            { id: 25, section: 'vocab', text: 'この くるまは とても （　　　）です。', options: ['はやい', 'おそく', 'はやく', 'はやかった'], answer: 0, explanation: 'はやい = cepat.', period: 'sep-nov' },
+            { id: 26, section: 'vocab', text: 'へやが くらいですね。（　　　）を つけてください。', options: ['でんき', 'テレビ', 'エアコン', 'ドア'], answer: 0, explanation: 'でんき = lampu/listrik.', period: 'sep-nov' },
+            { id: 27, section: 'vocab', text: '「車」は ひらがなで どう かきますか。', options: ['くるま', 'でんしゃ', 'じてんしゃ', 'ひこうき'], answer: 0, explanation: 'くるま = mobil.', period: 'sep-nov' },
+            { id: 28, section: 'vocab', text: 'カメラで しゃしんを （　　　）。', options: ['とります', 'つくります', 'かきます', 'します'], answer: 0, explanation: 'とります = mengambil (foto).', period: 'sep-nov' },
+            { id: 101, section: 'vocab', text: 'まいにち 6じに （　　　）を します。', options: ['べんきょう', 'あさごはん', 'でんしゃ', 'しごと'], answer: 0, explanation: 'べんきょう = belajar.', period: 'sep-nov' },
+            { id: 102, section: 'vocab', text: 'わたしは まいばん 11じに （　　　）。', options: ['ねます', 'おきます', 'あそびます', 'はたらきます'], answer: 0, explanation: 'ねます = tidur.', period: 'sep-nov' },
+            { id: 103, section: 'vocab', text: 'あさごはんに パンと たまごを （　　　）。', options: ['たべます', 'のみます', 'ききます', 'よみます'], answer: 0, explanation: 'たべます = makan.', period: 'sep-nov' },
+            { id: 104, section: 'vocab', text: 'まいにち みずを たくさん （　　　）。', options: ['のみます', 'たべます', 'かいます', 'かきます'], answer: 0, explanation: 'のみます = minum.', period: 'sep-nov' },
+            { id: 105, section: 'vocab', text: 'でんしゃに （　　　）まえに、きっぷを かいます。', options: ['のる', 'たべる', 'みる', 'ねる'], answer: 0, explanation: 'のる = naik.', period: 'sep-nov' },
+            
+            // GRAMMAR
+            { id: 6, section: 'grammar', text: 'A: 「すみません、しおを とって ください。」\nB: 「はい、（　　　）。」', options: ['どうぞ', 'どうも', 'ありがとう', 'ごめん'], answer: 0, explanation: 'どうぞ = silakan.', period: 'sep-nov' },
+            { id: 7, section: 'grammar', text: 'にほんへ （　　　） ことがありますか。', options: ['いく', 'いった', 'いかない', 'いって'], answer: 1, explanation: 'V-ta + ことがあります = pernah.', period: 'sep-nov' },
+            { id: 8, section: 'grammar', text: 'あしたは やすみ（　　　）、どこへも いきません。', options: ['から', 'だから', 'ですが', 'ので'], answer: 1, explanation: 'Kata benda + だから = karena.', period: 'sep-nov' },
+            { id: 9, section: 'grammar', text: 'A: 「コーヒーと こうちゃ、どちらが いいですか。」\nB: 「コーヒー（　　　） おねがいします。」', options: ['が', 'を', 'に', 'は'], answer: 1, explanation: 'を digunakan untuk objek yang diminta.', period: 'sep-nov' },
+            { id: 15, section: 'grammar', text: 'A:「あの うみは きれいですね。」\nB:「ええ、でも （　　　） およがないで くださいね。」', options: ['とても', 'ぜんぜん', 'ぜったいに', 'たいへん'], answer: 2, explanation: 'ぜったいに ~ない = sama sekali jangan.', period: 'sep-nov' },
+            { id: 18, section: 'grammar', text: 'この ケーキは おいしい（　　　）、やすいです。', options: ['し', 'から', 'けれども', 'と'], answer: 0, explanation: 'し = menyebutkan sifat sejajar.', period: 'sep-nov' },
+            { id: 19, section: 'grammar', text: 'A:「にもつを もちましょうか。」\nB:「（　　　）。」', options: ['いいえ、けっこうです', 'はい、そうです', 'いいえ、ちがいます', 'はい、もちます'], answer: 0, explanation: 'Menolak sopan: いいえ、けっこうです.', period: 'sep-nov' },
+            { id: 29, section: 'grammar', text: 'わたしは 日本語（　　　） はなせます。', options: ['が', 'を', 'で', 'に'], answer: 0, explanation: 'Kata kerja potensial sering pakai partikel が.', period: 'sep-nov' },
+            { id: 30, section: 'grammar', text: 'A: 「ここで タバコを （　　　） いいですか。」\nB: 「いいえ、ここでは すわないで ください。」', options: ['すっても', 'すうと', 'すえば', 'すっては'], answer: 0, explanation: '~てもいいですか = bolehkah.', period: 'sep-nov' },
+            { id: 31, section: 'grammar', text: 'きのうは あめが （　　　）。', options: ['ふりました', 'ふります', 'ふって', 'ふらない'], answer: 0, explanation: 'Bentuk lampau: ふりました.', period: 'sep-nov' },
+
+            // LISTENING
+            { id: 10, section: 'listening', text: '男の人はこれからどこへ行きますか。', audioText: '男：あ、もう５時ですね。スーパーへ買い物に行かなくちゃ。\n女：あれ？今日は銀行へ行くと言っていませんでしたか。\n男：あ、そうでした。じゃあ、先にあそこへ寄ってから、買い物に行きます。', options: ['銀行', 'スーパー', '会社', '家'], answer: 0, explanation: 'Ke bank dulu (あそこ) baru belanja.', period: 'sep-nov' },
+            { id: 11, section: 'listening', text: '天気はどうなりますか。', audioText: '明日は午前中は晴れますが、午後からくもりになり、夜には雨が降るでしょう。', options: ['晴れのちくもり、夜は雨', '晴れのち雨', '雨のち晴れ', 'ずっと晴れ'], answer: 0, explanation: 'Pagi cerah, siang mendung, malam hujan.', period: 'sep-nov' },
+            { id: 20, section: 'listening', text: '女の人は何を買いますか。', audioText: '女：すみません、りんごを３つと、みかんを５つください。', options: ['りんご３つ、みかん５つ', 'りんご５つ、みかん３つ', 'りんご３つだけ', 'みかん５つだけ'], answer: 0, explanation: 'Apel 3, Jeruk 5.', period: 'sep-nov' },
+            { id: 37, section: 'listening', text: '会議は何時からですか。', audioText: '男：明日の会議は、１０時からですか。\n女：いいえ、１時間遅れて、１１時からになりました。', options: ['１１時', '１０時', '１時', '１２時'], answer: 0, explanation: 'Mundur 1 jam jadi jam 11.', period: 'sep-nov' },
+            { id: 38, section: 'listening', text: '男の人はどうやって会社へ行きますか。', audioText: '女：山田さんはいつも電車ですか。\n男：いいえ、いつも自転車で行きます。', options: ['自転車', '電車', 'バス', '車'], answer: 0, explanation: 'Dia naik sepeda (自転車).', period: 'sep-nov' },
+            { id: 39, section: 'listening', text: '今、何時ですか。', audioText: '女：すみません、今何時ですか。\n男：えーと、４時半です。', options: ['４時半', '３時半', '４時', '５時半'], answer: 0, explanation: 'Jam 4.30 (４時半).', period: 'sep-nov' },
+            { id: 40, section: 'listening', text: '男の人は何を飲みますか。', audioText: '女：飲み物は何がいいですか。\n男：冷たいコーヒーがいいです。', options: ['冷たいコーヒー', '温かいコーヒー', '冷たいお茶', '水'], answer: 0, explanation: 'Es kopi (冷たいコーヒー).', period: 'sep-nov' },
+            { id: 41, section: 'listening', text: '二人はいつ会いますか。', audioText: '男：日曜日、映画に行きませんか。\n女：日曜日は用事があります。土曜日はどうですか。\n男：じゃあ土曜日にしましょう。', options: ['土曜日', '日曜日', '金曜日', '月曜日'], answer: 0, explanation: 'Sepakat hari Sabtu.', period: 'sep-nov' },
+            { id: 301, section: 'listening', text: '男の人は何を買いますか。', audioText: '女：スーパーで何を買いますか。\n男：牛乳とパンを買います。卵は買いません。', options: ['牛乳とパン', 'パンと卵', '牛乳と卵', '卵だけ'], answer: 0, explanation: 'Membeli susu dan roti.', period: 'sep-nov' },
+            { id: 302, section: 'listening', text: '女の人は何時に起きますか。', audioText: '男：毎朝何時に起きますか。\n女：いつも６時に起きます。', options: ['６時', '７時', '５時', '８時'], answer: 0, explanation: 'Bangun jam 6.', period: 'sep-nov' },
+
+            // READING
+            { id: 12, section: 'reading', text: '山田さんへ\nきのうはありがとうございました。また来月食事しましょう。\n\nだれが この てがみを かきましたか。', options: ['山田さんのともだち', '山田さん', 'わからない', 'せんせい'], answer: 0, explanation: 'Ditulis untuk Yamada, berarti dari orang lain (temannya).', period: 'sep-nov' },
+            { id: 13, section: 'reading', text: 'としょかんは月曜日が休みです。火曜日から日曜日は９時から５時まであいています。\n\n水曜日の６時に図書館へ行きます。本を借りることができますか。', options: ['いいえ、できません。', 'はい、できます。', 'わかりません。', 'げつようびは できます。'], answer: 0, explanation: 'Tutup jam 5 sore, jadi jam 6 tidak bisa.', period: 'sep-nov' },
+            { id: 21, section: 'reading', text: '田中さんへ\nあしたの会議は午後２時からに変更になったそうです。\n\n会議は何時からですか。', options: ['午後２時', '午前２時', 'あした', 'わかりません'], answer: 0, explanation: 'Jam 2 siang (午後２時).', period: 'sep-nov' },
+            { id: 42, section: 'reading', text: 'アリさんへ\nパーティーですが、飲み物はわたしが買いますから、アリさんはおかしをお願いします。\n\nアリさんは 何を 買いますか。', options: ['おかし', '飲み物', 'ケーキ', '何も買わない'], answer: 0, explanation: 'Ari diminta beli snack (おかし).', period: 'sep-nov' },
+            { id: 43, section: 'reading', text: 'スーパー「さくら」\n水曜日：野菜が 20% オフ\n金曜日：お肉が 20% オフ\n\n金曜日に 安く なるのは 何ですか。', options: ['お肉', '野菜', '魚', '果物'], answer: 0, explanation: 'Jumat daging diskon (お肉).', period: 'sep-nov' },
+            { id: 44, section: 'reading', text: 'わたしのまちは小さいですが、とてもしずかできれいです。\n\nこの まちは どんな まちですか。', options: ['小さくて きれいな まち', '大きくて にぎやかな まち', 'えきから 遠い まち', 'おてらが ない まち'], answer: 0, explanation: 'Kecil tapi indah.', period: 'sep-nov' },
+            { id: 45, section: 'reading', text: 'デパートへ行った。シャツを買いたかったが、高いものしかなかったので買わなかった。\n\nデパートで 何を 買いましたか。', options: ['何も買わなかった', 'シャツ', 'カレー', '高いもの'], answer: 0, explanation: 'Tidak beli apa-apa.', period: 'sep-nov' },
+            { id: 331, section: 'reading', text: 'スーパー「さくら」\n営業時間：午前９時～午後８時\n日曜日の午後９時にスーパーへ行きます。どうですか。', options: ['いいえ、閉まっています。', 'はい、開いています。', '月曜日だけ開いています。', '午前９時からです。'], answer: 0, explanation: 'Tutup jam 8 malam.', period: 'sep-nov' },
+            { id: 332, section: 'reading', text: '田中さんへ\nあしたは９時に駅の前で会いましょう。\n二人はどこで会いますか。', options: ['駅の前', '会社の前', '学校の前', 'レストラン'], answer: 0, explanation: 'Di depan stasiun.', period: 'sep-nov' },
+            { id: 334, section: 'reading', text: 'カレー 600円\nラーメン 700円\nうどん 500円\n\nいちばん安い食べ物は何ですか。', options: ['うどん', 'カレー', 'ラーメン', 'ジュース'], answer: 0, explanation: 'Udon 500 yen.', period: 'sep-nov' }
         ];
 
         let state = {
@@ -2193,640 +532,360 @@ label:has(input:focus-visible) {
             questions: [],
             currentQuestionIndex: 0,
             userAnswers: [],
-            isAnswerSubmitted: false,
             timerInterval: null,
             startTime: null,
             selectedPeriod: 'sep-nov'
         };
 
-        // --- STREAMING_CHUNK:Navigation & Utility Functions... ---
+        const SUPABASE_URL = 'https://lnthciiomeppirzucqwu.supabase.co';
+        const SUPABASE_ANON_KEY = 'sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
+        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(`screen-${screenId}`).classList.add('active');
             window.scrollTo(0, 0);
             
-            if(screenId === 'history') renderHistory();
-            if(state.currentScreen === 'quiz' && screenId !== 'quiz') clearInterval(state.timerInterval);
+            const header = document.getElementById('main-header');
+            if (header) {
+                // Header (termasuk tombol Logout) disembunyikan di layar login dan admin
+                if (screenId === 'auth' || screenId === 'admin') {
+                    header.classList.add('hidden');
+                } else {
+                    header.classList.remove('hidden');
+                }
+            }
             
+            if(screenId === 'history') renderHistory();
+            if(screenId === 'admin') loadAdminData(); 
+            if(state.currentScreen === 'quiz' && screenId !== 'quiz') clearInterval(state.timerInterval);
             state.currentScreen = screenId;
         }
 
+        async function handleLogin() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const btnLogin = document.getElementById('btn-login');
+            const errorMsg = document.getElementById('login-error');
+
+            if (!email || !password) {
+                errorMsg.textContent = "Email dan password harus diisi!";
+                errorMsg.classList.remove('hidden');
+                return;
+            }
+
+            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
+            btnLogin.disabled = true;
+            errorMsg.classList.add('hidden');
+
+            try {
+                const { data: dbData, error: dbError } = await window.supabaseClient.from('Jft-Basic').select('*').eq('email', email).eq('auth_code', password);
+                
+                if (dbError) throw dbError;
+                if (!dbData || dbData.length === 0) {
+                    errorMsg.innerHTML = "❌ Tidak ada data yang cocok.";
+                    errorMsg.classList.remove('hidden');
+                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+                    btnLogin.disabled = false;
+                    return;
+                }
+
+                const user = dbData[0];
+                if (user.status !== 'active') {
+                    errorMsg.innerHTML = `❌ Akun Anda dinonaktifkan.`;
+                    errorMsg.classList.remove('hidden');
+                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+                    btnLogin.disabled = false;
+                    return;
+                }
+
+                localStorage.setItem('jft_user_id', user.id);
+                localStorage.setItem('jft_user_name', user.name.toUpperCase());
+                localStorage.setItem('jft_user_email', user.email);
+                localStorage.setItem('jft_user_role', user.role);
+
+                if (user.role === 'admin') navigate('admin');
+                else {
+                    document.getElementById('user-name-input').value = user.name.toUpperCase();
+                    navigate('home');
+                }
+            } catch (err) {
+                errorMsg.innerHTML = `❌ Error: ${err.message}`;
+                errorMsg.classList.remove('hidden');
+            }
+            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+            btnLogin.disabled = false;
+        }
+
+        
+
+        function checkSession() {
+            const userId = localStorage.getItem('jft_user_id');
+            if (userId) {
+                const role = localStorage.getItem('jft_user_role');
+                const savedName = localStorage.getItem('jft_user_name');
+                if (savedName) document.getElementById('user-name-input').value = savedName;
+                
+                if (role === 'admin') navigate('admin');
+                else navigate('home');
+            } else {
+                navigate('auth');
+            }
+        }
+
+        // --- ADMIN FUNCTIONS ---
+        async function loadAdminData() {
+            const tbody = document.getElementById('admin-user-table');
+            if(!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center">Memuat...</td></tr>';
+            const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*').order('created_at', { ascending: false });
+            if (error) { tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-red-500">${error.message}</td></tr>`; return; }
+            tbody.innerHTML = '';
+            data.forEach(user => {
+                tbody.innerHTML += `<tr class="border-b"><td class="px-4 py-3">${user.name}</td><td class="px-4 py-3">${user.email}</td><td class="px-4 py-3 font-mono">${user.auth_code}</td><td class="px-4 py-3 uppercase text-xs">${user.role}</td><td class="px-4 py-3"><button onclick="deleteUser('${user.id}')" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button></td></tr>`;
+            });
+        }
+
+        function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
+        
+        async function simpanUserBaru() {
+            const name = document.getElementById('new-name').value.trim();
+            const email = document.getElementById('new-email').value.trim();
+            const authCode = document.getElementById('new-authcode').value.trim();
+            const role = document.getElementById('new-role').value;
+            
+            if (!name || !authCode) { alert("Nama dan Auth Code wajib diisi!"); return; }
+            
+            const { error } = await window.supabaseClient.from('Jft-Basic').insert([{ name, email: email||'-', auth_code: authCode, role, status: 'active' }]);
+            if (error) alert(error.message);
+            else { toggleAddUserForm(); loadAdminData(); }
+        }
+
+                // --- CUSTOM MODAL LOGIC ---
+        let confirmCallback = null;
+
+        function showCustomConfirm(message, callback, okText = "Ya") {
+            const modal = document.getElementById('custom-confirm-modal');
+            const box = document.getElementById('custom-confirm-box');
+            document.getElementById('custom-confirm-msg').textContent = message;
+            
+            const btnOk = document.getElementById('btn-confirm-ok');
+            btnOk.textContent = okText;
+            btnOk.onclick = () => { hideCustomConfirm(); if (callback) callback(); };
+            
+            modal.classList.remove('hidden'); modal.classList.add('flex');
+            setTimeout(() => { box.classList.remove('scale-95', 'opacity-0'); box.classList.add('scale-100', 'opacity-100'); }, 10);
+        }
+
+        function hideCustomConfirm() {
+            const modal = document.getElementById('custom-confirm-modal');
+            const box = document.getElementById('custom-confirm-box');
+            box.classList.remove('scale-100', 'opacity-100'); box.classList.add('scale-95', 'opacity-0');
+            setTimeout(() => { modal.classList.add('hidden'); modal.classList.remove('flex'); }, 200);
+        }
+
+        // --- REPLACE FUNGSI LAMA ---
+        function deleteUser(uid) {
+            showCustomConfirm("Yakin ingin menghapus user ini?", async () => {
+                await window.supabaseClient.from('Jft-Basic').delete().eq('id', uid);
+                loadAdminData();
+            }, "Hapus User");
+        }
+
+        function handleLogout() {
+            showCustomConfirm("Yakin ingin keluar dari akun ini?", () => {
+                localStorage.removeItem('jft_user_id');
+                localStorage.removeItem('jft_user_role');
+                document.getElementById('login-password').value = '';
+                navigate('auth');
+            }, "Keluar");
+        }
+
+        function confirmQuit() {
+            showCustomConfirm("Akhiri latihan lebih awal?", () => {
+                if(window.speechSynthesis) window.speechSynthesis.cancel();
+                navigate('home');
+            }, "Akhiri");
+        }
+
+        function clearHistory() {
+            showCustomConfirm("Hapus semua riwayat latihan?", () => {
+                localStorage.removeItem('jft_history');
+                renderHistory();
+            }, "Hapus Semua");
+        }
+
+
+        function switchAdminTab(tabName) {
+            const vUsers = document.getElementById('admin-view-users');
+            const vQs = document.getElementById('admin-view-questions');
+            const bUsers = document.getElementById('tab-users');
+            const bQs = document.getElementById('tab-questions');
+
+            if (tabName === 'users') {
+                vUsers.classList.remove('hidden'); vQs.classList.add('hidden');
+                bUsers.className = "bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
+                bQs.className = "bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium transition";
+            } else {
+                vUsers.classList.add('hidden'); vQs.classList.remove('hidden');
+                bUsers.className = "bg-slate-100 text-slate-600 px-4 py-2 rounded-lg text-sm font-medium transition";
+                bQs.className = "bg-slate-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition";
+                
+                const qContainer = document.getElementById('admin-questions-list');
+                document.getElementById('total-questions-count').textContent = `${QUESTION_BANK.length} Soal`;
+                qContainer.innerHTML = '';
+                QUESTION_BANK.forEach(q => {
+                    qContainer.innerHTML += `
+                        <div class="bg-slate-50 border p-4 rounded-xl">
+                            <div class="flex justify-between mb-2"><span class="text-xs font-bold bg-slate-200 px-2 rounded">ID: ${q.id}</span><span class="text-xs font-semibold">${q.section}</span></div>
+                            <div class="japanese-text text-lg font-medium mb-3">${q.text}</div>
+                            <div class="grid grid-cols-2 gap-2 mb-3">
+                                ${q.options.map((opt, idx) => `<div class="p-2 border rounded text-sm ${idx===q.answer?'bg-green-100 border-green-300 font-bold':''}">${opt}</div>`).join('')}
+                            </div>
+                            <div class="text-xs bg-white p-2 border rounded"><strong>Penjelasan:</strong> ${q.explanation}</div>
+                        </div>`;
+                });
+            }
+        }
+
+        // --- QUIZ FUNCTIONS ---
         function shuffleArray(array) {
             let currentIndex = array.length, randomIndex;
             while (currentIndex != 0) {
-                randomIndex = Math.floor(Math.random() * currentIndex);
-                currentIndex--;
+                randomIndex = Math.floor(Math.random() * currentIndex); currentIndex--;
                 [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
             }
             return array;
         }
-        
-        function clearHistory() {
-    // Tampilkan peringatan konfirmasi terlebih dahulu
-    if(confirm("Yakin ingin menghapus semua riwayat latihan? Data tidak dapat dikembalikan.")) {
-        // Hapus data riwayat skor dari localStorage
-        localStorage.removeItem('jft_history');
-        
-        // Hapus juga data frekuensi kemunculan soal agar siklus soal teriset ulang
-        localStorage.removeItem('jft_question_stats');
-        
-        // Render ulang tampilan riwayat (akan otomatis menampilkan ikon boks kosong)
-        renderHistory();
-        
-        alert("Riwayat berhasil dihapus!");
-    }
-}
 
-
-        function formatTime(seconds) {
-            const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const s = (seconds % 60).toString().padStart(2, '0');
-            return `${m}:${s}`;
-        }
-
-        // --- STREAMING_CHUNK:Quiz Engine Functions... ---
         function startQuiz() {
-            // Simpan nama pengguna
-            const nameInput = document.getElementById('user-name-input');
-            let userName = nameInput ? nameInput.value.trim() : '';
-            if(!userName) userName = "PRAYUDA EKA SYACH PUTRA"; // Fallback jika kosong
+            let userName = document.getElementById('user-name-input').value.trim() || "SISWA";
             localStorage.setItem('jft_user_name', userName.toUpperCase());
-            if(nameInput) nameInput.value = userName.toUpperCase();
 
-            const periodInput = document.querySelector('input[name="period"]:checked');
-            const countInput = document.querySelector('input[name="q_count"]:checked');
+            const reqCount = parseInt(document.querySelector('input[name="q_count"]:checked').value);
             
-            state.selectedPeriod = periodInput ? periodInput.value : 'sep-nov';
-            let requestCount = countInput ? parseInt(countInput.value) : 10;
+            // Logic Prioritas
+            const qStats = JSON.parse(localStorage.getItem('jft_question_stats') || '{}');
+            let wBank = [...QUESTION_BANK].map(q => ({ ...q, weight: (qStats[q.id]||0) + Math.random() }));
+            wBank.sort((a, b) => a.weight - b.weight);
+
+            let selected = [];
+            ['vocab','grammar','listening','reading'].forEach(sec => {
+                let secQs = wBank.filter(q => q.section === sec);
+                if(secQs.length > 0) selected.push(secQs[0]);
+            });
+
+            const selIds = new Set(selected.map(q => q.id));
+            let remain = wBank.filter(q => !selIds.has(q.id));
+            selected.push(...remain.slice(0, Math.max(0, reqCount - selected.length)));
             
-            // Acak seluruh bank soal untuk menghindari duplikat
-            // =========================================================
-// AMBIL SOAL — SEMUA SECTION WAJIB ADA
-// =========================================================
-
-// =========================================================
-// AMBIL SOAL — SEMUA SECTION WAJIB ADA (DENGAN SISTEM PRIORITAS)
-// =========================================================
-
-const sectionOrder = [
-    'vocab',
-    'grammar',
-    'listening',
-    'reading'
-];
-
-// 1. Ambil riwayat frekuensi kemunculan soal dari localStorage
-const questionStats = JSON.parse(localStorage.getItem('jft_question_stats') || '{}');
-
-// 2. Beri "bobot" pada tiap soal di bank soal
-// Rumus: Jumlah kemunculan + angka acak (0 sampai 1)
-// Soal yang belum pernah muncul (0) akan selalu lebih kecil bobotnya dibanding yang sudah muncul 1x, 2x, dst.
-let weightedBank = [...QUESTION_BANK].map(q => {
-    const seenCount = questionStats[q.id] || 0;
-    return {
-        ...q,
-        sortWeight: seenCount + Math.random() 
-    };
-});
-
-// 3. Urutkan dari bobot terkecil (paling jarang/belum pernah muncul) ke terbesar
-weightedBank.sort((a, b) => a.sortWeight - b.sortWeight);
-
-// Pastikan setiap section mendapat minimal 1 soal
-let selectedQuestions = [];
-
-sectionOrder.forEach(section => {
-    const sectionQuestions = weightedBank.filter(q => q.section === section);
-    if (sectionQuestions.length > 0) {
-        // Ambil 1 soal paling jarang muncul dari section tersebut
-        selectedQuestions.push(sectionQuestions[0]);
-    }
-});
-
-// Ambil sisa soal dari bank yang belum dipilih
-const selectedIds = new Set(selectedQuestions.map(q => q.id));
-
-let remainingQuestions = weightedBank.filter(q => !selectedIds.has(q.id));
-
-// Tambahkan sisa kuota soal (urutannya otomatis sudah memprioritaskan yang jarang muncul)
-const remainingCount = Math.max(0, requestCount - selectedQuestions.length);
-selectedQuestions.push(...remainingQuestions.slice(0, remainingCount));
-
-// 4. Catat soal-soal yang baru terpilih ini ke localStorage agar frekuensinya bertambah
-selectedQuestions.forEach(q => {
-    questionStats[q.id] = (questionStats[q.id] || 0) + 1;
-});
-localStorage.setItem('jft_question_stats', JSON.stringify(questionStats));
-
-// Bersihkan properti sortWeight sebelum masuk ke state agar object tetap rapi
-selectedQuestions = selectedQuestions.map(q => {
-    const cleanQ = {...q};
-    delete cleanQ.sortWeight;
-    return cleanQ;
-});
-
-// 5. Acak urutan final agar posisi section tetap tidak tertebak
-if (state.selectedPeriod !== 'random') {
-    selectedQuestions.sort((a, b) => sectionOrder.indexOf(a.section) - sectionOrder.indexOf(b.section));
-} else {
-    selectedQuestions = shuffleArray(selectedQuestions);
-}
-
-// =========================================================
-// Simpan ke state
-
-
-            state.questions = selectedQuestions;
+            selected.forEach(q => qStats[q.id] = (qStats[q.id]||0) + 1);
+            localStorage.setItem('jft_question_stats', JSON.stringify(qStats));
+            
+            state.questions = shuffleArray(selected);
             state.currentQuestionIndex = 0;
             state.userAnswers = new Array(state.questions.length).fill(null);
             
             navigate('quiz');
-            startTimer();
-            renderQuestion();
-        }
-
-        function startTimer() {
             state.startTime = Date.now();
-            updateTimerDisplay();
-            state.timerInterval = setInterval(updateTimerDisplay, 1000);
-        }
-
-        function updateTimerDisplay() {
-            const elapsed = Math.floor((Date.now() - state.startTime) / 1000);
-            document.getElementById('quiz-timer').innerHTML = `<i class="fa-regular fa-clock"></i> <span>${formatTime(elapsed)}</span>`;
+            state.timerInterval = setInterval(() => {
+                const s = Math.floor((Date.now() - state.startTime) / 1000);
+                document.getElementById('quiz-timer').innerHTML = `<i class="fa-regular fa-clock"></i> <span>${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}</span>`;
+            }, 1000);
+            renderQuestion();
         }
 
         function renderQuestion() {
             const q = state.questions[state.currentQuestionIndex];
-            const sectionInfo = SECTIONS.find(s => s.id === q.section);
-            
-            // Atur tombol Next/Selesai
-            const btnNext = document.getElementById('btn-next-question');
-            if (state.currentQuestionIndex === state.questions.length - 1) {
-                btnNext.innerHTML = `Lihat Hasil <i class="fa-solid fa-flag-checkered"></i>`;
-            } else {
-                btnNext.innerHTML = `Selanjutnya <i class="fa-solid fa-angle-right"></i>`;
-            }
-            
-            // Update Header (Kategori dan Progress)
-            document.getElementById('quiz-section-badge').textContent = sectionInfo.nameJP;
             document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} / ${state.questions.length}`;
-            
-            const progressPct = ((state.currentQuestionIndex) / state.questions.length) * 100;
-            document.getElementById('quiz-progress-bar').style.width = `${progressPct}%`;
-
-            // Render Teks Pertanyaan
+            document.getElementById('quiz-progress-bar').style.width = `${((state.currentQuestionIndex) / state.questions.length) * 100}%`;
             document.getElementById('quiz-question').innerText = q.text;
             
-            // Sesuaikan instruksi berdasarkan kategori
-            let instructionText = "つぎの ぶんの （　　　）に なにを いれますか。";
-            if(q.section === 'listening') instructionText = "音声を聞いて答えてください";
-            else if(q.section === 'reading') instructionText = "つぎの ぶんを よんで こたえてください。";
-            else if(q.section === 'grammar') instructionText = "つぎの （　　　）に なにを いれますか。";
-            
-            document.getElementById('quiz-instruction').textContent = instructionText;
-            
-            // Setup Tombol Audio
-            const audioBtn = document.getElementById('btn-play-audio');
-            const transcriptBtn = document.getElementById('btn-show-transcript');
-            const transcriptFallback = document.getElementById('audio-transcript-fallback');
-            
-            // Sembunyikan semua elemen audio di awal tiap render soal baru
-            if(audioBtn) audioBtn.classList.add('hidden');
-            if(transcriptBtn) transcriptBtn.classList.add('hidden');
-            if(transcriptFallback) transcriptFallback.classList.add('hidden');
+            const btnNext = document.getElementById('btn-next-question');
+            btnNext.innerHTML = state.currentQuestionIndex === state.questions.length - 1 ? `Lihat Hasil <i class="fa-solid fa-flag-checkered"></i>` : `Selanjutnya <i class="fa-solid fa-angle-right"></i>`;
+            btnNext.disabled = state.userAnswers[state.currentQuestionIndex] === null;
+            btnNext.className = `bg-brand-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 ${btnNext.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-700'}`;
 
-            // Hentikan audio sebelumnya dengan aman
-            try {
-                if ('speechSynthesis' in window) {
+            const aBtn = document.getElementById('btn-play-audio'), tBtn = document.getElementById('btn-show-transcript'), fb = document.getElementById('audio-transcript-fallback');
+            aBtn.classList.add('hidden'); tBtn.classList.add('hidden'); fb.classList.add('hidden');
+            if(window.speechSynthesis) window.speechSynthesis.cancel();
+            
+            if (q.audioText) {
+                aBtn.classList.remove('hidden'); tBtn.classList.remove('hidden'); fb.textContent = q.audioText;
+                aBtn.onclick = () => {
                     window.speechSynthesis.cancel();
-                }
-            } catch(e) {}
-
-            // Jika ini adalah soal Listening
-            if (q.section === 'listening' && q.audioText) {
-                audioBtn.classList.remove('hidden');
-                
-                // Selalu tampilkan tombol transcript sebagai cadangan wajib 
-                // jika HP pengguna menolak memutar audio secara otomatis.
-                if(transcriptBtn) {
-                    transcriptBtn.classList.remove('hidden');
-                    transcriptBtn.innerHTML = '<i class="fa-solid fa-closed-captioning"></i> Tampilkan Teks Audio (Jika Suara Tidak Keluar)';
-                }
-                if(transcriptFallback) {
-                    transcriptFallback.textContent = q.audioText;
-                }
-                
-                audioBtn.onclick = function() { 
-                    playQuestionAudio(q.audioText); 
+                    const u = new SpeechSynthesisUtterance(q.audioText); u.lang = 'ja-JP'; u.rate = 0.85;
+                    window.speechSynthesis.speak(u);
                 };
             }
 
-            // Render Pilihan Jawaban
-            const optionsContainer = document.getElementById('quiz-options');
-            optionsContainer.innerHTML = '';
-            
-            // Simpan index asli lalu acak posisinya
-            let optionsObj = q.options.map((opt, idx) => ({ text: opt, originalIndex: idx }));
-            optionsObj = shuffleArray(optionsObj);
-            
-            const labels = ['A', 'B', 'C', 'D'];
-
-            optionsObj.forEach((opt, idx) => {
-                const labelElement = document.createElement('label');
-                labelElement.className = 'option-label relative block';
-                labelElement.id = `label-opt-${opt.originalIndex}`;
-                
-                labelElement.innerHTML = `
-                    <input type="radio" name="q_option" value="${opt.originalIndex}" class="option-input peer sr-only" onchange="selectOption(${opt.originalIndex})">
-                    <div class="option-content flex items-center p-4 bg-white border border-slate-200 rounded-xl hover:bg-slate-50 transition cursor-pointer">
-                        <div class="radio-letter flex-shrink-0 w-8 h-8 flex items-center justify-center rounded bg-slate-100 text-slate-500 font-bold mr-3 border border-slate-200 transition-colors">
-                            ${labels[idx]}
-                        </div>
-                        <span class="text-lg text-slate-700 japanese-text">${opt.text}</span>
-                    </div>
-                `;
-                optionsContainer.appendChild(labelElement);
+            const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
+            shuffleArray(q.options.map((t,i)=>({t,i}))).forEach((opt, idx) => {
+                opts.innerHTML += `<label class="option-label block"><input type="radio" name="qo" value="${opt.i}" class="option-input peer sr-only" onchange="state.userAnswers[state.currentQuestionIndex]=${opt.i}; renderQuestion()"><div class="option-content flex items-center p-4 border rounded-xl hover:bg-slate-50 cursor-pointer ${state.userAnswers[state.currentQuestionIndex]===opt.i?'bg-teal-100 border-teal-500':''}"><div class="radio-letter w-8 h-8 flex items-center justify-center rounded bg-slate-100 font-bold mr-3">${['A','B','C','D'][idx]}</div><span class="text-lg japanese-text">${opt.t}</span></div></label>`;
             });
-
-            // Pastikan tombol submit diperbarui (disabled di awal)
-            updateSubmitButton();
-        }
-
-        function playQuestionAudio(text) {
-            try {
-                if ('speechSynthesis' in window) {
-                    // Stop any existing utterance safely
-                    window.speechSynthesis.cancel(); 
-                    
-                    const utterance = new SpeechSynthesisUtterance(text);
-                    utterance.lang = 'ja-JP';
-                    utterance.rate = 0.85; // Diperlambat sedikit
-                    
-                    // Deteksi suara Jepang
-                    const voices = window.speechSynthesis.getVoices();
-                    const jpVoice = voices.find(v => v.lang === 'ja-JP' || v.lang === 'ja_JP' || v.lang.includes('ja'));
-                    if (jpVoice) {
-                        utterance.voice = jpVoice;
-                    }
-                    
-                    const btnIcon = document.querySelector('#btn-play-audio i');
-                    
-                    utterance.onstart = () => {
-                        if(btnIcon) btnIcon.className = 'fa-solid fa-volume-up animate-pulse text-brand-600';
-                    };
-                    utterance.onend = () => {
-                        if(btnIcon) btnIcon.className = 'fa-solid fa-volume-high';
-                    };
-                    utterance.onerror = (e) => {
-                        console.warn('SpeechSynthesis error:', e);
-                        if(btnIcon) btnIcon.className = 'fa-solid fa-volume-high';
-                        // Paksa tampilkan transkrip jika terjadi error
-                        showTranscript();
-                    };
-
-                    window.speechSynthesis.speak(utterance);
-                } else {
-                    // Browser sama sekali tidak support
-                    showTranscript();
-                }
-            } catch (err) {
-                console.warn("Kesalahan memutar audio:", err);
-                showTranscript();
-            }
-        }
-
-        function showTranscript() {
-            const fallback = document.getElementById('audio-transcript-fallback');
-            const btn = document.getElementById('btn-show-transcript');
-            if(fallback && btn) {
-                fallback.classList.remove('hidden');
-                btn.classList.add('hidden');
-            }
-        }
-
-        function selectOption(index) {
-            // Simpan jawaban pengguna (bisa ditimpa jika mengganti pilihan sebelum menekan selanjutnya)
-            state.userAnswers[state.currentQuestionIndex] = index;
-            updateSubmitButton();
-        }
-
-        function updateSubmitButton() {
-            const btn = document.getElementById('btn-next-question');
-            const hasAnswer = state.userAnswers[state.currentQuestionIndex] !== null;
-            
-            if (hasAnswer) {
-                btn.removeAttribute('disabled');
-                btn.classList.remove('opacity-50', 'cursor-not-allowed');
-            } else {
-                btn.setAttribute('disabled', 'true');
-                btn.classList.add('opacity-50', 'cursor-not-allowed');
-            }
         }
         
+        function showTranscript() { document.getElementById('audio-transcript-fallback').classList.remove('hidden'); document.getElementById('btn-show-transcript').classList.add('hidden'); }
+        
+        
         function nextQuestion() {
-            if(state.userAnswers[state.currentQuestionIndex] === null) return;
-            
-            // Hentikan suara dengan aman saat lanjut ke soal berikutnya
-            try {
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                }
-            } catch(e) {}
-
-            if (state.currentQuestionIndex < state.questions.length - 1) {
-                state.currentQuestionIndex++;
-                renderQuestion();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            } else {
-                finishQuiz();
-            }
-        }
-
-        function confirmQuit() {
-            if(confirm("Yakin ingin mengakhiri latihan? Progress Anda tidak akan disimpan.")) {
-                // FIX: Pengecekan fitur audio saat keluar
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                }
-                navigate('home');
-            }
-        }
-
-        // --- STREAMING_CHUNK:Scoring & Results Calculation... ---
-        function calculateScore(totalQuestions, correctAnswers) {
-            // Formula simulasi: 10 sampai 250
-            // Jika 0 benar -> 10. Jika semua benar -> 250.
-            const min = 10;
-            const max = 250;
-            const percentage = correctAnswers / totalQuestions;
-            return Math.round(min + (percentage * (max - min)));
-        }
-
-        function getLevel(score) {
-            if (score < 145) return "Below A1";
-            if (score < 175) return "A1";
-            if (score < 200) return "A2.1";
-            return "A2.2(A2)";
+            if(window.speechSynthesis) window.speechSynthesis.cancel();
+            if (state.currentQuestionIndex < state.questions.length - 1) { state.currentQuestionIndex++; renderQuestion(); window.scrollTo(0,0); }
+            else finishQuiz();
         }
 
         function finishQuiz() {
             clearInterval(state.timerInterval);
+            let cor = 0, mis = [];
+            state.questions.forEach((q, i) => { if(state.userAnswers[i] === q.answer) cor++; else mis.push({q, a: state.userAnswers[i], n: i+1}); });
             
-            // Calculate results per section
-            let sectionStats = {};
-            SECTIONS.forEach(s => {
-                sectionStats[s.id] = { total: 0, correct: 0 };
-            });
-
-            let totalCorrect = 0;
-            let mistakes = [];
-
-            state.questions.forEach((q, idx) => {
-                const userAnswer = state.userAnswers[idx];
-                const isCorrect = userAnswer === q.answer;
-                
-                if (sectionStats[q.section]) {
-                    sectionStats[q.section].total++;
-                    if (isCorrect) sectionStats[q.section].correct++;
-                }
-
-                if (isCorrect) {
-                    totalCorrect++;
-                } else {
-                    mistakes.push({
-                        question: q,
-                        userAnswerIndex: userAnswer,
-                        num: idx + 1
-                    });
-                }
-            });
-
-            const totalQuestions = state.questions.length;
-            const finalScore = calculateScore(totalQuestions, totalCorrect);
-            const level = getLevel(finalScore);
-
-            // Save to history
-            const historyItem = {
-                id: Date.now(),
-                date: new Date().toISOString(),
-                period: state.selectedPeriod,
-                score: finalScore,
-                level: level,
-                correct: totalCorrect,
-                total: totalQuestions
-            };
-            saveToHistory(historyItem);
-
-            renderResults(finalScore, level, sectionStats, totalCorrect, totalQuestions, mistakes);
+            const score = Math.round(10 + ((cor/state.questions.length)*(250-10)));
+            const lvl = score<145?"Below A1":score<175?"A1":score<200?"A2.1":"A2.2(A2)";
+            
+            let hist = JSON.parse(localStorage.getItem('jft_history')||'[]');
+            hist.unshift({id: Date.now(), date: new Date().toISOString(), score, level: lvl, correct: cor, total: state.questions.length});
+            localStorage.setItem('jft_history', JSON.stringify(hist.slice(0,20)));
+            
+            // Render Result
+            document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
+            document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
+            document.getElementById('res-name').textContent = localStorage.getItem('jft_user_name');
+            document.getElementById('res-total-score').textContent = score;
+            document.getElementById('res-level').textContent = lvl;
+            document.getElementById('res-score-indicator').style.left = `${((score-10)/240)*100}%`;
+            document.getElementById('res-score-val-float').textContent = score;
+            
+            document.getElementById('eval-total').textContent = state.questions.length;
+            document.getElementById('eval-correct').textContent = cor;
+            document.getElementById('eval-wrong').textContent = mis.length;
+            document.getElementById('eval-accuracy').textContent = `${Math.round((cor/state.questions.length)*100)}%`;
+            
+            const mC = document.getElementById('mistakes-container'); mC.innerHTML = '';
+            if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
+            mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
+            
             navigate('result');
         }
 
-        // --- STREAMING_CHUNK:Rendering Results UI... ---
-        function renderResults(score, level, sectionStats, totalCorrect, totalQuestions, mistakes) {
-            // Setup Identity details
-            const today = new Date();
-            document.getElementById('res-date').textContent = `${today.getFullYear()}/${String(today.getMonth()+1).padStart(2,'0')}/${String(today.getDate()).padStart(2,'0')}`;
-            document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000 + 100000)}`;
-            
-            // Ambil nama dari memori
-            const savedName = localStorage.getItem('jft_user_name') || 'PRAYUDA EKA SYACH PUTRA';
-            document.getElementById('res-name').textContent = savedName;
-
-            // Main Score
-            document.getElementById('res-total-score').textContent = score;
-            document.getElementById('res-level').textContent = level;
-
-            // Position Indicator (Map 10-250 to 0-100%)
-            const scorePct = ((score - 10) / (250 - 10)) * 100;
-            setTimeout(() => {
-                const indicator = document.getElementById('res-score-indicator');
-                indicator.style.left = `${scorePct}%`;
-                document.getElementById('res-score-val-float').textContent = score;
-            }, 100); // slight delay for animation
-
-            // Sections
-            const secContainer = document.getElementById('res-sections-container');
-            secContainer.innerHTML = '';
-            
-            SECTIONS.forEach(s => {
-                const stat = sectionStats[s.id];
-                // If a section wasn't tested, set to N/A or 0
-                const pct = stat.total > 0 ? Math.round((stat.correct / stat.total) * 100) : 0;
-                const pctDisplay = stat.total > 0 ? `${pct}%` : '-';
-                
-                secContainer.innerHTML += `
-                    <div class="flex items-center gap-4">
-                        <div class="w-1/3 min-w-[120px]">
-                            <div class="japanese-text text-sm font-medium text-slate-700">${s.nameJP}</div>
-                            <div class="text-[10px] text-slate-500 leading-tight">${s.nameEN}</div>
-                        </div>
-                        <div class="flex-grow flex items-center gap-3">
-                            <div class="section-bar-bg flex-grow">
-                                <div class="section-bar-fill" style="width: 0%; transition-delay: 300ms;" data-target="${pct}"></div>
-                                <div class="section-bar-indicator" style="left: 0%; transition-delay: 300ms;" data-target="${pct}"></div>
-                            </div>
-                            <div class="w-10 text-right text-sm font-bold text-slate-600">${pctDisplay}</div>
-                        </div>
-                    </div>
-                `;
-            });
-
-            // Trigger section animations
-            setTimeout(() => {
-                document.querySelectorAll('.section-bar-fill').forEach(el => {
-                    el.style.width = `${el.dataset.target}%`;
-                });
-                document.querySelectorAll('.section-bar-indicator').forEach(el => {
-                    el.style.left = `${el.dataset.target}%`;
-                });
-            }, 100);
-
-            // Evaluation Details
-            document.getElementById('eval-total').textContent = totalQuestions;
-            document.getElementById('eval-correct').textContent = totalCorrect;
-            document.getElementById('eval-wrong').textContent = mistakes.length;
-            document.getElementById('eval-accuracy').textContent = `${Math.round((totalCorrect/totalQuestions)*100)}%`;
-
-            // Mistakes Review
-            const mistakesContainer = document.getElementById('mistakes-container');
-            mistakesContainer.innerHTML = '';
-            if (mistakes.length === 0) {
-                mistakesContainer.innerHTML = '<p class="text-green-600 font-medium p-4 bg-green-50 rounded-lg"><i class="fa-solid fa-check-circle mr-2"></i>Sempurna! Tidak ada jawaban yang salah.</p>';
-            } else {
-                mistakes.forEach(m => {
-                    const q = m.question;
-                    const userAnswerText = m.userAnswerIndex !== null ? q.options[m.userAnswerIndex] : 'Tidak dijawab';
-                    const correctAnswerText = q.options[q.answer];
-
-                    mistakesContainer.innerHTML += `
-                        <div class="border border-red-100 bg-red-50/30 rounded-xl p-4">
-                            <div class="text-sm font-semibold text-slate-600 mb-2">Soal ${m.num}</div>
-                            <div class="japanese-text text-lg text-slate-800 mb-3">${q.text.replace('\n', '<br>')}</div>
-                            
-                            <div class="grid sm:grid-cols-2 gap-3 mb-3">
-                                <div class="bg-red-100 text-red-800 p-2 rounded text-sm flex items-start gap-2">
-                                    <i class="fa-solid fa-xmark mt-0.5"></i>
-                                    <div><span class="text-xs block text-red-600">Jawaban Anda</span><span class="japanese-text font-medium">${userAnswerText}</span></div>
-                                </div>
-                                <div class="bg-green-100 text-green-800 p-2 rounded text-sm flex items-start gap-2">
-                                    <i class="fa-solid fa-check mt-0.5"></i>
-                                    <div><span class="text-xs block text-green-600">Jawaban Benar</span><span class="japanese-text font-medium">${correctAnswerText}</span></div>
-                                </div>
-                            </div>
-                            
-                            <div class="text-sm text-slate-600 bg-white p-3 rounded border border-slate-200">
-                                <strong>Penjelasan:</strong> ${q.explanation}
-                            </div>
-                        </div>
-                    `;
-                });
-            }
-        }
-
-        // --- STREAMING_CHUNK:Photo Customization & History... ---
-        function handlePhotoUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const img = document.getElementById('user-photo-img');
-                    img.src = e.target.result;
-                    img.classList.remove('hidden');
-                    // Simpan foto di local storage agar persisten
-                    localStorage.setItem('jft_user_photo', e.target.result);
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-
-        function editName() {
-            const currentName = document.getElementById('res-name').textContent;
-            const newName = prompt("Masukkan nama lengkap Anda:", currentName);
-            
-            if (newName !== null && newName.trim() !== '') {
-                const formattedName = newName.trim().toUpperCase();
-                
-                // Update UI di sertifikat
-                document.getElementById('res-name').textContent = formattedName;
-                
-                // Update input di home screen
-                const nameInput = document.getElementById('user-name-input');
-                if (nameInput) nameInput.value = formattedName;
-                
-                // Simpan ke local storage
-                localStorage.setItem('jft_user_name', formattedName);
-            }
-        }
-
-        function saveToHistory(item) {
-            let history = JSON.parse(localStorage.getItem('jft_history') || '[]');
-            history.unshift(item); // add to beginning
-            // Keep only last 20 records to save space
-            if(history.length > 20) history.pop();
-            localStorage.setItem('jft_history', JSON.stringify(history));
-        }
-
         function renderHistory() {
-            const history = JSON.parse(localStorage.getItem('jft_history') || '[]');
-            const container = document.getElementById('history-container');
-            const emptyState = document.getElementById('empty-history');
-            
-            container.innerHTML = '';
-            
-            if (history.length === 0) {
-                emptyState.classList.remove('hidden');
-            } else {
-                emptyState.classList.add('hidden');
-                
-                history.forEach(item => {
-                    const dateObj = new Date(item.date);
-                    const dateStr = dateObj.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute:'2-digit' });
-                    
-                    let levelColor = 'text-slate-600 bg-slate-100';
-                    if(item.level.includes('A2')) levelColor = 'text-green-700 bg-green-100';
-                    else if(item.level === 'A1') levelColor = 'text-blue-700 bg-blue-100';
-                    
-                    container.innerHTML += `
-                        <div class="bg-white p-4 rounded-xl border border-slate-200 shadow-sm flex items-center justify-between gap-4">
-                            <div>
-                                <div class="text-xs text-slate-500 mb-1">${dateStr}</div>
-                                <div class="font-medium text-slate-800 capitalize">Latihan: ${item.period}</div>
-                                <div class="text-sm text-slate-600">Skor: ${item.score} / 250</div>
-                            </div>
-                            <div class="text-right">
-                                <span class="px-3 py-1 rounded-full text-xs font-bold ${levelColor}">${item.level}</span>
-                                <div class="text-xs text-slate-400 mt-2">${item.correct}/${item.total} Benar</div>
-                            </div>
-                        </div>
-                    `;
-                });
+            const h = JSON.parse(localStorage.getItem('jft_history')||'[]');
+            const c = document.getElementById('history-container'); c.innerHTML = '';
+            if(!h.length) document.getElementById('empty-history').classList.remove('hidden');
+            else {
+                document.getElementById('empty-history').classList.add('hidden');
+                h.forEach(i => c.innerHTML += `<div class="bg-white p-4 border rounded shadow-sm mb-3 flex justify-between"><div class="text-sm"><div>${new Date(i.date).toLocaleString('id-ID')}</div><div class="font-bold">Skor: ${i.score}</div></div><div class="text-right font-bold text-brand-600">${i.level}<div class="text-xs text-slate-500">${i.correct}/${i.total} Benar</div></div></div>`);
             }
         }
+        
+        
+        function editName() { const n = prompt("Nama:", document.getElementById('res-name').textContent); if(n) { document.getElementById('res-name').textContent = n.toUpperCase(); localStorage.setItem('jft_user_name', n.toUpperCase()); document.getElementById('user-name-input').value = n.toUpperCase(); } }
+        function handlePhotoUpload(e) { if(e.target.files[0]) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('user-photo-img').src=ev.target.result; document.getElementById('user-photo-img').classList.remove('hidden'); localStorage.setItem('jft_user_photo', ev.target.result); }; r.readAsDataURL(e.target.files[0]); } }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', () => {
-            // Load foto profil yang tersimpan jika ada
-            const savedPhoto = localStorage.getItem('jft_user_photo');
-            if(savedPhoto) {
-                const img = document.getElementById('user-photo-img');
-                if(img) {
-                    img.src = savedPhoto;
-                    img.classList.remove('hidden');
-                }
-            }
-
-            // Load nama yang tersimpan jika ada
-            const savedName = localStorage.getItem('jft_user_name');
-            if(savedName) {
-                const nameInput = document.getElementById('user-name-input');
-                if(nameInput) nameInput.value = savedName;
-            }
-            
-            // Set initial screen
-            navigate('home');
+            const p = localStorage.getItem('jft_user_photo');
+            if(p) { document.getElementById('user-photo-img').src = p; document.getElementById('user-photo-img').classList.remove('hidden'); }
+            checkSession();
         });
-
     </script>
 </body>
 </html>
