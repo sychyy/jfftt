@@ -1579,100 +1579,93 @@
 
     if (!email || !password) {
         errorMsg.textContent = "Email dan password harus diisi!";
-        errorMsg.classList.add('hidden'); return;
+        errorMsg.classList.remove('hidden'); return;
     }
+    sessionStorage.setItem('show_name_prompt', 'true');
+    
+    btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
+    btnLogin.disabled = true; errorMsg.classList.add('hidden');
 
-    // TANDAI BAHWA PENGGUNA SEDANG MELAKUKAN PROSES LOGIN BARU
-    sessionStorage.setItem('jft_just_logged_in', 'true');
+    try {
+        const { data: dbData, error: dbError } = await window.supabaseClient.from('Jft-Basic').select('*').eq('email', email).eq('auth_code', password);
+        
+        if (dbError) throw dbError;
+        if (!dbData || dbData.length === 0) {
+            errorMsg.innerHTML = "❌ Auth Code atau Email salah.";
+            errorMsg.classList.remove('hidden');
+            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+            btnLogin.disabled = false; return;
+        }
 
-    // ... (sisa kode validasi database supabase Anda selanjutnya tetap sama)
+        const user = dbData[0];
+        if (user.status !== 'active') {
+            errorMsg.innerHTML = `❌ Akun Anda dinonaktifkan.`;
+            errorMsg.classList.remove('hidden');
+            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+            btnLogin.disabled = false; return;
+        }
 
+        if (user.role !== 'admin') {
+            const deviceId = getOrCreateDeviceId();
+            let devices = user.registered_devices || [];
+            if (typeof devices === 'string') devices = JSON.parse(devices);
 
-            btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
-            btnLogin.disabled = true; errorMsg.classList.add('hidden');
+            if (!devices.includes(deviceId)) {
+                const max = user.max_users || 1;
+                if (devices.length >= max) {
+                    errorMsg.innerHTML = `❌ Gagal: Akun ini sudah mencapai batas maksimal (${max} Perangkat).`;
+                    errorMsg.classList.remove('hidden');
+                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+                    btnLogin.disabled = false; return;
+                } else {
+                    devices.push(deviceId);
+                    await window.supabaseClient.from('Jft-Basic').update({ registered_devices: devices }).eq('id', user.id);
+                }
+            }
+        }
 
-            try {
-                const { data: dbData, error: dbError } = await window.supabaseClient.from('Jft-Basic').select('*').eq('email', email).eq('auth_code', password);
+        localStorage.setItem('jft_user_id', user.id);
+        localStorage.setItem('jft_user_name', user.name.toUpperCase());
+        localStorage.setItem('jft_user_role', user.role);
+
+        if (user.role === 'admin') {
+            navigate('admin');
+        } else {
+            navigate('home');
+
+            const savedDeviceName = localStorage.getItem('jft_device_custom_name');
+            const defaultAccountName = user.name.toUpperCase();
+
+            // KUNCI UTAMA: Hanya munculkan modal jika ADA nama lama di perangkat 
+            // DAN ada flag 'show_name_prompt' yang baru dibuat khusus saat tombol Masuk diklik.
+            if (savedDeviceName && sessionStorage.getItem('show_name_prompt') === 'true') {
+                document.getElementById('modal-old-name').textContent = savedDeviceName;
+                document.getElementById('user-name-input').value = savedDeviceName;
                 
-                if (dbError) throw dbError;
-                if (!dbData || dbData.length === 0) {
-                    errorMsg.innerHTML = "❌ Auth Code atau Email salah.";
-                    errorMsg.classList.remove('hidden');
-                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                    btnLogin.disabled = false; return;
-                }
+                const nameModal = document.getElementById('custom-name-modal');
+                nameModal.classList.remove('hidden');
+                nameModal.classList.add('flex');
 
-                const user = dbData[0];
-                if (user.status !== 'active') {
-                    errorMsg.innerHTML = `❌ Akun Anda dinonaktifkan.`;
-                    errorMsg.classList.remove('hidden');
-                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                    btnLogin.disabled = false; return;
-                }
-
-                if (user.role !== 'admin') {
-                    const deviceId = getOrCreateDeviceId();
-                    let devices = user.registered_devices || [];
-                    if (typeof devices === 'string') devices = JSON.parse(devices);
-
-                    if (!devices.includes(deviceId)) {
-                        const max = user.max_users || 1;
-                        if (devices.length >= max) {
-                            errorMsg.innerHTML = `❌ Gagal: Akun ini sudah mencapai batas maksimal (${max} Perangkat).`;
-                            errorMsg.classList.remove('hidden');
-                            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                            btnLogin.disabled = false; return;
-                        } else {
-                            devices.push(deviceId);
-                            await window.supabaseClient.from('Jft-Basic').update({ registered_devices: devices }).eq('id', user.id);
-                        }
-                    }
-                }
-
-                localStorage.setItem('jft_user_id', user.id);
-                localStorage.setItem('jft_user_name', user.name.toUpperCase());
-                localStorage.setItem('jft_user_role', user.role);
-
-                if (user.role === 'admin') {
-    navigate('admin');
-} else {
-    navigate('home');
-
-    // Cek apakah baru saja login pada sesi ini dan apakah sudah ada nama perangkat
-    const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-    const defaultAccountName = user.name.toUpperCase();
-    const isJustLoggedIn = sessionStorage.getItem('jft_just_logged_in');
-
-    // Modal hanya akan muncul jika baru login (isJustLoggedIn bernilai 'true') DAN nama perangkat sudah terekam sebelumnya
-    if (savedDeviceName && isJustLoggedIn === 'true') {
-        document.getElementById('modal-old-name').textContent = savedDeviceName;
-        document.getElementById('user-name-input').value = savedDeviceName;
-        
-        const nameModal = document.getElementById('custom-name-modal');
-        nameModal.classList.remove('hidden');
-        nameModal.classList.add('flex');
-
-        // Hapus flag agar jika halaman di-refresh, modal tidak terpanggil lagi
-        sessionStorage.removeItem('jft_just_logged_in');
-    } else {
-        // Jika di-refresh atau pertama kali di perangkat ini, langsung set namanya tanpa memunculkan modal
-        const activeName = savedDeviceName || defaultAccountName;
-        document.getElementById('user-name-input').value = activeName;
-        localStorage.setItem('jft_device_custom_name', activeName);
-        
-        // Bersihkan juga flag jika ada
-        sessionStorage.removeItem('jft_just_logged_in');
+                // Hapus flag agar jika di-refresh, modal tidak akan pernah muncul lagi
+                sessionStorage.removeItem('show_name_prompt');
+            } else {
+                // Jika baru pertama kali di perangkat ini atau halaman di-refresh
+                const activeName = savedDeviceName || defaultAccountName;
+                document.getElementById('user-name-input').value = activeName;
+                localStorage.setItem('jft_device_custom_name', activeName);
+                
+                // Bersihkan juga flag jika tersisa
+                sessionStorage.removeItem('show_name_prompt');
+            }
+        }
+    } catch (err) {
+        errorMsg.innerHTML = `❌ Error: ${err.message}`;
+        errorMsg.classList.remove('hidden');
     }
+    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+    btnLogin.disabled = false;
 }
 
-
-            } catch (err) {
-                errorMsg.innerHTML = `❌ Error: ${err.message}`;
-                errorMsg.classList.remove('hidden');
-            }
-            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-            btnLogin.disabled = false;
-        }
 
 
         function setLeaderboardFilter(count) {
@@ -2034,33 +2027,26 @@
         }
 
         function checkSession() {
-            const userId = localStorage.getItem('jft_user_id');
-            if (userId) {
-                const role = localStorage.getItem('jft_user_role');
-                if (role === 'admin') {
-                    navigate('admin');
-                    return;
-                }
-
-                navigate('home');
-
-                const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-                const defaultAccountName = localStorage.getItem('jft_user_name') || "";
-
-                if (savedDeviceName) {
-                    document.getElementById('modal-old-name').textContent = savedDeviceName;
-                    document.getElementById('user-name-input').value = savedDeviceName;
-                    
-                    const nameModal = document.getElementById('custom-name-modal');
-                    nameModal.classList.remove('hidden');
-                    nameModal.classList.add('flex');
-                } else {
-                    document.getElementById('user-name-input').value = defaultAccountName;
-                }
-            } else {
-                navigate('auth');
-            }
+    const userId = localStorage.getItem('jft_user_id');
+    if (userId) {
+        const role = localStorage.getItem('jft_user_role');
+        if (role === 'admin') {
+            navigate('admin');
+        } else {
+            navigate('home');
+            
+            // Saat di-refresh (lewat checkSession), langsung ambil nama dari localStorage saja tanpa modal
+            const savedDeviceName = localStorage.getItem('jft_device_custom_name') || localStorage.getItem('jft_user_name') || "";
+            document.getElementById('user-name-input').value = savedDeviceName;
+            
+            // Pastikan flag prompt dihapus agar aman dari refresh
+            sessionStorage.removeItem('show_name_prompt');
         }
+    } else {
+        navigate('auth');
+    }
+}
+
 
         function handleNameChoice(choice) {
     const nameModal = document.getElementById('custom-name-modal');
