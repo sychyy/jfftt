@@ -1572,15 +1572,21 @@
         }
         
                 async function handleLogin() {
-            const email = document.getElementById('login-email').value.trim();
-            const password = document.getElementById('login-password').value.trim();
-            const btnLogin = document.getElementById('btn-login');
-            const errorMsg = document.getElementById('login-error');
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value.trim();
+    const btnLogin = document.getElementById('btn-login');
+    const errorMsg = document.getElementById('login-error');
 
-            if (!email || !password) {
-                errorMsg.textContent = "Email dan password harus diisi!";
-                errorMsg.classList.remove('hidden'); return;
-            }
+    if (!email || !password) {
+        errorMsg.textContent = "Email dan password harus diisi!";
+        errorMsg.classList.add('hidden'); return;
+    }
+
+    // TANDAI BAHWA PENGGUNA SEDANG MELAKUKAN PROSES LOGIN BARU
+    sessionStorage.setItem('jft_just_logged_in', 'true');
+
+    // ... (sisa kode validasi database supabase Anda selanjutnya tetap sama)
+
 
             btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
             btnLogin.disabled = true; errorMsg.classList.add('hidden');
@@ -1632,24 +1638,33 @@
 } else {
     navigate('home');
 
-    // --- CEK NAMA TERDETEKSI SETELAH BERHASIL LOGIN ---
+    // Cek apakah baru saja login pada sesi ini dan apakah sudah ada nama perangkat
     const savedDeviceName = localStorage.getItem('jft_device_custom_name');
     const defaultAccountName = user.name.toUpperCase();
+    const isJustLoggedIn = sessionStorage.getItem('jft_just_logged_in');
 
-    if (savedDeviceName) {
-        // Jika nama perangkat sudah pernah tersimpan, tampilkan modal
+    // Modal hanya akan muncul jika baru login (isJustLoggedIn bernilai 'true') DAN nama perangkat sudah terekam sebelumnya
+    if (savedDeviceName && isJustLoggedIn === 'true') {
         document.getElementById('modal-old-name').textContent = savedDeviceName;
         document.getElementById('user-name-input').value = savedDeviceName;
         
         const nameModal = document.getElementById('custom-name-modal');
         nameModal.classList.remove('hidden');
         nameModal.classList.add('flex');
+
+        // Hapus flag agar jika halaman di-refresh, modal tidak terpanggil lagi
+        sessionStorage.removeItem('jft_just_logged_in');
     } else {
-        // Jika baru pertama kali login di perangkat ini
-        document.getElementById('user-name-input').value = defaultAccountName;
-        localStorage.setItem('jft_device_custom_name', defaultAccountName);
+        // Jika di-refresh atau pertama kali di perangkat ini, langsung set namanya tanpa memunculkan modal
+        const activeName = savedDeviceName || defaultAccountName;
+        document.getElementById('user-name-input').value = activeName;
+        localStorage.setItem('jft_device_custom_name', activeName);
+        
+        // Bersihkan juga flag jika ada
+        sessionStorage.removeItem('jft_just_logged_in');
     }
 }
+
 
             } catch (err) {
                 errorMsg.innerHTML = `❌ Error: ${err.message}`;
