@@ -120,6 +120,8 @@
             .section-bar-fill { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
         }
+                .option-label:active .option-content { transform: translate(3px,3px) !important; box-shadow: 1px 1px 0 var(--nb-black) !important; }
+                
     </style>
 </head>
 <body class="min-h-screen flex flex-col">
@@ -819,11 +821,33 @@
                 };
             }
 
-            const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
-            shuffleArray(q.options.map((t,i)=>({t,i}))).forEach((opt, idx) => {
-                opts.innerHTML += `<label class="option-label block"><input type="radio" name="qo" value="${opt.i}" class="option-input peer sr-only" onchange="state.userAnswers[state.currentQuestionIndex]=${opt.i}; renderQuestion()"><div class="option-content flex items-center p-4 border rounded-xl hover:bg-slate-50 cursor-pointer ${state.userAnswers[state.currentQuestionIndex]===opt.i?'bg-teal-100 border-teal-500':''}"><div class="radio-letter w-8 h-8 flex items-center justify-center rounded bg-slate-100 font-bold mr-3">${['A','B','C','D'][idx]}</div><span class="text-lg japanese-text">${opt.t}</span></div></label>`;
+                        const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
+            
+            // Cek apakah opsi sudah diacak sebelumnya. Jika belum, acak dan simpan.
+            if (!q.shuffledOptions) {
+                q.shuffledOptions = shuffleArray(q.options.map((t,i)=>({t,i})));
+            }
+            
+            // Gunakan opsi yang sudah diacak dan disimpan
+                        // Gunakan opsi yang sudah diacak dan disimpan
+            q.shuffledOptions.forEach((opt, idx) => {
+                const isChecked = state.userAnswers[state.currentQuestionIndex] === opt.i ? 'checked' : '';
+                opts.innerHTML += `<label class="option-label block"><input type="radio" name="qo" value="${opt.i}" class="option-input peer sr-only" onchange="pilihJawaban(${opt.i})" ${isChecked}><div class="option-content flex items-center p-4 border rounded-xl hover:bg-slate-50 cursor-pointer transition-all"><div class="radio-letter w-8 h-8 flex items-center justify-center rounded bg-slate-100 font-bold mr-3">${['A','B','C','D'][idx]}</div><span class="text-lg japanese-text">${opt.t}</span></div></label>`;
             });
+
+
         }
+        
+                function pilihJawaban(val) {
+            // Simpan jawaban tanpa me-refresh seluruh UI pertanyaan
+            state.userAnswers[state.currentQuestionIndex] = val;
+            
+            // Aktifkan tombol Selanjutnya
+            const btnNext = document.getElementById('btn-next-question');
+            btnNext.disabled = false;
+            btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
+        }
+        
         
         function showTranscript() { document.getElementById('audio-transcript-fallback').classList.remove('hidden'); document.getElementById('btn-show-transcript').classList.add('hidden'); }
         
