@@ -410,29 +410,47 @@
                         <button onclick="toggleAddUserForm()" class="bg-green-100 text-green-700 px-3 py-1.5 rounded text-sm font-medium flex items-center gap-2"><i class="fa-solid fa-plus"></i> Tambah User</button>
                     </div>
 
-                    <div id="add-user-form" class="hidden bg-slate-50 p-4 rounded-xl border border-slate-200 mb-6">
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-3">
-                            <input type="text" id="new-name" placeholder="Nama Lengkap" class="px-3 py-2 border rounded-lg text-sm">
-                            <input type="email" id="new-email" placeholder="Email" class="px-3 py-2 border rounded-lg text-sm">
-                            <input type="text" id="new-authcode" placeholder="Auth Code (mis: USER-1)" class="px-3 py-2 border rounded-lg text-sm">
-                            <select id="new-role" class="px-3 py-2 border rounded-lg text-sm bg-white"><option value="user">User</option><option value="admin">Admin</option></select>
+                                        <!-- FORM TAMBAH USER -->
+                    <div id="add-user-form" class="hidden bg-[#fffdf8] p-5 rounded-2xl border-[2.5px] border-[#181818] shadow-[5px_5px_0_#181818] mb-6 transition-all mt-2">
+                        <h4 class="font-bold text-slate-800 mb-4 text-sm uppercase tracking-wider border-b-2 border-[#181818] pb-2 inline-block">✨ Tambah Pengguna Baru</h4>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-5">
+                            <input type="text" id="new-name" placeholder="Nama Lengkap" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
+                            <input type="email" id="new-email" placeholder="Email" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
+                            <input type="text" id="new-authcode" placeholder="Auth Code (mis: USER-1)" class="px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-medium">
+                            
+                            <!-- Input Kuota -->
+                            <div class="flex gap-2">
+                                <input type="number" id="new-max-users" placeholder="Kuota (Orang)" value="1" min="1" class="w-1/2 px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-white font-bold text-center" title="Batas jumlah perangkat yang bisa login">
+                                <select id="new-role" class="w-1/2 px-2 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-1 transition-all bg-[#ffe45c] font-bold text-[#181818] cursor-pointer">
+                                    <option value="user">👤 User</option>
+                                    <option value="admin">🛡️ Admin</option>
+                                </select>
+                            </div>
                         </div>
-                        <div class="flex justify-end gap-2">
-                            <button onclick="toggleAddUserForm()" class="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg text-sm">Batal</button>
-                            <button onclick="simpanUserBaru()" id="btn-simpan-user" class="px-4 py-2 bg-brand-600 text-white rounded-lg text-sm">Simpan</button>
+                        <div class="flex justify-end gap-3">
+                            <button onclick="toggleAddUserForm()" class="px-5 py-2.5 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">Batal</button>
+                            <button onclick="simpanUserBaru()" id="btn-simpan-user" class="px-5 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] hover:bg-[#62bddb] transition-all">Simpan Data</button>
                         </div>
                         <p id="add-user-msg" class="text-xs mt-2 hidden"></p>
                     </div>
 
-                    <div class="overflow-x-auto border border-slate-200 rounded-xl">
-                        <table class="w-full text-left text-sm text-slate-600">
-                            <thead class="bg-slate-50 text-slate-700 font-bold uppercase text-xs">
-                                <tr><th class="px-4 py-3">Nama</th><th class="px-4 py-3">Email</th><th class="px-4 py-3">Auth Code</th><th class="px-4 py-3">Role</th><th class="px-4 py-3">Aksi</th></tr>
+                    <!-- TABEL ADMIN -->
+                    <div class="overflow-x-auto border-[2px] border-[#181818] rounded-xl shadow-[4px_4px_0_#181818]">
+                        <table class="w-full text-left text-sm text-slate-700 bg-white">
+                            <thead class="bg-[#ffe45c] text-[#181818] font-black uppercase text-xs border-b-[2px] border-[#181818]">
+                                <tr>
+                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Nama</th>
+                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Auth Code</th>
+                                    <th class="px-4 py-3 border-r-[2px] border-[#181818] text-center">Terpakai</th>
+                                    <th class="px-4 py-3 border-r-[2px] border-[#181818]">Role</th>
+                                    <th class="px-4 py-3 text-center">Aksi</th>
+                                </tr>
                             </thead>
-                            <tbody id="admin-user-table" class="divide-y divide-slate-100">
-                                <tr><td colspan="5" class="px-4 py-8 text-center">Memuat data...</td></tr>
+                            <tbody id="admin-user-table" class="divide-y-[2px] divide-[#181818]">
+                                <tr><td colspan="5" class="px-4 py-8 text-center font-bold text-slate-500">Memuat data...</td></tr>
                             </tbody>
                         </table>
+
                     </div>
                 </div>
 
@@ -564,6 +582,17 @@
             state.currentScreen = screenId;
         }
 
+                // --- DEVICE FINGERPRINT LOGIC ---
+        function getOrCreateDeviceId() {
+            let deviceId = localStorage.getItem('jft_device_id');
+            if (!deviceId) {
+                deviceId = 'DEV-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+                localStorage.setItem('jft_device_id', deviceId);
+            }
+            return deviceId;
+        }
+
+        // --- FUNGSI LOGIN DENGAN SISTEM KUOTA ---
         async function handleLogin() {
             const email = document.getElementById('login-email').value.trim();
             const password = document.getElementById('login-password').value.trim();
@@ -572,24 +601,21 @@
 
             if (!email || !password) {
                 errorMsg.textContent = "Email dan password harus diisi!";
-                errorMsg.classList.remove('hidden');
-                return;
+                errorMsg.classList.remove('hidden'); return;
             }
 
             btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
-            btnLogin.disabled = true;
-            errorMsg.classList.add('hidden');
+            btnLogin.disabled = true; errorMsg.classList.add('hidden');
 
             try {
                 const { data: dbData, error: dbError } = await window.supabaseClient.from('Jft-Basic').select('*').eq('email', email).eq('auth_code', password);
                 
                 if (dbError) throw dbError;
                 if (!dbData || dbData.length === 0) {
-                    errorMsg.innerHTML = "❌ Tidak ada data yang cocok.";
+                    errorMsg.innerHTML = "❌ Auth Code atau Email salah.";
                     errorMsg.classList.remove('hidden');
                     btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                    btnLogin.disabled = false;
-                    return;
+                    btnLogin.disabled = false; return;
                 }
 
                 const user = dbData[0];
@@ -597,13 +623,33 @@
                     errorMsg.innerHTML = `❌ Akun Anda dinonaktifkan.`;
                     errorMsg.classList.remove('hidden');
                     btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                    btnLogin.disabled = false;
-                    return;
+                    btnLogin.disabled = false; return;
                 }
 
+                // CEK KUOTA (Hanya untuk User, Admin bebas)
+                if (user.role !== 'admin') {
+                    const deviceId = getOrCreateDeviceId();
+                    let devices = user.registered_devices || [];
+                    if (typeof devices === 'string') devices = JSON.parse(devices);
+
+                    if (!devices.includes(deviceId)) {
+                        const max = user.max_users || 1;
+                        if (devices.length >= max) {
+                            errorMsg.innerHTML = `❌ Gagal: Akun ini sudah mencapai batas maksimal (${max} Perangkat).`;
+                            errorMsg.classList.remove('hidden');
+                            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+                            btnLogin.disabled = false; return;
+                        } else {
+                            // Daftarkan perangkat baru ke Supabase
+                            devices.push(deviceId);
+                            await window.supabaseClient.from('Jft-Basic').update({ registered_devices: devices }).eq('id', user.id);
+                        }
+                    }
+                }
+
+                // Lolos masuk
                 localStorage.setItem('jft_user_id', user.id);
                 localStorage.setItem('jft_user_name', user.name.toUpperCase());
-                localStorage.setItem('jft_user_email', user.email);
                 localStorage.setItem('jft_user_role', user.role);
 
                 if (user.role === 'admin') navigate('admin');
@@ -618,6 +664,83 @@
             btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
             btnLogin.disabled = false;
         }
+
+        // --- FUNGSI TAMPIL DATA ADMIN ---
+        async function loadAdminData() {
+            const tbody = document.getElementById('admin-user-table');
+            if(!tbody) return;
+            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center font-bold">Memuat...</td></tr>';
+            
+            const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*').order('created_at', { ascending: false });
+            if (error) { tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-red-500">${error.message}</td></tr>`; return; }
+            
+            tbody.innerHTML = '';
+            data.forEach(user => {
+                let devices = user.registered_devices || [];
+                if (typeof devices === 'string') devices = JSON.parse(devices);
+                
+                const max = user.max_users || 1;
+                const isFull = devices.length >= max;
+                
+                // Indikator Warna Kuota
+                let quotaBadge = `<span class="px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold">${devices.length} / ${max}</span>`;
+                if (isFull && user.role !== 'admin') quotaBadge = `<span class="px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded font-bold">${devices.length} / ${max} (Penuh)</span>`;
+                if (user.role === 'admin') quotaBadge = `<span class="text-slate-400 font-bold">-</span>`;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-[#fffdf8] transition">
+                        <td class="px-4 py-3 font-medium border-r-[2px] border-b-[2px] border-[#181818]">${user.name}</td>
+                        <td class="px-4 py-3 font-mono text-brand-600 font-black border-r-[2px] border-b-[2px] border-[#181818]">${user.auth_code}</td>
+                        <td class="px-4 py-3 text-center text-xs border-r-[2px] border-b-[2px] border-[#181818]">${quotaBadge}</td>
+                        <td class="px-4 py-3 uppercase text-xs font-bold border-r-[2px] border-b-[2px] border-[#181818]">${user.role}</td>
+                        <td class="px-4 py-3 text-center border-b-[2px] border-[#181818]">
+                            <button onclick="deleteUser('${user.id}')" class="text-red-500 hover:text-red-700 hover:scale-110 transition p-1" title="Hapus User">
+                                <i class="fa-solid fa-trash-can text-lg"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        // --- FUNGSI SIMPAN USER BARU DENGAN KUOTA ---
+        async function simpanUserBaru() {
+            const name = document.getElementById('new-name').value.trim();
+            const email = document.getElementById('new-email').value.trim();
+            const authCode = document.getElementById('new-authcode').value.trim();
+            const role = document.getElementById('new-role').value;
+            const maxUsers = parseInt(document.getElementById('new-max-users').value) || 1;
+            
+            if (!name || !authCode) { 
+                showCustomConfirm("Nama dan Auth Code wajib diisi!", null, "Oke"); 
+                return; 
+            }
+            
+            const btn = document.getElementById('btn-simpan-user');
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Menyimpan...';
+            
+            const { error } = await window.supabaseClient.from('Jft-Basic').insert([{ 
+                name, 
+                email: email || '-', 
+                auth_code: authCode, 
+                role, 
+                status: 'active',
+                max_users: maxUsers,
+                registered_devices: []
+            }]);
+            
+            if (error) {
+                showCustomConfirm("Gagal: " + error.message, null, "Oke");
+            } else { 
+                toggleAddUserForm(); 
+                loadAdminData(); 
+            }
+            
+            btn.disabled = false;
+            btn.innerHTML = 'Simpan Data';
+        }
+
 
         
 
@@ -636,32 +759,10 @@
         }
 
         // --- ADMIN FUNCTIONS ---
-        async function loadAdminData() {
-            const tbody = document.getElementById('admin-user-table');
-            if(!tbody) return;
-            tbody.innerHTML = '<tr><td colspan="5" class="px-4 py-8 text-center">Memuat...</td></tr>';
-            const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*').order('created_at', { ascending: false });
-            if (error) { tbody.innerHTML = `<tr><td colspan="5" class="px-4 py-4 text-red-500">${error.message}</td></tr>`; return; }
-            tbody.innerHTML = '';
-            data.forEach(user => {
-                tbody.innerHTML += `<tr class="border-b"><td class="px-4 py-3">${user.name}</td><td class="px-4 py-3">${user.email}</td><td class="px-4 py-3 font-mono">${user.auth_code}</td><td class="px-4 py-3 uppercase text-xs">${user.role}</td><td class="px-4 py-3"><button onclick="deleteUser('${user.id}')" class="text-red-500"><i class="fa-solid fa-trash-can"></i></button></td></tr>`;
-            });
-        }
 
         function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
         
-        async function simpanUserBaru() {
-            const name = document.getElementById('new-name').value.trim();
-            const email = document.getElementById('new-email').value.trim();
-            const authCode = document.getElementById('new-authcode').value.trim();
-            const role = document.getElementById('new-role').value;
-            
-            if (!name || !authCode) { alert("Nama dan Auth Code wajib diisi!"); return; }
-            
-            const { error } = await window.supabaseClient.from('Jft-Basic').insert([{ name, email: email||'-', auth_code: authCode, role, status: 'active' }]);
-            if (error) alert(error.message);
-            else { toggleAddUserForm(); loadAdminData(); }
-        }
+        
 
                 // --- CUSTOM MODAL LOGIC ---
         let confirmCallback = null;
