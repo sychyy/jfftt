@@ -187,7 +187,7 @@
                         <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                             <i class="fa-regular fa-user text-slate-400"></i>
                         </div>
-                        <input type="text" id="user-name-input" class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition text-slate-700 font-medium uppercase" placeholder="Masukkan nama Anda..." readonly>
+                        <input type="text" id="user-name-input" class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition text-slate-700 font-medium uppercase" placeholder="Masukkan nama Anda...">
                     </div>
                 </div>
 
@@ -1552,6 +1552,106 @@
         }
 
         // --- FUNGSI TAMPIL DATA ADMIN ---
+        
+
+        // --- FUNGSI SIMPAN USER BARU DENGAN KUOTA ---
+                // --- 1. UPDATE FUNGSI KELAR KUIS (Menyimpan Skor ke Supabase) ---
+        function finishQuiz() {
+            clearInterval(state.timerInterval);
+            let cor = 0, mis = [];
+            state.questions.forEach((q, i) => { if(state.userAnswers[i] === q.answer) cor++; else mis.push({q, a: state.userAnswers[i], n: i+1}); });
+            
+            const score = Math.round(10 + ((cor/state.questions.length)*(250-10)));
+            const lvl = score<145?"Below A1":score<175?"A1":score<200?"A2.1":"A2.2(A2)";
+            
+            let hist = JSON.parse(localStorage.getItem('jft_history')||'[]');
+            hist.unshift({id: Date.now(), date: new Date().toISOString(), score, level: lvl, correct: cor, total: state.questions.length});
+            localStorage.setItem('jft_history', JSON.stringify(hist.slice(0,20)));
+            
+            // Render Result
+            document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
+            document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
+            const currentUserName = localStorage.getItem('jft_user_name') || "SISWA";
+            document.getElementById('res-name').textContent = currentUserName;
+            document.getElementById('res-total-score').textContent = score;
+            document.getElementById('res-level').textContent = lvl;
+            document.getElementById('res-score-indicator').style.left = `${((score-10)/240)*100}%`;
+            document.getElementById('res-score-val-float').textContent = score;
+            document.getElementById('eval-total').textContent = state.questions.length;
+            document.getElementById('eval-correct').textContent = cor;
+            document.getElementById('eval-wrong').textContent = mis.length;
+            document.getElementById('eval-accuracy').textContent = `${Math.round((cor/state.questions.length)*100)}%`;
+            
+            const secStats = {};
+            SECTIONS.forEach(s => secStats[s.id] = { total: 0, correct: 0 });
+            state.questions.forEach((q, i) => {
+                if(secStats[q.section]) {
+                    secStats[q.section].total++;
+                    if(state.userAnswers[i] === q.answer) secStats[q.section].correct++;
+                }
+            });
+
+            const sContainer = document.getElementById('res-sections-container');
+            sContainer.innerHTML = '';
+            SECTIONS.forEach(s => {
+                const st = secStats[s.id];
+                const pct = st.total > 0 ? Math.round((st.correct / st.total) * 100) : 0;
+                sContainer.innerHTML += `
+                    <div class="flex items-center justify-between gap-4 text-sm">
+                        <div class="w-1/3">
+                            <div class="font-bold text-slate-800 japanese-text">${s.nameJP}</div>
+                            <div class="text-[11px] text-slate-500">${s.nameEN}</div>
+                        </div>
+                        <div class="w-1/2">
+                            <div class="section-bar-bg"><div class="section-bar-fill" style="width: ${pct}%"></div></div>
+                        </div>
+                        <div class="w-12 text-right font-bold text-slate-800">${pct}%</div>
+                    </div>`;
+            });
+
+            const mC = document.getElementById('mistakes-container'); mC.innerHTML = '';
+            if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
+            mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
+            
+                        // =========================================================
+            // SIMPAN SKOR TERBARU, NAMA, & WAKTU KE SUPABASE UNTUK ADMIN
+            // =========================================================
+            const userId = localStorage.getItem('jft_user_id');
+            const deviceId = localStorage.getItem('jft_device_id');
+            if (userId && deviceId) {
+                const sTime = Math.floor((Date.now() - state.startTime) / 1000);
+                const durationText = `${Math.floor(sTime/60)}m ${sTime%60}s`;
+                
+                const ua = navigator.userAgent;
+                let os = "Lainnya";
+                if (/android/i.test(ua)) os = "Android";
+                else if (/iPad|iPhone|iPod/.test(ua)) os = "iOS";
+                else if (/windows/i.test(ua)) os = "Windows";
+                else if (/mac/i.test(ua)) os = "Mac";
+
+                window.supabaseClient.from('Jft-Basic').select('device_scores').eq('id', userId).single().then(({data}) => {
+                    let scores = data?.device_scores || {};
+                    if(typeof scores === 'string') scores = JSON.parse(scores);
+                    
+                    // Menyimpan Skor, Durasi, OS, dan NAMA ASLI yang diinput siswa
+                    scores[deviceId] = { 
+                        name: currentUserName, 
+                        score: score, 
+                        level: lvl, 
+                        duration: durationText, 
+                        os: os 
+                    };
+                    
+                    window.supabaseClient.from('Jft-Basic').update({ device_scores: scores }).eq('id', userId).then();
+                });
+            }
+            // =========================================================
+
+
+            navigate('result');
+        }
+
+        // --- 2. UPDATE FUNGSI TAMPIL ADMIN (Menampilkan Skor di Tabel) ---
         async function loadAdminData() {
             const tbody = document.getElementById('admin-user-table');
             if(!tbody) return;
@@ -1565,21 +1665,54 @@
                 let devices = user.registered_devices || [];
                 if (typeof devices === 'string') devices = JSON.parse(devices);
                 
+                let scores = user.device_scores || {};
+                if (typeof scores === 'string') scores = JSON.parse(scores);
+                
                 const max = user.max_users || 1;
                 const isFull = devices.length >= max;
                 
-                // Indikator Warna Kuota
                 let quotaBadge = `<span class="px-2 py-1 bg-green-100 text-green-700 border border-green-300 rounded font-bold">${devices.length} / ${max}</span>`;
                 if (isFull && user.role !== 'admin') quotaBadge = `<span class="px-2 py-1 bg-red-100 text-red-700 border border-red-300 rounded font-bold">${devices.length} / ${max} (Penuh)</span>`;
                 if (user.role === 'admin') quotaBadge = `<span class="text-slate-400 font-bold">-</span>`;
 
+                // LOGIKA UNTUK MENAMPILKAN PERANGKAT & SKOR TEPAT DI BAWAH NAMA
+                                let scoreHTML = '';
+                if (user.role !== 'admin') {
+                    if (devices.length === 0) {
+                        scoreHTML = `<div class="text-[11px] text-slate-400 italic mt-2">Belum ada percobaan.</div>`;
+                    } else {
+                        scoreHTML = `<div class="mt-2 flex flex-col gap-1.5">`;
+                        devices.forEach((dev, idx) => {
+                            const s = scores[dev];
+                            if (s) {
+                                scoreHTML += `
+                                <div class="text-[11px] bg-slate-50 p-2 rounded-lg border border-slate-200 shadow-sm">
+                                    <div class="font-bold text-slate-800 mb-0.5"><i class="fa-solid fa-user-pen mr-1 text-brand-600"></i> ${s.name || 'Tanpa Nama'}</div>
+                                    <div class="text-slate-500 text-[10px] mb-1"><i class="fa-solid fa-mobile-screen-button mr-1"></i> ${s.os}</div>
+                                    <div class="flex items-center gap-2">
+                                        <span class="bg-brand-100 text-brand-700 px-1.5 py-0.5 rounded font-black border border-brand-200">Skor: ${s.score}</span>
+                                        <span class="text-slate-500 font-medium"><i class="fa-regular fa-clock"></i> ${s.duration}</span>
+                                    </div>
+                                </div>`;
+                            } else {
+                                scoreHTML += `<div class="text-[11px] bg-slate-50 text-slate-400 p-2 rounded-lg border border-slate-100"><i class="fa-solid fa-mobile-screen-button mr-1"></i> Perangkat ${idx+1}: Belum tes</div>`;
+                            }
+                        });
+                        scoreHTML += `</div>`;
+                    }
+                }
+
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-[#fffdf8] transition">
-                        <td class="px-4 py-3 font-medium border-r-[2px] border-b-[2px] border-[#181818]">${user.name}</td>
-                        <td class="px-4 py-3 font-mono text-brand-600 font-black border-r-[2px] border-b-[2px] border-[#181818]">${user.auth_code}</td>
-                        <td class="px-4 py-3 text-center text-xs border-r-[2px] border-b-[2px] border-[#181818]">${quotaBadge}</td>
-                        <td class="px-4 py-3 uppercase text-xs font-bold border-r-[2px] border-b-[2px] border-[#181818]">${user.role}</td>
-                        <td class="px-4 py-3 text-center border-b-[2px] border-[#181818]">
+                        <td class="px-4 py-3 border-r-[2px] border-b-[2px] border-[#181818] align-top w-1/3">
+                            <div class="font-bold text-sm text-[#181818]">${user.name}</div>
+                            ${scoreHTML}
+                        </td>
+                        <td class="px-4 py-3 font-mono text-brand-600 font-black border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${user.auth_code}</td>
+                        <td class="px-4 py-3 text-center text-xs border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${quotaBadge}</td>
+                        <td class="px-4 py-3 uppercase text-xs font-bold border-r-[2px] border-b-[2px] border-[#181818] align-top pt-4">${user.role}</td>
+                        <td class="px-4 py-3 text-center border-b-[2px] border-[#181818] align-top pt-3">
                             <button onclick="deleteUser('${user.id}')" class="text-red-500 hover:text-red-700 hover:scale-110 transition p-1" title="Hapus User">
                                 <i class="fa-solid fa-trash-can text-lg"></i>
                             </button>
@@ -1589,7 +1722,7 @@
             });
         }
 
-        // --- FUNGSI SIMPAN USER BARU DENGAN KUOTA ---
+        // --- 3. UPDATE FUNGSI SIMPAN USER BARU (Mempersiapkan Kolom JSONB) ---
         async function simpanUserBaru() {
             const name = document.getElementById('new-name').value.trim();
             const email = document.getElementById('new-email').value.trim();
@@ -1613,7 +1746,8 @@
                 role, 
                 status: 'active',
                 max_users: maxUsers,
-                registered_devices: []
+                registered_devices: [],
+                device_scores: {} // Memastikan kolom ini siap menerima skor
             }]);
             
             if (error) {
@@ -1628,14 +1762,19 @@
         }
 
 
+
         
 
-        function checkSession() {
+                function checkSession() {
             const userId = localStorage.getItem('jft_user_id');
             if (userId) {
                 const role = localStorage.getItem('jft_user_role');
+                
+                // Jangan paksakan nama akun master, biarkan siswa input nama mereka sendiri di form
                 const savedName = localStorage.getItem('jft_user_name');
-                if (savedName) document.getElementById('user-name-input').value = savedName;
+                if (savedName && role === 'admin') {
+                    document.getElementById('user-name-input').value = savedName;
+                }
                 
                 if (role === 'admin') navigate('admin');
                 else navigate('home');
@@ -1643,6 +1782,7 @@
                 navigate('auth');
             }
         }
+
 
         // --- ADMIN FUNCTIONS ---
 
@@ -1887,71 +2027,7 @@
             else finishQuiz();
         }
 
-                function finishQuiz() {
-            clearInterval(state.timerInterval);
-            let cor = 0, mis = [];
-            state.questions.forEach((q, i) => { if(state.userAnswers[i] === q.answer) cor++; else mis.push({q, a: state.userAnswers[i], n: i+1}); });
-            
-            const score = Math.round(10 + ((cor/state.questions.length)*(250-10)));
-            const lvl = score<145?"Below A1":score<175?"A1":score<200?"A2.1":"A2.2(A2)";
-            
-            let hist = JSON.parse(localStorage.getItem('jft_history')||'[]');
-            hist.unshift({id: Date.now(), date: new Date().toISOString(), score, level: lvl, correct: cor, total: state.questions.length});
-            localStorage.setItem('jft_history', JSON.stringify(hist.slice(0,20)));
-            
-            // Render Result
-            document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
-            document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
-            
-            // Ambil nama sesuai input akun yang login
-            const currentUserName = localStorage.getItem('jft_user_name') || "SISWA";
-            document.getElementById('res-name').textContent = currentUserName;
-            
-            document.getElementById('res-total-score').textContent = score;
-            document.getElementById('res-level').textContent = lvl;
-            document.getElementById('res-score-indicator').style.left = `${((score-10)/240)*100}%`;
-            document.getElementById('res-score-val-float').textContent = score;
-            
-            document.getElementById('eval-total').textContent = state.questions.length;
-            document.getElementById('eval-correct').textContent = cor;
-            document.getElementById('eval-wrong').textContent = mis.length;
-            document.getElementById('eval-accuracy').textContent = `${Math.round((cor/state.questions.length)*100)}%`;
-            
-            // --- BAGIAN INI YANG MEMBUAT 4 SECTION BAR MUNCUL KEMBALI ---
-            const secStats = {};
-            SECTIONS.forEach(s => secStats[s.id] = { total: 0, correct: 0 });
-            state.questions.forEach((q, i) => {
-                if(secStats[q.section]) {
-                    secStats[q.section].total++;
-                    if(state.userAnswers[i] === q.answer) secStats[q.section].correct++;
-                }
-            });
-
-            const sContainer = document.getElementById('res-sections-container');
-            sContainer.innerHTML = '';
-            SECTIONS.forEach(s => {
-                const st = secStats[s.id];
-                const pct = st.total > 0 ? Math.round((st.correct / st.total) * 100) : 0;
-                sContainer.innerHTML += `
-                    <div class="flex items-center justify-between gap-4 text-sm">
-                        <div class="w-1/3">
-                            <div class="font-bold text-slate-800 japanese-text">${s.nameJP}</div>
-                            <div class="text-[11px] text-slate-500">${s.nameEN}</div>
-                        </div>
-                        <div class="w-1/2">
-                            <div class="section-bar-bg"><div class="section-bar-fill" style="width: ${pct}%"></div></div>
-                        </div>
-                        <div class="w-12 text-right font-bold text-slate-800">${pct}%</div>
-                    </div>`;
-            });
-            // -------------------------------------------------------------
-
-            const mC = document.getElementById('mistakes-container'); mC.innerHTML = '';
-            if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
-            mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
-            
-            navigate('result');
-        }
+                
 
 
         function renderHistory() {
