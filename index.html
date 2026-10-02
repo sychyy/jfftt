@@ -299,17 +299,31 @@
                         <i class="fa-solid fa-volume-high"></i> Putar Audio
                     </button>
                     <button id="btn-show-transcript" class="hidden mb-4 text-sm text-slate-500 hover:text-brand-600 underline transition" onclick="showTranscript()">
-                        Audio tidak berbunyi? Klik untuk melihat teks percakapan
+                        
                     </button>
                     <div id="audio-transcript-fallback" class="hidden mb-4 p-4 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 japanese-text whitespace-pre-wrap text-sm leading-relaxed"></div>
                     <h3 id="quiz-question" class="text-xl sm:text-2xl font-medium text-slate-800 japanese-text leading-relaxed whitespace-pre-wrap"></h3>
                 </div>
                 <div id="quiz-options" class="flex-grow flex flex-col gap-3"></div>
-                <div class="mt-8 flex justify-end gap-3">
-                    <button id="btn-next-question" onclick="nextQuestion()" class="bg-brand-600 hover:bg-brand-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 opacity-50 cursor-not-allowed" disabled>
-                        Selanjutnya <i class="fa-solid fa-angle-right"></i>
-                    </button>
-                </div>
+                <div class="mt-8 flex justify-between gap-3">
+    <button
+        id="btn-prev-question"
+        onclick="previousQuestion()"
+        class="bg-slate-200 text-slate-700 font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 opacity-50 cursor-not-allowed"
+        disabled
+    >
+        <i class="fa-solid fa-angle-left"></i> Kembali
+    </button>
+
+    <button
+        id="btn-next-question"
+        onclick="nextQuestion()"
+        class="bg-brand-600 hover:bg-brand-700 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 opacity-50 cursor-not-allowed"
+        disabled
+    >
+        Selanjutnya <i class="fa-solid fa-angle-right"></i>
+    </button>
+</div>
             </div>
             <button onclick="confirmQuit()" class="mt-4 text-slate-400 hover:text-red-500 text-sm transition flex items-center gap-1 mx-auto">
                 <i class="fa-solid fa-xmark"></i> Akhiri latihan lebih awal
@@ -7545,7 +7559,9 @@
             startTime: null,
             selectedPeriod: 'sep-nov'
         };
-
+        
+        const MAX_AUDIO_PLAYS = 2;
+let audioPlayCounts = {};
         const SUPABASE_URL = 'https://lnthciiomeppirzucqwu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
         window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -8260,30 +8276,124 @@
             }, 1000);
             renderQuestion();
         }
+        
+        function previousQuestion() {
+    if (state.currentQuestionIndex > 0) {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+
+        state.currentQuestionIndex--;
+        renderQuestion();
+        window.scrollTo(0, 0);
+    }
+}
 
         function renderQuestion() {
             const q = state.questions[state.currentQuestionIndex];
+            
             document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} / ${state.questions.length}`;
             document.getElementById('quiz-progress-bar').style.width = `${((state.currentQuestionIndex) / state.questions.length) * 100}%`;
             document.getElementById('quiz-question').innerText = q.text;
             
             const btnNext = document.getElementById('btn-next-question');
+            const btnPrev = document.getElementById('btn-prev-question');
+
+btnPrev.disabled = state.currentQuestionIndex === 0;
+
+if (btnPrev.disabled) {
+    btnPrev.classList.add('opacity-50', 'cursor-not-allowed');
+} else {
+    btnPrev.classList.remove('opacity-50', 'cursor-not-allowed');
+}
             btnNext.innerHTML = state.currentQuestionIndex === state.questions.length - 1 ? `Lihat Hasil <i class="fa-solid fa-flag-checkered"></i>` : `Selanjutnya <i class="fa-solid fa-angle-right"></i>`;
             btnNext.disabled = state.userAnswers[state.currentQuestionIndex] === null;
             btnNext.className = `bg-brand-600 text-white font-medium py-2.5 px-6 rounded-lg transition-colors flex items-center gap-2 ${btnNext.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-brand-700'}`;
 
-            const aBtn = document.getElementById('btn-play-audio'), tBtn = document.getElementById('btn-show-transcript'), fb = document.getElementById('audio-transcript-fallback');
-            aBtn.classList.add('hidden'); tBtn.classList.add('hidden'); fb.classList.add('hidden');
-            if(window.speechSynthesis) window.speechSynthesis.cancel();
-            
-            if (q.audioText) {
-                aBtn.classList.remove('hidden'); tBtn.classList.remove('hidden'); fb.textContent = q.audioText;
-                aBtn.onclick = () => {
-                    window.speechSynthesis.cancel();
-                    const u = new SpeechSynthesisUtterance(q.audioText); u.lang = 'ja-JP'; u.rate = 0.85;
-                    window.speechSynthesis.speak(u);
-                };
-            }
+            const aBtn = document.getElementById('btn-play-audio');
+const tBtn = document.getElementById('btn-show-transcript');
+const fb = document.getElementById('audio-transcript-fallback');
+
+aBtn.classList.add('hidden');
+tBtn.classList.add('hidden');
+fb.classList.add('hidden');
+
+// Jangan langsung memanggil speechSynthesis tanpa pengecekan
+if (window.speechSynthesis) {
+    window.speechSynthesis.cancel();
+}
+
+if (q.audioText) {
+    aBtn.classList.remove('hidden');
+    tBtn.classList.remove('hidden');
+    fb.textContent = q.audioText;
+
+    const questionId = q.id;
+
+    if (audioPlayCounts[questionId] === undefined) {
+        audioPlayCounts[questionId] = 0;
+    }
+
+    const updateAudioButton = () => {
+        const count = audioPlayCounts[questionId];
+
+        if (count >= 2) {
+            aBtn.disabled = true;
+            aBtn.innerHTML =
+                '<i class="fa-solid fa-volume-xmark"></i> Audio sudah 2x';
+
+            aBtn.classList.add(
+                'opacity-50',
+                'cursor-not-allowed'
+            );
+        } else {
+            aBtn.disabled = false;
+            aBtn.innerHTML =
+                `<i class="fa-solid fa-volume-high"></i> Putar Audio (${count}/2)`;
+
+            aBtn.classList.remove(
+                'opacity-50',
+                'cursor-not-allowed'
+            );
+        }
+    };
+
+    updateAudioButton();
+
+    aBtn.onclick = () => {
+
+        // Sudah 2x → tidak boleh diputar lagi
+        if (audioPlayCounts[questionId] >= 2) {
+            return;
+        }
+
+        // Pastikan browser mendukung TTS
+        if (
+            !window.speechSynthesis ||
+            !window.SpeechSynthesisUtterance
+        ) {
+            console.error('Speech Synthesis tidak tersedia');
+            return;
+        }
+
+        // Tambah hitungan
+        audioPlayCounts[questionId]++;
+
+        // Hentikan audio sebelumnya
+        window.speechSynthesis.cancel();
+
+        // Buat audio Jepang
+        const u = new SpeechSynthesisUtterance(q.audioText);
+        u.lang = 'ja-JP';
+        u.rate = 0.85;
+
+        // Putar
+        window.speechSynthesis.speak(u);
+
+        // Update tombol
+        updateAudioButton();
+    };
+}
 
             const opts = document.getElementById('quiz-options'); opts.innerHTML = '';
             
@@ -8311,6 +8421,18 @@
             if (state.currentQuestionIndex < state.questions.length - 1) { state.currentQuestionIndex++; renderQuestion(); window.scrollTo(0,0); }
             else finishQuiz();
         }
+        
+        function previousQuestion() {
+    if (state.currentQuestionIndex > 0) {
+        if (window.speechSynthesis) {
+            window.speechSynthesis.cancel();
+        }
+
+        state.currentQuestionIndex--;
+        renderQuestion();
+        window.scrollTo(0, 0);
+    }
+}
 
         function renderHistory() {
             const h = JSON.parse(localStorage.getItem('jft_history')||'[]');
