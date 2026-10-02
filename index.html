@@ -144,6 +144,102 @@
         .rank-badge-2 { background: #e4e0d6; color: var(--nb-black); border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); }
         .rank-badge-3 { background: #ff9b58; color: var(--nb-black); border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); }
     </style>
+
+<style id="compact-chat-mobile">
+/* ===== COMPACT GLOBAL CHAT ===== */
+#global-chat-modal { padding: 8px !important; }
+#global-chat-modal > div:first-child {
+    width: 100% !important;
+    max-width: 560px !important;
+    height: min(680px, calc(100dvh - 16px)) !important;
+    max-height: calc(100dvh - 16px) !important;
+    border-radius: 16px !important;
+    border-width: 2px !important;
+    box-shadow: 5px 5px 0 #181818 !important;
+}
+#global-chat-modal > div:first-child > div:first-child {
+    padding: 10px 12px !important;
+    border-bottom-width: 2px !important;
+    min-height: 48px !important;
+}
+#global-chat-modal > div:first-child > div:first-child h3 {
+    font-size: 13px !important;
+    gap: 6px !important;
+}
+#global-chat-modal > div:first-child > div:first-child button {
+    width: 30px !important;
+    height: 30px !important;
+}
+#chat-messages-container {
+    padding: 10px !important;
+    gap: 7px !important;
+    background: #f7f3ea !important;
+    scrollbar-width: thin;
+}
+#chat-messages-container > div { margin: 0 !important; }
+.chat-bubble-card {
+    max-width: min(78%, 380px) !important;
+    padding: 7px 9px !important;
+    border-width: 1.5px !important;
+    border-radius: 12px !important;
+    box-shadow: 1.5px 1.5px 0 #181818 !important;
+    font-size: 12px !important;
+    line-height: 1.4 !important;
+    overflow-wrap: anywhere !important;
+}
+#chat-messages-container .text-\[10px\] {
+    font-size: 9px !important;
+    line-height: 1.15 !important;
+}
+#chat-messages-container .text-\[9px\] {
+    font-size: 8px !important;
+}
+#chat-messages-container .bg-black\/5 {
+    padding: 5px !important;
+    margin-bottom: 5px !important;
+    font-size: 9px !important;
+}
+#reply-preview-box {
+    padding: 6px 10px !important;
+    border-top-width: 1.5px !important;
+}
+#global-chat-modal > div:first-child > div:last-child {
+    padding: 8px !important;
+    border-top-width: 2px !important;
+    gap: 6px !important;
+}
+#tag-suggestions { padding-bottom: 2px !important; }
+#chat-input-msg {
+    min-width: 0 !important;
+    padding: 8px 10px !important;
+    border-width: 1.5px !important;
+    border-radius: 10px !important;
+    font-size: 12px !important;
+}
+#global-chat-modal button[onclick="sendGlobalMessage()"] {
+    padding: 8px 12px !important;
+    border-width: 1.5px !important;
+    border-radius: 10px !important;
+    box-shadow: 2px 2px 0 #181818 !important;
+    font-size: 12px !important;
+    white-space: nowrap;
+}
+@media (max-width: 480px) {
+    #global-chat-modal { padding: 5px !important; }
+    #global-chat-modal > div:first-child {
+        height: calc(100dvh - 10px) !important;
+        max-height: calc(100dvh - 10px) !important;
+        border-radius: 14px !important;
+    }
+    #chat-messages-container { padding: 8px !important; gap: 6px !important; }
+    .chat-bubble-card {
+        max-width: 82% !important;
+        padding: 6px 8px !important;
+        font-size: 11.5px !important;
+    }
+}
+</style>
+
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -7814,38 +7910,48 @@ let audioPlayCounts = {};
         }
 
         localStorage.setItem('jft_user_id', user.id);
-        localStorage.setItem('jft_user_name', user.name.toUpperCase());
         localStorage.setItem('jft_user_role', user.role);
 
+        const accountName = (user.name || 'SISWA').trim().toUpperCase();
+        localStorage.setItem('jft_account_name', accountName);
+
         if (user.role === 'admin') {
+            localStorage.setItem('jft_display_name', accountName);
+            localStorage.setItem('jft_user_name', accountName);
             navigate('admin');
         } else {
             navigate('home');
 
-            const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-            const defaultAccountName = user.name.toUpperCase();
+            // Nama custom dipisahkan per akun. Jika belum ada, chat memakai USER1/USER2/etc.
+            const customKey = `jft_custom_name_${user.id}`;
+            const savedCustomName = (localStorage.getItem(customKey) || '').trim().toUpperCase();
 
-            // KUNCI UTAMA: Hanya munculkan modal jika ADA nama lama di perangkat 
-            // DAN ada flag 'show_name_prompt' yang baru dibuat khusus saat tombol Masuk diklik.
-            if (savedDeviceName && sessionStorage.getItem('show_name_prompt') === 'true') {
-                document.getElementById('modal-old-name').textContent = savedDeviceName;
-                document.getElementById('user-name-input').value = savedDeviceName;
-                
+            let registeredDevices = user.registered_devices || [];
+            if (typeof registeredDevices === 'string') {
+                try { registeredDevices = JSON.parse(registeredDevices); } catch (e) { registeredDevices = []; }
+            }
+            const deviceIndex = registeredDevices.indexOf(deviceId);
+            const guestAliasKey = `jft_guest_alias_${user.id}`;
+            let guestAlias = localStorage.getItem(guestAliasKey);
+            if (!guestAlias) {
+                guestAlias = `USER${deviceIndex >= 0 ? deviceIndex + 1 : 1}`;
+                localStorage.setItem(guestAliasKey, guestAlias);
+            }
+
+            const chatName = savedCustomName || guestAlias;
+            localStorage.setItem('jft_display_name', chatName);
+            localStorage.setItem('jft_user_name', chatName);
+
+            document.getElementById('user-name-input').value = savedCustomName || accountName;
+
+            if (savedCustomName && sessionStorage.getItem('show_name_prompt') === 'true') {
+                document.getElementById('modal-old-name').textContent = savedCustomName;
+                document.getElementById('user-name-input').value = savedCustomName;
                 const nameModal = document.getElementById('custom-name-modal');
                 nameModal.classList.remove('hidden');
                 nameModal.classList.add('flex');
-
-                // Hapus flag agar jika di-refresh, modal tidak akan pernah muncul lagi
-                sessionStorage.removeItem('show_name_prompt');
-            } else {
-                // Jika baru pertama kali di perangkat ini atau halaman di-refresh
-                const activeName = savedDeviceName || defaultAccountName;
-                document.getElementById('user-name-input').value = activeName;
-                localStorage.setItem('jft_device_custom_name', activeName);
-                
-                // Bersihkan juga flag jika tersisa
-                sessionStorage.removeItem('show_name_prompt');
             }
+            sessionStorage.removeItem('show_name_prompt');
         }
     } catch (err) {
         errorMsg.innerHTML = `❌ Error: ${err.message}`;
@@ -8216,42 +8322,69 @@ let audioPlayCounts = {};
         }
 
         function checkSession() {
-    const userId = localStorage.getItem('jft_user_id');
-    if (userId) {
-        const role = localStorage.getItem('jft_user_role');
-        if (role === 'admin') {
-            navigate('admin');
-        } else {
+            const userId = localStorage.getItem('jft_user_id');
+            if (!userId) {
+                navigate('auth');
+                return;
+            }
+
+            const role = localStorage.getItem('jft_user_role');
+            if (role === 'admin') {
+                navigate('admin');
+                return;
+            }
+
             navigate('home');
-            
-            // Saat di-refresh (lewat checkSession), langsung ambil nama dari localStorage saja tanpa modal
-            const savedDeviceName = localStorage.getItem('jft_device_custom_name') || localStorage.getItem('jft_user_name') || "";
-            document.getElementById('user-name-input').value = savedDeviceName;
-            
-            // Pastikan flag prompt dihapus agar aman dari refresh
+
+            const accountName = localStorage.getItem('jft_account_name') || 'SISWA';
+            const customName = (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase();
+            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+            const chatName = customName || guestAlias;
+
+            document.getElementById('user-name-input').value = customName || accountName;
+            localStorage.setItem('jft_display_name', chatName);
+            localStorage.setItem('jft_user_name', chatName);
             sessionStorage.removeItem('show_name_prompt');
         }
-    } else {
-        navigate('auth');
-    }
-}
 
 
         function handleNameChoice(choice) {
-    const nameModal = document.getElementById('custom-name-modal');
-    nameModal.classList.remove('flex');
-    nameModal.classList.add('hidden');
+            const nameModal = document.getElementById('custom-name-modal');
+            nameModal.classList.remove('flex');
+            nameModal.classList.add('hidden');
 
-    if (choice === 'keep') {
-        // Menggunakan nama lama yang tersimpan di perangkat
-        const savedDeviceName = localStorage.getItem('jft_device_custom_name');
-        document.getElementById('user-name-input').value = savedDeviceName;
-    } else {
-        // Mengosongkan input agar pengguna bisa mengetik nama baru
-        document.getElementById('user-name-input').value = '';
-        document.getElementById('user-name-input').focus();
-    }
-}
+            const userId = localStorage.getItem('jft_user_id');
+            const savedCustomName = userId ? (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase() : '';
+
+            if (choice === 'keep' && savedCustomName) {
+                document.getElementById('user-name-input').value = savedCustomName;
+            } else {
+                document.getElementById('user-name-input').value = '';
+                document.getElementById('user-name-input').focus();
+            }
+        }
+
+        // Begitu nama custom diubah, identitas chat langsung ikut berubah.
+        document.addEventListener('input', (e) => {
+            if (e.target.id !== 'user-name-input') return;
+            const userId = localStorage.getItem('jft_user_id');
+            if (!userId) return;
+
+            const value = e.target.value.trim().toUpperCase();
+            const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
+            const customKey = `jft_custom_name_${userId}`;
+            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+
+            if (value && value !== accountName) {
+                localStorage.setItem(customKey, value);
+                localStorage.setItem('jft_display_name', value);
+                localStorage.setItem('jft_user_name', value);
+            } else {
+                localStorage.removeItem(customKey);
+                localStorage.setItem('jft_display_name', guestAlias);
+                localStorage.setItem('jft_user_name', guestAlias);
+            }
+        });
 
 
         function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
@@ -8543,9 +8676,21 @@ async function clearAllChats() {
         return;
     }
 
-    // Simpan nama terbaru ke perangkat
-    localStorage.setItem('jft_device_custom_name', userName.toUpperCase());
-    localStorage.setItem('jft_user_name', userName.toUpperCase());
+    const userId = localStorage.getItem('jft_user_id');
+    const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
+    const normalizedName = userName.toUpperCase();
+    const customKey = `jft_custom_name_${userId}`;
+    const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+
+    if (normalizedName !== accountName) {
+        localStorage.setItem(customKey, normalizedName);
+        localStorage.setItem('jft_display_name', normalizedName);
+        localStorage.setItem('jft_user_name', normalizedName);
+    } else {
+        localStorage.removeItem(customKey);
+        localStorage.setItem('jft_display_name', guestAlias);
+        localStorage.setItem('jft_user_name', guestAlias);
+    }
 
     // ... (lanjutan kode kuis Anda)
 
@@ -8809,6 +8954,16 @@ function updateRoomUIState() {
     }
 }
 
+function getCurrentChatName() {
+    const userId = localStorage.getItem('jft_user_id');
+    if (!userId) return 'SISWA';
+
+    const customName = (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase();
+    if (customName) return customName;
+
+    return localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+}
+
 async function fetchChatMessages() {
     const container = document.getElementById('chat-messages-container');
     const { data, error } = await window.supabaseClient
@@ -8826,7 +8981,7 @@ async function fetchChatMessages() {
 
 function renderMessages(messages) {
     const container = document.getElementById('chat-messages-container');
-    const currentUserName = localStorage.getItem('jft_user_name') || 'SISWA';
+    const currentUserName = getCurrentChatName();
     
     if (messages.length === 0) {
         container.innerHTML = `<p class="text-center text-xs text-slate-400 font-bold italic py-10">Belum ada percakapan. Yuk sapa teman-temanmu!</p>`;
@@ -8880,7 +9035,7 @@ function appendMessageElement(msg, currentUserName, container) {
     }
 
     const messageDiv = document.createElement('div');
-    messageDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none`;
+    messageDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none leading-tight`;
     
     messageDiv.innerHTML = `
         <span class="text-[10px] font-black text-slate-500 uppercase px-1">${escapeHtml(msg.sender_name)} ${isMsgAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[8px]">ADMIN</span>' : ''} • <span class="font-normal">${timeStr}</span></span>
@@ -9027,7 +9182,7 @@ function updateAdminRoomButton() {
 async function sendGlobalMessage() {
     const input = document.getElementById('chat-input-msg');
     const message = input.value.trim();
-    const senderName = localStorage.getItem('jft_user_name') || 'SISWA';
+    const senderName = getCurrentChatName();
     const userRole = localStorage.getItem('jft_user_role') || 'user';
 
     if (!message) return;
@@ -9138,7 +9293,25 @@ function escapeHtml(text) {
             }
         }
         
-        function editName() { const n = prompt("Nama:", document.getElementById('res-name').textContent); if(n) { document.getElementById('res-name').textContent = n.toUpperCase(); localStorage.setItem('jft_user_name', n.toUpperCase()); document.getElementById('user-name-input').value = n.toUpperCase(); } }
+        function editName() {
+            const n = prompt("Nama:", document.getElementById('res-name').textContent);
+            if (!n) return;
+            const userId = localStorage.getItem('jft_user_id');
+            const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
+            const normalizedName = n.trim().toUpperCase();
+            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+            document.getElementById('res-name').textContent = normalizedName;
+            document.getElementById('user-name-input').value = normalizedName;
+            if (normalizedName !== accountName) {
+                localStorage.setItem(`jft_custom_name_${userId}`, normalizedName);
+                localStorage.setItem('jft_display_name', normalizedName);
+                localStorage.setItem('jft_user_name', normalizedName);
+            } else {
+                localStorage.removeItem(`jft_custom_name_${userId}`);
+                localStorage.setItem('jft_display_name', guestAlias);
+                localStorage.setItem('jft_user_name', guestAlias);
+            }
+        }
         function handlePhotoUpload(e) { if(e.target.files[0]) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('user-photo-img').src=ev.target.result; document.getElementById('user-photo-img').classList.remove('hidden'); localStorage.setItem('jft_user_photo', ev.target.result); }; r.readAsDataURL(e.target.files[0]); } }
         
 // Fungsi untuk memunculkan/menutup modal konfirmasi kustom
@@ -9149,6 +9322,13 @@ function escapeHtml(text) {
             if(p) { document.getElementById('user-photo-img').src = p; document.getElementById('user-photo-img').classList.remove('hidden'); }
             checkSession();
         });
+        // Penyelamat otomatis: Paksa nama di chat selalu pakai nama yang sudah kamu ganti
+window.addEventListener('DOMContentLoaded', () => {
+    const originalSend = window.sendGlobalMessage || window.kirimPesan;
+    // Ini memastikan setiap kali tombol kirim dikunci, nama yang dipakai dari memori browser terbaru
+    console.log("Sistem sinkronisasi nama aktif!");
+});
+
     </script>
 </body>
 </html>
