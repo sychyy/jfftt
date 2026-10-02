@@ -8998,6 +8998,25 @@ function renderMessages(messages) {
     container.scrollTop = container.scrollHeight;
 }
 
+function getUserColor(userName) {
+    const totalColors = 240;
+
+    let hash = 0;
+
+    for (let i = 0; i < userName.length; i++) {
+        hash = ((hash << 5) - hash) + userName.charCodeAt(i);
+        hash |= 0;
+    }
+
+    const index = Math.abs(hash) % totalColors;
+    const hue = Math.round((index * 360) / totalColors);
+
+    const saturation = 75 + (index % 3) * 5;
+    const lightness = 28 + (index % 3) * 3;
+
+    return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
+}
+
 function appendMessageElement(msg, currentUserName, container) {
     const userRole = localStorage.getItem('jft_user_role');
     const isAdmin = userRole === 'admin';
@@ -9028,18 +9047,36 @@ function appendMessageElement(msg, currentUserName, container) {
     
     // WARNA BUBBLE: Admin warna Biru (#62bddb), User sendiri Kuning (#ffe45c), User lain Putih (bg-white)
     let bubbleColorClass = "bg-white text-[#181818]";
-    if (isMsgAdmin) {
-        bubbleColorClass = "bg-[#62bddb] text-[#181818]"; // Warna khusus admin
-    } else if (isMe) {
-        bubbleColorClass = "bg-[#ffe45c] text-[#181818]";
-    }
+
+if (isMsgAdmin) {
+    bubbleColorClass = "bg-[#62bddb] text-[#181818]";
+} else if (isMe) {
+    bubbleColorClass = "bg-[#ffe45c] text-[#181818]";
+}
+
+    let bubbleColor = '#ffffff';
+
+if (isMsgAdmin) {
+    bubbleColor = '#62bddb';
+} else if (isMe) {
+    bubbleColor = '#ffe45c';
+} else {
+    bubbleColor = getUserColor(msg.sender_name);
+}
 
     const messageDiv = document.createElement('div');
     messageDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none leading-tight`;
     
     messageDiv.innerHTML = `
-        <span class="text-[10px] font-black text-slate-500 uppercase px-1">${escapeHtml(msg.sender_name)} ${isMsgAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[8px]">ADMIN</span>' : ''} • <span class="font-normal">${timeStr}</span></span>
-        <div class="chat-bubble-card max-w-[85%] p-3 rounded-xl border-[2px] border-[#181818] text-xs font-medium shadow-[2px_2px_0_#181818] ${bubbleColorClass} transition-transform duration-150 relative cursor-pointer">
+        <span
+    class="text-[10px] font-black uppercase px-1"
+    style="color: ${isMsgAdmin ? '#ef4444' : getUserColor(msg.sender_name)};"
+>
+    ${escapeHtml(msg.sender_name)}
+    ${isMsgAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[8px]">ADMIN</span>' : ''}
+    • <span class="font-normal text-slate-400">${timeStr}</span>
+</span>
+        <div class="chat-bubble-card max-w-[85%] p-3 rounded-xl border-[2px] border-[#181818] text-left text-xs font-medium shadow-[2px_2px_0_#181818] ${bubbleColorClass} transition-transform duration-150 relative cursor-pointer">
             ${htmlReplyPart}
             <span>${escapeHtml(msg.message)}${editedTag}</span>
         </div>
