@@ -19,6 +19,23 @@
         }
     </script>
     <style>
+    /* Animasi Muncul (Fade In & Scale Up) */
+    @keyframes modalPopup {
+        0% {
+            opacity: 0;
+            transform: scale(0.8) translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+    }
+
+    /* Kelas untuk memicu animasi */
+    .animate-modal {
+        animation: modalPopup 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    
         :root { --nb-bg: #f8f3e8; --nb-paper: #fffdf8; --nb-black: #181818; --nb-yellow: #ffe45c; --nb-coral: #ff7373; --nb-purple: #9b82f3; --nb-teal: #43c9bd; --nb-blue: #62bddb; --nb-gray: #f0ede5; --nb-border: 2.5px solid var(--nb-black); --nb-shadow: 5px 5px 0 var(--nb-black); --nb-shadow-small: 3px 3px 0 var(--nb-black); --nb-radius: 14px; }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
@@ -550,6 +567,7 @@
                     </button>
                 </div>
                 
+
                                 <!-- KONTROL ROOM CHAT DI ADMIN PANEL -->
 <div class="mb-5 bg-[#ffe45c] p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex justify-between items-center">
     <div>
@@ -560,6 +578,45 @@
         Tutup Room Chat
     </button>
 </div>
+
+<!-- Kontrol Khusus Admin -->
+<div id="admin-chat-controls" style="display: none; margin: 12px 0; padding: 12px 16px; background: #ffe4e6; border: 3px solid #000000; border-radius: 12px; box-shadow: 4px 4px 0px #000000; align-items: center; justify-content: space-between;">
+    <span style="font-size: 13px; font-weight: 800; color: #000000;">Panel Kontrol Admin</span>
+    <button id="jft-clear-chat-btn" style="background: #ff4d4d; color: white; border: 2px solid #000000; padding: 6px 14px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 0px #000000;">
+        🗑 Clear All Chat
+    </button>
+</div>
+
+<!-- Custom Modal Konfirmasi Hapus Chat -->
+<div id="jft-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;">
+    <div style="background: #ffffff; width: 85%; max-width: 360px; padding: 20px; border: 3px solid #000000; border-radius: 12px; box-shadow: 5px 5px 0px #000000; text-align: center; transform: scale(1); animation: jftScaleUp 0.2s ease;">
+        <div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+        <h3 style="margin: 0 0 8px 0; color: #000000; font-size: 16px; font-weight: 800;">Hapus Semua Chat?</h3>
+        <p style="margin: 0 0 20px 0; color: #333333; font-size: 13px; line-height: 1.4;">Tindakan ini akan menghapus seluruh riwayat percakapan secara permanen.</p>
+        <div style="display: flex; gap: 10px; justify-content: center;">
+            <button id="jft-cancel-btn" style="flex: 1; background: #e0e0e0; color: #000; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">Batal</button>
+            <button id="jft-yes-delete-btn" style="flex: 1; background: #ff4d4d; color: white; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">Hapus</button>
+        </div>
+    </div>
+</div>
+
+<!-- Custom Modal Sukses Hapus Chat -->
+<div id="jft-success-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10001; align-items: center; justify-content: center;">
+    <div style="background: #ffffff; width: 85%; max-width: 360px; padding: 20px; border: 3px solid #000000; border-radius: 12px; box-shadow: 5px 5px 0px #000000; text-align: center; animation: jftScaleUp 0.2s ease;">
+        <div style="font-size: 32px; margin-bottom: 8px;">🎉</div>
+        <h3 style="margin: 0 0 8px 0; color: #000000; font-size: 16px; font-weight: 800;">Berhasil!</h3>
+        <p style="margin: 0 0 20px 0; color: #333333; font-size: 13px; line-height: 1.4;">Semua riwayat chat berhasil dibersihkan dari database.</p>
+        <button id="jft-success-ok-btn" style="width: 100%; background: #4ade80; color: #000; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">OK</button>
+    </div>
+</div>
+
+<style>
+@keyframes jftScaleUp {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+</style>
+
 
 
                 <!-- TAB NAVIGASI ADMIN -->
@@ -8273,6 +8330,157 @@ let audioPlayCounts = {};
                 renderAdminQuestions();
             }
         }
+        
+        // 1. Fungsi untuk mengecek dan menampilkan tombol Clear Chat jika user adalah Admin
+function checkAdminChatFeature() {
+    const adminControls = document.getElementById("admin-chat-controls");
+    if (!adminControls) return;
+
+    // Ambil data user yang sedang login dari localStorage (sesuaikan key-nya dengan aplikasi kamu)
+    const currentUserRole = localStorage.getItem('jft_user_role') || ''; // atau 'role' dari data user
+    const currentUserEmail = localStorage.getItem('jft_user_email') || '';
+
+    // Tulis email admin kamu di sini atau cek berdasarkan role 'admin'
+    const isAdmin = currentUserRole.toLowerCase() === 'admin' || currentUserEmail === 'email_admin_kamu@gmail.com';
+
+    if (isAdmin) {
+        adminControls.style.display = "block"; // Tampilkan tombol khusus admin
+    } else {
+        adminControls.style.display = "none";  // Sembunyikan jika bukan admin
+    }
+}
+
+// Panggil fungsi ini setiap halaman chat dimuat atau setelah login berhasil
+window.addEventListener('DOMContentLoaded', () => {
+    checkAdminChatFeature();
+});
+
+
+// 2. Fungsi untuk menghapus semua pesan di database Supabase
+// Fungsi untuk memunculkan notifikasi (Toast) yang modern
+// 1. Fungsi Toast Notifikasi (Pastikan fungsi ini ada di file JS kamu)
+// Fungsi Toast Notifikasi
+function showToast(message, type = 'success') {
+    let container = document.getElementById("custom-toast-container");
+    if (!container) {
+        container = document.createElement("div");
+        container.id = "custom-toast-container";
+        container.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;";
+        document.body.appendChild(container);
+    }
+
+    const toast = document.createElement("div");
+    const bgColor = type === 'success' ? '#4ade80' : '#f87171';
+    
+    toast.style.cssText = `
+        background: ${bgColor};
+        color: #000000;
+        border: 2px solid #000000;
+        padding: 10px 14px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 3px 3px 0px #000000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    `;
+    
+    toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> ${message}`;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.remove();
+    }, 3000);
+}
+
+// Logika Interaksi Modal dan Tombol Hapus
+const modal = document.getElementById("custom-confirm-modal");
+/// Menggunakan fungsi terisolasi agar variabel tidak bentrok dengan tombol Logout
+(function() {
+    const confirmModal = document.getElementById("jft-confirm-modal");
+    const successModal = document.getElementById("jft-success-modal");
+    const clearBtn = document.getElementById("jft-clear-chat-btn");
+    const yesDeleteBtn = document.getElementById("jft-yes-delete-btn");
+    const cancelBtn = document.getElementById("jft-cancel-btn");
+    const successOkBtn = document.getElementById("jft-success-ok-btn");
+
+    // Buka modal konfirmasi saat tombol Clear Chat diklik
+    clearBtn?.addEventListener("click", () => {
+        if (confirmModal) confirmModal.style.display = "flex";
+    });
+
+    // Tutup modal saat Batal diklik
+    cancelBtn?.addEventListener("click", () => {
+        if (confirmModal) confirmModal.style.display = "none";
+    });
+
+    // Eksekusi hapus database saat tombol Hapus diklik
+    yesDeleteBtn?.addEventListener("click", async () => {
+        if (confirmModal) confirmModal.style.display = "none";
+
+        try {
+            const { error } = await supabaseClient
+                .from('global_chats')
+                .delete()
+                .neq('id', 0);
+
+            if (error) throw error;
+
+            // Kosongkan tampilan chat lokal
+            const chatContainer = document.getElementById("chat-messages-container");
+            if (chatContainer) chatContainer.innerHTML = "";
+
+            // Munculkan modal sukses
+            if (successModal) successModal.style.display = "flex";
+
+        } catch (err) {
+            console.error("Gagal menghapus chat:", err.message);
+            alert("Gagal menghapus chat. Coba lagi.");
+        }
+    });
+
+    // Tutup modal sukses saat OK diklik
+    successOkBtn?.addEventListener("click", () => {
+        if (successModal) successModal.style.display = "none";
+    });
+})();
+
+
+
+
+
+// Fungsi Hapus Chat dengan Konfirmasi & Notifikasi Cantik
+async function clearAllChats() {
+    // Bisa pakai custom modal konfirmasi, atau konfirmasi standar tapi aman
+    const confirmation = window.confirm("⚠️ Yakin ingin menghapus seluruh riwayat chat? Tindakan ini permanen.");
+    if (!confirmation) return;
+
+    try {
+        const { error } = await supabaseClient
+            .from('global_chats')
+            .delete()
+            .neq('id', 0); // Menghapus semua baris data
+
+        if (error) throw error;
+
+        showToast("Semua riwayat chat berhasil dibersihkan!", "success");
+        
+        // Kosongkan tampilan chat lokal
+        const chatContainer = document.getElementById("chat-messages-container");
+        if (chatContainer) {
+            chatContainer.innerHTML = "";
+        }
+    } catch (err) {
+        console.error("Gagal menghapus chat:", err.message);
+        showToast("Gagal menghapus chat. Coba lagi.", "error");
+    }
+}
+
+
+
+
+
 
         function renderAdminQuestions() {
             const qContainer = document.getElementById('admin-questions-list');
@@ -8932,6 +9140,9 @@ function escapeHtml(text) {
         
         function editName() { const n = prompt("Nama:", document.getElementById('res-name').textContent); if(n) { document.getElementById('res-name').textContent = n.toUpperCase(); localStorage.setItem('jft_user_name', n.toUpperCase()); document.getElementById('user-name-input').value = n.toUpperCase(); } }
         function handlePhotoUpload(e) { if(e.target.files[0]) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('user-photo-img').src=ev.target.result; document.getElementById('user-photo-img').classList.remove('hidden'); localStorage.setItem('jft_user_photo', ev.target.result); }; r.readAsDataURL(e.target.files[0]); } }
+        
+// Fungsi untuk memunculkan/menutup modal konfirmasi kustom
+
 
         document.addEventListener('DOMContentLoaded', () => {
             const p = localStorage.getItem('jft_user_photo');
