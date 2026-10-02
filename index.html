@@ -245,6 +245,86 @@
                 <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto mb-6">
                     Mulai Latihan <i class="fa-solid fa-arrow-right"></i>
                 </button>
+                
+                <!-- POSISI TOMBOL GLOBAL CHAT DI SCREEN 1 (HOME) -->
+<div class="mt-3 relative">
+    <button onclick="toggleGlobalChat()" class="w-full py-3 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2 relative">
+        <i class="fa-solid fa-comments text-lg"></i> Global Chat (Ruang Diskusi Siswa)
+        <!-- Bulatan Hijau Notifikasi Tag (@) -->
+        <span id="chat-notification-dot" class="hidden absolute -top-1.5 -right-1.5 w-4 h-4 bg-emerald-500 border-2 border-[#181818] rounded-full animate-pulse"></span>
+    </button>
+</div>
+
+<!-- MODAL GLOBAL CHAT -->
+<div id="global-chat-modal" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
+        <!-- Header Chat -->
+        <div class="bg-[#ffe45c] p-4 border-b-[3px] border-[#181818] flex justify-between items-center">
+            <h3 class="font-black text-[#181818] text-base flex items-center gap-2">
+                <i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
+            </h3>
+            <button onclick="toggleGlobalChat()" class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Area Pesan Masuk -->
+        <div id="chat-messages-container" class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#f8f3e8]">
+            <p class="text-center text-xs text-slate-400 font-bold">Memuat pesan...</p>
+        </div>
+
+        <!-- Preview Kotak Reply (Jika sedang mereply) -->
+        <div id="reply-preview-box" class="hidden px-4 py-2 bg-slate-100 border-t-[2px] border-[#181818] flex justify-between items-center text-xs">
+            <div>
+                <span class="font-black text-brand-700" id="reply-preview-user"></span>
+                <p class="text-slate-600 truncate max-w-[380px]" id="reply-preview-text"></p>
+            </div>
+            <button onclick="cancelReply()" class="text-slate-500 hover:text-rose-600 font-bold"><i class="fa-solid fa-xmark text-sm"></i></button>
+        </div>
+
+        <!-- Input, Tag, & Tombol Kirim -->
+        <div class="p-3 bg-white border-t-[3px] border-[#181818] flex flex-col gap-2">
+            <!-- Pilihan Tag User Cepat -->
+            <div id="tag-suggestions" class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden"></div>
+            <div class="flex gap-2">
+                <input type="text" id="chat-input-msg" placeholder="Tulis pesan (gunakan @ untuk tag)..." class="flex-grow px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" onkeypress="handleChatKeyPress(event)" oninput="checkChatInput(event)">
+                <button onclick="sendGlobalMessage()" class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+                    Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL / POP-UP MENU KETIKA BUBBLE CHAT DI-TEKAN LAMA (LONG PRESS) -->
+<div id="chat-action-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-5 flex flex-col gap-3 text-center">
+        <h4 class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
+        <button onclick="handleActionEdit()" id="btn-action-edit" class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Pesan
+        </button>
+        <button onclick="handleActionDelete()" class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-trash-can"></i> Hapus Pesan
+        </button>
+        <button onclick="closeChatActionModal()" class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1">
+            Batal
+        </button>
+    </div>
+</div>
+
+<!-- KUSTOM NOTIFIKASI / ALERT CANTIK -->
+<div id="custom-toast-modal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
+        <div id="toast-icon" class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3">
+            <i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
+        </div>
+        <h4 id="toast-title" class="font-black text-[#181818] text-lg mb-1">Informasi</h4>
+        <p id="toast-message" class="text-slate-700 text-xs font-medium mb-5">Pesan notifikasi di sini...</p>
+        <button onclick="closeToast()" class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+            Mengerti
+        </button>
+    </div>
+</div>
 
                 <!-- TOMBOL MENU LEADERBOARD -->
                 <div class="border-t-2 border-slate-200 pt-6 mt-6">
@@ -260,6 +340,8 @@
                             </h4>
                             <button onclick="toggleLeaderboard()" class="text-xs font-bold text-slate-500 hover:text-red-500"><i class="fa-solid fa-xmark text-base"></i></button>
                         </div>
+                        
+                        
 
                         <!-- TAB FILTER KATEGORI JUMLAH SOAL -->
                         <div class="grid grid-cols-4 gap-1 mb-3 text-xs font-bold">
@@ -276,7 +358,7 @@
                 </div>
             </div>
         </div>
-
+        
         <!-- SCREEN 2: Quiz -->
         <div id="screen-quiz" class="screen w-full mt-4">
             <div class="bg-white p-4 rounded-t-2xl border-b border-slate-200 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -451,7 +533,7 @@
                 <!-- SCREEN 5: Admin Dashboard -->
         <div id="screen-admin" class="screen w-full max-w-6xl mt-4 mx-auto px-2">
             <div class="bg-[#fffdf8] p-6 sm:p-8 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] mb-12">
-                
+
                 <!-- HEADER ADMIN PANEL -->
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b-[3px] border-[#181818] pb-5 gap-4">
                     <div class="flex items-center gap-3">
@@ -468,6 +550,18 @@
                     </button>
                 </div>
                 
+                                <!-- KONTROL ROOM CHAT DI ADMIN PANEL -->
+<div class="mb-5 bg-[#ffe45c] p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex justify-between items-center">
+    <div>
+        <h4 class="font-black text-[#181818] text-sm">Status Ruang Global Chat</h4>
+        <p class="text-xs text-slate-700">Tutup room untuk menghentikan siswa mengirim pesan.</p>
+    </div>
+    <button id="btn-toggle-room" onclick="adminToggleRoomChat()" class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition">
+        Tutup Room Chat
+    </button>
+</div>
+
+
                 <!-- TAB NAVIGASI ADMIN -->
                 <div class="flex gap-3 mb-6">
                     <button onclick="switchAdminTab('users')" id="tab-users" class="px-5 py-2.5 rounded-xl text-sm font-black border-[2px] border-[#181818] bg-[#ffe45c] text-[#181818] shadow-[3px_3px_0_#181818] transition-all flex items-center gap-2">
@@ -8417,6 +8511,394 @@ if (q.audioText) {
             btnNext.disabled = false;
             btnNext.classList.remove('opacity-50', 'cursor-not-allowed');
         }
+        
+let chatChannel = null;
+let roomStatusChannel = null;
+let activeReplyData = null;
+let activeActiveUsers = new Set();
+let selectedMessageForAction = null;
+let isEditingMode = false;
+let editingMessageId = null;
+let isRoomClosed = false;
+
+function showToast(title, message, isError = false) {
+    document.getElementById('toast-title').textContent = title;
+    document.getElementById('toast-message').textContent = message;
+    const iconEl = document.getElementById('toast-icon');
+    if(isError) {
+        iconEl.className = "w-12 h-12 bg-[#ff7373] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-white";
+        iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
+    } else {
+        iconEl.className = "w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-[#181818]";
+        iconEl.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
+    }
+    const modal = document.getElementById('custom-toast-modal');
+    modal.classList.remove('hidden'); modal.classList.add('flex');
+}
+
+function closeToast() {
+    document.getElementById('custom-toast-modal').classList.remove('flex');
+    document.getElementById('custom-toast-modal').classList.add('hidden');
+}
+
+async function toggleGlobalChat() {
+    const modal = document.getElementById('global-chat-modal');
+    modal.classList.toggle('hidden');
+    
+    // KETIKA USER MEMBUKA ROOM CHAT, TITIK HIJAU LANGSUNG HILANG
+    document.getElementById('chat-notification-dot').classList.add('hidden');
+    localStorage.setItem('jft_has_unread_tag', 'false');
+    
+    if (!modal.classList.contains('hidden')) {
+        await checkRoomStatus();
+        fetchChatMessages();
+        subscribeToGlobalChat();
+    } else {
+        if (chatChannel) {
+            window.supabaseClient.removeChannel(chatChannel);
+            chatChannel = null;
+        }
+    }
+}
+
+async function checkRoomStatus() {
+    const { data } = await window.supabaseClient.from('room_settings').select('*').eq('id', 1).single();
+    if (data) {
+        isRoomClosed = data.is_closed;
+        updateRoomUIState();
+    }
+}
+
+function updateRoomUIState() {
+    const inputMsg = document.getElementById('chat-input-msg');
+    const sendBtn = document.getElementById('chat-send-btn');
+    const closedNotice = document.getElementById('room-closed-notice');
+    
+    if (isRoomClosed) {
+        const userRole = localStorage.getItem('jft_user_role');
+        if (userRole !== 'admin') {
+            inputMsg.disabled = true;
+            inputMsg.placeholder = "Room chat sedang ditutup oleh Admin.";
+            if(sendBtn) sendBtn.disabled = true;
+        } else {
+            inputMsg.disabled = false;
+            inputMsg.placeholder = "Room ditutup (Admin tetap bisa mengetik)...";
+        }
+        if(!closedNotice) {
+            const container = document.getElementById('chat-messages-container');
+            const notice = document.createElement('div');
+            notice.id = 'room-closed-notice';
+            notice.className = "bg-rose-100 border-2 border-rose-400 text-rose-800 p-2 rounded-xl text-center text-xs font-bold my-2";
+            notice.innerHTML = `<i class="fa-solid lock"></i> Room chat sedang ditutup oleh Admin.`;
+            container.prepend(notice);
+        }
+    } else {
+        inputMsg.disabled = false;
+        inputMsg.placeholder = "Tulis pesan (gunakan @ untuk tag)...";
+        if(sendBtn) sendBtn.disabled = false;
+        const notice = document.getElementById('room-closed-notice');
+        if(notice) notice.remove();
+    }
+}
+
+async function fetchChatMessages() {
+    const container = document.getElementById('chat-messages-container');
+    const { data, error } = await window.supabaseClient
+        .from('global_chats')
+        .select('*')
+        .order('created_at', { ascending: true })
+        .limit(100);
+
+    if (error) {
+        container.innerHTML = `<p class="text-center text-xs text-rose-500 font-bold">Gagal memuat pesan: ${error.message}</p>`;
+        return;
+    }
+    renderMessages(data);
+}
+
+function renderMessages(messages) {
+    const container = document.getElementById('chat-messages-container');
+    const currentUserName = localStorage.getItem('jft_user_name') || 'SISWA';
+    
+    if (messages.length === 0) {
+        container.innerHTML = `<p class="text-center text-xs text-slate-400 font-bold italic py-10">Belum ada percakapan. Yuk sapa teman-temanmu!</p>`;
+        return;
+    }
+
+    container.innerHTML = '';
+    activeActiveUsers.clear();
+
+    messages.forEach(msg => {
+        activeActiveUsers.add(msg.sender_name);
+        appendMessageElement(msg, currentUserName, container);
+    });
+    container.scrollTop = container.scrollHeight;
+}
+
+function appendMessageElement(msg, currentUserName, container) {
+    const userRole = localStorage.getItem('jft_user_role');
+    const isAdmin = userRole === 'admin';
+    const isMe = msg.sender_name === currentUserName;
+    const isMsgAdmin = msg.sender_role === 'admin' || msg.sender_name.includes('ADMIN');
+    const timeStr = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+    
+    // CEK APAKAH USER INI DI-TAG
+    const isTagged = msg.message.includes(`@${currentUserName}`);
+    const modalIsOpen = !document.getElementById('global-chat-modal').classList.contains('hidden');
+
+    if (isTagged && !isMe && !modalIsOpen) {
+        document.getElementById('chat-notification-dot').classList.remove('hidden');
+        localStorage.setItem('jft_has_unread_tag', 'true');
+    }
+
+    let htmlReplyPart = '';
+    if (msg.reply_to) {
+        htmlReplyPart = `
+            <div class="bg-black/5 border-l-2 border-[#181818] p-1.5 mb-1.5 rounded text-[10px]">
+                <span class="font-black text-slate-700">${escapeHtml(msg.reply_user || 'Seseorang')}</span>
+                <p class="truncate text-slate-600">${escapeHtml(msg.reply_to)}</p>
+            </div>
+        `;
+    }
+
+    const editedTag = msg.edited_at ? ` <span class="text-[9px] italic opacity-60">(diedit)</span>` : '';
+    
+    // WARNA BUBBLE: Admin warna Biru (#62bddb), User sendiri Kuning (#ffe45c), User lain Putih (bg-white)
+    let bubbleColorClass = "bg-white text-[#181818]";
+    if (isMsgAdmin) {
+        bubbleColorClass = "bg-[#62bddb] text-[#181818]"; // Warna khusus admin
+    } else if (isMe) {
+        bubbleColorClass = "bg-[#ffe45c] text-[#181818]";
+    }
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none`;
+    
+    messageDiv.innerHTML = `
+        <span class="text-[10px] font-black text-slate-500 uppercase px-1">${escapeHtml(msg.sender_name)} ${isMsgAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[8px]">ADMIN</span>' : ''} • <span class="font-normal">${timeStr}</span></span>
+        <div class="chat-bubble-card max-w-[85%] p-3 rounded-xl border-[2px] border-[#181818] text-xs font-medium shadow-[2px_2px_0_#181818] ${bubbleColorClass} transition-transform duration-150 relative cursor-pointer">
+            ${htmlReplyPart}
+            <span>${escapeHtml(msg.message)}${editedTag}</span>
+        </div>
+        <span class="text-[9px] text-slate-400 opacity-0 swipe-hint mt-0.5">Geser kanan untuk reply ➡</span>
+    `;
+
+    container.appendChild(messageDiv);
+
+    const bubbleCard = messageDiv.querySelector('.chat-bubble-card');
+    let startX = 0, currentX = 0, isSwiping = false;
+
+    // SWIPE KANAN UNTUK REPLY
+    bubbleCard.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isSwiping = true; }, {passive: true});
+    bubbleCard.addEventListener('touchmove', (e) => {
+        if (!isSwiping) return;
+        currentX = e.touches[0].clientX - startX;
+        if (currentX > 0 && currentX < 120) {
+            bubbleCard.style.transform = `translateX(${currentX}px)`;
+            messageDiv.querySelector('.swipe-hint').style.opacity = '1';
+        }
+    }, {passive: true});
+    bubbleCard.addEventListener('touchend', () => {
+        isSwiping = false;
+        if (currentX > 60) triggerReply(msg.sender_name, msg.message);
+        bubbleCard.style.transform = 'translateX(0px)';
+        messageDiv.querySelector('.swipe-hint').style.opacity = '0';
+        currentX = 0;
+    });
+
+    // LONG PRESS (TEKAN LAMA) UNTUK HAPUS & EDIT
+    let pressTimer = null;
+    const startLongPress = () => {
+        pressTimer = setTimeout(() => {
+            // HANYA PEMILIK PESAN ATAU ADMIN YANG BISA HAPUS/EDIT
+            if (isMe || isAdmin) {
+                selectedMessageForAction = msg;
+                // Tombol edit hanya muncul jika pesannya sendiri (user biasa) atau admin
+                document.getElementById('btn-action-edit').style.display = isMe ? 'flex' : 'none';
+                
+                const modal = document.getElementById('chat-action-modal');
+                modal.classList.remove('hidden'); modal.classList.add('flex');
+            }
+        }, 600);
+    };
+    const cancelLongPress = () => { clearTimeout(pressTimer); };
+
+    bubbleCard.addEventListener('mousedown', startLongPress);
+    bubbleCard.addEventListener('mouseup', cancelLongPress);
+    bubbleCard.addEventListener('mouseleave', cancelLongPress);
+    bubbleCard.addEventListener('touchstart', startLongPress, {passive: true});
+    bubbleCard.addEventListener('touchend', cancelLongPress);
+}
+
+function closeChatActionModal() {
+    document.getElementById('chat-action-modal').classList.remove('flex');
+    document.getElementById('chat-action-modal').classList.add('hidden');
+}
+
+function handleActionEdit() {
+    closeChatActionModal();
+    if (!selectedMessageForAction) return;
+    isEditingMode = true;
+    editingMessageId = selectedMessageForAction.id;
+    
+    const input = document.getElementById('chat-input-msg');
+    input.value = selectedMessageForAction.message;
+    input.focus();
+    showToast("Mode Edit", "Silakan ubah pesan di kolom input lalu kirim.");
+}
+
+async function handleActionDelete() {
+    closeChatActionModal();
+    if (!selectedMessageForAction) return;
+    
+    const { error } = await window.supabaseClient.from('global_chats').delete().eq('id', selectedMessageForAction.id);
+    if (error) {
+        showToast("Gagal", error.message, true);
+    } else {
+        fetchChatMessages();
+        showToast("Berhasil", "Pesan telah dihapus.");
+    }
+}
+
+function triggerReply(sender, text) {
+    activeReplyData = { sender, text };
+    const previewBox = document.getElementById('reply-preview-box');
+    previewBox.classList.remove('hidden');
+    document.getElementById('reply-preview-user').textContent = `Membalas @${sender}:`;
+    document.getElementById('reply-preview-text').textContent = text;
+    document.getElementById('chat-input-msg').focus();
+}
+
+function cancelReply() {
+    activeReplyData = null;
+    document.getElementById('reply-preview-box').classList.add('hidden');
+}
+
+function subscribeToGlobalChat() {
+    if (chatChannel) return;
+    chatChannel = window.supabaseClient
+        .channel('public:global_chats')
+        .on('postgres_changes', { event: '*', schema: 'public', table: 'global_chats' }, () => {
+            fetchChatMessages();
+        })
+        .subscribe();
+
+    if (!roomStatusChannel) {
+        roomStatusChannel = window.supabaseClient
+            .channel('public:room_settings')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'room_settings' }, payload => {
+                if (payload.new) {
+                    isRoomClosed = payload.new.is_closed;
+                    updateRoomUIState();
+                }
+            })
+            .subscribe();
+    }
+}
+
+async function adminToggleRoomChat() {
+    isRoomClosed = !isRoomClosed;
+    await window.supabaseClient.from('room_settings').upsert({ id: 1, is_closed: isRoomClosed });
+    updateAdminRoomButton();
+    showToast("Status Room", isRoomClosed ? "Room Chat berhasil DITUTUP." : "Room Chat berhasil DIBUKA.");
+}
+
+function updateAdminRoomButton() {
+    const btn = document.getElementById('btn-toggle-room');
+    if(btn) {
+        if(isRoomClosed) {
+            btn.textContent = "Buka Kembali Room Chat";
+            btn.className = "px-4 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition";
+        } else {
+            btn.textContent = "Tutup Room Chat";
+            btn.className = "px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition";
+        }
+    }
+}
+
+async function sendGlobalMessage() {
+    const input = document.getElementById('chat-input-msg');
+    const message = input.value.trim();
+    const senderName = localStorage.getItem('jft_user_name') || 'SISWA';
+    const userRole = localStorage.getItem('jft_user_role') || 'user';
+
+    if (!message) return;
+    if (isRoomClosed && userRole !== 'admin') {
+        showToast("Peringatan", "Room chat sedang ditutup oleh admin.", true);
+        return;
+    }
+
+    if (isEditingMode && editingMessageId) {
+        const { error } = await window.supabaseClient
+            .from('global_chats')
+            .update({ message: message, edited_at: new Date().toISOString() })
+            .eq('id', editingMessageId);
+
+        isEditingMode = false;
+        editingMessageId = null;
+        input.value = '';
+        if (error) showToast("Gagal", error.message, true);
+        else fetchChatMessages();
+        return;
+    }
+
+    let payloadData = {
+        sender_name: senderName,
+        sender_role: userRole,
+        message: message,
+        reply_to: activeReplyData ? activeReplyData.text : null,
+        reply_user: activeReplyData ? activeReplyData.sender : null
+    };
+
+    input.value = '';
+    cancelReply();
+    document.getElementById('tag-suggestions').classList.add('hidden');
+
+    const { error } = await window.supabaseClient.from('global_chats').insert([payloadData]);
+    if (error) showToast("Gagal", error.message, true);
+}
+
+// Inisialisasi awal pengecekan status notifikasi tag saat halaman dimuat
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('jft_has_unread_tag') === 'true') {
+        document.getElementById('chat-notification-dot').classList.remove('hidden');
+    }
+    checkRoomStatus();
+});
+
+
+function checkChatInput(e) {
+    const val = e.target.value;
+    const tagContainer = document.getElementById('tag-suggestions');
+    if (val.includes('@')) {
+        tagContainer.classList.remove('hidden');
+        tagContainer.innerHTML = '';
+        activeActiveUsers.forEach(user => {
+            tagContainer.innerHTML += `<button onclick="insertTagUser('${user}')" class="px-2 py-1 bg-[#ffe45c] border border-[#181818] rounded font-bold text-xs whitespace-nowrap shadow-sm">@${user}</button>`;
+        });
+    } else {
+        tagContainer.classList.add('hidden');
+    }
+}
+
+function insertTagUser(username) {
+    const input = document.getElementById('chat-input-msg');
+    input.value += `${username} `;
+    document.getElementById('tag-suggestions').classList.add('hidden');
+    input.focus();
+}
+
+function handleChatKeyPress(e) {
+    if (e.key === 'Enter') sendGlobalMessage();
+}
+
+function escapeHtml(text) {
+    if (!text) return '';
+    const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;' };
+    return text.replace(/[&<>"']/g, m => map[m]);
+}
+
+
         
         function showTranscript() { document.getElementById('audio-transcript-fallback').classList.remove('hidden'); document.getElementById('btn-show-transcript').classList.add('hidden'); }
         
