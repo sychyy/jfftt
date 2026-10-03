@@ -239,6 +239,289 @@
     }
 }
 </style>
+<style id="global-chat-polish-v2">
+#global-chat-modal { padding: 10px !important; }
+#global-chat-modal > div:first-child {
+    width: min(680px, 100%) !important;
+    height: min(760px, calc(100dvh - 20px)) !important;
+    max-height: calc(100dvh - 20px) !important;
+    border-radius: 18px !important;
+    border: 2.5px solid #181818 !important;
+    box-shadow: 7px 7px 0 #181818 !important;
+}
+#global-chat-modal > div:first-child > div:first-child {
+    padding: 11px 14px !important;
+    min-height: 58px !important;
+}
+#chat-messages-container {
+    padding: 12px !important;
+    gap: 10px !important;
+    background: #f6f1e7 !important;
+    overscroll-behavior: contain;
+}
+.chat-message-row {
+    animation: chatMessageIn .16s ease-out both;
+}
+@keyframes chatMessageIn {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.chat-bubble-wrap {
+    touch-action: pan-y;
+}
+.chat-bubble-card {
+    min-height: 34px;
+    font-size: 13px !important;
+    line-height: 1.45 !important;
+    padding: 8px 11px !important;
+    border-radius: 14px !important;
+    box-shadow: 2.5px 2.5px 0 #181818 !important;
+    user-select: none;
+}
+.chat-bubble-card:active {
+    box-shadow: 1px 1px 0 #181818 !important;
+}
+.chat-author { max-width: 92%; }
+#reply-preview-box {
+    background: #f0ede5 !important;
+    border-top: 2px solid #181818 !important;
+}
+#tag-suggestions {
+    scrollbar-width: none;
+}
+#tag-suggestions::-webkit-scrollbar { display: none; }
+#chat-input-msg {
+    min-height: 42px !important;
+}
+#chat-send-btn {
+    min-width: 92px;
+}
+@media (max-width: 480px) {
+    #global-chat-modal { padding: 4px !important; }
+    #global-chat-modal > div:first-child {
+        height: calc(100dvh - 8px) !important;
+        max-height: calc(100dvh - 8px) !important;
+        border-radius: 15px !important;
+    }
+    #chat-messages-container { padding: 9px !important; gap: 8px !important; }
+    .chat-bubble-card {
+        max-width: 88% !important;
+        font-size: 12.5px !important;
+        padding: 8px 10px !important;
+    }
+}
+</style>
+
+<style id="global-chat-final-fix">
+/* ===== FINAL GLOBAL CHAT LAYOUT FIX ===== */
+#global-chat-modal {
+    padding: 12px !important;
+}
+
+#global-chat-modal > div:first-child {
+    width: min(720px, 100%) !important;
+    height: min(780px, calc(100dvh - 24px)) !important;
+    max-height: calc(100dvh - 24px) !important;
+    border-radius: 20px !important;
+    border: 2.5px solid #181818 !important;
+    box-shadow: 8px 8px 0 #181818 !important;
+}
+
+#global-chat-modal > div:first-child > div:first-child {
+    padding: 13px 15px !important;
+    min-height: 64px !important;
+    flex-shrink: 0 !important;
+}
+
+#global-chat-modal > div:first-child > div:first-child h3 {
+    font-size: 14px !important;
+    line-height: 1.2 !important;
+}
+
+#chat-messages-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    padding: 14px !important;
+    overflow-y: auto !important;
+    overflow-x: hidden !important;
+    min-height: 0 !important;
+    background: #f6f1e7 !important;
+}
+
+.chat-message-row {
+    width: 100% !important;
+    flex: 0 0 auto !important;
+}
+
+.chat-author {
+    display: flex !important;
+    align-items: center !important;
+    width: auto !important;
+    max-width: 92% !important;
+    min-width: 0 !important;
+    margin-bottom: 4px !important;
+}
+
+.chat-author span:first-child {
+    max-width: 70vw !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: nowrap !important;
+}
+
+.chat-bubble-wrap {
+    display: block !important;
+    width: fit-content !important;
+    max-width: 88% !important;
+    min-width: 0 !important;
+    flex: 0 1 auto !important;
+}
+
+.chat-bubble-card {
+    display: block !important;
+    width: fit-content !important;
+    max-width: 100% !important;
+    min-width: 48px !important;
+    padding: 10px 13px !important;
+    border: 2px solid #181818 !important;
+    border-radius: 15px !important;
+    box-shadow: 3px 3px 0 #181818 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    font-weight: 500 !important;
+    text-align: left !important;
+    white-space: normal !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    hyphens: none !important;
+}
+
+.chat-message-text {
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+    white-space: pre-wrap !important;
+    word-break: normal !important;
+    overflow-wrap: anywhere !important;
+    line-break: auto !important;
+}
+
+.chat-message-text .text-\[9px\] {
+    white-space: nowrap !important;
+}
+
+.reply-card {
+    width: min(100%, 360px) !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+}
+
+.reply-card p {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#reply-preview-box {
+    flex-shrink: 0 !important;
+    padding: 8px 12px !important;
+}
+
+#reply-preview-box > div {
+    min-width: 0 !important;
+}
+
+#reply-preview-text {
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#global-chat-modal > div:first-child > div:last-child {
+    flex-shrink: 0 !important;
+    padding: 10px !important;
+    gap: 8px !important;
+}
+
+#chat-input-msg {
+    min-height: 46px !important;
+    height: 46px !important;
+    font-size: 14px !important;
+    line-height: 1.3 !important;
+    padding: 10px 12px !important;
+}
+
+#chat-send-btn {
+    min-width: 94px !important;
+    height: 46px !important;
+}
+
+@media (max-width: 480px) {
+    #global-chat-modal {
+        padding: 4px !important;
+    }
+
+    #global-chat-modal > div:first-child {
+        width: 100% !important;
+        height: calc(100dvh - 8px) !important;
+        max-height: calc(100dvh - 8px) !important;
+        border-radius: 16px !important;
+    }
+
+    #global-chat-modal > div:first-child > div:first-child {
+        padding: 11px 12px !important;
+        min-height: 58px !important;
+    }
+
+    #global-chat-modal > div:first-child > div:first-child h3 {
+        font-size: 13px !important;
+    }
+
+    #chat-messages-container {
+        gap: 10px !important;
+        padding: 10px !important;
+    }
+
+    .chat-bubble-wrap {
+        max-width: 92% !important;
+    }
+
+    .chat-bubble-card {
+        max-width: 100% !important;
+        min-width: 46px !important;
+        padding: 9px 11px !important;
+        border-radius: 14px !important;
+        font-size: 13.5px !important;
+        line-height: 1.5 !important;
+    }
+
+    .chat-message-text {
+        width: auto !important;
+    }
+
+    .chat-author {
+        max-width: 94% !important;
+    }
+
+    .chat-author span:first-child {
+        max-width: 56vw !important;
+    }
+
+    #chat-input-msg {
+        height: 44px !important;
+        min-height: 44px !important;
+        font-size: 13px !important;
+    }
+
+    #chat-send-btn {
+        min-width: 84px !important;
+        height: 44px !important;
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+    }
+}
+</style>
 
 </head>
 <body class="min-h-screen flex flex-col">
@@ -358,24 +641,29 @@
                 <button onclick="startQuiz()" class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto mb-6">
                     Mulai Latihan <i class="fa-solid fa-arrow-right"></i>
                 </button>
-                
+                <span id="chat-notification-dot"
+      class="hidden absolute -top-1.5 -right-1.5 w-4 h-4 bg-emerald-500 border-2 border-[#181818] rounded-full animate-pulse">
+</span>
                 <!-- POSISI TOMBOL GLOBAL CHAT DI SCREEN 1 (HOME) -->
 <div class="mt-3 relative">
     <button onclick="toggleGlobalChat()" class="w-full py-3 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2 relative">
         <i class="fa-solid fa-comments text-lg"></i> Global Chat (Ruang Diskusi Siswa)
-        <!-- Bulatan Hijau Notifikasi Tag (@) -->
-        <span id="chat-notification-dot" class="hidden absolute -top-1.5 -right-1.5 w-4 h-4 bg-emerald-500 border-2 border-[#181818] rounded-full animate-pulse"></span>
     </button>
 </div>
 
 <!-- MODAL GLOBAL CHAT -->
-<div id="global-chat-modal" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+<div id="global-chat-modal" onclick="if(event.target===this) toggleGlobalChat();" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
     <div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
         <!-- Header Chat -->
-        <div class="bg-[#ffe45c] p-4 border-b-[3px] border-[#181818] flex justify-between items-center">
-            <h3 class="font-black text-[#181818] text-base flex items-center gap-2">
-                <i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
-            </h3>
+        <div class="bg-[#ffe45c] p-3 border-b-[3px] border-[#181818] flex justify-between items-center gap-3">
+            <div class="min-w-0">
+                <h3 class="font-black text-[#181818] text-base flex items-center gap-2">
+                    <i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
+                </h3>
+                <p class="mt-0.5 text-[9px] font-bold text-slate-600 uppercase tracking-wide truncate">
+                    Aktif sebagai <span id="chat-current-name" class="font-black text-[#181818]">USER1</span> • Geser bubble ke kanan untuk balas
+                </p>
+            </div>
             <button onclick="toggleGlobalChat()" class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center">
                 <i class="fa-solid fa-xmark"></i>
             </button>
@@ -401,7 +689,7 @@
             <div id="tag-suggestions" class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden"></div>
             <div class="flex gap-2">
                 <input type="text" id="chat-input-msg" placeholder="Tulis pesan (gunakan @ untuk tag)..." class="flex-grow px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" onkeypress="handleChatKeyPress(event)" oninput="checkChatInput(event)">
-                <button onclick="sendGlobalMessage()" class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+                <button id="chat-send-btn" onclick="sendGlobalMessage()" class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
                     Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
                 </button>
             </div>
@@ -410,14 +698,17 @@
 </div>
 
 <!-- MODAL / POP-UP MENU KETIKA BUBBLE CHAT DI-TEKAN LAMA (LONG PRESS) -->
-<div id="chat-action-modal" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-    <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-5 flex flex-col gap-3 text-center">
-        <h4 class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
+<div id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
+        <h4 data-chat-action-title class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
         <button onclick="handleActionEdit()" id="btn-action-edit" class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-pen-to-square"></i> Edit Pesan
         </button>
-        <button onclick="handleActionDelete()" class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+        <button onclick="handleActionDelete()" id="btn-action-delete" class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
             <i class="fa-solid fa-trash-can"></i> Hapus Pesan
+        </button>
+        <button onclick="selectedMessageForAction && triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();" class="w-full py-2.5 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-reply"></i> Balas Pesan
         </button>
         <button onclick="closeChatActionModal()" class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1">
             Batal
@@ -826,19 +1117,41 @@
             </div>
         </div>
 
-        <!-- CUSTOM PROMPT MODAL (GANTI / LANJUT NAMA) -->
-        <div id="custom-name-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-            <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all">
-                <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-user-pen text-[#43c9bd]"></i> Konfirmasi Nama
-                </h3>
-                <p id="custom-name-desc" class="text-slate-700 font-medium mb-6 text-sm">Nama sebelumnya terdeteksi: <b id="modal-old-name" class="text-brand-600"></b>. Apakah Anda ingin menggunakan nama ini atau menggantinya?</p>
-                <div class="flex justify-end gap-3">
-                    <button onclick="handleNameChoice('keep')" class="px-4 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 transition-all">Lanjut Saja</button>
-                    <button onclick="handleNameChoice('change')" class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 transition-all">Ganti Nama</button>
-                </div>
-            </div>
-        </div>
+        <!-- CUSTOM PROMPT MODAL - WAJIB GANTI NAMA -->
+<div id="custom-name-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+    <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full">
+
+        <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-user-pen text-[#43c9bd]"></i>
+            Atur Nama
+        </h3>
+
+        <p class="text-slate-700 font-medium mb-4 text-sm">
+            Silakan masukkan nama yang akan digunakan di website.
+            Nama ini wajib diisi dan tidak boleh sama dengan nama akun dari admin.
+        </p>
+
+        <input
+            type="text"
+            id="required-custom-name"
+            maxlength="30"
+            autocomplete="off"
+            class="w-full px-4 py-3 rounded-xl border-[2px] border-[#181818] bg-white font-bold uppercase focus:outline-none focus:ring-2 focus:ring-[#43c9bd]"
+            placeholder="Masukkan nama..."
+        >
+
+        <p id="required-name-error"
+           class="hidden text-rose-500 text-xs font-bold mt-2">
+        </p>
+
+        <button
+            onclick="saveRequiredCustomName()"
+            class="w-full mt-4 px-4 py-3 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+            Simpan Nama
+        </button>
+
+    </div>
+</div>
     </main>
 
     <script>
@@ -7856,7 +8169,7 @@ let audioPlayCounts = {};
             }
         }
         
-                async function handleLogin() {
+         async function handleLogin() {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value.trim();
     const btnLogin = document.getElementById('btn-login');
@@ -7864,103 +8177,214 @@ let audioPlayCounts = {};
 
     if (!email || !password) {
         errorMsg.textContent = "Email dan password harus diisi!";
-        errorMsg.classList.remove('hidden'); return;
+        errorMsg.classList.remove('hidden');
+        return;
     }
-    sessionStorage.setItem('show_name_prompt', 'true');
-    
-    btnLogin.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
-    btnLogin.disabled = true; errorMsg.classList.add('hidden');
+
+    btnLogin.innerHTML =
+        '<i class="fa-solid fa-spinner fa-spin"></i> Memeriksa...';
+
+    btnLogin.disabled = true;
+    errorMsg.classList.add('hidden');
 
     try {
-        const { data: dbData, error: dbError } = await window.supabaseClient.from('Jft-Basic').select('*').eq('email', email).eq('auth_code', password);
-        
+        const { data: dbData, error: dbError } =
+            await window.supabaseClient
+                .from('Jft-Basic')
+                .select('*')
+                .eq('email', email)
+                .eq('auth_code', password);
+
         if (dbError) throw dbError;
+
         if (!dbData || dbData.length === 0) {
             errorMsg.innerHTML = "❌ Auth Code atau Email salah.";
             errorMsg.classList.remove('hidden');
-            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-            btnLogin.disabled = false; return;
+
+            btnLogin.innerHTML =
+                'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+
+            btnLogin.disabled = false;
+            return;
         }
 
         const user = dbData[0];
+
         if (user.status !== 'active') {
-            errorMsg.innerHTML = `❌ Akun Anda dinonaktifkan.`;
+            errorMsg.innerHTML = "❌ Akun Anda dinonaktifkan.";
             errorMsg.classList.remove('hidden');
-            btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-            btnLogin.disabled = false; return;
+
+            btnLogin.innerHTML =
+                'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+
+            btnLogin.disabled = false;
+            return;
         }
 
+        // ==========================================
+        // DEVICE ID
+        // ==========================================
+        let deviceId = null;
+
         if (user.role !== 'admin') {
-            const deviceId = getOrCreateDeviceId();
+            deviceId = getOrCreateDeviceId();
+
             let devices = user.registered_devices || [];
-            if (typeof devices === 'string') devices = JSON.parse(devices);
+
+            if (typeof devices === 'string') {
+                try {
+                    devices = JSON.parse(devices);
+                } catch (e) {
+                    devices = [];
+                }
+            }
 
             if (!devices.includes(deviceId)) {
                 const max = user.max_users || 1;
+
                 if (devices.length >= max) {
-                    errorMsg.innerHTML = `❌ Gagal: Akun ini sudah mencapai batas maksimal (${max} Perangkat).`;
+                    errorMsg.innerHTML =
+                        `❌ Gagal: Akun ini sudah mencapai batas maksimal (${max} Perangkat).`;
+
                     errorMsg.classList.remove('hidden');
-                    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
-                    btnLogin.disabled = false; return;
-                } else {
-                    devices.push(deviceId);
-                    await window.supabaseClient.from('Jft-Basic').update({ registered_devices: devices }).eq('id', user.id);
+
+                    btnLogin.innerHTML =
+                        'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+
+                    btnLogin.disabled = false;
+                    return;
                 }
+
+                devices.push(deviceId);
+
+                const { error: updateError } =
+                    await window.supabaseClient
+                        .from('Jft-Basic')
+                        .update({
+                            registered_devices: devices
+                        })
+                        .eq('id', user.id);
+
+                if (updateError) throw updateError;
             }
         }
 
-        localStorage.setItem('jft_user_id', user.id);
-        localStorage.setItem('jft_user_role', user.role);
+        // ==========================================
+        // SIMPAN DATA LOGIN
+        // ==========================================
+        localStorage.setItem(
+            'jft_user_id',
+            user.id
+        );
 
-        const accountName = (user.name || 'SISWA').trim().toUpperCase();
-        localStorage.setItem('jft_account_name', accountName);
+        localStorage.setItem(
+            'jft_user_role',
+            user.role
+        );
 
+        const accountName =
+            (user.name || 'SISWA').trim().toUpperCase();
+
+        localStorage.setItem(
+            'jft_account_name',
+            accountName
+        );
+
+        // ==========================================
+        // ADMIN
+        // ==========================================
         if (user.role === 'admin') {
-            localStorage.setItem('jft_display_name', accountName);
-            localStorage.setItem('jft_user_name', accountName);
+
+            localStorage.setItem(
+                'jft_display_name',
+                accountName
+            );
+
+            localStorage.setItem(
+                'jft_user_name',
+                accountName
+            );
+
             navigate('admin');
+
         } else {
+
+            // ==========================================
+            // USER BIASA
+            // ==========================================
             navigate('home');
 
-            // Nama custom dipisahkan per akun. Jika belum ada, chat memakai USER1/USER2/etc.
-            const customKey = `jft_custom_name_${user.id}`;
-            const savedCustomName = (localStorage.getItem(customKey) || '').trim().toUpperCase();
+            // PENTING:
+            // Gunakan deviceId yang sudah dibuat di atas.
+            const customKey =
+                `jft_custom_name_${deviceId}`;
 
-            let registeredDevices = user.registered_devices || [];
-            if (typeof registeredDevices === 'string') {
-                try { registeredDevices = JSON.parse(registeredDevices); } catch (e) { registeredDevices = []; }
+            const savedCustomName = (
+                localStorage.getItem(customKey) || ''
+            ).trim().toUpperCase();
+
+            const nameInput =
+                document.getElementById('user-name-input');
+
+            // ==========================================
+            // DEVICE INI SUDAH PUNYA NAMA
+            // ==========================================
+            if (savedCustomName) {
+
+                localStorage.setItem(
+                    'jft_display_name',
+                    savedCustomName
+                );
+
+                localStorage.setItem(
+                    'jft_user_name',
+                    savedCustomName
+                );
+
+                if (nameInput) {
+                    nameInput.value =
+                        savedCustomName;
+                }
+
+            } else {
+
+                // ==========================================
+                // DEVICE BARU
+                // WAJIB MEMASUKKAN NAMA SENDIRI
+                // ==========================================
+                localStorage.removeItem(
+                    'jft_display_name'
+                );
+
+                localStorage.removeItem(
+                    'jft_user_name'
+                );
+
+                setTimeout(() => {
+                    showRequiredNameModal();
+                }, 200);
             }
-            const deviceIndex = registeredDevices.indexOf(deviceId);
-            const guestAliasKey = `jft_guest_alias_${user.id}`;
-            let guestAlias = localStorage.getItem(guestAliasKey);
-            if (!guestAlias) {
-                guestAlias = `USER${deviceIndex >= 0 ? deviceIndex + 1 : 1}`;
-                localStorage.setItem(guestAliasKey, guestAlias);
-            }
-
-            const chatName = savedCustomName || guestAlias;
-            localStorage.setItem('jft_display_name', chatName);
-            localStorage.setItem('jft_user_name', chatName);
-
-            document.getElementById('user-name-input').value = savedCustomName || accountName;
-
-            if (savedCustomName && sessionStorage.getItem('show_name_prompt') === 'true') {
-                document.getElementById('modal-old-name').textContent = savedCustomName;
-                document.getElementById('user-name-input').value = savedCustomName;
-                const nameModal = document.getElementById('custom-name-modal');
-                nameModal.classList.remove('hidden');
-                nameModal.classList.add('flex');
-            }
-            sessionStorage.removeItem('show_name_prompt');
         }
+
     } catch (err) {
-        errorMsg.innerHTML = `❌ Error: ${err.message}`;
+
+        console.error(
+            "Login error:",
+            err
+        );
+
+        errorMsg.innerHTML =
+            `❌ Error: ${err.message}`;
+
         errorMsg.classList.remove('hidden');
+
     }
-    btnLogin.innerHTML = 'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+
+    btnLogin.innerHTML =
+        'Masuk <i class="fa-solid fa-right-to-bracket"></i>';
+
     btnLogin.disabled = false;
 }
-
 
 
         function setLeaderboardFilter(count) {
@@ -8321,6 +8745,32 @@ let audioPlayCounts = {};
             btn.innerHTML = 'Simpan Data';
         }
 
+        function getChatIdentity() {
+            const userId = localStorage.getItem('jft_user_id');
+            const deviceId = getOrCreateDeviceId();
+            return userId ? `${userId}:${deviceId}` : deviceId;
+        }
+
+        function getChatNameStorageKey() {
+            const userId = localStorage.getItem('jft_user_id') || 'guest';
+            const deviceId = getOrCreateDeviceId();
+            return `jft_custom_name_${userId}_${deviceId}`;
+        }
+
+        function getCurrentChatName() {
+            const saved = (
+                localStorage.getItem(getChatNameStorageKey()) || ''
+            ).trim().toUpperCase();
+
+            return saved || 'USER1';
+        }
+
+        function isCurrentDeviceMessage(msg) {
+            const senderId = String(msg?.sender_id || '');
+            const myIdentity = String(getChatIdentity());
+            return !!senderId && senderId === myIdentity;
+        }
+
         function checkSession() {
             const userId = localStorage.getItem('jft_user_id');
             if (!userId) {
@@ -8336,56 +8786,181 @@ let audioPlayCounts = {};
 
             navigate('home');
 
-            const accountName = localStorage.getItem('jft_account_name') || 'SISWA';
-            const customName = (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase();
-            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
-            const chatName = customName || guestAlias;
+            const accountName =
+                localStorage.getItem('jft_account_name') || 'SISWA';
 
-            document.getElementById('user-name-input').value = customName || accountName;
-            localStorage.setItem('jft_display_name', chatName);
-            localStorage.setItem('jft_user_name', chatName);
+            const customName = (
+                localStorage.getItem(getChatNameStorageKey()) || ''
+            ).trim().toUpperCase();
+
+            const nameInput =
+                document.getElementById('user-name-input');
+
+            if (nameInput) {
+                nameInput.value = customName || accountName;
+            }
+
+            if (customName) {
+                localStorage.setItem('jft_display_name', customName);
+                localStorage.setItem('jft_user_name', customName);
+            } else {
+                localStorage.removeItem('jft_display_name');
+                localStorage.removeItem('jft_user_name');
+
+                setTimeout(() => {
+                    showRequiredNameModal();
+                }, 200);
+            }
+
             sessionStorage.removeItem('show_name_prompt');
         }
 
 
         function handleNameChoice(choice) {
             const nameModal = document.getElementById('custom-name-modal');
-            nameModal.classList.remove('flex');
-            nameModal.classList.add('hidden');
+            if (nameModal) {
+                nameModal.classList.remove('flex');
+                nameModal.classList.add('hidden');
+            }
 
-            const userId = localStorage.getItem('jft_user_id');
-            const savedCustomName = userId ? (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase() : '';
+            const savedCustomName = (
+                localStorage.getItem(getChatNameStorageKey()) || ''
+            ).trim().toUpperCase();
+
+            const input = document.getElementById('user-name-input');
 
             if (choice === 'keep' && savedCustomName) {
-                document.getElementById('user-name-input').value = savedCustomName;
+                if (input) input.value = savedCustomName;
             } else {
-                document.getElementById('user-name-input').value = '';
-                document.getElementById('user-name-input').focus();
+                if (input) {
+                    input.value = '';
+                    input.focus();
+                }
             }
         }
 
-        // Begitu nama custom diubah, identitas chat langsung ikut berubah.
-        document.addEventListener('input', (e) => {
+        async function saveChatName(newName, options = {}) {
+            const normalizedName = String(newName || '').trim().toUpperCase();
+            const accountName = (
+                localStorage.getItem('jft_account_name') || ''
+            ).trim().toUpperCase();
+
+            if (!normalizedName) {
+                throw new Error('Nama wajib diisi.');
+            }
+
+            if (normalizedName === accountName) {
+                throw new Error('Nama tidak boleh sama dengan nama akun dari admin.');
+            }
+
+            const identity = getChatIdentity();
+
+            // Ubah semua pesan MILIK DEVICE ini sehingga nama baru
+            // langsung terlihat di semua perangkat yang membuka room.
+            const { error: chatError } = await window.supabaseClient
+                .from('global_chats')
+                .update({
+                    sender_name: normalizedName
+                })
+                .eq('sender_id', identity);
+
+            if (chatError) throw chatError;
+
+            localStorage.setItem(
+                getChatNameStorageKey(),
+                normalizedName
+            );
+            localStorage.setItem('jft_display_name', normalizedName);
+            localStorage.setItem('jft_user_name', normalizedName);
+
+            const nameInput = document.getElementById('user-name-input');
+            if (nameInput) nameInput.value = normalizedName;
+
+            const resultName = document.getElementById('res-name');
+            if (resultName) resultName.textContent = normalizedName;
+
+            const chatCurrentName = document.getElementById('chat-current-name');
+            if (chatCurrentName) chatCurrentName.textContent = normalizedName;
+
+            if (typeof fetchChatMessages === 'function') {
+                await fetchChatMessages();
+            }
+
+            if (options.showToast !== false) {
+                showToast('Berhasil', `Nama chat sekarang ${normalizedName}.`);
+            }
+
+            return normalizedName;
+        }
+
+        function showRequiredNameModal() {
+            const modal = document.getElementById('custom-name-modal');
+            const input = document.getElementById('required-custom-name');
+            const error = document.getElementById('required-name-error');
+
+            if (!modal || !input) return;
+
+            const savedName = (
+                localStorage.getItem(getChatNameStorageKey()) || ''
+            ).trim().toUpperCase();
+
+            input.value = savedName;
+
+            if (error) {
+                error.textContent = '';
+                error.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            setTimeout(() => input.focus(), 100);
+        }
+
+        document.addEventListener('change', async (e) => {
             if (e.target.id !== 'user-name-input') return;
-            const userId = localStorage.getItem('jft_user_id');
-            if (!userId) return;
 
-            const value = e.target.value.trim().toUpperCase();
-            const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
-            const customKey = `jft_custom_name_${userId}`;
-            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+            const input = e.target;
+            const newName = input.value.trim().toUpperCase();
 
-            if (value && value !== accountName) {
-                localStorage.setItem(customKey, value);
-                localStorage.setItem('jft_display_name', value);
-                localStorage.setItem('jft_user_name', value);
-            } else {
-                localStorage.removeItem(customKey);
-                localStorage.setItem('jft_display_name', guestAlias);
-                localStorage.setItem('jft_user_name', guestAlias);
+            if (!newName) return;
+
+            try {
+                await saveChatName(newName);
+            } catch (error) {
+                console.error('Gagal mengganti nama:', error);
+                input.value = getCurrentChatName();
+                showToast('Gagal', error.message, true);
             }
         });
 
+        async function saveRequiredCustomName() {
+            const input = document.getElementById('required-custom-name');
+            const error = document.getElementById('required-name-error');
+
+            if (!input || !error) return;
+
+            const name = input.value.trim().toUpperCase();
+
+            if (!name) {
+                error.textContent = 'Nama wajib diisi.';
+                error.classList.remove('hidden');
+                input.focus();
+                return;
+            }
+
+            try {
+                await saveChatName(name, { showToast: true });
+
+                const modal = document.getElementById('custom-name-modal');
+                modal.classList.remove('flex');
+                modal.classList.add('hidden');
+            } catch (err) {
+                error.textContent = err.message;
+                error.classList.remove('hidden');
+                input.focus();
+            }
+        }
 
         function toggleAddUserForm() { document.getElementById('add-user-form').classList.toggle('hidden'); }
         
@@ -8422,6 +8997,11 @@ let audioPlayCounts = {};
             showCustomConfirm("Yakin ingin keluar dari akun ini?", () => {
                 localStorage.removeItem('jft_user_id');
                 localStorage.removeItem('jft_user_role');
+                localStorage.removeItem('jft_display_name');
+                localStorage.removeItem('jft_user_name');
+                isEditingMode = false;
+                editingMessageId = null;
+                cancelReply();
                 document.getElementById('login-password').value = '';
                 navigate('auth');
             }, "Keluar");
@@ -8670,27 +9250,39 @@ async function clearAllChats() {
         }
 
         function startQuiz() {
-    let userName = document.getElementById('user-name-input').value.trim();
-    if(!userName) {
+    const nameInput = document.getElementById('user-name-input');
+    const userName = nameInput ? nameInput.value.trim() : '';
+
+    if (!userName) {
         showCustomConfirm("Silakan masukkan nama Anda terlebih dahulu!", null, "Oke");
         return;
     }
 
-    const userId = localStorage.getItem('jft_user_id');
-    const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
-    const normalizedName = userName.toUpperCase();
-    const customKey = `jft_custom_name_${userId}`;
-    const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
+    const accountName = (
+        localStorage.getItem('jft_account_name') || ''
+    ).trim().toUpperCase();
 
-    if (normalizedName !== accountName) {
-        localStorage.setItem(customKey, normalizedName);
-        localStorage.setItem('jft_display_name', normalizedName);
-        localStorage.setItem('jft_user_name', normalizedName);
-    } else {
-        localStorage.removeItem(customKey);
-        localStorage.setItem('jft_display_name', guestAlias);
-        localStorage.setItem('jft_user_name', guestAlias);
+    const normalizedName = userName.toUpperCase();
+
+    if (normalizedName === accountName) {
+        showCustomConfirm(
+            "Nama tidak boleh sama dengan nama yang dibuat admin!",
+            null,
+            "Oke"
+        );
+        return;
     }
+
+    // Simpan nama untuk akun + device ini saja.
+    localStorage.setItem(
+        getChatNameStorageKey(),
+        normalizedName
+    );
+    localStorage.setItem('jft_display_name', normalizedName);
+    localStorage.setItem('jft_user_name', normalizedName);
+
+    const chatCurrentName = document.getElementById('chat-current-name');
+    if (chatCurrentName) chatCurrentName.textContent = normalizedName;
 
     // ... (lanjutan kode kuis Anda)
 
@@ -8868,7 +9460,7 @@ if (q.audioText) {
 let chatChannel = null;
 let roomStatusChannel = null;
 let activeReplyData = null;
-let activeActiveUsers = new Set();
+let activeActiveUsers = new Map();
 let selectedMessageForAction = null;
 let isEditingMode = false;
 let editingMessageId = null;
@@ -8896,28 +9488,38 @@ function closeToast() {
 
 async function toggleGlobalChat() {
     const modal = document.getElementById('global-chat-modal');
+    if (!modal) return;
+
     modal.classList.toggle('hidden');
-    
-    // KETIKA USER MEMBUKA ROOM CHAT, TITIK HIJAU LANGSUNG HILANG
-    document.getElementById('chat-notification-dot').classList.add('hidden');
-    localStorage.setItem('jft_has_unread_tag', 'false');
-    
-    if (!modal.classList.contains('hidden')) {
-        await checkRoomStatus();
-        fetchChatMessages();
-        subscribeToGlobalChat();
-    } else {
-        if (chatChannel) {
-            window.supabaseClient.removeChannel(chatChannel);
-            chatChannel = null;
+    const isOpening = !modal.classList.contains('hidden');
+
+    if (isOpening) {
+        const currentNameEl = document.getElementById('chat-current-name');
+        if (currentNameEl) {
+            currentNameEl.textContent = getCurrentChatName();
         }
+
+        hideChatNotificationDot();
+        await checkRoomStatus();
+        await fetchChatMessages();
+        subscribeToGlobalChat();
     }
 }
 
 async function checkRoomStatus() {
-    const { data } = await window.supabaseClient.from('room_settings').select('*').eq('id', 1).single();
+    const { data, error } = await window.supabaseClient
+        .from('room_settings')
+        .select('*')
+        .eq('id', 1)
+        .single();
+
+    if (error) {
+        console.warn('Gagal membaca status room:', error.message);
+        return;
+    }
+
     if (data) {
-        isRoomClosed = data.is_closed;
+        isRoomClosed = !!data.is_closed;
         updateRoomUIState();
     }
 }
@@ -8925,47 +9527,41 @@ async function checkRoomStatus() {
 function updateRoomUIState() {
     const inputMsg = document.getElementById('chat-input-msg');
     const sendBtn = document.getElementById('chat-send-btn');
-    const closedNotice = document.getElementById('room-closed-notice');
-    
-    if (isRoomClosed) {
-        const userRole = localStorage.getItem('jft_user_role');
-        if (userRole !== 'admin') {
-            inputMsg.disabled = true;
-            inputMsg.placeholder = "Room chat sedang ditutup oleh Admin.";
-            if(sendBtn) sendBtn.disabled = true;
-        } else {
-            inputMsg.disabled = false;
-            inputMsg.placeholder = "Room ditutup (Admin tetap bisa mengetik)...";
-        }
-        if(!closedNotice) {
-            const container = document.getElementById('chat-messages-container');
-            const notice = document.createElement('div');
+    const container = document.getElementById('chat-messages-container');
+
+    if (!inputMsg) return;
+
+    const userRole = localStorage.getItem('jft_user_role');
+    const isAdmin = userRole === 'admin';
+
+    let notice = document.getElementById('room-closed-notice');
+
+    if (isRoomClosed && !isAdmin) {
+        inputMsg.disabled = true;
+        inputMsg.placeholder = 'Room chat sedang ditutup oleh Admin.';
+        if (sendBtn) sendBtn.disabled = true;
+
+        if (!notice && container) {
+            notice = document.createElement('div');
             notice.id = 'room-closed-notice';
-            notice.className = "bg-rose-100 border-2 border-rose-400 text-rose-800 p-2 rounded-xl text-center text-xs font-bold my-2";
-            notice.innerHTML = `<i class="fa-solid lock"></i> Room chat sedang ditutup oleh Admin.`;
+            notice.className = 'sticky top-0 z-10 bg-rose-100 border-2 border-rose-400 text-rose-800 px-3 py-2 rounded-xl text-center text-[10px] font-black mb-2';
+            notice.innerHTML = '<i class="fa-solid fa-lock mr-1"></i> Room chat sedang ditutup oleh Admin.';
             container.prepend(notice);
         }
     } else {
         inputMsg.disabled = false;
-        inputMsg.placeholder = "Tulis pesan (gunakan @ untuk tag)...";
-        if(sendBtn) sendBtn.disabled = false;
-        const notice = document.getElementById('room-closed-notice');
-        if(notice) notice.remove();
+        inputMsg.placeholder = isAdmin
+            ? 'Room ditutup — Admin tetap bisa mengetik...'
+            : 'Tulis pesan (gunakan @ untuk tag)...';
+        if (sendBtn) sendBtn.disabled = false;
+        if (notice) notice.remove();
     }
-}
-
-function getCurrentChatName() {
-    const userId = localStorage.getItem('jft_user_id');
-    if (!userId) return 'SISWA';
-
-    const customName = (localStorage.getItem(`jft_custom_name_${userId}`) || '').trim().toUpperCase();
-    if (customName) return customName;
-
-    return localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
 }
 
 async function fetchChatMessages() {
     const container = document.getElementById('chat-messages-container');
+    if (!container) return;
+
     const { data, error } = await window.supabaseClient
         .from('global_chats')
         .select('*')
@@ -8973,18 +9569,82 @@ async function fetchChatMessages() {
         .limit(100);
 
     if (error) {
-        container.innerHTML = `<p class="text-center text-xs text-rose-500 font-bold">Gagal memuat pesan: ${error.message}</p>`;
+        container.innerHTML = `<p class="text-center text-xs text-rose-500 font-bold py-10">Gagal memuat pesan: ${escapeHtml(error.message)}</p>`;
         return;
     }
-    renderMessages(data);
+
+    renderMessages(data || []);
+}
+
+function showChatNotificationDot() {
+    const dot = document.getElementById('chat-notification-dot');
+    if (!dot) return;
+    dot.classList.remove('hidden');
+    localStorage.setItem('jft_has_unread_tag', 'true');
+}
+
+function hideChatNotificationDot() {
+    const dot = document.getElementById('chat-notification-dot');
+    if (!dot) return;
+    dot.classList.add('hidden');
+    localStorage.setItem('jft_has_unread_tag', 'false');
+}
+
+function restoreChatNotificationDot() {
+    if (localStorage.getItem('jft_has_unread_tag') === 'true') {
+        showChatNotificationDot();
+    } else {
+        hideChatNotificationDot();
+    }
+}
+
+function messageContainsMyTag(message, myName) {
+    if (!message || !myName) return false;
+
+    const text = String(message).toUpperCase();
+    const name = String(myName).trim().toUpperCase();
+
+    const escapedName = name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    const regex = new RegExp(
+        `(^|\\s)@${escapedName}(?=\\s|$|[.,!?])`,
+        'i'
+    );
+
+    return regex.test(text);
+}
+
+async function checkUnreadTagNotification() {
+    const currentUserName = getCurrentChatName();
+    const myIdentity = getChatIdentity();
+
+    if (!currentUserName || currentUserName === 'SISWA') return;
+
+    const { data, error } = await window.supabaseClient
+        .from('global_chats')
+        .select('sender_id, sender_name, message, created_at')
+        .order('created_at', { ascending: false })
+        .limit(100);
+
+    if (error || !data) return;
+
+    const modal = document.getElementById('global-chat-modal');
+    if (modal && !modal.classList.contains('hidden')) return;
+
+    const tagged = data.some(msg =>
+        String(msg.sender_id || '') !== String(myIdentity) &&
+        messageContainsMyTag(msg.message, currentUserName)
+    );
+
+    if (tagged) showChatNotificationDot();
 }
 
 function renderMessages(messages) {
     const container = document.getElementById('chat-messages-container');
-    const currentUserName = getCurrentChatName();
-    
-    if (messages.length === 0) {
-        container.innerHTML = `<p class="text-center text-xs text-slate-400 font-bold italic py-10">Belum ada percakapan. Yuk sapa teman-temanmu!</p>`;
+    if (!container) return;
+
+    if (!messages.length) {
+        container.innerHTML = '<div class="flex items-center justify-center h-full text-center text-xs text-slate-400 font-bold"><div><i class="fa-regular fa-comments text-2xl mb-2 opacity-50"></i><p>Belum ada percakapan.<br>Yuk sapa teman-temanmu!</p></div></div>';
+        activeActiveUsers.clear();
         return;
     }
 
@@ -8992,177 +9652,295 @@ function renderMessages(messages) {
     activeActiveUsers.clear();
 
     messages.forEach(msg => {
-        activeActiveUsers.add(msg.sender_name);
-        appendMessageElement(msg, currentUserName, container);
+        const senderId = String(msg.sender_id || '');
+        const senderName = (msg.sender_name || 'SISWA').trim().toUpperCase();
+
+        if (senderId) {
+            activeActiveUsers.set(senderId, senderName);
+        }
+
+        appendMessageElement(msg, container);
     });
+
+    updateRoomUIState();
     container.scrollTop = container.scrollHeight;
 }
 
-function getUserColor(userName) {
+function getUserColor(identity) {
+    const input = String(identity || '');
     const totalColors = 240;
-
     let hash = 0;
 
-    for (let i = 0; i < userName.length; i++) {
-        hash = ((hash << 5) - hash) + userName.charCodeAt(i);
+    for (let i = 0; i < input.length; i++) {
+        hash = ((hash << 5) - hash) + input.charCodeAt(i);
         hash |= 0;
     }
 
     const index = Math.abs(hash) % totalColors;
     const hue = Math.round((index * 360) / totalColors);
-
     const saturation = 75 + (index % 3) * 5;
     const lightness = 28 + (index % 3) * 3;
 
     return `hsl(${hue}, ${saturation}%, ${lightness}%)`;
 }
 
-function appendMessageElement(msg, currentUserName, container) {
-    const userRole = localStorage.getItem('jft_user_role');
-    const isAdmin = userRole === 'admin';
-    const isMe = msg.sender_name === currentUserName;
-    const isMsgAdmin = msg.sender_role === 'admin' || msg.sender_name.includes('ADMIN');
-    const timeStr = new Date(msg.created_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    
-    // CEK APAKAH USER INI DI-TAG
-    const isTagged = msg.message.includes(`@${currentUserName}`);
-    const modalIsOpen = !document.getElementById('global-chat-modal').classList.contains('hidden');
+function canModifyMessage(msg) {
+    const role = localStorage.getItem('jft_user_role');
+    return role === 'admin' || isCurrentDeviceMessage(msg);
+}
+
+function appendMessageElement(msg, container) {
+    const senderId = String(msg.sender_id || '');
+    const senderName = (msg.sender_name || 'SISWA')
+        .trim()
+        .toUpperCase();
+    const isMe = isCurrentDeviceMessage(msg);
+    const isAdmin = msg.sender_role === 'admin';
+    const nameColor = isAdmin ? '#ef4444' : getUserColor(senderId || `legacy:${senderName}`);
+    const timeStr = new Date(msg.created_at).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    });
+
+    const isTagged = messageContainsMyTag(
+        msg.message,
+        getCurrentChatName()
+    );
+
+    const modal = document.getElementById('global-chat-modal');
+    const modalIsOpen = modal && !modal.classList.contains('hidden');
 
     if (isTagged && !isMe && !modalIsOpen) {
-        document.getElementById('chat-notification-dot').classList.remove('hidden');
-        localStorage.setItem('jft_has_unread_tag', 'true');
+        showChatNotificationDot();
     }
+
+    const editedTag = msg.edited_at
+        ? ' <span class="text-[9px] italic opacity-60">(diedit)</span>'
+        : '';
 
     let htmlReplyPart = '';
     if (msg.reply_to) {
         htmlReplyPart = `
-            <div class="bg-black/5 border-l-2 border-[#181818] p-1.5 mb-1.5 rounded text-[10px]">
+            <div class="reply-card bg-black/5 border-l-[3px] border-[#181818] p-2 mb-2 rounded-lg text-[10px]">
                 <span class="font-black text-slate-700">${escapeHtml(msg.reply_user || 'Seseorang')}</span>
-                <p class="truncate text-slate-600">${escapeHtml(msg.reply_to)}</p>
+                <p class="truncate text-slate-600 mt-0.5">${escapeHtml(msg.reply_to)}</p>
             </div>
         `;
     }
 
-    const editedTag = msg.edited_at ? ` <span class="text-[9px] italic opacity-60">(diedit)</span>` : '';
-    
-    // WARNA BUBBLE: Admin warna Biru (#62bddb), User sendiri Kuning (#ffe45c), User lain Putih (bg-white)
-    let bubbleColorClass = "bg-white text-[#181818]";
-
-if (isMsgAdmin) {
-    bubbleColorClass = "bg-[#62bddb] text-[#181818]";
-} else if (isMe) {
-    bubbleColorClass = "bg-[#ffe45c] text-[#181818]";
-}
-
-    let bubbleColor = '#ffffff';
-
-if (isMsgAdmin) {
-    bubbleColor = '#62bddb';
-} else if (isMe) {
-    bubbleColor = '#ffe45c';
-} else {
-    bubbleColor = getUserColor(msg.sender_name);
-}
+    let bubbleColorClass = 'bg-white text-[#181818]';
+    if (isAdmin) {
+        bubbleColorClass = 'bg-[#62bddb] text-[#181818]';
+    } else if (isMe) {
+        bubbleColorClass = 'bg-[#ffe45c] text-[#181818]';
+    }
 
     const messageDiv = document.createElement('div');
-    messageDiv.className = `flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none leading-tight`;
-    
+    messageDiv.className = `chat-message-row w-full flex flex-col ${isMe ? 'items-end' : 'items-start'} relative select-none`;
+
     messageDiv.innerHTML = `
-        <span
-    class="text-[10px] font-black uppercase px-1"
-    style="color: ${isMsgAdmin ? '#ef4444' : getUserColor(msg.sender_name)};"
->
-    ${escapeHtml(msg.sender_name)}
-    ${isMsgAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[8px]">ADMIN</span>' : ''}
-    • <span class="font-normal text-slate-400">${timeStr}</span>
-</span>
-        <div class="chat-bubble-card max-w-[85%] p-3 rounded-xl border-[2px] border-[#181818] text-left text-xs font-medium shadow-[2px_2px_0_#181818] ${bubbleColorClass} transition-transform duration-150 relative cursor-pointer">
-            ${htmlReplyPart}
-            <span>${escapeHtml(msg.message)}${editedTag}</span>
+        <div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">
+            <span class="text-[10px] font-black uppercase truncate" style="color: ${nameColor};">${escapeHtml(senderName)}</span>
+            ${isAdmin ? '<span class="bg-red-500 text-white px-1 rounded text-[7px] font-black">ADMIN</span>' : ''}
+            <span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span>
         </div>
-        <span class="text-[9px] text-slate-400 opacity-0 swipe-hint mt-0.5">Geser kanan untuk reply ➡</span>
+
+        <div class="chat-bubble-wrap relative max-w-[84%]" data-message-id="${escapeHtml(String(msg.id || ''))}">
+            <div class="chat-swipe-indicator absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 opacity-0 pointer-events-none text-[#181818] font-black text-sm">↪</div>
+            <div class="chat-bubble-card ${bubbleColorClass} p-3 rounded-2xl border-[2px] border-[#181818] text-left text-xs font-medium shadow-[3px_3px_0_#181818] relative cursor-pointer touch-pan-y will-change-transform">
+                ${htmlReplyPart}
+                <div class="chat-message-text">${escapeHtml(msg.message)}${editedTag}</div>
+            </div>
+        </div>
     `;
 
-    container.appendChild(messageDiv);
+    const bubbleWrap = messageDiv.querySelector('.chat-bubble-wrap');
+    const bubble = messageDiv.querySelector('.chat-bubble-card');
+    const swipeIndicator = messageDiv.querySelector('.chat-swipe-indicator');
 
-    const bubbleCard = messageDiv.querySelector('.chat-bubble-card');
-    let startX = 0, currentX = 0, isSwiping = false;
+    let startX = 0;
+    let startY = 0;
+    let currentDx = 0;
+    let swiping = false;
+    let didSwipe = false;
 
-    // SWIPE KANAN UNTUK REPLY
-    bubbleCard.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isSwiping = true; }, {passive: true});
-    bubbleCard.addEventListener('touchmove', (e) => {
-        if (!isSwiping) return;
-        currentX = e.touches[0].clientX - startX;
-        if (currentX > 0 && currentX < 120) {
-            bubbleCard.style.transform = `translateX(${currentX}px)`;
-            messageDiv.querySelector('.swipe-hint').style.opacity = '1';
-        }
-    }, {passive: true});
-    bubbleCard.addEventListener('touchend', () => {
-        isSwiping = false;
-        if (currentX > 60) triggerReply(msg.sender_name, msg.message);
-        bubbleCard.style.transform = 'translateX(0px)';
-        messageDiv.querySelector('.swipe-hint').style.opacity = '0';
-        currentX = 0;
+    const resetSwipe = () => {
+        bubble.style.transform = '';
+        bubble.style.transition = 'transform .18s ease';
+        swipeIndicator.style.opacity = '0';
+        swipeIndicator.style.transform = 'translate(-2rem, -50%)';
+        currentDx = 0;
+        swiping = false;
+    };
+
+    bubble.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        startX = e.clientX;
+        startY = e.clientY;
+        currentDx = 0;
+        didSwipe = false;
+        swiping = true;
+        bubble.style.transition = 'none';
+        try { bubble.setPointerCapture(e.pointerId); } catch (_) {}
     });
 
-    // LONG PRESS (TEKAN LAMA) UNTUK HAPUS & EDIT
-    let pressTimer = null;
-    const startLongPress = () => {
-        pressTimer = setTimeout(() => {
-            // HANYA PEMILIK PESAN ATAU ADMIN YANG BISA HAPUS/EDIT
-            if (isMe || isAdmin) {
-                selectedMessageForAction = msg;
-                // Tombol edit hanya muncul jika pesannya sendiri (user biasa) atau admin
-                document.getElementById('btn-action-edit').style.display = isMe ? 'flex' : 'none';
-                
-                const modal = document.getElementById('chat-action-modal');
-                modal.classList.remove('hidden'); modal.classList.add('flex');
-            }
-        }, 600);
-    };
-    const cancelLongPress = () => { clearTimeout(pressTimer); };
+    bubble.addEventListener('pointermove', (e) => {
+        if (!swiping) return;
 
-    bubbleCard.addEventListener('mousedown', startLongPress);
-    bubbleCard.addEventListener('mouseup', cancelLongPress);
-    bubbleCard.addEventListener('mouseleave', cancelLongPress);
-    bubbleCard.addEventListener('touchstart', startLongPress, {passive: true});
-    bubbleCard.addEventListener('touchend', cancelLongPress);
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+
+        if (Math.abs(dy) > Math.abs(dx) && Math.abs(dy) > 10) {
+            swiping = false;
+            resetSwipe();
+            return;
+        }
+
+        if (dx > 8) {
+            currentDx = Math.min(dx, 95);
+            bubble.style.transform = `translateX(${currentDx}px)`;
+            swipeIndicator.style.opacity = String(Math.min(currentDx / 55, 1));
+            swipeIndicator.style.transform = `translate(${Math.min(-32 + currentDx * 0.25, -2)}px, -50%)`;
+        }
+    });
+
+    bubble.addEventListener('pointerup', (e) => {
+        if (!swiping) return;
+        try { bubble.releasePointerCapture(e.pointerId); } catch (_) {}
+
+        if (currentDx >= 55) {
+            didSwipe = true;
+            bubble.style.transition = 'transform .15s ease';
+            bubble.style.transform = 'translateX(35px)';
+
+            setTimeout(() => {
+                resetSwipe();
+                triggerReply(senderName, msg.message, senderId);
+            }, 120);
+        } else {
+            resetSwipe();
+        }
+    });
+
+    bubble.addEventListener('pointercancel', resetSwipe);
+
+    bubble.addEventListener('click', (e) => {
+        if (didSwipe) {
+            e.preventDefault();
+            e.stopPropagation();
+            didSwipe = false;
+            return;
+        }
+
+        selectedMessageForAction = msg;
+        openChatActionModal(msg);
+    });
+
+    container.appendChild(messageDiv);
+}
+
+function openChatActionModal(msg) {
+    selectedMessageForAction = msg;
+
+    const modal = document.getElementById('chat-action-modal');
+    const editBtn = document.getElementById('btn-action-edit');
+    const deleteBtn = document.getElementById('btn-action-delete');
+
+    if (!modal) return;
+
+    const canModify = canModifyMessage(msg);
+
+    if (editBtn) {
+        editBtn.classList.toggle('hidden', !canModify);
+    }
+
+    if (deleteBtn) {
+        deleteBtn.classList.toggle('hidden', !canModify);
+    }
+
+    const isMe = isCurrentDeviceMessage(msg);
+    const title = modal.querySelector('[data-chat-action-title]');
+
+    if (title) {
+        title.textContent = isMe
+            ? 'Opsi Pesan Saya'
+            : `Pesan ${msg.sender_name || 'Seseorang'}`;
+    }
+
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
 }
 
 function closeChatActionModal() {
-    document.getElementById('chat-action-modal').classList.remove('flex');
-    document.getElementById('chat-action-modal').classList.add('hidden');
+    const modal = document.getElementById('chat-action-modal');
+    if (!modal) return;
+    modal.classList.remove('flex');
+    modal.classList.add('hidden');
 }
 
 function handleActionEdit() {
-    closeChatActionModal();
     if (!selectedMessageForAction) return;
+
+    if (!canModifyMessage(selectedMessageForAction)) {
+        showToast('Tidak diizinkan', 'Kamu hanya bisa mengedit pesan milikmu sendiri.', true);
+        closeChatActionModal();
+        return;
+    }
+
+    closeChatActionModal();
     isEditingMode = true;
     editingMessageId = selectedMessageForAction.id;
-    
+
     const input = document.getElementById('chat-input-msg');
-    input.value = selectedMessageForAction.message;
+    input.value = selectedMessageForAction.message || '';
     input.focus();
-    showToast("Mode Edit", "Silakan ubah pesan di kolom input lalu kirim.");
+
+    showToast('Mode Edit', 'Ubah pesan lalu tekan Kirim.');
 }
 
 async function handleActionDelete() {
-    closeChatActionModal();
     if (!selectedMessageForAction) return;
-    
-    const { error } = await window.supabaseClient.from('global_chats').delete().eq('id', selectedMessageForAction.id);
-    if (error) {
-        showToast("Gagal", error.message, true);
-    } else {
-        fetchChatMessages();
-        showToast("Berhasil", "Pesan telah dihapus.");
+
+    if (!canModifyMessage(selectedMessageForAction)) {
+        showToast('Tidak diizinkan', 'Kamu hanya bisa menghapus pesan milikmu sendiri.', true);
+        closeChatActionModal();
+        return;
     }
+
+    const messageId = selectedMessageForAction.id;
+    closeChatActionModal();
+
+    showCustomConfirm('Yakin ingin menghapus pesan ini?', async () => {
+        const query = window.supabaseClient
+            .from('global_chats')
+            .delete()
+            .eq('id', messageId);
+
+        const role = localStorage.getItem('jft_user_role');
+        const result = role === 'admin'
+            ? await query
+            : await query.eq('sender_id', getChatIdentity());
+
+        if (result.error) {
+            showToast('Gagal', result.error.message, true);
+            return;
+        }
+
+        await fetchChatMessages();
+        showToast('Berhasil', 'Pesan telah dihapus.');
+    }, 'Hapus');
 }
 
-function triggerReply(sender, text) {
-    activeReplyData = { sender, text };
+function triggerReply(sender, text, senderId = '') {
+    activeReplyData = {
+        sender,
+        text,
+        senderId
+    };
+
     const previewBox = document.getElementById('reply-preview-box');
+    if (!previewBox) return;
+
     previewBox.classList.remove('hidden');
     document.getElementById('reply-preview-user').textContent = `Membalas @${sender}:`;
     document.getElementById('reply-preview-text').textContent = text;
@@ -9171,48 +9949,69 @@ function triggerReply(sender, text) {
 
 function cancelReply() {
     activeReplyData = null;
-    document.getElementById('reply-preview-box').classList.add('hidden');
+    const preview = document.getElementById('reply-preview-box');
+    if (preview) preview.classList.add('hidden');
 }
 
 function subscribeToGlobalChat() {
     if (chatChannel) return;
+
     chatChannel = window.supabaseClient
         .channel('public:global_chats')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'global_chats' }, () => {
-            fetchChatMessages();
-        })
+        .on(
+            'postgres_changes',
+            { event: '*', schema: 'public', table: 'global_chats' },
+            () => fetchChatMessages()
+        )
         .subscribe();
 
     if (!roomStatusChannel) {
         roomStatusChannel = window.supabaseClient
             .channel('public:room_settings')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'room_settings' }, payload => {
-                if (payload.new) {
-                    isRoomClosed = payload.new.is_closed;
-                    updateRoomUIState();
+            .on(
+                'postgres_changes',
+                { event: '*', schema: 'public', table: 'room_settings' },
+                payload => {
+                    if (payload.new) {
+                        isRoomClosed = !!payload.new.is_closed;
+                        updateRoomUIState();
+                    }
                 }
-            })
+            )
             .subscribe();
     }
 }
 
 async function adminToggleRoomChat() {
     isRoomClosed = !isRoomClosed;
-    await window.supabaseClient.from('room_settings').upsert({ id: 1, is_closed: isRoomClosed });
+
+    const { error } = await window.supabaseClient
+        .from('room_settings')
+        .upsert({ id: 1, is_closed: isRoomClosed });
+
+    if (error) {
+        showToast('Gagal', error.message, true);
+        return;
+    }
+
     updateAdminRoomButton();
-    showToast("Status Room", isRoomClosed ? "Room Chat berhasil DITUTUP." : "Room Chat berhasil DIBUKA.");
+    updateRoomUIState();
+    showToast(
+        'Status Room',
+        isRoomClosed ? 'Room Chat berhasil DITUTUP.' : 'Room Chat berhasil DIBUKA.'
+    );
 }
 
 function updateAdminRoomButton() {
     const btn = document.getElementById('btn-toggle-room');
-    if(btn) {
-        if(isRoomClosed) {
-            btn.textContent = "Buka Kembali Room Chat";
-            btn.className = "px-4 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition";
-        } else {
-            btn.textContent = "Tutup Room Chat";
-            btn.className = "px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition";
-        }
+    if (!btn) return;
+
+    if (isRoomClosed) {
+        btn.textContent = 'Buka Kembali Room Chat';
+        btn.className = 'px-4 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition';
+    } else {
+        btn.textContent = 'Tutup Room Chat';
+        btn.className = 'px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition';
     }
 }
 
@@ -9223,58 +10022,89 @@ async function sendGlobalMessage() {
     const userRole = localStorage.getItem('jft_user_role') || 'user';
 
     if (!message) return;
+
     if (isRoomClosed && userRole !== 'admin') {
-        showToast("Peringatan", "Room chat sedang ditutup oleh admin.", true);
+        showToast('Peringatan', 'Room chat sedang ditutup oleh admin.', true);
         return;
     }
 
     if (isEditingMode && editingMessageId) {
-        const { error } = await window.supabaseClient
+        const query = window.supabaseClient
             .from('global_chats')
-            .update({ message: message, edited_at: new Date().toISOString() })
+            .update({
+                message,
+                edited_at: new Date().toISOString()
+            })
             .eq('id', editingMessageId);
 
+        const result = userRole === 'admin'
+            ? await query
+            : await query.eq('sender_id', getChatIdentity());
+
         isEditingMode = false;
+        const editedId = editingMessageId;
         editingMessageId = null;
         input.value = '';
-        if (error) showToast("Gagal", error.message, true);
-        else fetchChatMessages();
+
+        if (result.error) {
+            showToast('Gagal', result.error.message, true);
+        } else {
+            await fetchChatMessages();
+        }
+
         return;
     }
 
-    let payloadData = {
+    const senderId = getChatIdentity();
+
+    const payloadData = {
+        sender_id: senderId,
         sender_name: senderName,
         sender_role: userRole,
-        message: message,
+        message,
         reply_to: activeReplyData ? activeReplyData.text : null,
         reply_user: activeReplyData ? activeReplyData.sender : null
     };
 
     input.value = '';
     cancelReply();
-    document.getElementById('tag-suggestions').classList.add('hidden');
 
-    const { error } = await window.supabaseClient.from('global_chats').insert([payloadData]);
-    if (error) showToast("Gagal", error.message, true);
+    const tagSuggestions = document.getElementById('tag-suggestions');
+    if (tagSuggestions) tagSuggestions.classList.add('hidden');
+
+    const { error } = await window.supabaseClient
+        .from('global_chats')
+        .insert([payloadData]);
+
+    if (error) {
+        showToast('Gagal', error.message, true);
+        return;
+    }
+
+    await fetchChatMessages();
 }
 
-// Inisialisasi awal pengecekan status notifikasi tag saat halaman dimuat
 document.addEventListener('DOMContentLoaded', () => {
-    if (localStorage.getItem('jft_has_unread_tag') === 'true') {
-        document.getElementById('chat-notification-dot').classList.remove('hidden');
-    }
+    restoreChatNotificationDot();
     checkRoomStatus();
 });
-
 
 function checkChatInput(e) {
     const val = e.target.value;
     const tagContainer = document.getElementById('tag-suggestions');
+    if (!tagContainer) return;
+
     if (val.includes('@')) {
         tagContainer.classList.remove('hidden');
         tagContainer.innerHTML = '';
-        activeActiveUsers.forEach(user => {
-            tagContainer.innerHTML += `<button onclick="insertTagUser('${user}')" class="px-2 py-1 bg-[#ffe45c] border border-[#181818] rounded font-bold text-xs whitespace-nowrap shadow-sm">@${user}</button>`;
+
+        activeActiveUsers.forEach((username, senderId) => {
+            const button = document.createElement('button');
+            button.type = 'button';
+            button.className = 'px-2.5 py-1.5 bg-[#ffe45c] border-[1.5px] border-[#181818] rounded-lg font-black text-[10px] whitespace-nowrap shadow-[2px_2px_0_#181818]';
+            button.textContent = `@${username}`;
+            button.onclick = () => insertTagUser(username);
+            tagContainer.appendChild(button);
         });
     } else {
         tagContainer.classList.add('hidden');
@@ -9283,13 +10113,23 @@ function checkChatInput(e) {
 
 function insertTagUser(username) {
     const input = document.getElementById('chat-input-msg');
-    input.value += `${username} `;
-    document.getElementById('tag-suggestions').classList.add('hidden');
+    if (!input) return;
+
+    const current = input.value.trimEnd();
+    const prefix = current && !current.endsWith(' ') ? ' ' : '';
+    input.value = `${current}${prefix}@${username} `;
+
+    const tagSuggestions = document.getElementById('tag-suggestions');
+    if (tagSuggestions) tagSuggestions.classList.add('hidden');
+
     input.focus();
 }
 
 function handleChatKeyPress(e) {
-    if (e.key === 'Enter') sendGlobalMessage();
+    if (e.key === 'Enter') {
+        e.preventDefault();
+        sendGlobalMessage();
+    }
 }
 
 function escapeHtml(text) {
@@ -9330,25 +10170,27 @@ function escapeHtml(text) {
             }
         }
         
-        function editName() {
-            const n = prompt("Nama:", document.getElementById('res-name').textContent);
-            if (!n) return;
-            const userId = localStorage.getItem('jft_user_id');
-            const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
+        async function editName() {
+            const currentName = getCurrentChatName();
+            const n = prompt('Nama:', currentName);
+
+            if (n === null) return;
+
             const normalizedName = n.trim().toUpperCase();
-            const guestAlias = localStorage.getItem(`jft_guest_alias_${userId}`) || 'USER1';
-            document.getElementById('res-name').textContent = normalizedName;
-            document.getElementById('user-name-input').value = normalizedName;
-            if (normalizedName !== accountName) {
-                localStorage.setItem(`jft_custom_name_${userId}`, normalizedName);
-                localStorage.setItem('jft_display_name', normalizedName);
-                localStorage.setItem('jft_user_name', normalizedName);
-            } else {
-                localStorage.removeItem(`jft_custom_name_${userId}`);
-                localStorage.setItem('jft_display_name', guestAlias);
-                localStorage.setItem('jft_user_name', guestAlias);
+
+            if (!normalizedName) {
+                showCustomConfirm('Nama tidak boleh kosong!', null, 'Oke');
+                return;
+            }
+
+            try {
+                await saveChatName(normalizedName);
+            } catch (error) {
+                console.error('Gagal mengganti nama:', error);
+                showToast('Gagal', error.message, true);
             }
         }
+
         function handlePhotoUpload(e) { if(e.target.files[0]) { const r = new FileReader(); r.onload = (ev) => { document.getElementById('user-photo-img').src=ev.target.result; document.getElementById('user-photo-img').classList.remove('hidden'); localStorage.setItem('jft_user_photo', ev.target.result); }; r.readAsDataURL(e.target.files[0]); } }
         
 // Fungsi untuk memunculkan/menutup modal konfirmasi kustom
