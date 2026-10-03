@@ -698,7 +698,7 @@
 </div>
 
 <!-- MODAL / POP-UP MENU KETIKA BUBBLE CHAT DI-TEKAN LAMA (LONG PRESS) -->
-<div id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();" class="fixed inset-0 z-[120] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+<div id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
     <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
         <h4 data-chat-action-title class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
         <button onclick="handleActionEdit()" id="btn-action-edit" class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
@@ -717,7 +717,7 @@
 </div>
 
 <!-- KUSTOM NOTIFIKASI / ALERT CANTIK -->
-<div id="custom-toast-modal" class="fixed inset-0 z-[130] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+<div id="custom-toast-modal" class="fixed inset-0 z-[220] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
     <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
         <div id="toast-icon" class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3">
             <i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
@@ -1104,7 +1104,7 @@
 
 
         <!-- CUSTOM CONFIRM MODAL (NEO-BRUTALISM) -->
-        <div id="custom-confirm-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+        <div id="custom-confirm-modal" class="fixed inset-0 z-[210] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
             <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
                 <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
@@ -1118,7 +1118,7 @@
         </div>
 
         <!-- CUSTOM PROMPT MODAL - WAJIB GANTI NAMA -->
-<div id="custom-name-modal" class="fixed inset-0 z-[100] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+<div id="custom-name-modal" class="fixed inset-0 z-[210] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
     <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full">
 
         <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
@@ -8866,6 +8866,45 @@ let audioPlayCounts = {};
 
             if (chatError) throw chatError;
 
+            // Sinkronkan nama perangkat ini ke skor leaderboard yang sudah tersimpan.
+            const userId = localStorage.getItem('jft_user_id');
+            const deviceId = getOrCreateDeviceId();
+
+            if (userId && deviceId) {
+                const { data: scoreRow, error: scoreReadError } =
+                    await window.supabaseClient
+                        .from('Jft-Basic')
+                        .select('device_scores')
+                        .eq('id', userId)
+                        .single();
+
+                if (scoreReadError) throw scoreReadError;
+
+                let scores = scoreRow?.device_scores || {};
+                if (typeof scores === 'string') {
+                    try {
+                        scores = JSON.parse(scores);
+                    } catch (_) {
+                        scores = {};
+                    }
+                }
+
+                if (scores && scores[deviceId]) {
+                    scores[deviceId] = {
+                        ...scores[deviceId],
+                        name: normalizedName
+                    };
+
+                    const { error: scoreUpdateError } =
+                        await window.supabaseClient
+                            .from('Jft-Basic')
+                            .update({ device_scores: scores })
+                            .eq('id', userId);
+
+                    if (scoreUpdateError) throw scoreUpdateError;
+                }
+            }
+
             localStorage.setItem(
                 getChatNameStorageKey(),
                 normalizedName
@@ -9073,38 +9112,48 @@ window.addEventListener('DOMContentLoaded', () => {
 // Fungsi untuk memunculkan notifikasi (Toast) yang modern
 // 1. Fungsi Toast Notifikasi (Pastikan fungsi ini ada di file JS kamu)
 // Fungsi Toast Notifikasi
-function showToast(message, type = 'success') {
-    let container = document.getElementById("custom-toast-container");
+function showToast(title, message, isError = false) {
+    // Kompatibel dengan pemanggilan lama: showToast('pesan', 'success').
+    if (arguments.length === 2 && (message === 'success' || message === 'error')) {
+        isError = message === 'error';
+        message = title;
+        title = isError ? 'Gagal' : 'Berhasil';
+    }
+
+    const modal = document.getElementById('custom-toast-modal');
+    if (modal) {
+        const iconEl = document.getElementById('toast-icon');
+        document.getElementById('toast-title').textContent = title || 'Informasi';
+        document.getElementById('toast-message').textContent = message || '';
+
+        if (iconEl) {
+            iconEl.className = isError
+                ? 'w-12 h-12 bg-[#ff7373] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-white'
+                : 'w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-[#181818]';
+            iconEl.innerHTML = isError
+                ? '<i class="fa-solid fa-triangle-exclamation"></i>'
+                : '<i class="fa-solid fa-circle-check"></i>';
+        }
+
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        return;
+    }
+
+    // Fallback jika modal toast tidak tersedia.
+    let container = document.getElementById('custom-toast-container');
     if (!container) {
-        container = document.createElement("div");
-        container.id = "custom-toast-container";
-        container.style.cssText = "position: fixed; bottom: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px;";
+        container = document.createElement('div');
+        container.id = 'custom-toast-container';
+        container.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:10px;';
         document.body.appendChild(container);
     }
 
-    const toast = document.createElement("div");
-    const bgColor = type === 'success' ? '#4ade80' : '#f87171';
-    
-    toast.style.cssText = `
-        background: ${bgColor};
-        color: #000000;
-        border: 2px solid #000000;
-        padding: 10px 14px;
-        border-radius: 8px;
-        font-size: 13px;
-        font-weight: 700;
-        box-shadow: 3px 3px 0px #000000;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    `;
-    
-    toast.innerHTML = `<span>${type === 'success' ? '✅' : '⚠️'}</span> ${message}`;
+    const toast = document.createElement('div');
+    toast.style.cssText = `background:${isError ? '#ff7373' : '#43c9bd'};color:#181818;border:2px solid #181818;padding:10px 14px;border-radius:10px;font-size:13px;font-weight:700;box-shadow:3px 3px 0 #181818;`;
+    toast.textContent = `${title}: ${message}`;
     container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 3000);
+    setTimeout(() => toast.remove(), 3000);
 }
 
 // Logika Interaksi Modal dan Tombol Hapus
@@ -9466,20 +9515,7 @@ let isEditingMode = false;
 let editingMessageId = null;
 let isRoomClosed = false;
 
-function showToast(title, message, isError = false) {
-    document.getElementById('toast-title').textContent = title;
-    document.getElementById('toast-message').textContent = message;
-    const iconEl = document.getElementById('toast-icon');
-    if(isError) {
-        iconEl.className = "w-12 h-12 bg-[#ff7373] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-white";
-        iconEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i>';
-    } else {
-        iconEl.className = "w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3 text-[#181818]";
-        iconEl.innerHTML = '<i class="fa-solid fa-circle-check"></i>';
-    }
-    const modal = document.getElementById('custom-toast-modal');
-    modal.classList.remove('hidden'); modal.classList.add('flex');
-}
+
 
 function closeToast() {
     document.getElementById('custom-toast-modal').classList.remove('flex');
@@ -9824,14 +9860,48 @@ function appendMessageElement(msg, container) {
 
     bubble.addEventListener('pointercancel', resetSwipe);
 
-    bubble.addEventListener('click', (e) => {
-        if (didSwipe) {
-            e.preventDefault();
-            e.stopPropagation();
-            didSwipe = false;
-            return;
-        }
+    // Tekan lama untuk membuka menu pesan. Tap biasa tidak melakukan apa-apa.
+    let longPressTimer = null;
+    let longPressTriggered = false;
 
+    const cancelLongPress = () => {
+        if (longPressTimer) {
+            clearTimeout(longPressTimer);
+            longPressTimer = null;
+        }
+    };
+
+    bubble.addEventListener('pointerdown', (e) => {
+        if (e.pointerType === 'mouse' && e.button !== 0) return;
+        longPressTriggered = false;
+        cancelLongPress();
+
+        longPressTimer = setTimeout(() => {
+            // Jangan membuka menu jika gesture sedang dipakai untuk swipe reply.
+            if (Math.abs(currentDx) >= 8 || !swiping) return;
+            longPressTriggered = true;
+            selectedMessageForAction = msg;
+            openChatActionModal(msg);
+        }, 550);
+    });
+
+    bubble.addEventListener('pointermove', (e) => {
+        if (Math.abs(e.clientX - startX) > 12 || Math.abs(e.clientY - startY) > 12) {
+            cancelLongPress();
+        }
+    });
+
+    bubble.addEventListener('pointerup', () => {
+        cancelLongPress();
+    });
+
+    bubble.addEventListener('pointercancel', () => {
+        cancelLongPress();
+    });
+
+    bubble.addEventListener('contextmenu', (e) => {
+        e.preventDefault();
+        cancelLongPress();
         selectedMessageForAction = msg;
         openChatActionModal(msg);
     });
@@ -9902,14 +9972,15 @@ async function handleActionDelete() {
     if (!selectedMessageForAction) return;
 
     if (!canModifyMessage(selectedMessageForAction)) {
-        showToast('Tidak diizinkan', 'Kamu hanya bisa menghapus pesan milikmu sendiri.', true);
         closeChatActionModal();
+        showToast('Tidak diizinkan', 'Kamu hanya bisa menghapus pesan milikmu sendiri.', true);
         return;
     }
 
     const messageId = selectedMessageForAction.id;
     closeChatActionModal();
 
+    // Confirm dibuat di layer paling atas agar tidak tertutup room chat.
     showCustomConfirm('Yakin ingin menghapus pesan ini?', async () => {
         const query = window.supabaseClient
             .from('global_chats')
