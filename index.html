@@ -10761,10 +10761,22 @@ let audioPlayCounts = {};
                 });
             });
 
-            // Skor terbaru tidak lagi menimpa skor latihan sebelumnya.
-            // Setiap latihan disimpan sebagai satu attempt tersendiri.
+            // Setiap latihan disimpan sebagai attempt tersendiri.
+            // Urutan leaderboard: skor tertinggi lebih dulu.
+            // Jika skornya sama, waktu pengerjaan tercepat menang.
+            allScores.sort((a, b) => {
+                const scoreDiff = Number(b.score || 0) - Number(a.score || 0);
+                if (scoreDiff !== 0) return scoreDiff;
 
-            allScores.sort((a, b) => b.score - a.score);
+                const getDurationSeconds = (value) => {
+                    if (!value || value === '-') return Number.POSITIVE_INFINITY;
+                    const m = String(value).match(/(\d+)m\s*(\d+)s/i);
+                    if (!m) return Number.POSITIVE_INFINITY;
+                    return (Number(m[1]) * 60) + Number(m[2]);
+                };
+
+                return getDurationSeconds(a.duration) - getDurationSeconds(b.duration);
+            });
 
             if (allScores.length === 0) {
                 listEl.innerHTML = `<p class="text-center text-xs text-slate-400 py-4 font-medium italic">Belum ada data untuk kategori ${filterCount} soal.</p>`;
@@ -10787,12 +10799,30 @@ let audioPlayCounts = {};
                     rankIcon = '<i class="fa-solid fa-medal text-amber-800 text-xs"></i> 3';
                 }
 
-                const attemptTime = item.startedAt
-                    ? new Date(item.startedAt).toLocaleString('id-ID', {
-                        day: '2-digit', month: '2-digit', year: 'numeric',
-                        hour: '2-digit', minute: '2-digit'
-                    })
-                    : '-';
+                const formatTime = (iso) => {
+                    if (!iso) return null;
+                    const d = new Date(iso);
+                    if (Number.isNaN(d.getTime())) return null;
+                    return d.toLocaleTimeString('id-ID', {
+                        hour: '2-digit', minute: '2-digit', hour12: false
+                    });
+                };
+
+                const formatDate = (iso) => {
+                    if (!iso) return null;
+                    const d = new Date(iso);
+                    if (Number.isNaN(d.getTime())) return null;
+                    return d.toLocaleDateString('id-ID', {
+                        day: '2-digit', month: '2-digit', year: 'numeric'
+                    });
+                };
+
+                const startTime = formatTime(item.startedAt);
+                const endTime = formatTime(item.completedAt);
+                const attemptDate = formatDate(item.startedAt || item.completedAt);
+                const timeRange = startTime && endTime
+                    ? `${startTime} - ${endTime}`
+                    : startTime || endTime || '-';
 
                 listEl.innerHTML += `
                     <div class="leaderboard-card p-2.5 rounded-xl flex items-center justify-between text-xs bg-white">
@@ -10803,7 +10833,7 @@ let audioPlayCounts = {};
                             <div>
                                 <div class="font-black text-slate-800 uppercase">${item.name}</div>
                                 <div class="text-[10px] text-slate-500"><i class="fa-solid fa-mobile-screen-button"></i> ${item.os} • <i class="fa-regular fa-clock"></i> ${item.duration}</div>
-                                <div class="text-[10px] text-slate-400 mt-0.5"><i class="fa-regular fa-calendar"></i> ${attemptTime}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5"><i class="fa-regular fa-calendar"></i> ${attemptDate || '-'} • <i class="fa-regular fa-clock"></i> ${timeRange}</div>
                             </div>
                         </div>
                         <div class="text-right">
