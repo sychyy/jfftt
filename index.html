@@ -8338,6 +8338,7 @@
             userAnswers: [],
             timerInterval: null,
             startTime: null,
+            endTime: null,
             selectedPeriod: 'sep-nov'
         };
         
@@ -8351,7 +8352,7 @@ let audioPlayCounts = {};
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
             document.getElementById(`screen-${screenId}`).classList.add('active');
             window.scrollTo(0, 0);
-            
+
             const header = document.getElementById('main-header');
             if (header) {
                 if (screenId === 'auth' || screenId === 'admin') {
@@ -8360,9 +8361,17 @@ let audioPlayCounts = {};
                     header.classList.remove('hidden');
                 }
             }
-            
-            if(screenId === 'history') renderHistory();
-            if(screenId === 'admin') loadAdminData(); 
+
+            if (screenId === 'history') renderHistory();
+            if (screenId === 'admin') {
+                loadAdminData();
+                if (typeof checkAdminChatFeature === 'function') {
+                    checkAdminChatFeature();
+                }
+                if (typeof updateAdminChatNameDisplay === 'function') {
+                    updateAdminChatNameDisplay();
+                }
+            }
             if(state.currentScreen === 'quiz' && screenId !== 'quiz') clearInterval(state.timerInterval);
             state.currentScreen = screenId;
         }
@@ -8623,38 +8632,144 @@ let audioPlayCounts = {};
             loadLeaderboardData(count);
         }
 
+        function parseDurationToSeconds(value) {
+            if (value === null || value === undefined || value === '-' || value === '') return Number.POSITIVE_INFINITY;
+            const text = String(value).trim();
+            const hm = text.match(/(?:(\d+)h\s*)?(?:(\d+)m\s*)?(?:(\d+)s\s*)?/i);
+            if (!hm || (!hm[1] && !hm[2] && !hm[3])) return Number.POSITIVE_INFINITY;
+            return (Number(hm[1] || 0) * 3600) + (Number(hm[2] || 0) * 60) + Number(hm[3] || 0);
+        }
+
+        function formatLeaderboardDateTime(value) {
+            if (!value) return '';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return '';
+            return d.toLocaleDateString('id-ID', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric'
+            });
+        }
+
+        function formatLeaderboardClock(value) {
+            if (!value) return '';
+            const d = new Date(value);
+            if (Number.isNaN(d.getTime())) return '';
+            return d.toLocaleTimeString('id-ID', {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            });
+        }
+
+        function formatLeaderboardDateRange(item) {
+            let start = item.startedAt || item.startTime || item.attemptedAt || '';
+            let end = item.finishedAt || item.endTime || item.completedAt || item.completed_at || item.updatedAt || '';
+
+            // Kompatibel dengan data lama yang hanya punya waktu selesai + durasi.
+            if (!start && end && item.duration) {
+                const endMs = new Date(end).getTime();
+                const durationSec = parseDurationToSeconds(item.duration);
+                if (Number.isFinite(endMs) && Number.isFinite(durationSec)) {
+                    start = new Date(endMs - (durationSec * 1000)).toISOString();
+                }
+            }
+            if (!end && start && item.duration) {
+                const startMs = new Date(start).getTime();
+                const durationSec = parseDurationToSeconds(item.duration);
+                if (Number.isFinite(startMs) && Number.isFinite(durationSec)) {
+                    end = new Date(startMs + (durationSec * 1000)).toISOString();
+                }
+            }
+
+            const date = formatLeaderboardDateTime(start || end);
+            const startClock = formatLeaderboardClock(start);
+            const endClock = formatLeaderboardClock(end);
+
+            if (date && startClock && endClock) {
+                return `<i class="fa-regular fa-calendar-days text-slate-400 mr-1"></i>${date}<span class="mx-1">•</span><i class="fa-regular fa-clock text-slate-400 mr-1"></i>${startClock} - ${endClock}`;
+            }
+            if (date && startClock) {
+                return `<i class="fa-regular fa-calendar-days text-slate-400 mr-1"></i>${date}<span class="mx-1">•</span><i class="fa-regular fa-clock text-slate-400 mr-1"></i>${startClock}`;
+            }
+            if (date) return `<i class="fa-regular fa-calendar-days text-slate-400 mr-1"></i>${date}`;
+            return '<span class="text-slate-400">Waktu belum tersimpan</span>';
+        }
+
         async function loadLeaderboardData(filterCount) {
             const listEl = document.getElementById('leaderboard-list');
             listEl.innerHTML = '<p class="text-center text-xs text-slate-500 py-4 font-bold">Mengambil data peringkat...</p>';
 
             const { data, error } = await window.supabaseClient.from('Jft-Basic').select('*');
             if (error) {
-                listEl.innerHTML = `<p class="text-center text-xs text-red-500 py-2">Gagal memuat: ${error.message}</p>`;
+                listEl.innerHTML = `<p class="text-center text-xs text-red-500 py-2">Gagal memuat: ${escapeHtml(error.message)}</p>`;
                 return;
             }
 
-            let allScores = [];
-            data.forEach(user => {
+            // Leaderboard: satu akun hanya punya satu hasil aktif per jumlah soal.
+            // Jika akun mengerjakan ulang, record dengan timestamp paling baru yang dipakai.
+            const latestByAccountAndCount = new Map();
+
+            (data || []).forEach(user => {
                 let scores = user.device_scores || {};
-                if (typeof scores === 'string') scores = JSON.parse(scores);
-                
-                Object.values(scores).forEach(s => {
-                    if (s && s.score !== undefined) {
-                        const sCount = s.qCount || 10;
-                        if (sCount === filterCount) {
-                            allScores.push({
-                                name: s.name || user.name || 'Siswa',
-                                score: s.score,
-                                level: s.level || '-',
-                                duration: s.duration || '-',
-                                os: s.os || 'Lainnya'
-                            });
-                        }
+                if (typeof scores === 'string') {
+                    try { scores = JSON.parse(scores); } catch (_) { scores = {}; }
+                }
+                if (!scores || typeof scores !== 'object' || Array.isArray(scores)) return;
+
+                Object.entries(scores).forEach(([storageKey, s], index) => {
+                    if (!s || s.score === undefined || s.score === null) return;
+
+                    let sCount = Number(s.qCount || s.questionCount || 0);
+                    if (!sCount) {
+                        const keyMatch = String(storageKey).match(/(?:^|__)q(\d+)$/i);
+                        if (keyMatch) sCount = Number(keyMatch[1]);
                     }
+                    if (!sCount) sCount = 10;
+                    if (sCount !== Number(filterCount)) return;
+
+                    const item = {
+                        accountId: String(user.id),
+                        storageKey,
+                        name: s.name || user.name || 'Siswa',
+                        score: Number(s.score) || 0,
+                        level: s.level || '-',
+                        duration: s.duration || '-',
+                        durationSeconds: parseDurationToSeconds(s.duration),
+                        os: s.os || 'Lainnya',
+                        startedAt: s.startedAt || s.startTime || s.started_at || s.attemptedAt || null,
+                        finishedAt: s.finishedAt || s.endTime || s.finished_at || s.completedAt || s.completed_at || null,
+                        updatedAt: s.updatedAt || s.finishedAt || s.endTime || s.completedAt || s.completed_at || s.updated_at || s.startedAt || s.startTime || null,
+                        legacyIndex: index
+                    };
+
+                    const key = `${item.accountId}::${sCount}`;
+                    const existing = latestByAccountAndCount.get(key);
+                    const itemStamp = item.updatedAt ? new Date(item.updatedAt).getTime() : NaN;
+                    const existingStamp = existing?.updatedAt ? new Date(existing.updatedAt).getTime() : NaN;
+
+                    const shouldReplace =
+                        !existing ||
+                        (Number.isFinite(itemStamp) && (!Number.isFinite(existingStamp) || itemStamp > existingStamp)) ||
+                        (!Number.isFinite(itemStamp) && !Number.isFinite(existingStamp) && item.legacyIndex >= existing.legacyIndex);
+
+                    if (shouldReplace) latestByAccountAndCount.set(key, item);
                 });
             });
 
-            allScores.sort((a, b) => b.score - a.score);
+            const allScores = Array.from(latestByAccountAndCount.values());
+
+            allScores.sort((a, b) => {
+                const scoreDiff = b.score - a.score;
+                if (scoreDiff !== 0) return scoreDiff;
+
+                const durationDiff = a.durationSeconds - b.durationSeconds;
+                if (durationDiff !== 0) return durationDiff;
+
+                const aStamp = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
+                const bStamp = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
+                return bStamp - aStamp;
+            });
 
             if (allScores.length === 0) {
                 listEl.innerHTML = `<p class="text-center text-xs text-slate-400 py-4 font-medium italic">Belum ada data untuk kategori ${filterCount} soal.</p>`;
@@ -8662,10 +8777,11 @@ let audioPlayCounts = {};
             }
 
             listEl.innerHTML = '';
+
             allScores.slice(0, 15).forEach((item, index) => {
                 let rankClass = 'bg-slate-100 text-slate-700';
                 let rankIcon = `<span class="font-black text-xs">#${index + 1}</span>`;
-                
+
                 if (index === 0) {
                     rankClass = 'rank-badge-1';
                     rankIcon = '<i class="fa-solid fa-crown text-amber-600 text-xs"></i> 1';
@@ -8679,18 +8795,25 @@ let audioPlayCounts = {};
 
                 listEl.innerHTML += `
                     <div class="leaderboard-card p-2.5 rounded-xl flex items-center justify-between text-xs bg-white">
-                        <div class="flex items-center gap-3">
-                            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-black ${rankClass}">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-8 h-8 rounded-lg flex items-center justify-center font-black ${rankClass} shrink-0">
                                 ${rankIcon}
                             </div>
-                            <div>
-                                <div class="font-black text-slate-800 uppercase">${item.name}</div>
-                                <div class="text-[10px] text-slate-500"><i class="fa-solid fa-mobile-screen-button"></i> ${item.os} • <i class="fa-regular fa-clock"></i> ${item.duration}</div>
+                            <div class="min-w-0 flex-1">
+                                <div class="font-black text-slate-800 uppercase truncate">${escapeHtml(item.name)}</div>
+                                <div class="text-[10px] text-slate-500 flex items-center flex-wrap gap-x-1">
+                                    <span><i class="fa-solid fa-mobile-screen-button"></i> ${escapeHtml(item.os)}</span>
+                                    <span>•</span>
+                                    <span><i class="fa-regular fa-clock"></i> ${escapeHtml(item.duration)}</span>
+                                </div>
+                                <div class="text-[10px] text-slate-400 mt-0.5 leading-4 whitespace-normal">
+                                    ${formatLeaderboardDateRange(item)}
+                                </div>
                             </div>
                         </div>
-                        <div class="text-right">
+                        <div class="text-right ml-2 shrink-0">
                             <div class="font-black text-brand-600 text-sm">${item.score} <span class="text-[10px] text-slate-400">Pts</span></div>
-                            <div class="text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">${item.level}</div>
+                            <div class="text-[10px] font-bold bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded border border-amber-200">${escapeHtml(item.level)}</div>
                         </div>
                     </div>
                 `;
@@ -8712,7 +8835,7 @@ let audioPlayCounts = {};
             }, "Reset Semua");
         }
         
-        async function removeDeviceSession(userId, deviceId) {
+        function removeDeviceSession(userId, deviceId) {
             showCustomConfirm("Yakin ingin menghapus perangkat ini dari akun?", async () => {
                 const { data: user, error } = await window.supabaseClient.from('Jft-Basic').select('*').eq('id', userId).single();
                 if (error) {
@@ -8726,7 +8849,12 @@ let audioPlayCounts = {};
 
                 let scores = user.device_scores || {};
                 if (typeof scores === 'string') scores = JSON.parse(scores);
-                delete scores[deviceId];
+                Object.keys(scores).forEach(key => {
+                    const entry = scores[key];
+                    if (key === deviceId || (entry && entry.device_id === deviceId)) {
+                        delete scores[key];
+                    }
+                });
 
                 const { error: updateError } = await window.supabaseClient.from('Jft-Basic').update({
                     registered_devices: devices,
@@ -8741,18 +8869,29 @@ let audioPlayCounts = {};
             }, "Hapus Perangkat");
         }
 
-        function finishQuiz() {
+        async function finishQuiz() {
             clearInterval(state.timerInterval);
+            state.endTime = Date.now();
             let cor = 0, mis = [];
             state.questions.forEach((q, i) => { if(state.userAnswers[i] === q.answer) cor++; else mis.push({q, a: state.userAnswers[i], n: i+1}); });
-            
+
             const score = Math.round(10 + ((cor/state.questions.length)*(250-10)));
             const lvl = score<145?"Below A1":score<175?"A1":score<200?"A2.1":"A2.2(A2)";
-            
+
             let hist = JSON.parse(localStorage.getItem('jft_history')||'[]');
-            hist.unshift({id: Date.now(), date: new Date().toISOString(), score, level: lvl, correct: cor, total: state.questions.length});
+            hist.unshift({
+                id: Date.now(),
+                date: new Date().toISOString(),
+                startTime: state.startTime ? new Date(state.startTime).toISOString() : null,
+                endTime: new Date(state.endTime).toISOString(),
+                score,
+                level: lvl,
+                correct: cor,
+                total: state.questions.length,
+                duration: state.startTime ? `${Math.floor(Math.max(0, state.endTime - state.startTime)/1000/60)}m ${Math.floor((Math.max(0, state.endTime - state.startTime)/1000)%60)}s` : '-'
+            });
             localStorage.setItem('jft_history', JSON.stringify(hist.slice(0,20)));
-            
+
             document.getElementById('res-date').textContent = new Date().toLocaleDateString('id-ID');
             document.getElementById('res-reg-num').textContent = `PRACTICE-${Math.floor(Math.random()*900000+100000)}`;
             const currentUserName = localStorage.getItem('jft_user_name') || "SISWA";
@@ -8765,7 +8904,7 @@ let audioPlayCounts = {};
             document.getElementById('eval-correct').textContent = cor;
             document.getElementById('eval-wrong').textContent = mis.length;
             document.getElementById('eval-accuracy').textContent = `${Math.round((cor/state.questions.length)*100)}%`;
-            
+
             const secStats = {};
             SECTIONS.forEach(s => secStats[s.id] = { total: 0, correct: 0 });
             state.questions.forEach((q, i) => {
@@ -8796,13 +8935,14 @@ let audioPlayCounts = {};
             const mC = document.getElementById('mistakes-container'); mC.innerHTML = '';
             if(!mis.length) mC.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Sempurna!</p>';
             mis.forEach(m => mC.innerHTML += `<div class="bg-red-50 p-4 rounded mb-4"><div class="font-bold">Soal ${m.n}</div><div class="japanese-text text-lg mb-2">${m.q.text}</div><div class="text-sm text-red-600 mb-1">Salah: ${m.a!==null?m.q.options[m.a]:'Kosong'}</div><div class="text-sm text-green-600 font-bold mb-2">Benar: ${m.q.options[m.q.answer]}</div><div class="text-xs bg-white p-2 rounded">Penjelasan: ${m.q.explanation}</div></div>`);
-            
+
             const userId = localStorage.getItem('jft_user_id');
             const deviceId = localStorage.getItem('jft_device_id');
-            if (userId && deviceId) {
-                const sTime = Math.floor((Date.now() - state.startTime) / 1000);
+            if (userId && deviceId && window.supabaseClient) {
+                const elapsedMs = state.startTime ? Math.max(0, state.endTime - state.startTime) : 0;
+                const sTime = Math.floor(elapsedMs / 1000);
                 const durationText = `${Math.floor(sTime/60)}m ${sTime%60}s`;
-                
+
                 const ua = navigator.userAgent;
                 let os = "Lainnya";
                 if (/android/i.test(ua)) os = "Android";
@@ -8810,21 +8950,54 @@ let audioPlayCounts = {};
                 else if (/windows/i.test(ua)) os = "Windows";
                 else if (/mac/i.test(ua)) os = "Mac";
 
-                window.supabaseClient.from('Jft-Basic').select('device_scores').eq('id', userId).single().then(({data}) => {
-                    let scores = data?.device_scores || {};
-                    if(typeof scores === 'string') scores = JSON.parse(scores);
-                    
-                    scores[deviceId] = { 
-                        name: currentUserName, 
-                        score: score, 
-                        level: lvl, 
-                        duration: durationText, 
-                        os: os,
-                        qCount: state.questions.length 
-                    };
-                    
-                    window.supabaseClient.from('Jft-Basic').update({ device_scores: scores }).eq('id', userId).then();
-                });
+                try {
+                    const { data, error: readError } = await window.supabaseClient
+                        .from('Jft-Basic')
+                        .select('device_scores')
+                        .eq('id', userId)
+                        .single();
+
+                    if (!readError) {
+                        let scores = data?.device_scores || {};
+                        if (typeof scores === 'string') {
+                            try { scores = JSON.parse(scores); } catch (_) { scores = {}; }
+                        }
+                        if (!scores || typeof scores !== 'object' || Array.isArray(scores)) scores = {};
+
+                        // Satu device + satu jumlah soal = satu hasil aktif.
+                        // Pengulangan jumlah soal yang sama akan menimpa record ini.
+                        // Jumlah soal berbeda tetap disimpan terpisah.
+                        const storageKey = `${deviceId}__q${state.questions.length}`;
+                        const startIso = state.startTime ? new Date(state.startTime).toISOString() : null;
+                        const endIso = new Date(state.endTime).toISOString();
+
+                        scores[storageKey] = {
+                            device_id: deviceId,
+                            name: currentUserName,
+                            score: score,
+                            level: lvl,
+                            duration: durationText,
+                            os: os,
+                            qCount: state.questions.length,
+                            startedAt: startIso,
+                            finishedAt: endIso,
+                            completedAt: endIso,
+                            updatedAt: endIso,
+                            attemptId: storageKey
+                        };
+
+                        const { error: saveError } = await window.supabaseClient
+                            .from('Jft-Basic')
+                            .update({ device_scores: scores })
+                            .eq('id', userId);
+
+                        if (saveError) console.error('Gagal menyimpan skor leaderboard:', saveError);
+                    } else {
+                        console.error('Gagal membaca skor leaderboard:', readError);
+                    }
+                } catch (saveException) {
+                    console.error('Gagal menyimpan data leaderboard:', saveException);
+                }
             }
 
             navigate('result');
@@ -8870,7 +9043,10 @@ let audioPlayCounts = {};
                     } else {
                         scoreHTML = `<div class="mt-2.5 space-y-2">`;
                         devices.forEach((dev, idx) => {
-                            const s = scores[dev];
+                            const deviceAttempts = Object.values(scores).filter(s => s && s.device_id === dev);
+                            const s = deviceAttempts.length
+                                ? deviceAttempts.sort((a, b) => new Date(b.completedAt || b.completed_at || 0) - new Date(a.completedAt || a.completed_at || 0))[0]
+                                : scores[dev]; // dukung data lama
                             // Di sinilah nama yang diketik siswa saat latihan (seperti "Raihan Fitri") akan muncul rapi!
                             const activeName = s ? s.name : `Perangkat #${idx + 1}`;
                             const deviceOs = s ? s.os : 'Web Browser';
@@ -9017,7 +9193,14 @@ let audioPlayCounts = {};
             const role = String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase();
 
             if (role === 'admin') {
-                return getAdminChatName() || 'ADMIN';
+                let adminName = getAdminChatName();
+                if (!adminName) {
+                    try {
+                        adminName = (localStorage.getItem(getLegacyAdminChatNameStorageKey()) || '').trim().toUpperCase();
+                        if (adminName) localStorage.setItem(getAdminChatNameStorageKey(), adminName);
+                    } catch (_) {}
+                }
+                return adminName || 'ADMIN';
             }
 
             const saved = (
@@ -9073,18 +9256,18 @@ let audioPlayCounts = {};
             }
 
             localStorage.setItem(getAdminChatNameStorageKey(), name);
-            // Simpan juga ke key lama yang aktif agar versi web lama tidak kehilangan nama.
             try { localStorage.setItem(getLegacyAdminChatNameStorageKey(), name); } catch (_) {}
             updateAdminChatNameDisplay();
+
             const shouldOpenChat = adminChatOpenAfterName;
             adminChatOpenAfterName = false;
+
             const currentNameEl = document.getElementById('chat-current-name');
             if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
+
             closeAdminChatNameModal();
             showToast('Identitas Admin', `Nama Global Chat sekarang ${name}.`);
 
-            // Jika modal nama dibuka karena admin menekan tombol Global Chat,
-            // lanjutkan otomatis membuka room setelah nama disimpan.
             if (shouldOpenChat) {
                 await toggleGlobalChat();
             }
@@ -9675,7 +9858,29 @@ async function clearAllChats() {
             return array;
         }
 
-        function startQuiz() {
+        function getQuizSectionIndex(index) {
+            const q = state.questions[index];
+            if (!q) return -1;
+            return SECTIONS.findIndex(s => s.id === q.section);
+        }
+
+function getNextSectionIndex(index) {
+            const currentSectionIndex = getQuizSectionIndex(index);
+            if (currentSectionIndex < 0) return -1;
+            for (let i = currentSectionIndex + 1; i < SECTIONS.length; i++) {
+                if (state.questions.some(q => q.section === SECTIONS[i].id)) return i;
+            }
+            return -1;
+        }
+
+function getQuestionSeenCount(q,stats){const raw=stats[q.id];if(typeof raw==='number')return raw;if(raw&&typeof raw==='object')return Number(raw.count)||0;return 0;}
+
+function getQuestionWeight(q,stats){const c=getQuestionSeenCount(q,stats);return 1/Math.pow(1+c*1.75,1.15);}
+
+function weightedPick(pool,stats){if(!pool.length)return null;const ws=pool.map(q=>getQuestionWeight(q,stats)),total=ws.reduce((a,b)=>a+b,0);let r=Math.random()*total;for(let i=0;i<pool.length;i++){r-=ws[i];if(r<=0)return pool[i];}return pool[pool.length-1];}
+
+function weightedSample(pool,count,stats){const work=[...pool],picked=[];while(work.length&&picked.length<count){const q=weightedPick(work,stats);if(!q)break;picked.push(q);work.splice(work.indexOf(q),1);}return picked;}
+function startQuiz() {
     const nameInput = document.getElementById('user-name-input');
     const userName = nameInput ? nameInput.value.trim() : '';
 
@@ -9717,26 +9922,46 @@ async function clearAllChats() {
             const reqCount = qCountRadio ? parseInt(qCountRadio.value) : 10;
 
             const qStats = JSON.parse(localStorage.getItem('jft_question_stats') || '{}');
-            let wBank = [...QUESTION_BANK].map(q => ({ ...q, weight: (qStats[q.id]||0) + Math.random() }));
-            wBank.sort((a, b) => a.weight - b.weight);
+
+            // Urutan mengikuti struktur JFT Basic: Vocabulary → Grammar/Conversation & Expression → Listening → Reading.
+            // Jumlah soal dibagi seimbang. Jika tidak habis dibagi 4, sisa 1-3 soal
+            // dibagikan secara acak sehingga selisih antarbagian maksimal 1 soal.
+            const sectionOrder = ['vocab', 'grammar', 'listening', 'reading'];
+            const totalQuestions = Math.min(reqCount, QUESTION_BANK.length);
+            const baseCount = Math.floor(totalQuestions / sectionOrder.length);
+            const remainder = totalQuestions % sectionOrder.length;
+            const counts = Object.fromEntries(sectionOrder.map(sec => [sec, baseCount]));
+            const remainderSections = shuffleArray([...sectionOrder]).slice(0, remainder);
+            remainderSections.forEach(sec => counts[sec]++);
 
             let selected = [];
-            ['vocab','grammar','listening','reading'].forEach(sec => {
-                let secQs = wBank.filter(q => q.section === sec);
-                if(secQs.length > 0) selected.push(secQs[0]);
+            const usedQuestionKeys = new Set();
+
+            // Jangan pernah memasukkan soal dengan teks yang sama dalam satu latihan.
+            // ID yang berbeda tidak dianggap cukup berbeda jika pertanyaannya identik.
+            const getQuestionKey = q => String(q.text || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toLowerCase();
+
+            sectionOrder.forEach(sec => {
+                const qs = QUESTION_BANK.filter(q =>
+                    q.section === sec && !usedQuestionKeys.has(getQuestionKey(q))
+                );
+                const picks = weightedSample(qs, Math.min(counts[sec], qs.length), qStats);
+                picks.forEach(q => usedQuestionKeys.add(getQuestionKey(q)));
+                selected.push(...picks);
             });
 
-            const selIds = new Set(selected.map(q => q.id));
-            let remain = wBank.filter(q => !selIds.has(q.id));
-            selected.push(...remain.slice(0, Math.max(0, reqCount - selected.length)));
-
-            selected.forEach(q => qStats[q.id] = (qStats[q.id]||0) + 1);
+            selected.forEach(q => qStats[q.id] = getQuestionSeenCount(q, qStats) + 1);
             localStorage.setItem('jft_question_stats', JSON.stringify(qStats));
 
-            state.questions = shuffleArray(selected);
+            // Jangan mengacak seluruh soal, supaya urutan bagian tetap seperti JFT.
+            state.questions = selected;
             state.currentQuestionIndex = 0;
             state.userAnswers = new Array(state.questions.length).fill(null);
 
+            state.endTime = null;
             navigate('quiz');
             state.startTime = Date.now();
             state.timerInterval = setInterval(() => {
@@ -9763,12 +9988,21 @@ async function clearAllChats() {
             
             document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} / ${state.questions.length}`;
             document.getElementById('quiz-progress-bar').style.width = `${((state.currentQuestionIndex) / state.questions.length) * 100}%`;
+            const badge=document.getElementById('quiz-section-badge');
+            if (badge) {
+                const sec = SECTIONS.find(x => x.id === q.section);
+                badge.textContent = sec ? `${sec.nameJP} / ${sec.nameEN}` : q.section;
+            }
             document.getElementById('quiz-question').innerText = q.text;
             
             const btnNext = document.getElementById('btn-next-question');
             const btnPrev = document.getElementById('btn-prev-question');
 
-btnPrev.disabled = state.currentQuestionIndex === 0;
+const currentSectionForPrev = state.questions[state.currentQuestionIndex]?.section;
+const previousSectionForPrev = state.questions[state.currentQuestionIndex - 1]?.section;
+// Tombol kembali dikunci pada awal setiap sesi. Jadi setelah pindah
+// dari Vocabulary ke Grammar, Vocabulary tidak dapat dibuka lagi.
+btnPrev.disabled = state.currentQuestionIndex === 0 || currentSectionForPrev !== previousSectionForPrev;
 
 if (btnPrev.disabled) {
     btnPrev.classList.add('opacity-50', 'cursor-not-allowed');
@@ -10614,8 +10848,43 @@ function escapeHtml(text) {
         
         function nextQuestion() {
             if(window.speechSynthesis) window.speechSynthesis.cancel();
-            if (state.currentQuestionIndex < state.questions.length - 1) { state.currentQuestionIndex++; renderQuestion(); window.scrollTo(0,0); }
-            else finishQuiz();
+
+            const currentIndex = state.currentQuestionIndex;
+            const currentSection = state.questions[currentIndex]?.section;
+            const nextIndex = currentIndex + 1;
+            const isLastQuestion = currentIndex >= state.questions.length - 1;
+            const nextQuestionSection = state.questions[nextIndex]?.section;
+
+            // Masih di sesi yang sama: lanjut biasa.
+            if (!isLastQuestion && nextQuestionSection === currentSection) {
+                state.currentQuestionIndex++;
+                renderQuestion();
+                window.scrollTo(0,0);
+                return;
+            }
+
+            // Soal terakhir pada sebuah sesi: minta konfirmasi sebelum
+            // mengunci sesi tersebut dan masuk ke sesi berikutnya.
+            if (!isLastQuestion && nextQuestionSection !== currentSection) {
+                const nextSec = SECTIONS.find(s => s.id === nextQuestionSection);
+                const currentSec = SECTIONS.find(s => s.id === currentSection);
+                const nextName = nextSec ? `${nextSec.nameJP} / ${nextSec.nameEN}` : 'sesi berikutnya';
+                const currentName = currentSec ? `${currentSec.nameJP} / ${currentSec.nameEN}` : 'sesi ini';
+
+                showCustomConfirm(
+                    `Sesi ${currentName} sudah selesai. Jika Anda memilih \"Lanjut\", sesi ini akan dikunci dan Anda tidak dapat kembali melihat atau mengerjakan soal di sesi sebelumnya.\n\nLanjut ke ${nextName}?`,
+                    () => {
+                        state.currentQuestionIndex++;
+                        renderQuestion();
+                        window.scrollTo(0,0);
+                    },
+                    'Lanjut'
+                );
+                return;
+            }
+
+            // Semua sesi sudah selesai.
+            finishQuiz();
         }
         
         function previousQuestion() {
