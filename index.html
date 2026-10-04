@@ -148,6 +148,8 @@
 <style id="compact-chat-mobile">
 /* ===== COMPACT GLOBAL CHAT ===== */
 #global-chat-modal { padding: 8px !important; }
+#kana-quiz-modal { z-index: 1050 !important; }
+#kana-quiz-modal .kana-option:disabled { opacity: 1; cursor: default; }
 #global-chat-modal > div:first-child {
     width: 100% !important;
     max-width: 560px !important;
@@ -650,6 +652,69 @@
         <i class="fa-solid fa-comments text-lg"></i> Global Chat (Ruang Diskusi Siswa)
     </button>
 </div>
+
+                <!-- KUIS HURUF UNTUK PEMULA -->
+                <div class="border-t-2 border-slate-200 pt-6 mt-6 text-left">
+                    <div class="mb-3">
+                        <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                            <i class="fa-solid fa-language text-brand-600"></i> Kuis Kana — Pemula
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">Hiragana dan Katakana dipisah. Fokus karakter dasar, cocok untuk pemula.</p>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <button onclick="openKanaQuiz('hiragana')" class="text-left p-4 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="text-xs font-black uppercase text-slate-600">Kuis 01</div>
+                                    <div class="text-xl font-black text-[#181818]">ひらがな</div>
+                                    <div class="text-[11px] font-bold text-slate-600 mt-1">Hiragana dasar • 10 soal</div>
+                                </div>
+                                <span class="text-4xl font-black">あ</span>
+                            </div>
+                        </button>
+                        <button onclick="openKanaQuiz('katakana')" class="text-left p-4 bg-[#62bddb] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="flex items-center justify-between gap-3">
+                                <div>
+                                    <div class="text-xs font-black uppercase text-slate-600">Kuis 02</div>
+                                    <div class="text-xl font-black text-[#181818]">カタカナ</div>
+                                    <div class="text-[11px] font-bold text-slate-700 mt-1">Katakana dasar • 10 soal</div>
+                                </div>
+                                <span class="text-4xl font-black">ア</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ETALASE MATERI GRATIS -->
+                <div class="border-t-2 border-slate-200 pt-6 mt-6 text-left">
+                    <div class="flex items-start justify-between gap-3 mb-3">
+                        <div>
+                            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-store text-emerald-600"></i> Etalase Materi Gratis
+                            </h3>
+                            <p class="text-xs text-slate-500 mt-1">Buka materi di tab baru melalui Google Drive.</p>
+                        </div>
+                        <span class="shrink-0 bg-[#43c9bd] text-[#181818] px-2.5 py-1 rounded-lg border-[2px] border-[#181818] text-[9px] font-black shadow-[2px_2px_0_#181818]">GRATIS</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <a href="https://drive.google.com/file/d/1EQ_fETz_S3kypo6vIVGjMR6p4-A_B6eT/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-white border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">Version 1</div><div class="text-[11px] font-bold text-slate-500 mt-1">Materi • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1e3Mv-gDcKL7vC7PI7VXouLyRR37NE2CI/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-white border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">Version 2</div><div class="text-[11px] font-bold text-slate-500 mt-1">Materi • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/16xGs1meRe964-PU2PWTlBkBpjdd3EoZV/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">V1 — Full Jepang</div><div class="text-[11px] font-bold text-slate-600 mt-1">Versi bahasa Jepang • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1SL8KvzGQVf4f2pGLU2ZRRHUTnzX80oEu/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
+                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">V2 — Full Jepang</div><div class="text-[11px] font-bold text-slate-600 mt-1">Versi bahasa Jepang • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
+                        </a>
+                        <a href="https://drive.google.com/file/d/1synFNOto3RifCp2360b2w1HvRbwmCcmA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all sm:col-span-2">
+                            <div class="flex items-center justify-between gap-3"><div><div class="text-[10px] font-black uppercase text-slate-600">Kotoba</div><div class="font-black text-[#181818] text-base mt-0.5">Bab 1–50</div><div class="text-[11px] font-bold text-slate-600 mt-1">Kumpulan kosakata bab 1 sampai 50 • Gratis</div></div><div class="text-2xl">📚</div></div>
+                            <div class="mt-3 text-xs font-black text-[#181818]">Buka Materi ↗</div>
+                        </a>
+                    </div>
+                </div>
 
                 <!-- TOMBOL MENU LEADERBOARD -->
                 <div class="border-t-2 border-slate-200 pt-6 mt-6">
@@ -1189,6 +1254,29 @@
 </div>
 
 
+<!-- MODAL KUIS HIRAGANA / KATAKANA PEMULA -->
+<div id="kana-quiz-modal" class="fixed inset-0 z-[1050] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+  <div class="bg-[#fffdf8] w-full max-w-md rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] overflow-hidden">
+    <div class="bg-[#ffe45c] p-4 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
+      <div><div class="text-[10px] font-black uppercase tracking-widest text-slate-600">Kuis Kana • Pemula</div><h3 id="kana-quiz-title" class="text-xl font-black text-[#181818]">ひらがな</h3></div>
+      <button onclick="closeKanaQuiz()" class="w-9 h-9 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="p-5">
+      <div class="flex items-center justify-between gap-3 mb-4"><span id="kana-quiz-progress" class="text-xs font-black text-slate-600">Soal 1 / 10</span><span id="kana-quiz-score" class="text-xs font-black bg-white border-[2px] border-[#181818] rounded-lg px-2 py-1">Skor: 0</span></div>
+      <div id="kana-quiz-question" class="min-h-[190px] bg-white border-[3px] border-[#181818] rounded-2xl shadow-[4px_4px_0_#181818] flex flex-col items-center justify-center text-center p-5">
+        <div class="text-xs font-black uppercase tracking-wider text-slate-500 mb-3">Huruf ini dibaca...</div>
+        <div id="kana-quiz-character" class="text-8xl font-black leading-none japanese-text">あ</div>
+        <div id="kana-quiz-feedback" class="text-sm font-black mt-4 min-h-[20px]"></div>
+      </div>
+      <div id="kana-quiz-options" class="grid grid-cols-2 gap-3 mt-4"></div>
+      <div id="kana-quiz-result" class="hidden mt-4 text-center bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-4">
+        <div class="text-[10px] font-black uppercase tracking-widest text-slate-500">Hasil</div><div id="kana-quiz-result-score" class="text-3xl font-black text-[#181818] mt-1">0 / 10</div><div id="kana-quiz-result-text" class="text-xs font-bold text-slate-600 mt-1"></div>
+        <div class="flex gap-2 mt-4"><button onclick="restartKanaQuiz()" class="flex-1 py-2.5 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]">Ulangi</button><button onclick="closeKanaQuiz()" class="flex-1 py-2.5 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]">Selesai</button></div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- KUSTOM NOTIFIKASI / ALERT CANTIK -->
 <div id="custom-toast-modal" class="fixed inset-0 z-[1200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
     <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
@@ -1212,6 +1300,67 @@
             { id: 'listening', nameJP: '聴解', nameEN: 'Listening Comprehension' },
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
+
+        // ==========================================
+        // KUIS HIRAGANA / KATAKANA PEMULA
+        // ==========================================
+        const HIRAGANA_BEGINNER = [
+          ['あ','a'],['い','i'],['う','u'],['え','e'],['お','o'],['か','ka'],['き','ki'],['く','ku'],['け','ke'],['こ','ko'],
+          ['さ','sa'],['し','shi'],['す','su'],['せ','se'],['そ','so'],['た','ta'],['ち','chi'],['つ','tsu'],['て','te'],['と','to'],
+          ['な','na'],['に','ni'],['ぬ','nu'],['ね','ne'],['の','no'],['は','ha'],['ひ','hi'],['ふ','fu'],['へ','he'],['ほ','ho'],
+          ['ま','ma'],['み','mi'],['む','mu'],['め','me'],['も','mo'],['や','ya'],['ゆ','yu'],['よ','yo'],['ら','ra'],['り','ri'],
+          ['る','ru'],['れ','re'],['ろ','ro'],['わ','wa'],['を','wo'],['ん','n']
+        ];
+        const KATAKANA_BEGINNER = HIRAGANA_BEGINNER.map(([_, romaji], index) => [
+          ['ア','イ','ウ','エ','オ','カ','キ','ク','ケ','コ','サ','シ','ス','セ','ソ','タ','チ','ツ','テ','ト','ナ','ニ','ヌ','ネ','ノ','ハ','ヒ','フ','ヘ','ホ','マ','ミ','ム','メ','モ','ヤ','ユ','ヨ','ラ','リ','ル','レ','ロ','ワ','ヲ','ン'][index], romaji
+        ]);
+        let kanaQuizState = { type: 'hiragana', questions: [], index: 0, score: 0, answered: false };
+
+        function kanaShuffle(arr) {
+          const copy = [...arr];
+          for (let i = copy.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [copy[i], copy[j]] = [copy[j], copy[i]]; }
+          return copy;
+        }
+        function buildKanaQuestions(type) {
+          const bank = type === 'katakana' ? KATAKANA_BEGINNER : HIRAGANA_BEGINNER;
+          return kanaShuffle(bank).slice(0, 10).map(([character, answer]) => {
+            const distinct = [...new Set(bank.map(x => x[1]).filter(x => x !== answer))];
+            const options = kanaShuffle([answer, ...kanaShuffle(distinct).slice(0, 3)]);
+            return { character, answer, options };
+          });
+        }
+        function openKanaQuiz(type) {
+          kanaQuizState = { type, questions: buildKanaQuestions(type), index: 0, score: 0, answered: false };
+          const modal = document.getElementById('kana-quiz-modal'); if (!modal) return;
+          modal.classList.remove('hidden'); modal.classList.add('flex'); renderKanaQuizQuestion();
+        }
+        function renderKanaQuizQuestion() {
+          const q = kanaQuizState.questions[kanaQuizState.index]; if (!q) return;
+          document.getElementById('kana-quiz-title').textContent = kanaQuizState.type === 'katakana' ? 'カタカナ' : 'ひらがな';
+          document.getElementById('kana-quiz-progress').textContent = `Soal ${kanaQuizState.index + 1} / ${kanaQuizState.questions.length}`;
+          document.getElementById('kana-quiz-score').textContent = `Skor: ${kanaQuizState.score}`;
+          document.getElementById('kana-quiz-character').textContent = q.character;
+          const feedback = document.getElementById('kana-quiz-feedback'); feedback.textContent = ''; feedback.className = 'text-sm font-black mt-4 min-h-[20px]';
+          document.getElementById('kana-quiz-question').classList.remove('hidden');
+          document.getElementById('kana-quiz-result').classList.add('hidden');
+          document.getElementById('kana-quiz-options').innerHTML = q.options.map(option => `<button type="button" onclick="answerKanaQuestion('${option}')" class="kana-option py-3 px-3 bg-white border-[2px] border-[#181818] rounded-xl font-black text-base shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">${option}</button>`).join('');
+          kanaQuizState.answered = false;
+        }
+        function answerKanaQuestion(selected) {
+          if (kanaQuizState.answered) return; const q = kanaQuizState.questions[kanaQuizState.index]; if (!q) return;
+          kanaQuizState.answered = true; const correct = selected === q.answer; if (correct) kanaQuizState.score++;
+          document.querySelectorAll('#kana-quiz-options .kana-option').forEach(btn => { btn.disabled = true; if (btn.textContent === q.answer) btn.classList.add('bg-[#43c9bd]'); else if (btn.textContent === selected) btn.classList.add('bg-[#ff7373]'); });
+          const feedback = document.getElementById('kana-quiz-feedback'); feedback.textContent = correct ? 'Benar! ✨' : `Belum tepat. Jawaban: ${q.answer}`; feedback.className = `text-sm font-black mt-4 min-h-[20px] ${correct ? 'text-emerald-600' : 'text-rose-600'}`;
+          document.getElementById('kana-quiz-score').textContent = `Skor: ${kanaQuizState.score}`;
+          setTimeout(() => { if (kanaQuizState.index < kanaQuizState.questions.length - 1) { kanaQuizState.index++; renderKanaQuizQuestion(); } else finishKanaQuiz(); }, 650);
+        }
+        function finishKanaQuiz() {
+          document.getElementById('kana-quiz-options').innerHTML = ''; document.getElementById('kana-quiz-question').classList.add('hidden'); document.getElementById('kana-quiz-result').classList.remove('hidden');
+          document.getElementById('kana-quiz-result-score').textContent = `${kanaQuizState.score} / ${kanaQuizState.questions.length}`;
+          document.getElementById('kana-quiz-result-text').textContent = kanaQuizState.score === 10 ? 'Sempurna! ✨' : kanaQuizState.score >= 7 ? 'Bagus! Tinggal sedikit lagi.' : 'Ayo ulangi sampai makin hafal.';
+        }
+        function restartKanaQuiz() { openKanaQuiz(kanaQuizState.type); }
+        function closeKanaQuiz() { const modal = document.getElementById('kana-quiz-modal'); if (!modal) return; modal.classList.add('hidden'); modal.classList.remove('flex'); }
 
         // MOCK QUESTION BANK
                 const QUESTION_BANK = [
@@ -8815,13 +8964,36 @@ let audioPlayCounts = {};
         }
 
         function getAdminChatNameStorageKey() {
+            // Nama admin disimpan berdasarkan ID akun, bukan device ID.
+            // Jadi nama tetap bertahan setelah reload / buka ulang web.
+            const userId = localStorage.getItem('jft_user_id') || 'guest';
+            return `jft_admin_chat_name_${userId}`;
+        }
+
+        function getLegacyAdminChatNameStorageKey() {
             const userId = localStorage.getItem('jft_user_id') || 'guest';
             const deviceId = getOrCreateDeviceId();
             return `jft_admin_chat_name_${userId}_${deviceId}`;
         }
 
         function getAdminChatName() {
-            return (localStorage.getItem(getAdminChatNameStorageKey()) || '').trim().toUpperCase();
+            const stableKey = getAdminChatNameStorageKey();
+            let name = (localStorage.getItem(stableKey) || '').trim().toUpperCase();
+
+            if (!name && String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase() === 'admin') {
+                // Cari nama dari SEMUA key lama milik akun ini, bukan hanya device aktif.
+                // Ini membuat migrasi tetap berhasil walaupun device ID versi lama berubah.
+                const prefix = `jft_admin_chat_name_${localStorage.getItem('jft_user_id') || 'guest'}_`;
+                for (let i = 0; i < localStorage.length; i++) {
+                    const key = localStorage.key(i);
+                    if (!key || !key.startsWith(prefix)) continue;
+                    const candidate = (localStorage.getItem(key) || '').trim().toUpperCase();
+                    if (candidate) { name = candidate; break; }
+                }
+                if (name) localStorage.setItem(stableKey, name);
+            }
+
+            return name;
         }
 
         function getCurrentChatName() {
@@ -8884,6 +9056,8 @@ let audioPlayCounts = {};
             }
 
             localStorage.setItem(getAdminChatNameStorageKey(), name);
+            // Simpan juga ke key lama yang aktif agar versi web lama tidak kehilangan nama.
+            try { localStorage.setItem(getLegacyAdminChatNameStorageKey(), name); } catch (_) {}
             updateAdminChatNameDisplay();
             const shouldOpenChat = adminChatOpenAfterName;
             adminChatOpenAfterName = false;
@@ -8959,9 +9133,14 @@ let audioPlayCounts = {};
                 return;
             }
 
-            const role = localStorage.getItem('jft_user_role');
+            const role = String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase();
             if (role === 'admin') {
                 navigate('admin');
+                setTimeout(() => {
+                    updateAdminChatNameDisplay();
+                    const currentNameEl = document.getElementById('chat-current-name');
+                    if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
+                }, 0);
                 return;
             }
 
@@ -9765,7 +9944,7 @@ function updateRoomUIState() {
     if (!inputMsg) return;
 
     const userRole = localStorage.getItem('jft_user_role');
-    const isAdmin = userRole === 'admin';
+    const isAdmin = String(userRole || '').trim().toLowerCase() === 'admin';
 
     let notice = document.getElementById('room-closed-notice');
 
@@ -9973,6 +10152,7 @@ function appendMessageElement(msg, container) {
 
     messageDiv.innerHTML = `
         <div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">
+            ${isAdmin ? '<span class="text-[12px] leading-none" title="Admin">👑</span>' : ''}
             <span class="text-[10px] font-black uppercase truncate" style="color: ${nameColor};">${escapeHtml(senderName)}</span>
             
             <span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span>
@@ -10185,7 +10365,7 @@ async function handleActionDelete() {
             .eq('id', messageId);
 
         const role = localStorage.getItem('jft_user_role');
-        const result = role === 'admin'
+        const result = String(role || '').trim().toLowerCase() === 'admin'
             ? await query
             : await query.eq('sender_id', getChatIdentity());
 
@@ -10291,7 +10471,7 @@ async function sendGlobalMessage() {
 
     if (!message) return;
 
-    if (isRoomClosed && userRole !== 'admin') {
+    if (isRoomClosed && String(userRole || '').trim().toLowerCase() !== 'admin') {
         showToast('Peringatan', 'Room chat sedang ditutup oleh admin.', true);
         return;
     }
@@ -10305,7 +10485,7 @@ async function sendGlobalMessage() {
             })
             .eq('id', editingMessageId);
 
-        const result = userRole === 'admin'
+        const result = String(userRole || '').trim().toLowerCase() === 'admin'
             ? await query
             : await query.eq('sender_id', getChatIdentity());
 
@@ -10355,6 +10535,11 @@ async function sendGlobalMessage() {
 document.addEventListener('DOMContentLoaded', () => {
     restoreChatNotificationDot();
     checkRoomStatus();
+    if (String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase() === 'admin') {
+        updateAdminChatNameDisplay();
+        const currentNameEl = document.getElementById('chat-current-name');
+        if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
+    }
 });
 
 function checkChatInput(e) {
