@@ -654,97 +654,55 @@
 </div>
 
                 <!-- KUIS HURUF UNTUK PEMULA -->
-                <div class="border-t-2 border-slate-200 pt-6 mt-6 text-left">
-                    <div class="mb-3">
-                        <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
-                            <i class="fa-solid fa-language text-brand-600"></i> Kuis Kana — Pemula
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1">Hiragana dan Katakana dipisah. Fokus karakter dasar, cocok untuk pemula.</p>
+                <div class="border-t-2 border-slate-200 pt-5 mt-5 text-left">
+                    <div class="flex items-center justify-between gap-3 mb-3">
+                        <div class="min-w-0">
+                            <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+                                <i class="fa-solid fa-language text-brand-600"></i> Kuis Kana Pemula
+                            </h3>
+                            <p class="text-[11px] text-slate-500 mt-1">Latihan dasar. Hiragana dan Katakana dibuat terpisah.</p>
+                        </div>
+                        <span class="shrink-0 text-[9px] font-black px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white shadow-[2px_2px_0_#181818]">10 SOAL</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <button onclick="openKanaQuiz('hiragana')" class="text-left p-4 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="flex items-center justify-between gap-3">
-                                <div>
-                                    <div class="text-xs font-black uppercase text-slate-600">Kuis 01</div>
-                                    <div class="text-xl font-black text-[#181818]">ひらがな</div>
-                                    <div class="text-[11px] font-bold text-slate-600 mt-1">Hiragana dasar • 10 soal</div>
-                                </div>
-                                <span class="text-4xl font-black">あ</span>
-                            </div>
+                    <div class="flex flex-wrap gap-2">
+                        <button onclick="openKanaQuiz('hiragana')" class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black">
+                            <span class="text-lg leading-none japanese-text">あ</span><span>Hiragana</span>
                         </button>
-                        <button onclick="openKanaQuiz('katakana')" class="text-left p-4 bg-[#62bddb] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="flex items-center justify-between gap-3">
-                                <div>
-                                    <div class="text-xs font-black uppercase text-slate-600">Kuis 02</div>
-                                    <div class="text-xl font-black text-[#181818]">カタカナ</div>
-                                    <div class="text-[11px] font-bold text-slate-700 mt-1">Katakana dasar • 10 soal</div>
-                                </div>
-                                <span class="text-4xl font-black">ア</span>
-                            </div>
+                        <button onclick="openKanaQuiz('katakana')" class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black">
+                            <span class="text-lg leading-none japanese-text">ア</span><span>Katakana</span>
                         </button>
                     </div>
                 </div>
 
                 <!-- ETALASE MATERI GRATIS -->
-                <div class="border-t-2 border-slate-200 pt-6 mt-6 text-left">
+                <div class="border-t-2 border-slate-200 pt-5 mt-5 text-left">
                     <div class="flex items-start justify-between gap-3 mb-3">
                         <div>
                             <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
                                 <i class="fa-solid fa-store text-emerald-600"></i> Etalase Materi Gratis
                             </h3>
-                            <p class="text-xs text-slate-500 mt-1">Buka materi di tab baru melalui Google Drive.</p>
+                            <p class="text-[11px] text-slate-500 mt-1">Pilih materi untuk melihat detail, lalu buka sumbernya.</p>
                         </div>
                         <span class="shrink-0 bg-[#43c9bd] text-[#181818] px-2.5 py-1 rounded-lg border-[2px] border-[#181818] text-[9px] font-black shadow-[2px_2px_0_#181818]">GRATIS</span>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <a href="https://drive.google.com/file/d/1EQ_fETz_S3kypo6vIVGjMR6p4-A_B6eT/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-white border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">Version 1</div><div class="text-[11px] font-bold text-slate-500 mt-1">Materi • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
-                        </a>
-                        <a href="https://drive.google.com/file/d/1e3Mv-gDcKL7vC7PI7VXouLyRR37NE2CI/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-white border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">Version 2</div><div class="text-[11px] font-bold text-slate-500 mt-1">Materi • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
-                        </a>
-                        <a href="https://drive.google.com/file/d/16xGs1meRe964-PU2PWTlBkBpjdd3EoZV/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">V1 — Full Jepang</div><div class="text-[11px] font-bold text-slate-600 mt-1">Versi bahasa Jepang • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
-                        </a>
-                        <a href="https://drive.google.com/file/d/1SL8KvzGQVf4f2pGLU2ZRRHUTnzX80oEu/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all">
-                            <div class="text-[10px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-base mt-0.5">V2 — Full Jepang</div><div class="text-[11px] font-bold text-slate-600 mt-1">Versi bahasa Jepang • Gratis</div><div class="mt-3 text-xs font-black text-brand-700">Buka Materi ↗</div>
-                        </a>
-                        <a href="https://drive.google.com/file/d/1synFNOto3RifCp2360b2w1HvRbwmCcmA/view?usp=drivesdk" target="_blank" rel="noopener noreferrer" class="group p-4 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all sm:col-span-2">
-                            <div class="flex items-center justify-between gap-3"><div><div class="text-[10px] font-black uppercase text-slate-600">Kotoba</div><div class="font-black text-[#181818] text-base mt-0.5">Bab 1–50</div><div class="text-[11px] font-bold text-slate-600 mt-1">Kumpulan kosakata bab 1 sampai 50 • Gratis</div></div><div class="text-2xl">📚</div></div>
-                            <div class="mt-3 text-xs font-black text-[#181818]">Buka Materi ↗</div>
-                        </a>
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                        <button onclick="openMaterialShelf(0)" class="material-shelf-btn text-left p-3 bg-white border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition">
+                            <div class="text-[9px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-sm mt-0.5">V1</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+                        </button>
+                        <button onclick="openMaterialShelf(1)" class="material-shelf-btn text-left p-3 bg-white border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition">
+                            <div class="text-[9px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-sm mt-0.5">V2</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+                        </button>
+                        <button onclick="openMaterialShelf(2)" class="material-shelf-btn text-left p-3 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition">
+                            <div class="text-[9px] font-black uppercase text-slate-500">Full Jepang</div><div class="font-black text-[#181818] text-sm mt-0.5">V1</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+                        </button>
+                        <button onclick="openMaterialShelf(3)" class="material-shelf-btn text-left p-3 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition">
+                            <div class="text-[9px] font-black uppercase text-slate-500">Full Jepang</div><div class="font-black text-[#181818] text-sm mt-0.5">V2</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+                        </button>
+                        <button onclick="openMaterialShelf(4)" class="material-shelf-btn text-left p-3 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition col-span-2 sm:col-span-1">
+                            <div class="text-[9px] font-black uppercase text-slate-600">Kotoba</div><div class="font-black text-[#181818] text-sm mt-0.5">Bab 1–50</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+                        </button>
                     </div>
                 </div>
-
-                <!-- TOMBOL MENU LEADERBOARD -->
-                <div class="border-t-2 border-slate-200 pt-6 mt-6">
-                    <button onclick="toggleLeaderboard()" class="w-full py-3 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-trophy text-lg text-amber-600"></i> Lihat Papan Peringkat (Leaderboard)
-                    </button>
-                    
-                    <!-- KOTAK KONTAINER LEADERBOARD -->
-                    <div id="leaderboard-container" class="hidden mt-4 text-left bg-white p-4 rounded-xl border-[2px] border-[#181818] shadow-[4px_4px_0_#181818]">
-                        <div class="flex justify-between items-center mb-3 border-b-2 border-[#181818] pb-2">
-                            <h4 class="font-black text-slate-800 text-sm uppercase flex items-center gap-2">
-                                <i class="fa-solid fa-medal text-amber-500"></i> Top Skor Siswa
-                            </h4>
-                            <button onclick="toggleLeaderboard()" class="text-xs font-bold text-slate-500 hover:text-red-500"><i class="fa-solid fa-xmark text-base"></i></button>
-                        </div>
-                        
-                        
-
-                        <!-- TAB FILTER KATEGORI JUMLAH SOAL -->
-                        <div class="grid grid-cols-4 gap-1 mb-3 text-xs font-bold">
-                            <button onclick="setLeaderboardFilter(10)" id="l-btn-10" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-center shadow-[2px_2px_0_#181818] transition-all">10 Soal</button>
-                            <button onclick="setLeaderboardFilter(20)" id="l-btn-20" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">20 Soal</button>
-                            <button onclick="setLeaderboardFilter(30)" id="l-btn-30" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">30 Soal</button>
-                            <button onclick="setLeaderboardFilter(50)" id="l-btn-50" class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all">50 Soal</button>
-                        </div>
-
-                        <div id="leaderboard-list" class="space-y-2.5 max-h-64 overflow-y-auto pr-1">
-                            <p class="text-center text-xs text-slate-500 py-4 font-bold">Memuat peringkat...</p>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -1254,24 +1212,39 @@
 </div>
 
 
-<!-- MODAL KUIS HIRAGANA / KATAKANA PEMULA -->
-<div id="kana-quiz-modal" class="fixed inset-0 z-[1050] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
-  <div class="bg-[#fffdf8] w-full max-w-md rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] overflow-hidden">
-    <div class="bg-[#ffe45c] p-4 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
-      <div><div class="text-[10px] font-black uppercase tracking-widest text-slate-600">Kuis Kana • Pemula</div><h3 id="kana-quiz-title" class="text-xl font-black text-[#181818]">ひらがな</h3></div>
-      <button onclick="closeKanaQuiz()" class="w-9 h-9 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]"><i class="fa-solid fa-xmark"></i></button>
+<!-- MODAL ETALASE MATERI GRATIS -->
+<div id="material-shelf-modal" onclick="if(event.target===this) closeMaterialShelf();" class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4">
+  <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[7px_7px_0_#181818] overflow-hidden">
+    <div class="bg-[#ffe45c] px-4 py-3 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
+      <div class="min-w-0"><div class="text-[9px] font-black uppercase tracking-widest text-slate-600">Etalase Materi Gratis</div><h3 id="material-shelf-title" class="text-lg font-black text-[#181818] mt-0.5">Materi</h3></div>
+      <button onclick="closeMaterialShelf()" class="w-8 h-8 shrink-0 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]"><i class="fa-solid fa-xmark"></i></button>
     </div>
-    <div class="p-5">
-      <div class="flex items-center justify-between gap-3 mb-4"><span id="kana-quiz-progress" class="text-xs font-black text-slate-600">Soal 1 / 10</span><span id="kana-quiz-score" class="text-xs font-black bg-white border-[2px] border-[#181818] rounded-lg px-2 py-1">Skor: 0</span></div>
-      <div id="kana-quiz-question" class="min-h-[190px] bg-white border-[3px] border-[#181818] rounded-2xl shadow-[4px_4px_0_#181818] flex flex-col items-center justify-center text-center p-5">
-        <div class="text-xs font-black uppercase tracking-wider text-slate-500 mb-3">Huruf ini dibaca...</div>
-        <div id="kana-quiz-character" class="text-8xl font-black leading-none japanese-text">あ</div>
-        <div id="kana-quiz-feedback" class="text-sm font-black mt-4 min-h-[20px]"></div>
+    <div class="p-4">
+      <div class="flex items-center gap-3 mb-3"><div id="material-shelf-icon" class="w-11 h-11 shrink-0 rounded-xl bg-[#62bddb] border-[2px] border-[#181818] shadow-[2px_2px_0_#181818] flex items-center justify-center"><i class="fa-solid fa-book-open text-[#181818]"></i></div><div><div id="material-shelf-subtitle" class="text-[10px] font-black uppercase text-slate-500">Materi</div><div class="text-[11px] font-bold text-slate-600">Sumber gratis yang kamu bagikan</div></div></div>
+      <p id="material-shelf-description" class="text-xs leading-relaxed text-slate-700 mb-4">Materi tersedia melalui Google Drive.</p>
+      <a id="material-shelf-open" href="#" target="_blank" rel="noopener noreferrer" class="w-full py-2.5 px-4 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] flex items-center justify-center gap-2"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Materi</a>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL KUIS HIRAGANA / KATAKANA PEMULA -->
+<div id="kana-quiz-modal" onclick="if(event.target===this) closeKanaQuiz();" class="fixed inset-0 z-[1150] hidden items-center justify-center bg-black/55 backdrop-blur-sm p-3 sm:p-4">
+  <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[7px_7px_0_#181818] overflow-hidden">
+    <div class="bg-[#ffe45c] px-4 py-3 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
+      <div class="min-w-0"><div class="text-[9px] font-black uppercase tracking-widest text-slate-600">Latihan Kana Pemula</div><h3 id="kana-quiz-title" class="text-lg font-black text-[#181818] mt-0.5">ひらがな</h3></div>
+      <button onclick="closeKanaQuiz()" class="w-8 h-8 shrink-0 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div class="p-4">
+      <div class="flex items-center justify-between gap-2 mb-3"><span id="kana-quiz-progress" class="text-[10px] font-black text-slate-600">Soal 1 / 10</span><span id="kana-quiz-score" class="text-[10px] font-black bg-white border-[2px] border-[#181818] rounded-lg px-2 py-1">Skor: 0</span></div>
+      <div id="kana-quiz-question" class="min-h-[170px] bg-white border-[3px] border-[#181818] rounded-2xl shadow-[4px_4px_0_#181818] flex flex-col items-center justify-center text-center p-4">
+        <div class="text-[10px] font-black uppercase tracking-wider text-slate-500 mb-2">Huruf ini dibaca</div>
+        <div id="kana-quiz-character" class="text-7xl sm:text-8xl font-black leading-none japanese-text">あ</div>
+        <div id="kana-quiz-feedback" class="text-xs font-black mt-3 min-h-[18px]"></div>
       </div>
-      <div id="kana-quiz-options" class="grid grid-cols-2 gap-3 mt-4"></div>
-      <div id="kana-quiz-result" class="hidden mt-4 text-center bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-4">
-        <div class="text-[10px] font-black uppercase tracking-widest text-slate-500">Hasil</div><div id="kana-quiz-result-score" class="text-3xl font-black text-[#181818] mt-1">0 / 10</div><div id="kana-quiz-result-text" class="text-xs font-bold text-slate-600 mt-1"></div>
-        <div class="flex gap-2 mt-4"><button onclick="restartKanaQuiz()" class="flex-1 py-2.5 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]">Ulangi</button><button onclick="closeKanaQuiz()" class="flex-1 py-2.5 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]">Selesai</button></div>
+      <div id="kana-quiz-options" class="grid grid-cols-2 gap-2.5 mt-3"></div>
+      <div id="kana-quiz-result" class="hidden mt-3 text-center bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-4">
+        <div class="text-[9px] font-black uppercase tracking-widest text-slate-500">Hasil latihan</div><div id="kana-quiz-result-score" class="text-3xl font-black text-[#181818] mt-1">0 / 10</div><div id="kana-quiz-result-text" class="text-xs font-bold text-slate-600 mt-1"></div>
+        <div class="flex gap-2 mt-3"><button onclick="restartKanaQuiz()" class="flex-1 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818]">Ulangi</button><button onclick="closeKanaQuiz()" class="flex-1 py-2 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818]">Selesai</button></div>
       </div>
     </div>
   </div>
@@ -1300,6 +1273,23 @@
             { id: 'listening', nameJP: '聴解', nameEN: 'Listening Comprehension' },
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
+
+        const MATERIAL_SHELF = [
+          { title: 'Minna no Nihongo V1', subtitle: 'Minna no Nihongo', description: 'Materi Minna no Nihongo versi 1 yang kamu bagikan secara gratis.', url: 'https://drive.google.com/file/d/1EQ_fETz_S3kypo6vIVGjMR6p4-A_B6eT/view?usp=drivesdk' },
+          { title: 'Minna no Nihongo V2', subtitle: 'Minna no Nihongo', description: 'Materi Minna no Nihongo versi 2 yang kamu bagikan secara gratis.', url: 'https://drive.google.com/file/d/1e3Mv-gDcKL7vC7PI7VXouLyRR37NE2CI/view?usp=drivesdk' },
+          { title: 'Full Jepang V1', subtitle: 'Minna no Nihongo — Full Jepang', description: 'Versi bahasa Jepang untuk Minna no Nihongo V1.', url: 'https://drive.google.com/file/d/16xGs1meRe964-PU2PWTlBkBpjdd3EoZV/view?usp=drivesdk' },
+          { title: 'Full Jepang V2', subtitle: 'Minna no Nihongo — Full Jepang', description: 'Versi bahasa Jepang untuk Minna no Nihongo V2.', url: 'https://drive.google.com/file/d/1SL8KvzGQVf4f2pGLU2ZRRHUTnzX80oEu/view?usp=drivesdk' },
+          { title: 'Kotoba Bab 1–50', subtitle: 'Kotoba', description: 'Materi kosakata Bab 1 sampai Bab 50 yang kamu bagikan secara gratis.', url: 'https://drive.google.com/file/d/1synFNOto3RifCp2360b2w1HvRbwmCcmA/view?usp=drivesdk' }
+        ];
+        function openMaterialShelf(index) {
+          const item = MATERIAL_SHELF[index]; const modal = document.getElementById('material-shelf-modal'); if (!item || !modal) return;
+          document.getElementById('material-shelf-title').textContent = item.title;
+          document.getElementById('material-shelf-subtitle').textContent = item.subtitle;
+          document.getElementById('material-shelf-description').textContent = item.description;
+          document.getElementById('material-shelf-open').href = item.url;
+          modal.classList.remove('hidden'); modal.classList.add('flex');
+        }
+        function closeMaterialShelf() { const modal = document.getElementById('material-shelf-modal'); if (!modal) return; modal.classList.add('hidden'); modal.classList.remove('flex'); }
 
         // ==========================================
         // KUIS HIRAGANA / KATAKANA PEMULA
@@ -1350,14 +1340,14 @@
           if (kanaQuizState.answered) return; const q = kanaQuizState.questions[kanaQuizState.index]; if (!q) return;
           kanaQuizState.answered = true; const correct = selected === q.answer; if (correct) kanaQuizState.score++;
           document.querySelectorAll('#kana-quiz-options .kana-option').forEach(btn => { btn.disabled = true; if (btn.textContent === q.answer) btn.classList.add('bg-[#43c9bd]'); else if (btn.textContent === selected) btn.classList.add('bg-[#ff7373]'); });
-          const feedback = document.getElementById('kana-quiz-feedback'); feedback.textContent = correct ? 'Benar! ✨' : `Belum tepat. Jawaban: ${q.answer}`; feedback.className = `text-sm font-black mt-4 min-h-[20px] ${correct ? 'text-emerald-600' : 'text-rose-600'}`;
+          const feedback = document.getElementById('kana-quiz-feedback'); feedback.textContent = correct ? 'Benar' : `Belum tepat. Jawaban: ${q.answer}`; feedback.className = `text-sm font-black mt-4 min-h-[20px] ${correct ? 'text-emerald-600' : 'text-rose-600'}`;
           document.getElementById('kana-quiz-score').textContent = `Skor: ${kanaQuizState.score}`;
           setTimeout(() => { if (kanaQuizState.index < kanaQuizState.questions.length - 1) { kanaQuizState.index++; renderKanaQuizQuestion(); } else finishKanaQuiz(); }, 650);
         }
         function finishKanaQuiz() {
           document.getElementById('kana-quiz-options').innerHTML = ''; document.getElementById('kana-quiz-question').classList.add('hidden'); document.getElementById('kana-quiz-result').classList.remove('hidden');
           document.getElementById('kana-quiz-result-score').textContent = `${kanaQuizState.score} / ${kanaQuizState.questions.length}`;
-          document.getElementById('kana-quiz-result-text').textContent = kanaQuizState.score === 10 ? 'Sempurna! ✨' : kanaQuizState.score >= 7 ? 'Bagus! Tinggal sedikit lagi.' : 'Ayo ulangi sampai makin hafal.';
+          document.getElementById('kana-quiz-result-text').textContent = kanaQuizState.score === 10 ? 'Sempurna.' : kanaQuizState.score >= 7 ? 'Bagus! Tinggal sedikit lagi.' : 'Ayo ulangi sampai makin hafal.';
         }
         function restartKanaQuiz() { openKanaQuiz(kanaQuizState.type); }
         function closeKanaQuiz() { const modal = document.getElementById('kana-quiz-modal'); if (!modal) return; modal.classList.add('hidden'); modal.classList.remove('flex'); }
@@ -10152,7 +10142,7 @@ function appendMessageElement(msg, container) {
 
     messageDiv.innerHTML = `
         <div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">
-            ${isAdmin ? '<span class="text-[12px] leading-none" title="Admin">👑</span>' : ''}
+            ${isAdmin ? '<span class="text-[12px] leading-none text-[#2f80ed]" title="Admin" aria-label="Admin"><i class="fa-solid fa-crown"></i></span>' : ''}
             <span class="text-[10px] font-black uppercase truncate" style="color: ${nameColor};">${escapeHtml(senderName)}</span>
             
             <span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span>
