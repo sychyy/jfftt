@@ -979,7 +979,7 @@
         </div>
         <div class="min-w-0">
             <div class="text-[10px] font-black uppercase tracking-wider text-slate-500">Identitas Global Chat</div>
-            <div class="font-black text-[#181818] truncate">[ADMIN] <span id="admin-chat-name-display">Belum diatur</span></div>
+            <div class="font-black text-[#181818] truncate"><span id="admin-chat-name-display">Belum diatur</span></div>
         </div>
     </div>
     <button onclick="openAdminChatNameModal()" class="px-4 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition shrink-0">
@@ -1186,9 +1186,9 @@
                 <h3 class="text-xl font-black text-[#181818]">Atur Nama Admin</h3>
             </div>
         </div>
-        <p class="text-sm text-slate-700 font-medium mb-4">Nama ini akan tampil di Global Chat sebagai <b>[ADMIN]</b>. Gunakan nama yang ingin dilihat siswa.</p>
+        <p class="text-sm text-slate-700 font-medium mb-4">Nama ini akan tampil di Global Chat. Gunakan nama yang ingin dilihat siswa.</p>
         <div class="bg-[#e9f8fc] border-[2px] border-[#181818] rounded-xl px-3 py-2 mb-3 text-xs font-black text-[#181818]">
-            <i class="fa-solid fa-circle-check text-[#1597b5] mr-1"></i> Pesan admin akan diberi tanda <span class="text-red-600">[ADMIN]</span> otomatis.
+            <i class="fa-solid fa-circle-check text-[#1597b5] mr-1"></i> Pesan admin akan tampil menggunakan nama yang kamu pilih.
         </div>
         <input type="text" id="admin-chat-name-input" maxlength="30" autocomplete="off" class="w-full px-4 py-3 rounded-xl border-[2px] border-[#181818] bg-white font-bold uppercase focus:outline-none focus:ring-2 focus:ring-[#62bddb]" placeholder="Contoh: SENSEI / ADMIN JFT">
         <p id="admin-chat-name-error" class="hidden text-rose-500 text-xs font-bold mt-2"></p>
@@ -8820,10 +8820,10 @@ let audioPlayCounts = {};
         }
 
         function getCurrentChatName() {
-            const role = localStorage.getItem('jft_user_role') || '';
+            const role = String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase();
 
             if (role === 'admin') {
-                return getAdminChatName() || '[ADMIN]';
+                return getAdminChatName() || 'ADMIN';
             }
 
             const saved = (
@@ -8840,7 +8840,7 @@ let audioPlayCounts = {};
         }
 
         function openAdminChatNameModal(force = false) {
-            if (localStorage.getItem('jft_user_role') !== 'admin') return;
+            if (String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase() !== 'admin') return;
             const modal = document.getElementById('admin-chat-name-modal');
             const input = document.getElementById('admin-chat-name-input');
             const error = document.getElementById('admin-chat-name-error');
@@ -8857,6 +8857,8 @@ let audioPlayCounts = {};
             const modal = document.getElementById('admin-chat-name-modal');
             if (modal) { modal.classList.add('hidden'); modal.classList.remove('flex'); }
         }
+
+        let adminChatOpenAfterName = false;
 
         async function saveAdminChatName() {
             const input = document.getElementById('admin-chat-name-input');
@@ -8878,19 +8880,55 @@ let audioPlayCounts = {};
 
             localStorage.setItem(getAdminChatNameStorageKey(), name);
             updateAdminChatNameDisplay();
+            const shouldOpenChat = adminChatOpenAfterName;
+            adminChatOpenAfterName = false;
             const currentNameEl = document.getElementById('chat-current-name');
             if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
             closeAdminChatNameModal();
-            showToast('Identitas Admin', `Nama Global Chat sekarang [ADMIN] ${name}.`);
+            showToast('Identitas Admin', `Nama Global Chat sekarang ${name}.`);
+
+            // Jika modal nama dibuka karena admin menekan tombol Global Chat,
+            // lanjutkan otomatis membuka room setelah nama disimpan.
+            if (shouldOpenChat) {
+                await toggleGlobalChat();
+            }
         }
 
         async function openAdminGlobalChat() {
-            if (localStorage.getItem('jft_user_role') !== 'admin') return;
+            const role = String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase();
+            if (role !== 'admin') {
+                showToast('Akses Admin', 'Sesi admin tidak terdeteksi. Silakan login admin kembali.', true);
+                return;
+            }
+
+            // Pastikan modal nama tidak menghalangi pembukaan room.
             if (!getAdminChatName()) {
+                adminChatOpenAfterName = true;
                 openAdminChatNameModal(true);
                 return;
             }
-            await toggleGlobalChat();
+
+            const modal = document.getElementById('global-chat-modal');
+            if (!modal) {
+                showToast('Global Chat', 'Elemen room chat tidak ditemukan di halaman.', true);
+                return;
+            }
+
+            // Buka room TERLEBIH DAHULU. Proses Supabase dijalankan setelahnya,
+            // jadi room tetap tampil walaupun query status/pesan sedang gagal.
+            modal.classList.remove('hidden');
+            const currentNameEl = document.getElementById('chat-current-name');
+            if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
+            hideChatNotificationDot();
+
+            try {
+                await checkRoomStatus();
+                await fetchChatMessages();
+                subscribeToGlobalChat();
+            } catch (err) {
+                console.error('Global Chat init error:', err);
+                showToast('Global Chat', 'Room terbuka, tetapi data chat gagal dimuat.', true);
+            }
         }
 
         document.addEventListener('keydown', (e) => {
@@ -9666,6 +9704,7 @@ async function toggleGlobalChat() {
 
     const role = localStorage.getItem('jft_user_role') || '';
     if (role === 'admin' && !getAdminChatName()) {
+        adminChatOpenAfterName = true;
         openAdminChatNameModal(true);
         return;
     }
@@ -9921,7 +9960,7 @@ function appendMessageElement(msg, container) {
     messageDiv.innerHTML = `
         <div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">
             <span class="text-[10px] font-black uppercase truncate" style="color: ${nameColor};">${escapeHtml(senderName)}</span>
-            ${isAdmin ? '<span class="bg-red-500 text-white px-1.5 py-0.5 rounded text-[7px] font-black tracking-wide shadow-[1px_1px_0_#181818]">[ADMIN]</span>' : ''}
+            
             <span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span>
         </div>
 
