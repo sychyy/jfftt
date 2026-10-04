@@ -4207,7 +4207,7 @@
         {
           "id": 201,
           "section": "listening",
-          "text": "【音声を聞いて答えてください】\n何を持ってきますか。",
+          "text": "【音声を聞いて答えてください】\n男の人は何を持ってきますか。",
           "audioText": "男：明日のパーティーに何を持ってきますか。\n女：私はケーキを持ってきます。\n男：じゃあ、私はジュースを持ってきます。",
           "options": [
             "ジュース",
@@ -8706,9 +8706,11 @@ let audioPlayCounts = {};
                 return;
             }
 
-            // Leaderboard: satu akun hanya punya satu hasil aktif per jumlah soal.
-            // Jika akun mengerjakan ulang, record dengan timestamp paling baru yang dipakai.
-            const latestByAccountAndCount = new Map();
+            // Setiap PERANGKAT + JUMLAH SOAL adalah entri leaderboard terpisah.
+            // Jangan dedupe berdasarkan akun saja: satu akun dapat memiliki beberapa
+            // perangkat (max_users), sehingga skor siswa lain pada perangkat berbeda
+            // tidak boleh terlihat seperti tertimpa.
+            const allScores = [];
 
             (data || []).forEach(user => {
                 let scores = user.device_scores || {};
@@ -8730,6 +8732,7 @@ let audioPlayCounts = {};
 
                     const item = {
                         accountId: String(user.id),
+                        deviceId: String(s.device_id || String(storageKey).split('__')[0] || 'UNKNOWN'),
                         storageKey,
                         name: s.name || user.name || 'Siswa',
                         score: Number(s.score) || 0,
@@ -8743,21 +8746,9 @@ let audioPlayCounts = {};
                         legacyIndex: index
                     };
 
-                    const key = `${item.accountId}::${sCount}`;
-                    const existing = latestByAccountAndCount.get(key);
-                    const itemStamp = item.updatedAt ? new Date(item.updatedAt).getTime() : NaN;
-                    const existingStamp = existing?.updatedAt ? new Date(existing.updatedAt).getTime() : NaN;
-
-                    const shouldReplace =
-                        !existing ||
-                        (Number.isFinite(itemStamp) && (!Number.isFinite(existingStamp) || itemStamp > existingStamp)) ||
-                        (!Number.isFinite(itemStamp) && !Number.isFinite(existingStamp) && item.legacyIndex >= existing.legacyIndex);
-
-                    if (shouldReplace) latestByAccountAndCount.set(key, item);
+                    allScores.push(item);
                 });
             });
-
-            const allScores = Array.from(latestByAccountAndCount.values());
 
             allScores.sort((a, b) => {
                 const scoreDiff = b.score - a.score;
@@ -8768,7 +8759,9 @@ let audioPlayCounts = {};
 
                 const aStamp = a.updatedAt ? new Date(a.updatedAt).getTime() : 0;
                 const bStamp = b.updatedAt ? new Date(b.updatedAt).getTime() : 0;
-                return bStamp - aStamp;
+                if (bStamp !== aStamp) return bStamp - aStamp;
+
+                return String(a.storageKey).localeCompare(String(b.storageKey));
             });
 
             if (allScores.length === 0) {
@@ -8819,6 +8812,7 @@ let audioPlayCounts = {};
                 `;
             });
         }
+
 
         async function clearAllDevices(userId) {
             showCustomConfirm("Yakin ingin mereset dan menghapus SEMUA perangkat yang terhubung ke akun ini?", async () => {
@@ -8986,12 +8980,87 @@ let audioPlayCounts = {};
                             attemptId: storageKey
                         };
 
-                        const { error: saveError } = await window.supabaseClient
-                            .from('Jft-Basic')
-                            .update({ device_scores: scores })
-                            .eq('id', userId);
+                        // Simpan dengan merge + verifikasi ulang. Ini mencegah update dari
+                        // dua perangkat yang selesai hampir bersamaan saling menimpa data.
+                        let mergedSaved = false;
+                        let lastSaveError = null;
 
-                        if (saveError) console.error('Gagal menyimpan skor leaderboard:', saveError);
+                        for (let attempt = 0; attempt < 4 && !mergedSaved; attempt++) {
+                            if (attempt > 0) {
+                                const { data: latestRow, error: latestReadError } = await window.supabaseClient
+                                    .from('Jft-Basic')
+                                    .select('device_scores')
+                                    .eq('id', userId)
+                                    .single();
+
+                                if (latestReadError) {
+                                    lastSaveError = latestReadError;
+                                    continue;
+                                }
+
+                                let latestScores = latestRow?.device_scores || {};
+                                if (typeof latestScores === 'string') {
+                                    try { latestScores = JSON.parse(latestScores); } catch (_) { latestScores = {}; }
+                                }
+                                if (!latestScores || typeof latestScores !== 'object' || Array.isArray(latestScores)) latestScores = {};
+
+                                // Prioritaskan data terbaru dari server, lalu pasang entri kita.
+                                scores = { ...latestScores, [storageKey]: {
+                                    ...(latestScores[storageKey] || {}),
+                                    device_id: deviceId,
+                                    name: currentUserName,
+                                    score,
+                                    level: lvl,
+                                    duration: durationText,
+                                    os,
+                                    qCount: state.questions.length,
+                                    startedAt: startIso,
+                                    finishedAt: endIso,
+                                    completedAt: endIso,
+                                    updatedAt: endIso,
+                                    attemptId: storageKey
+                                }};
+                            }
+
+                            const { error: saveError } = await window.supabaseClient
+                                .from('Jft-Basic')
+                                .update({ device_scores: scores })
+                                .eq('id', userId);
+
+                            if (saveError) {
+                                lastSaveError = saveError;
+                                continue;
+                            }
+
+                            const { data: verifyRow, error: verifyError } = await window.supabaseClient
+                                .from('Jft-Basic')
+                                .select('device_scores')
+                                .eq('id', userId)
+                                .single();
+
+                            if (verifyError) {
+                                lastSaveError = verifyError;
+                                continue;
+                            }
+
+                            let verifyScores = verifyRow?.device_scores || {};
+                            if (typeof verifyScores === 'string') {
+                                try { verifyScores = JSON.parse(verifyScores); } catch (_) { verifyScores = {}; }
+                            }
+
+                            const verifiedEntry = verifyScores && !Array.isArray(verifyScores) ? verifyScores[storageKey] : null;
+                            const verifiedAt = verifiedEntry?.updatedAt || null;
+                            const verifiedScore = verifiedEntry?.score;
+                            mergedSaved = String(verifiedAt || '') === String(endIso) && Number(verifiedScore) === Number(score);
+
+                            if (!mergedSaved && attempt === 3) {
+                                lastSaveError = new Error('Verifikasi penyimpanan skor gagal setelah beberapa percobaan.');
+                            }
+                        }
+
+                        if (!mergedSaved && lastSaveError) {
+                            console.error('Gagal menyimpan skor leaderboard:', lastSaveError);
+                        }
                     } else {
                         console.error('Gagal membaca skor leaderboard:', readError);
                     }
@@ -9449,19 +9518,26 @@ let audioPlayCounts = {};
                     }
                 }
 
-                if (scores && scores[deviceId]) {
-                    scores[deviceId] = {
-                        ...scores[deviceId],
-                        name: normalizedName
-                    };
+                if (scores && typeof scores === 'object' && !Array.isArray(scores)) {
+                    let changed = false;
+                    Object.entries(scores).forEach(([scoreKey, scoreValue]) => {
+                        if (!scoreValue || typeof scoreValue !== 'object') return;
+                        const scoreDeviceId = String(scoreValue.device_id || String(scoreKey).split('__')[0] || '');
+                        if (scoreDeviceId === String(deviceId)) {
+                            scores[scoreKey] = { ...scoreValue, name: normalizedName };
+                            changed = true;
+                        }
+                    });
 
-                    const { error: scoreUpdateError } =
-                        await window.supabaseClient
-                            .from('Jft-Basic')
-                            .update({ device_scores: scores })
-                            .eq('id', userId);
+                    if (changed) {
+                        const { error: scoreUpdateError } =
+                            await window.supabaseClient
+                                .from('Jft-Basic')
+                                .update({ device_scores: scores })
+                                .eq('id', userId);
 
-                    if (scoreUpdateError) throw scoreUpdateError;
+                        if (scoreUpdateError) throw scoreUpdateError;
+                    }
                 }
             }
 
