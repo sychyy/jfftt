@@ -10739,23 +10739,30 @@ let audioPlayCounts = {};
             let allScores = [];
             data.forEach(user => {
                 let scores = user.device_scores || {};
-                if (typeof scores === 'string') scores = JSON.parse(scores);
+                if (typeof scores === 'string') {
+                    try { scores = JSON.parse(scores); } catch (_) { scores = {}; }
+                }
                 
                 Object.values(scores).forEach(s => {
                     if (s && s.score !== undefined) {
-                        const sCount = s.qCount || 10;
+                        const sCount = Number(s.qCount || 10);
                         if (sCount === filterCount) {
                             allScores.push({
                                 name: s.name || user.name || 'Siswa',
                                 score: s.score,
                                 level: s.level || '-',
                                 duration: s.duration || '-',
-                                os: s.os || 'Lainnya'
+                                os: s.os || 'Lainnya',
+                                startedAt: s.startedAt || s.started_at || null,
+                                completedAt: s.completedAt || s.completed_at || null
                             });
                         }
                     }
                 });
             });
+
+            // Skor terbaru tidak lagi menimpa skor latihan sebelumnya.
+            // Setiap latihan disimpan sebagai satu attempt tersendiri.
 
             allScores.sort((a, b) => b.score - a.score);
 
@@ -10780,6 +10787,13 @@ let audioPlayCounts = {};
                     rankIcon = '<i class="fa-solid fa-medal text-amber-800 text-xs"></i> 3';
                 }
 
+                const attemptTime = item.startedAt
+                    ? new Date(item.startedAt).toLocaleString('id-ID', {
+                        day: '2-digit', month: '2-digit', year: 'numeric',
+                        hour: '2-digit', minute: '2-digit'
+                    })
+                    : '-';
+
                 listEl.innerHTML += `
                     <div class="leaderboard-card p-2.5 rounded-xl flex items-center justify-between text-xs bg-white">
                         <div class="flex items-center gap-3">
@@ -10789,6 +10803,7 @@ let audioPlayCounts = {};
                             <div>
                                 <div class="font-black text-slate-800 uppercase">${item.name}</div>
                                 <div class="text-[10px] text-slate-500"><i class="fa-solid fa-mobile-screen-button"></i> ${item.os} • <i class="fa-regular fa-clock"></i> ${item.duration}</div>
+                                <div class="text-[10px] text-slate-400 mt-0.5"><i class="fa-regular fa-calendar"></i> ${attemptTime}</div>
                             </div>
                         </div>
                         <div class="text-right">
@@ -10829,7 +10844,12 @@ let audioPlayCounts = {};
 
                 let scores = user.device_scores || {};
                 if (typeof scores === 'string') scores = JSON.parse(scores);
-                delete scores[deviceId];
+                Object.keys(scores).forEach(key => {
+                    const entry = scores[key];
+                    if (key === deviceId || (entry && entry.device_id === deviceId)) {
+                        delete scores[key];
+                    }
+                });
 
                 const { error: updateError } = await window.supabaseClient.from('Jft-Basic').update({
                     registered_devices: devices,
@@ -10917,13 +10937,19 @@ let audioPlayCounts = {};
                     let scores = data?.device_scores || {};
                     if(typeof scores === 'string') scores = JSON.parse(scores);
                     
-                    scores[deviceId] = { 
-                        name: currentUserName, 
-                        score: score, 
-                        level: lvl, 
-                        duration: durationText, 
+                    // Simpan setiap latihan sebagai attempt terpisah.
+                    // Sebelumnya key memakai deviceId sehingga latihan baru menimpa latihan lama.
+                    const attemptId = `${deviceId}_${Date.now()}`;
+                    scores[attemptId] = {
+                        device_id: deviceId,
+                        name: currentUserName,
+                        score: score,
+                        level: lvl,
+                        duration: durationText,
                         os: os,
-                        qCount: state.questions.length 
+                        qCount: state.questions.length,
+                        startedAt: new Date(state.startTime).toISOString(),
+                        completedAt: new Date().toISOString()
                     };
                     
                     window.supabaseClient.from('Jft-Basic').update({ device_scores: scores }).eq('id', userId).then();
@@ -10973,7 +10999,10 @@ let audioPlayCounts = {};
                     } else {
                         scoreHTML = `<div class="mt-2.5 space-y-2">`;
                         devices.forEach((dev, idx) => {
-                            const s = scores[dev];
+                            const deviceAttempts = Object.values(scores).filter(s => s && s.device_id === dev);
+                            const s = deviceAttempts.length
+                                ? deviceAttempts.sort((a, b) => new Date(b.completedAt || b.completed_at || 0) - new Date(a.completedAt || a.completed_at || 0))[0]
+                                : scores[dev]; // dukung data lama
                             // Di sinilah nama yang diketik siswa saat latihan (seperti "Raihan Fitri") akan muncul rapi!
                             const activeName = s ? s.name : `Perangkat #${idx + 1}`;
                             const deviceOs = s ? s.os : 'Web Browser';
@@ -11215,12 +11244,16 @@ let audioPlayCounts = {};
                     }
                 }
 
-                if (scores && scores[deviceId]) {
-                    scores[deviceId] = {
-                        ...scores[deviceId],
-                        name: normalizedName
-                    };
+                let scoresChanged = false;
+                Object.keys(scores).forEach(key => {
+                    const entry = scores[key];
+                    if (key === deviceId || (entry && entry.device_id === deviceId)) {
+                        scores[key] = { ...entry, name: normalizedName };
+                        scoresChanged = true;
+                    }
+                });
 
+                if (scoresChanged) {
                     const { error: scoreUpdateError } =
                         await window.supabaseClient
                             .from('Jft-Basic')
@@ -11683,9 +11716,21 @@ function startQuiz() {
             remainderSections.forEach(sec => counts[sec]++);
 
             let selected = [];
+            const usedQuestionKeys = new Set();
+
+            // Jangan pernah memasukkan soal dengan teks yang sama dalam satu latihan.
+            // ID yang berbeda tidak dianggap cukup berbeda jika pertanyaannya identik.
+            const getQuestionKey = q => String(q.text || '')
+                .replace(/\s+/g, ' ')
+                .trim()
+                .toLowerCase();
+
             sectionOrder.forEach(sec => {
-                const qs = QUESTION_BANK.filter(q => q.section === sec);
+                const qs = QUESTION_BANK.filter(q =>
+                    q.section === sec && !usedQuestionKeys.has(getQuestionKey(q))
+                );
                 const picks = weightedSample(qs, Math.min(counts[sec], qs.length), qStats);
+                picks.forEach(q => usedQuestionKeys.add(getQuestionKey(q)));
                 selected.push(...picks);
             });
 
