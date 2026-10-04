@@ -651,85 +651,6 @@
     </button>
 </div>
 
-<!-- MODAL GLOBAL CHAT -->
-<div id="global-chat-modal" onclick="if(event.target===this) toggleGlobalChat();" class="hidden fixed inset-0 z-[110] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-    <div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
-        <!-- Header Chat -->
-        <div class="bg-[#ffe45c] p-3 border-b-[3px] border-[#181818] flex justify-between items-center gap-3">
-            <div class="min-w-0">
-                <h3 class="font-black text-[#181818] text-base flex items-center gap-2">
-                    <i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
-                </h3>
-                <p class="mt-0.5 text-[9px] font-bold text-slate-600 uppercase tracking-wide truncate">
-                    Aktif sebagai <span id="chat-current-name" class="font-black text-[#181818]">USER1</span> • Geser bubble ke kanan untuk balas
-                </p>
-            </div>
-            <button onclick="toggleGlobalChat()" class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <!-- Area Pesan Masuk -->
-        <div id="chat-messages-container" class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#f8f3e8]">
-            <p class="text-center text-xs text-slate-400 font-bold">Memuat pesan...</p>
-        </div>
-
-        <!-- Preview Kotak Reply (Jika sedang mereply) -->
-        <div id="reply-preview-box" class="hidden px-4 py-2 bg-slate-100 border-t-[2px] border-[#181818] flex justify-between items-center text-xs">
-            <div>
-                <span class="font-black text-brand-700" id="reply-preview-user"></span>
-                <p class="text-slate-600 truncate max-w-[380px]" id="reply-preview-text"></p>
-            </div>
-            <button onclick="cancelReply()" class="text-slate-500 hover:text-rose-600 font-bold"><i class="fa-solid fa-xmark text-sm"></i></button>
-        </div>
-
-        <!-- Input, Tag, & Tombol Kirim -->
-        <div class="p-3 bg-white border-t-[3px] border-[#181818] flex flex-col gap-2">
-            <!-- Pilihan Tag User Cepat -->
-            <div id="tag-suggestions" class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden"></div>
-            <div class="flex gap-2">
-                <input type="text" id="chat-input-msg" placeholder="Tulis pesan (gunakan @ untuk tag)..." class="flex-grow px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" onkeypress="handleChatKeyPress(event)" oninput="checkChatInput(event)">
-                <button id="chat-send-btn" onclick="sendGlobalMessage()" class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
-                    Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
-                </button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- MODAL / POP-UP MENU KETIKA BUBBLE CHAT DI-TEKAN LAMA (LONG PRESS) -->
-<div id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-    <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
-        <h4 data-chat-action-title class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
-        <button onclick="handleActionEdit()" id="btn-action-edit" class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-pen-to-square"></i> Edit Pesan
-        </button>
-        <button onclick="handleActionDelete()" id="btn-action-delete" class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-trash-can"></i> Hapus Pesan
-        </button>
-        <button onclick="selectedMessageForAction && triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();" class="w-full py-2.5 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
-            <i class="fa-solid fa-reply"></i> Balas Pesan
-        </button>
-        <button onclick="closeChatActionModal()" class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1">
-            Batal
-        </button>
-    </div>
-</div>
-
-<!-- KUSTOM NOTIFIKASI / ALERT CANTIK -->
-<div id="custom-toast-modal" class="fixed inset-0 z-[220] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
-    <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
-        <div id="toast-icon" class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3">
-            <i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
-        </div>
-        <h4 id="toast-title" class="font-black text-[#181818] text-lg mb-1">Informasi</h4>
-        <p id="toast-message" class="text-slate-700 text-xs font-medium mb-5">Pesan notifikasi di sini...</p>
-        <button onclick="closeToast()" class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
-            Mengerti
-        </button>
-    </div>
-</div>
-
                 <!-- TOMBOL MENU LEADERBOARD -->
                 <div class="border-t-2 border-slate-200 pt-6 mt-6">
                     <button onclick="toggleLeaderboard()" class="w-full py-3 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2">
@@ -1199,6 +1120,90 @@
     </div>
 </div>
     </main>
+
+        <!-- GLOBAL CHAT OVERLAYS: di luar semua .screen agar juga tampil dari Admin -->
+<!-- MODAL GLOBAL CHAT -->
+<div id="global-chat-modal" onclick="if(event.target===this) toggleGlobalChat();" class="hidden fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
+        <!-- Header Chat -->
+        <div class="bg-[#ffe45c] p-3 border-b-[3px] border-[#181818] flex justify-between items-center gap-3">
+            <div class="min-w-0">
+                <h3 class="font-black text-[#181818] text-base flex items-center gap-2">
+                    <i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
+                </h3>
+                <p class="mt-0.5 text-[9px] font-bold text-slate-600 uppercase tracking-wide truncate">
+                    Aktif sebagai <span id="chat-current-name" class="font-black text-[#181818]">USER1</span> • Geser bubble ke kanan untuk balas
+                </p>
+            </div>
+            <button onclick="toggleGlobalChat()" class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Area Pesan Masuk -->
+        <div id="chat-messages-container" class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#f8f3e8]">
+            <p class="text-center text-xs text-slate-400 font-bold">Memuat pesan...</p>
+        </div>
+
+        <!-- Preview Kotak Reply (Jika sedang mereply) -->
+        <div id="reply-preview-box" class="hidden px-4 py-2 bg-slate-100 border-t-[2px] border-[#181818] flex justify-between items-center text-xs">
+            <div>
+                <span class="font-black text-brand-700" id="reply-preview-user"></span>
+                <p class="text-slate-600 truncate max-w-[380px]" id="reply-preview-text"></p>
+            </div>
+            <button onclick="cancelReply()" class="text-slate-500 hover:text-rose-600 font-bold"><i class="fa-solid fa-xmark text-sm"></i></button>
+        </div>
+
+        <!-- Input, Tag, & Tombol Kirim -->
+        <div class="p-3 bg-white border-t-[3px] border-[#181818] flex flex-col gap-2">
+            <!-- Pilihan Tag User Cepat -->
+            <div id="tag-suggestions" class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden"></div>
+            <div class="flex gap-2">
+                <input type="text" id="chat-input-msg" placeholder="Tulis pesan (gunakan @ untuk tag)..." class="flex-grow px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" onkeypress="handleChatKeyPress(event)" oninput="checkChatInput(event)">
+                <button id="chat-send-btn" onclick="sendGlobalMessage()" class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+                    Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- MODAL / POP-UP MENU KETIKA BUBBLE CHAT DI-TEKAN LAMA (LONG PRESS) -->
+<div id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();" class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
+        <h4 data-chat-action-title class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2">Opsi Pesan</h4>
+        <button onclick="handleActionEdit()" id="btn-action-edit" class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-pen-to-square"></i> Edit Pesan
+        </button>
+        <button onclick="handleActionDelete()" id="btn-action-delete" class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-trash-can"></i> Hapus Pesan
+        </button>
+        <button onclick="selectedMessageForAction && triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();" class="w-full py-2.5 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-reply"></i> Balas Pesan
+        </button>
+        <button onclick="closeChatActionModal()" class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1">
+            Batal
+        </button>
+    </div>
+</div>
+
+
+<!-- KUSTOM NOTIFIKASI / ALERT CANTIK -->
+<div id="custom-toast-modal" class="fixed inset-0 z-[1200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4">
+    <div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
+        <div id="toast-icon" class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3">
+            <i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
+        </div>
+        <h4 id="toast-title" class="font-black text-[#181818] text-lg mb-1">Informasi</h4>
+        <p id="toast-message" class="text-slate-700 text-xs font-medium mb-5">Pesan notifikasi di sini...</p>
+        <button onclick="closeToast()" class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition">
+            Mengerti
+        </button>
+    </div>
+</div>
+
+
 
     <script>
         const SECTIONS = [
@@ -9702,26 +9707,35 @@ async function toggleGlobalChat() {
     const modal = document.getElementById('global-chat-modal');
     if (!modal) return;
 
-    const role = localStorage.getItem('jft_user_role') || '';
+    const role = String(localStorage.getItem('jft_user_role') || '').trim().toLowerCase();
     if (role === 'admin' && !getAdminChatName()) {
         adminChatOpenAfterName = true;
         openAdminChatNameModal(true);
         return;
     }
 
-    modal.classList.toggle('hidden');
-    const isOpening = !modal.classList.contains('hidden');
+    const isOpening = modal.classList.contains('hidden');
 
-    if (isOpening) {
-        const currentNameEl = document.getElementById('chat-current-name');
-        if (currentNameEl) {
-            currentNameEl.textContent = getCurrentChatName();
-        }
+    if (!isOpening) {
+        modal.classList.add('hidden');
+        return;
+    }
 
-        hideChatNotificationDot();
+    // Penting: tampilkan room terlebih dahulu. Modal sekarang berada di level <body>,
+    // bukan di dalam .screen-home yang disembunyikan saat Admin aktif.
+    modal.classList.remove('hidden');
+
+    const currentNameEl = document.getElementById('chat-current-name');
+    if (currentNameEl) currentNameEl.textContent = getCurrentChatName();
+    hideChatNotificationDot();
+
+    try {
         await checkRoomStatus();
         await fetchChatMessages();
         subscribeToGlobalChat();
+    } catch (err) {
+        console.error('Global Chat init error:', err);
+        showToast('Global Chat', 'Room terbuka, tetapi data chat gagal dimuat.', true);
     }
 }
 
