@@ -10471,7 +10471,14 @@ let audioPlayCounts = {};
             }
             
             if(screenId === 'history') renderHistory();
-            if(screenId === 'admin') loadAdminData(); 
+            if(screenId === 'admin') {
+                loadAdminData();
+                // Refresh admin-only chat controls immediately after login/navigation.
+                // This prevents the Clear All Chat button from requiring a page reload.
+                if (typeof checkAdminChatFeature === 'function') {
+                    checkAdminChatFeature();
+                }
+            }
             if(state.currentScreen === 'quiz' && screenId !== 'quiz') clearInterval(state.timerInterval);
             state.currentScreen = screenId;
         }
