@@ -144,7 +144,12 @@ const CHAT_BUCKET = 'chat-media';
 const senderName = getCurrentChatName();
 const userRole = localStorage.getItem('jft_user_role') || 'user';
 
-const messageType = getMessageTypeFromFile(file);
+const messageType =
+    file.messageType ||
+    (file.type?.startsWith('image/') ? 'image' :
+    file.type?.startsWith('video/') ? 'video' :
+    file.type?.startsWith('audio/') ? 'audio' :
+    'document');
 
 const mediaLabels = {
     image: '[Foto]',
