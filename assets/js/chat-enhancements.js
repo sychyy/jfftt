@@ -111,15 +111,20 @@ function announcementPlayerMarkup(url,duration,mime){
 function announcementMediaMarkup(item){
   const url=String(item.file_url||''); if(!url)return '';
   const type=String(item.media_type||'').toLowerCase();
+  const mode=String(item.media_mode||'video').toLowerCase();
   if(type==='image') return `<div class="jft-ann-media jft-ann-image"><a href="${attr(url)}" target="_blank" rel="noopener noreferrer"><img src="${attr(url)}" alt="Media pengumuman" loading="lazy"></a></div>`;
-  if(type==='video') return `<div class="jft-ann-media jft-ann-video"><video controls preload="metadata" playsinline><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video></div>`;
+  if(type==='video'){
+    if(mode==='gif') return `<div class="jft-ann-media jft-ann-video jft-ann-video-gif"><video autoplay muted loop playsinline preload="auto" aria-label="Video GIF pengumuman"><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video><span class="jft-ann-loop-pill"><i class="fa-solid fa-repeat"></i> GIF · loop terus</span></div>`;
+    return `<div class="jft-ann-media jft-ann-video"><video controls preload="metadata" playsinline><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video></div>`;
+  }
   if(type==='audio') return `<div class="jft-ann-media jft-ann-audio-wrap">${announcementPlayerMarkup(url,item.duration_seconds,item.mime_type)}</div>`;
   return `<div class="jft-ann-media jft-ann-file"><a href="${attr(url)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-arrow-down"></i><span>${esc(item.file_name||'Lampiran pengumuman')}</span></a></div>`;
 }
 function mediaBadge(item){
   const type=String(item.media_type||'').toLowerCase();
+  const mode=String(item.media_mode||'video').toLowerCase();
   if(type==='image') return '<span class="jft-ann-badge"><i class="fa-solid fa-image"></i> Foto</span>';
-  if(type==='video') return '<span class="jft-ann-badge"><i class="fa-solid fa-video"></i> Video</span>';
+  if(type==='video') return mode==='gif' ? '<span class="jft-ann-badge jft-ann-badge-gif"><i class="fa-solid fa-repeat"></i> GIF</span>' : '<span class="jft-ann-badge"><i class="fa-solid fa-video"></i> Video</span>';
   if(type==='audio') return '<span class="jft-ann-badge"><i class="fa-solid fa-music"></i> Lagu</span>';
   if(type==='document') return '<span class="jft-ann-badge"><i class="fa-solid fa-paperclip"></i> File</span>';
   return '';
@@ -222,6 +227,7 @@ async function sendAnnouncement(){
   const fileInput=document.getElementById('announcement-file-input');
   const title=String(titleInput?.value||'').trim(); const text=String(messageInput?.value||'').trim();
   const file=fileInput?.files?.[0]||null;
+  const mediaMode=String(document.querySelector('input[name="announcement-media-mode"]:checked')?.value||'video').toLowerCase();
   if(!title){toast('Judul belum diisi','Tambahkan judul pengumuman dulu.',true);return}
   if(!text&&!file){toast('Isi pengumuman kosong','Tulis pesan atau pilih media.',true);return}
   if(file&&file.size>MAX_ANNOUNCEMENT_FILE_BYTES){toast('File terlalu besar','Maksimal 25 MB.',true);return}
@@ -233,10 +239,13 @@ async function sendAnnouncement(){
       uploadMeta=await window.uploadChatFile(file,{subfolder:'announcements'});
     }
     const now=new Date(); const expires=new Date(now.getTime()+DAY); const mediaType=uploadMeta.publicUrl?mediaTypeFromFile(file):null;
-    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,duration_seconds:null};
+    const effectiveMode=mediaType==='video' ? (mediaMode==='gif' ? 'gif' : 'video') : (mediaType?mediaType:'none');
+    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,media_mode:effectiveMode,duration_seconds:null};
     const {error}=await window.supabaseClient.from('chat_announcements').insert([payload]);
     if(error){ if(uploadMeta.path&&typeof window.deleteChatStoragePaths==='function')await window.deleteChatStoragePaths([uploadMeta.path]); throw error; }
     if(titleInput)titleInput.value=''; if(messageInput)messageInput.value=''; if(fileInput)fileInput.value='';
+    const defaultMode=document.querySelector('input[name="announcement-media-mode"][value="video"]'); if(defaultMode)defaultMode.checked=true;
+    const modeWrap=document.getElementById('announcement-media-mode-wrap'); if(modeWrap)modeWrap.classList.add('hidden');
     const preview=document.getElementById('announcement-file-preview'); if(preview){preview.innerHTML='';preview.classList.add('hidden');}
     toast('Pengumuman diterbitkan','Pengumuman aktif selama 24 jam.');
     await renderAnnouncementCenter();
@@ -268,7 +277,7 @@ function ensureAnnouncementUI(){
   if(isAdmin()){
     let slot=mount.querySelector('#announcement-admin-slot');
     if(slot && !slot.querySelector('#announcement-title-input')){
-      slot.innerHTML=`<div class="jft-ann-compose"><div class="jft-ann-compose-title"><i class="fa-solid fa-bullhorn"></i><span>Buat pengumuman baru</span><small>Judul, isi, dan media opsional</small></div><input id="announcement-title-input" maxlength="120" placeholder="Judul pengumuman..." class="jft-ann-input" type="text"><textarea id="announcement-input" maxlength="4000" placeholder="Tulis isi pengumuman..."></textarea><div class="jft-ann-compose-row"><label class="jft-ann-filepick"><input id="announcement-file-input" accept="image/*,video/*,audio/*" type="file"><i class="fa-solid fa-paperclip"></i><span>Tambah foto, video, atau lagu</span></label><button type="button" id="announcement-send" class="jft-ann-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div><div id="announcement-file-preview" class="jft-ann-file-preview hidden"></div></div>`;
+      slot.innerHTML=`<div class="jft-ann-compose"><div class="jft-ann-compose-title"><i class="fa-solid fa-bullhorn"></i><span>Buat pengumuman baru</span><small>Judul, isi, dan media opsional</small></div><input id="announcement-title-input" maxlength="120" placeholder="Judul pengumuman..." class="jft-ann-input" type="text"><textarea id="announcement-input" maxlength="4000" placeholder="Tulis isi pengumuman..."></textarea><div class="jft-ann-compose-row"><label class="jft-ann-filepick"><input id="announcement-file-input" accept="image/*,video/*,audio/*" type="file"><i class="fa-solid fa-paperclip"></i><span>Tambah foto, video, atau lagu</span></label><button type="button" id="announcement-send" class="jft-ann-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div><div id="announcement-media-mode-wrap" class="jft-ann-media-mode hidden"><div class="jft-ann-media-mode-head"><span><i class="fa-solid fa-sliders"></i> Mode video</span><small>GIF = autoplay + loop terus tanpa tombol pause</small></div><div class="jft-ann-media-mode-options"><label class="jft-ann-mode-option is-active"><input type="radio" name="announcement-media-mode" value="video" checked><span><i class="fa-solid fa-video"></i><b>Video</b><small>Bisa pause &amp; atur menit</small></span></label><label class="jft-ann-mode-option"><input type="radio" name="announcement-media-mode" value="gif"><span><i class="fa-solid fa-repeat"></i><b>GIF</b><small>Jalan terus, loop otomatis</small></span></label></div></div><div id="announcement-file-preview" class="jft-ann-file-preview hidden"></div></div>`;
     }
     const sendBtn=mount.querySelector('#announcement-send');
     if(sendBtn && !sendBtn.dataset.bound){sendBtn.dataset.bound='1';sendBtn.addEventListener('click',sendAnnouncement)}
@@ -279,10 +288,19 @@ function ensureAnnouncementUI(){
         const file=e.target.files?.[0]; const preview=mount.querySelector('#announcement-file-preview'); if(!preview)return;
         if(!file){preview.classList.add('hidden');preview.innerHTML='';return}
         const type=mediaTypeFromFile(file); const icon=type==='image'?'fa-image':type==='video'?'fa-video':type==='audio'?'fa-music':'fa-file';
-        preview.classList.remove('hidden'); preview.innerHTML=`<span class="jft-ann-preview-icon"><i class="fa-solid ${icon}"></i></span><span class="min-w-0 flex-1"><strong>${esc(file.name)}</strong><small>${typeof formatBytes==='function'?formatBytes(file.size):Math.round(file.size/1024)+' KB'}</small></span><button type="button" id="announcement-file-clear"><i class="fa-solid fa-xmark"></i></button>`;
-        preview.querySelector('#announcement-file-clear')?.addEventListener('click',()=>{fileInput.value='';preview.classList.add('hidden');preview.innerHTML='';});
+        const modeWrap=mount.querySelector('#announcement-media-mode-wrap');
+        const modeOptions=[...mount.querySelectorAll('label.jft-ann-mode-option')];
+        if(type==='video'){ modeWrap?.classList.remove('hidden'); modeOptions.forEach(x=>x.classList.toggle('is-active',x.querySelector('input')?.checked)); } else { modeWrap?.classList.add('hidden'); }
+        preview.classList.remove('hidden'); preview.innerHTML=`<span class="jft-ann-preview-icon"><i class="fa-solid ${icon}"></i></span><span class="min-w-0 flex-1"><strong>${esc(file.name)}</strong><small>${typeof formatBytes==='function'?formatBytes(file.size):Math.round(file.size/1024)+' KB'}${type==='video'?' · Pilih mode di atas':''}</small></span><button type="button" id="announcement-file-clear"><i class="fa-solid fa-xmark"></i></button>`;
+        preview.querySelector('#announcement-file-clear')?.addEventListener('click',()=>{fileInput.value='';preview.classList.add('hidden');preview.innerHTML='';modeWrap?.classList.add('hidden');});
       });
     }
+    mount.querySelectorAll('input[name="announcement-media-mode"]').forEach(input=>{
+      if(input.dataset.boundMode)return; input.dataset.boundMode='1';
+      input.addEventListener('change',()=>{
+        mount.querySelectorAll('label.jft-ann-mode-option').forEach(label=>label.classList.toggle('is-active',label.querySelector('input')?.checked));
+      });
+    });
   }
 }
 

@@ -766,6 +766,25 @@
 .jft-home-dot{position:absolute;right:7px;top:7px;width:10px;height:10px;border-radius:999px;background:#ff7373;border:2px solid #181818;box-shadow:0 0 0 2px #fffdf8;animation:jftDotPulse 1.25s infinite}
 @keyframes jftDotPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.18)}}
 
+
+.jft-ann-media-mode{margin-top:8px;padding:9px 10px;background:#ffe45c;border:2px solid #181818;border-radius:12px;box-shadow:2px 2px 0 #181818}
+.jft-ann-media-mode-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:7px}
+.jft-ann-media-mode-head span{font-size:9px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}
+.jft-ann-media-mode-head small{font-size:7px;font-weight:800;opacity:.6;text-align:right;line-height:1.25}
+.jft-ann-media-mode-options{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.jft-ann-mode-option{display:block;cursor:pointer}
+.jft-ann-mode-option input{position:absolute;opacity:0;pointer-events:none}
+.jft-ann-mode-option span{display:flex;align-items:center;gap:7px;padding:8px 9px;background:#fffdf8;border:2px solid #181818;border-radius:10px;min-height:42px;transition:.16s ease}
+.jft-ann-mode-option span i{font-size:11px;width:20px;height:20px;display:flex;align-items:center;justify-content:center;border:2px solid #181818;border-radius:7px;background:#fffdf8}
+.jft-ann-mode-option b{font-size:9px;font-weight:1000;display:block}
+.jft-ann-mode-option small{display:block;font-size:7px;font-weight:800;opacity:.56;margin-top:1px}
+.jft-ann-mode-option.is-active span{background:#43c9bd;transform:translate(-1px,-1px);box-shadow:2px 2px 0 #181818}
+.jft-ann-video-gif{position:relative}
+.jft-ann-video-gif video{display:block;width:100%;max-height:360px;object-fit:cover;background:#181818}
+.jft-ann-loop-pill{position:absolute;left:10px;bottom:10px;padding:5px 8px;border:2px solid #181818;border-radius:10px;background:#ffe45c;color:#181818;font-size:8px;font-weight:1000;box-shadow:2px 2px 0 #181818}
+.jft-ann-badge-gif{background:#43c9bd}
+@media (max-width:520px){.jft-ann-media-mode-head{flex-direction:column}.jft-ann-media-mode-head small{text-align:left}.jft-ann-mode-option span{min-height:48px}.jft-ann-mode-option small{font-size:6.5px}}
+
 .jft-ann-modal{position:fixed;inset:0;z-index:1250;display:flex;align-items:center;justify-content:center;padding:14px}
 .jft-ann-modal.hidden{display:none}
 .jft-ann-backdrop{position:absolute;inset:0;background:rgba(24,24,24,.58);backdrop-filter:blur(5px)}

@@ -75,6 +75,7 @@ create table if not exists public.chat_announcements (
   mime_type text,
   file_size bigint,
   media_type text,
+  media_mode text not null default 'video',
   duration_seconds numeric
 );
 
@@ -86,6 +87,7 @@ alter table public.chat_announcements add column if not exists file_name text;
 alter table public.chat_announcements add column if not exists mime_type text;
 alter table public.chat_announcements add column if not exists file_size bigint;
 alter table public.chat_announcements add column if not exists media_type text;
+alter table public.chat_announcements add column if not exists media_mode text not null default 'video';
 alter table public.chat_announcements add column if not exists duration_seconds numeric;
 create index if not exists chat_announcements_expiry_idx
   on public.chat_announcements(expires_at desc);
