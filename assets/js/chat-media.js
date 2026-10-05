@@ -140,7 +140,13 @@ const CHAT_BUCKET = 'chat-media';
             if(voice){
                 const fileObj=new File([voice],`voice-note-${Date.now()}.webm`,{type:voice.type||'audio/webm'}); uploadMeta=await uploadChatFile(fileObj); uploadMeta.message_type='voice'; uploadMeta.file_name=fileObj.name; uploadMeta.mime_type=fileObj.type; uploadMeta.file_size=fileObj.size; uploadMeta.duration=Math.round((Date.now()-voiceStartedAt)/1000);
             } else if(file){ uploadMeta=await uploadChatFile(file); uploadMeta.message_type=file.type?.startsWith('image/')?'image':file.type?.startsWith('video/')?'video':file.type?.startsWith('audio/')?'audio':'document'; uploadMeta.file_name=file.name; uploadMeta.mime_type=file.type||'application/octet-stream'; uploadMeta.file_size=file.size; }
-            const mediaLabels = {
+            const senderId = getChatIdentity();
+const senderName = getCurrentChatName();
+const userRole = localStorage.getItem('jft_user_role') || 'user';
+
+const messageType = getMessageTypeFromFile(file);
+
+const mediaLabels = {
     image: '[Foto]',
     video: '[Video]',
     document: '[Dokumen]',
@@ -148,21 +154,17 @@ const CHAT_BUCKET = 'chat-media';
     voice: '[Voice Note]'
 };
 
-const senderId = getChatIdentity();
-const senderName = getCurrentChatName();
-const userRole = localStorage.getItem('jft_user_role') || 'user';
-
 const payload = {
     sender_id: senderId,
     sender_name: senderName,
     sender_role: userRole,
-    message: mediaLabels[message_type] || '[File]',
-    message_type,
-    file_url,
-    file_name,
-    file_path,
-    mime_type,
-    file_size
+    message: mediaLabels[messageType] || '[File]',
+    message_type: messageType,
+    file_url: fileUrl,
+    file_name: file.name,
+    file_path: filePath,
+    mime_type: file.type,
+    file_size: file.size
 };
             const {error}=await window.supabaseClient.from('global_chats').insert([payload]);
             if(error) throw error;
