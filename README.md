@@ -1,3 +1,7 @@
+JFT-Basic v10
+
+Perbaikan: toast selalu di atas modal pengumuman dan audio pengumuman mendapat border/visual card yang lebih kuat.
+
 # JFT-Basic Practice — v6
 
 Pembaruan v6 berfokus pada Pusat Pengumuman di Home dan rich media.
