@@ -99,24 +99,34 @@ function mediaTypeFromFile(file){
   if(t.startsWith('audio/')) return 'audio';
   return 'document';
 }
+async function getAnnouncementMediaDuration(file){
+  if(!file || !/^(audio|video)\//i.test(String(file.type||''))) return null;
+  return new Promise(resolve=>{
+    const el=document.createElement(file.type.startsWith('audio/')?'audio':'video');
+    const url=URL.createObjectURL(file); let done=false;
+    const finish=value=>{if(done)return;done=true;URL.revokeObjectURL(url);el.remove();resolve(Number.isFinite(value)&&value>0?Math.round(value):null)};
+    el.preload='metadata'; el.onloadedmetadata=()=>finish(el.duration); el.onerror=()=>finish(null); setTimeout(()=>finish(null),5000); el.src=url;
+  });
+}
 function announcementPlayerMarkup(url,duration,mime){
-  const bars=Array.from({length:46},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
+  const bars=Array.from({length:52},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
   return `<div class="jft-vn-player jft-ann-audio jft-ann-audio-premium" data-vn-player data-vn-duration="${Number(duration)||0}">
     <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${attr(url)}" type="${attr(mime||'audio/mpeg')}"></audio>
-    <div class="jft-ann-audio-main">
-      <button type="button" class="jft-vn-play jft-ann-audio-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
-      <div class="jft-vn-content">
-        <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-headphones"></i> Audio Pengumuman</span><span data-vn-time>0:00 / 0:00</span></div>
-        <button type="button" class="jft-vn-wave jft-ann-audio-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
-      </div>
+    <div class="jft-ann-audio-glow"></div>
+    <div class="jft-ann-audio-icon"><i class="fa-solid fa-music"></i></div>
+    <div class="jft-ann-audio-center">
+      <div class="jft-ann-audio-top"><span class="jft-ann-audio-label">AUDIO</span><span class="jft-ann-audio-name">Pengumuman JFT-Basic</span><span class="jft-ann-audio-time" data-vn-time>0:00 / ${formatAnnTime(duration)}</span></div>
+      <button type="button" class="jft-vn-wave jft-ann-audio-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-track" data-vn-track></span><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
     </div>
-    <div class="jft-ann-audio-actions">
+    <div class="jft-ann-audio-controls">
       <button type="button" class="jft-ann-audio-skip" data-vn-skip="-10" aria-label="Mundur 10 detik"><i class="fa-solid fa-rotate-left"></i><span>10</span></button>
+      <button type="button" class="jft-ann-audio-play jft-vn-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
       <button type="button" class="jft-ann-audio-skip" data-vn-skip="10" aria-label="Maju 10 detik"><i class="fa-solid fa-rotate-right"></i><span>10</span></button>
-      <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
+      <button type="button" class="jft-vn-speed jft-ann-audio-speed" data-vn-speed>1x</button>
     </div>
   </div>`;
 }
+function formatAnnTime(seconds){ const n=Math.max(0,Number(seconds)||0); return formatDuration(n); }
 function announcementMediaMarkup(item){
   const url=String(item.file_url||''); if(!url)return '';
   const type=String(item.media_type||'').toLowerCase();
@@ -249,7 +259,7 @@ async function sendAnnouncement(){
     }
     const now=new Date(); const expires=new Date(now.getTime()+DAY); const mediaType=uploadMeta.publicUrl?mediaTypeFromFile(file):null;
     const effectiveMode=mediaType==='video' ? (mediaMode==='gif' ? 'gif' : 'video') : (mediaType?mediaType:'none');
-    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,media_mode:effectiveMode,duration_seconds:null};
+    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,media_mode:effectiveMode,duration_seconds:mediaDuration};
     const {error}=await window.supabaseClient.from('chat_announcements').insert([payload]);
     if(error){ if(uploadMeta.path&&typeof window.deleteChatStoragePaths==='function')await window.deleteChatStoragePaths([uploadMeta.path]); throw error; }
     if(titleInput)titleInput.value=''; if(messageInput)messageInput.value=''; if(fileInput)fileInput.value='';
