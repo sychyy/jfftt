@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFT-Basic Practice</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="assets/js/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen flex flex-col" data-page="home">
+<header class="bg-white shadow-sm sticky top-0 z-50" id="main-header">
+<div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
+<i class="fa-solid fa-language text-brand-600 text-2xl"></i>
+<div>
+<h1 class="text-lg font-bold text-slate-800 leading-tight">JFT-Basic Practice</h1>
+<p class="text-xs text-slate-500 hidden sm:block">Simulasi Latihan Bahasa Jepang</p>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1" onclick="navigate('history')">
+<i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+                </button>
+<button class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+</nav>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center p-4 max-w-4xl mx-auto w-full">
+<div class="screen active w-full max-w-2xl mt-8" id="screen-home">
+<div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+<div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-50 text-brand-600 mb-4">
+<i class="fa-solid fa-graduation-cap text-3xl"></i>
+</div>
+<h2 class="text-2xl font-bold text-slate-800 mb-2">Siap untuk Latihan?</h2>
+<p class="text-slate-600 mb-8">Pilih mode simulasi dan jumlah soal untuk memulai latihan.</p>
+<div class="text-left mb-6">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-2">Nama Lengkap</h3>
+<div class="relative">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+<i class="fa-regular fa-user text-slate-400"></i>
+</div>
+<input class="w-full pl-11 pr-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition text-slate-700 font-medium uppercase" id="user-name-input" placeholder="Masukkan nama Anda..." type="text"/>
+</div>
+</div>
+<div class="text-left mb-6">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">1. Pilih Mode Latihan</h3>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition">
+<input checked="" class="peer sr-only" name="period" type="radio" value="sep-nov">
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-xl absolute inset-0 pointer-events-none transition"></div>
+<div class="flex flex-col gap-1 z-10">
+<span class="font-semibold text-slate-800"><i class="fa-regular fa-calendar-check text-brand-500 mr-2"></i>September–November</span>
+<span class="text-xs text-slate-500">Simulasi pola JFT-Basic</span>
+</div>
+</input></label>
+<label class="relative flex cursor-pointer rounded-xl border border-slate-200 bg-white p-4 shadow-sm focus:outline-none hover:border-brand-300 hover:bg-slate-50 transition">
+<input class="peer sr-only" name="period" type="radio" value="random">
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-xl absolute inset-0 pointer-events-none transition"></div>
+<div class="flex flex-col gap-1 z-10">
+<span class="font-semibold text-slate-800"><i class="fa-solid fa-shuffle text-brand-500 mr-2"></i>Random Practice</span>
+<span class="text-xs text-slate-500">Acak seluruh bank soal</span>
+</div>
+</input></label>
+</div>
+</div>
+<div class="text-left mb-8">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">2. Jumlah Soal</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
+<input checked="" class="peer sr-only" name="q_count" type="radio" value="10">
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
+<span class="font-semibold text-slate-700 z-10">10 Soal</span>
+</input></label>
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
+<input class="peer sr-only" name="q_count" type="radio" value="20"/>
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
+<span class="font-semibold text-slate-700 z-10">20 Soal</span>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
+<input class="peer sr-only" name="q_count" type="radio" value="30"/>
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
+<span class="font-semibold text-slate-700 z-10">30 Soal</span>
+</label>
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
+<input class="peer sr-only" name="q_count" type="radio" value="50"/>
+<div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
+<span class="font-semibold text-slate-700 z-10">50 Soal</span>
+</label>
+</div>
+</div>
+<button class="w-full sm:w-auto bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-full shadow-md transition-all flex items-center justify-center gap-2 mx-auto mb-6" onclick="startQuiz()">
+                    Mulai Latihan <i class="fa-solid fa-arrow-right"></i>
+</button>
+<span class="hidden absolute -top-1.5 -right-1.5 w-4 h-4 bg-emerald-500 border-2 border-[#181818] rounded-full animate-pulse" id="chat-notification-dot">
+</span>
+<!-- POSISI TOMBOL GLOBAL CHAT DI SCREEN 1 (HOME) -->
+<div class="mt-3 relative">
+<button class="w-full py-3 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2 relative" onclick="toggleGlobalChat()">
+<i class="fa-solid fa-comments text-lg"></i> Global Chat (Ruang Diskusi Siswa)
+    </button>
+</div>
+<!-- KUIS HURUF UNTUK PEMULA -->
+<div class="border-t-2 border-slate-200 pt-5 mt-5 text-left">
+<div class="flex items-center justify-between gap-3 mb-3">
+<div class="min-w-0">
+<h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+<i class="fa-solid fa-language text-brand-600"></i> Kuis Kana Pemula
+                            </h3>
+<p class="text-[11px] text-slate-500 mt-1">Latihan dasar. Hiragana dan Katakana dibuat terpisah.</p>
+</div>
+<span class="shrink-0 text-[9px] font-black px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white shadow-[2px_2px_0_#181818]">10 SOAL</span>
+</div>
+<div class="flex flex-wrap gap-2">
+<button class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black" onclick="openKanaQuiz('hiragana')">
+<span class="text-lg leading-none japanese-text">あ</span><span>Hiragana</span>
+</button>
+<button class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black" onclick="openKanaQuiz('katakana')">
+<span class="text-lg leading-none japanese-text">ア</span><span>Katakana</span>
+</button>
+</div>
+</div>
+<!-- ETALASE MATERI GRATIS -->
+<div class="border-t-2 border-slate-200 pt-5 mt-5 text-left">
+<div class="flex items-start justify-between gap-3 mb-3">
+<div>
+<h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
+<i class="fa-solid fa-store text-emerald-600"></i> Etalase Materi Gratis
+                            </h3>
+<p class="text-[11px] text-slate-500 mt-1">Pilih materi untuk melihat detail, lalu buka sumbernya.</p>
+</div>
+<span class="shrink-0 bg-[#43c9bd] text-[#181818] px-2.5 py-1 rounded-lg border-[2px] border-[#181818] text-[9px] font-black shadow-[2px_2px_0_#181818]">GRATIS</span>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+<button class="material-shelf-btn text-left p-3 bg-white border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition" onclick="openMaterialShelf(0)">
+<div class="text-[9px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-sm mt-0.5">V1</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+</button>
+<button class="material-shelf-btn text-left p-3 bg-white border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition" onclick="openMaterialShelf(1)">
+<div class="text-[9px] font-black uppercase text-slate-500">Minna no Nihongo</div><div class="font-black text-[#181818] text-sm mt-0.5">V2</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+</button>
+<button class="material-shelf-btn text-left p-3 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition" onclick="openMaterialShelf(2)">
+<div class="text-[9px] font-black uppercase text-slate-500">Full Jepang</div><div class="font-black text-[#181818] text-sm mt-0.5">V1</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+</button>
+<button class="material-shelf-btn text-left p-3 bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition" onclick="openMaterialShelf(3)">
+<div class="text-[9px] font-black uppercase text-slate-500">Full Jepang</div><div class="font-black text-[#181818] text-sm mt-0.5">V2</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+</button>
+<button class="material-shelf-btn text-left p-3 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition col-span-2 sm:col-span-1" onclick="openMaterialShelf(4)">
+<div class="text-[9px] font-black uppercase text-slate-600">Kotoba</div><div class="font-black text-[#181818] text-sm mt-0.5">Bab 1–50</div><div class="text-[10px] font-bold text-brand-700 mt-1">Lihat materi</div>
+</button>
+</div>
+
+<div id="resume-quiz-card" class="hidden mb-5 text-left"></div>
+
+                <!-- LEADERBOARD / PAPAN PERINGKAT -->
+<div class="border-t-2 border-slate-200 pt-5 mt-5 text-left">
+<button class="w-full py-3 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center justify-center gap-2" onclick="toggleLeaderboard()">
+<i class="fa-solid fa-trophy text-lg text-amber-600"></i> Lihat Papan Peringkat (Leaderboard)
+                    </button>
+<div class="hidden mt-4 text-left bg-white p-4 rounded-xl border-[2px] border-[#181818] shadow-[4px_4px_0_#181818]" id="leaderboard-container">
+<div class="flex justify-between items-center mb-3 border-b-2 border-[#181818] pb-2">
+<h4 class="font-black text-slate-800 text-sm uppercase flex items-center gap-2">
+<i class="fa-solid fa-medal text-amber-500"></i> Top Skor Siswa
+                            </h4>
+<button aria-label="Tutup leaderboard" class="text-xs font-bold text-slate-500 hover:text-red-500" onclick="toggleLeaderboard()"><i class="fa-solid fa-xmark text-base"></i></button>
+</div>
+<div class="grid grid-cols-4 gap-1 mb-3 text-xs font-bold">
+<button class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-center shadow-[2px_2px_0_#181818] transition-all" id="l-btn-10" onclick="setLeaderboardFilter(10)">10 Soal</button>
+<button class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all" id="l-btn-20" onclick="setLeaderboardFilter(20)">20 Soal</button>
+<button class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all" id="l-btn-30" onclick="setLeaderboardFilter(30)">30 Soal</button>
+<button class="py-1.5 px-1 rounded-lg border-[2px] border-[#181818] bg-white text-center shadow-[2px_2px_0_#181818] transition-all" id="l-btn-50" onclick="setLeaderboardFilter(50)">50 Soal</button>
+</div>
+<div class="space-y-2.5 max-h-64 overflow-y-auto pr-1" id="leaderboard-list">
+<p class="text-center text-xs text-slate-500 py-4 font-bold">Memuat peringkat...</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-[5000] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" id="custom-confirm-modal" style="z-index:5000 !important;">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
+<h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+<i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
+                </h3>
+<p class="text-slate-700 font-medium mb-6" id="custom-confirm-msg">Pesan di sini</p>
+<div class="flex justify-end gap-3">
+<button class="px-4 py-2 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" onclick="hideCustomConfirm()">Batal</button>
+<button class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" id="btn-confirm-ok">Ya</button>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[210] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" id="custom-name-modal">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full">
+<h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+<i class="fa-solid fa-user-pen text-[#43c9bd]"></i>
+            Atur Nama
+        </h3>
+<p class="text-slate-700 font-medium mb-4 text-sm">
+            Silakan masukkan nama yang akan digunakan di website.
+            Nama ini wajib diisi dan tidak boleh sama dengan nama akun dari admin.
+        </p>
+<input autocomplete="off" class="w-full px-4 py-3 rounded-xl border-[2px] border-[#181818] bg-white font-bold uppercase focus:outline-none focus:ring-2 focus:ring-[#43c9bd]" id="required-custom-name" maxlength="30" placeholder="Masukkan nama..." type="text"/>
+<p class="hidden text-rose-500 text-xs font-bold mt-2" id="required-name-error">
+</p>
+<button class="w-full mt-4 px-4 py-3 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" onclick="saveRequiredCustomName()">
+            Simpan Nama
+        </button>
+</div>
+</div>
+<div class="fixed inset-0 z-[230] hidden items-center justify-center bg-black/50 backdrop-blur-sm px-4" id="admin-chat-name-modal">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full">
+<div class="flex items-start gap-3 mb-4">
+<div class="w-11 h-11 rounded-xl bg-[#62bddb] border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex items-center justify-center text-lg shrink-0">
+<i class="fa-solid fa-user-shield"></i>
+</div>
+<div>
+<div class="text-[10px] font-black uppercase tracking-widest text-slate-500">Identitas Moderator</div>
+<h3 class="text-xl font-black text-[#181818]">Atur Nama Admin</h3>
+</div>
+</div>
+<p class="text-sm text-slate-700 font-medium mb-4">Nama ini akan tampil di Global Chat. Gunakan nama yang ingin dilihat siswa.</p>
+<div class="bg-[#e9f8fc] border-[2px] border-[#181818] rounded-xl px-3 py-2 mb-3 text-xs font-black text-[#181818]">
+<i class="fa-solid fa-circle-check text-[#1597b5] mr-1"></i> Pesan admin akan tampil menggunakan nama yang kamu pilih.
+        </div>
+<input autocomplete="off" class="w-full px-4 py-3 rounded-xl border-[2px] border-[#181818] bg-white font-bold uppercase focus:outline-none focus:ring-2 focus:ring-[#62bddb]" id="admin-chat-name-input" maxlength="30" placeholder="Contoh: SENSEI / ADMIN JFT" type="text"/>
+<p class="hidden text-rose-500 text-xs font-bold mt-2" id="admin-chat-name-error"></p>
+<div class="flex gap-2 mt-4">
+<button class="flex-1 px-4 py-3 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]" onclick="closeAdminChatNameModal()">Batal</button>
+<button class="flex-1 px-4 py-3 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition shadow-[3px_3px_0_#181818]" onclick="saveAdminChatName()">Simpan Nama</button>
+</div>
+</div>
+</div>
+<div class="hidden fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="global-chat-modal" onclick="if(event.target===this) toggleGlobalChat();">
+<div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
+<!-- Header Chat -->
+<div class="bg-[#ffe45c] p-3 border-b-[3px] border-[#181818] flex justify-between items-center gap-3">
+<div class="min-w-0">
+<h3 class="font-black text-[#181818] text-base flex items-center gap-2">
+<i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
+                </h3>
+<p class="mt-0.5 text-[9px] font-bold text-slate-600 uppercase tracking-wide truncate">
+                    Aktif sebagai <span class="font-black text-[#181818]" id="chat-current-name">USER1</span> • Geser bubble ke kanan untuk balas
+                </p>
+</div>
+<button class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center" onclick="toggleGlobalChat()">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<!-- Area Pesan Masuk -->
+<div class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#f8f3e8]" id="chat-messages-container">
+<p class="text-center text-xs text-slate-400 font-bold">Memuat pesan...</p>
+</div>
+<!-- Preview Kotak Reply (Jika sedang mereply) -->
+<div class="hidden px-4 py-2 bg-slate-100 border-t-[2px] border-[#181818] flex justify-between items-center text-xs" id="reply-preview-box">
+<div>
+<span class="font-black text-brand-700" id="reply-preview-user"></span>
+<p class="text-slate-600 truncate max-w-[380px]" id="reply-preview-text"></p>
+</div>
+<button class="text-slate-500 hover:text-rose-600 font-bold" onclick="cancelReply()"><i class="fa-solid fa-xmark text-sm"></i></button>
+</div>
+<!-- Input, Tag, & Tombol Kirim -->
+
+<div class="hidden bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-2 text-[10px]" id="chat-attachment-preview"></div>
+<div class="hidden bg-white border-[1.5px] border-[#181818] rounded-lg p-1.5" id="chat-upload-progress">
+<div class="flex justify-between text-[9px] font-black mb-1"><span id="chat-upload-progress-text">Mengunggah 0%</span></div>
+<div class="h-2 bg-slate-200 border border-[#181818] rounded-full overflow-hidden"><div class="h-full bg-[#43c9bd]" id="chat-upload-progress-bar" style="width:0%"></div></div>
+</div>
+<div class="text-[9px] font-black text-rose-600 min-h-[12px]" id="chat-record-status"></div>
+<div class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden" id="tag-suggestions"></div><div class="p-3 bg-white border-t-[3px] border-[#181818] flex flex-col gap-2">
+<!-- Pilihan Tag User Cepat -->
+
+<div class="flex gap-2 items-end">
+<input accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar,.7z" class="hidden" id="chat-file-input" onchange="handleChatFileSelected(event)" type="file"/>
+<button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" onclick="toggleChatFilePicker()" title="Kirim file" type="button"><i class="fa-solid fa-paperclip"></i></button>
+<button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" id="chat-record-btn" title="Voice note" type="button"><i class="fa-solid fa-microphone"></i></button>
+<input class="flex-grow min-w-0 px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" id="chat-input-msg" oninput="checkChatInput(event)" onkeypress="handleChatKeyPress(event)" placeholder="Tulis pesan (gunakan @ untuk tag)..." type="text"/>
+<button class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" id="chat-send-btn" onclick="sendGlobalMessage()">
+        Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();">
+<div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
+<h4 class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2" data-chat-action-title="">Opsi Pesan</h4>
+<button class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" id="btn-action-edit" onclick="handleActionEdit()">
+<i class="fa-solid fa-pen-to-square"></i> Edit Pesan
+        </button>
+<button class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" id="btn-action-delete" onclick="handleActionDelete()">
+<i class="fa-solid fa-trash-can"></i> Hapus Pesan
+        </button>
+<button class="w-full py-2.5 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" onclick="selectedMessageForAction &amp;&amp; triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();">
+<i class="fa-solid fa-reply"></i> Balas Pesan
+        </button>
+<button class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1" onclick="closeChatActionModal()">
+            Batal
+        </button>
+</div>
+</div>
+<div class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/50 backdrop-blur-sm p-4" id="material-shelf-modal" onclick="if(event.target===this) closeMaterialShelf();">
+<div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[7px_7px_0_#181818] overflow-hidden">
+<div class="bg-[#ffe45c] px-4 py-3 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
+<div class="min-w-0"><div class="text-[9px] font-black uppercase tracking-widest text-slate-600">Etalase Materi Gratis</div><h3 class="text-lg font-black text-[#181818] mt-0.5" id="material-shelf-title">Materi</h3></div>
+<button class="w-8 h-8 shrink-0 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]" onclick="closeMaterialShelf()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="p-4">
+<div class="flex items-center gap-3 mb-3"><div class="w-11 h-11 shrink-0 rounded-xl bg-[#62bddb] border-[2px] border-[#181818] shadow-[2px_2px_0_#181818] flex items-center justify-center" id="material-shelf-icon"><i class="fa-solid fa-book-open text-[#181818]"></i></div><div><div class="text-[10px] font-black uppercase text-slate-500" id="material-shelf-subtitle">Materi</div><div class="text-[11px] font-bold text-slate-600">Sumber gratis yang kamu bagikan</div></div></div>
+<p class="text-xs leading-relaxed text-slate-700 mb-4" id="material-shelf-description">Materi tersedia melalui Google Drive.</p>
+<a class="w-full py-2.5 px-4 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] flex items-center justify-center gap-2" href="#" id="material-shelf-open" rel="noopener noreferrer" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka Materi</a>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[1150] hidden items-center justify-center bg-black/55 backdrop-blur-sm p-3 sm:p-4" id="kana-quiz-modal" onclick="if(event.target===this) closeKanaQuiz();">
+<div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[7px_7px_0_#181818] overflow-hidden">
+<div class="bg-[#ffe45c] px-4 py-3 border-b-[3px] border-[#181818] flex items-center justify-between gap-3">
+<div class="min-w-0"><div class="text-[9px] font-black uppercase tracking-widest text-slate-600">Latihan Kana Pemula</div><h3 class="text-lg font-black text-[#181818] mt-0.5" id="kana-quiz-title">ひらがな</h3></div>
+<button class="w-8 h-8 shrink-0 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818]" onclick="closeKanaQuiz()"><i class="fa-solid fa-xmark"></i></button>
+</div>
+<div class="p-4">
+<div class="flex items-center justify-between gap-2 mb-3"><span class="text-[10px] font-black text-slate-600" id="kana-quiz-progress">Soal 1 / 10</span><span class="text-[10px] font-black bg-white border-[2px] border-[#181818] rounded-lg px-2 py-1" id="kana-quiz-score">Skor: 0</span></div>
+<div class="min-h-[170px] bg-white border-[3px] border-[#181818] rounded-2xl shadow-[4px_4px_0_#181818] flex flex-col items-center justify-center text-center p-4" id="kana-quiz-question">
+<div class="text-[10px] font-black uppercase tracking-wider text-slate-500 mb-2">Huruf ini dibaca</div>
+<div class="text-7xl sm:text-8xl font-black leading-none japanese-text" id="kana-quiz-character">あ</div>
+<div class="text-xs font-black mt-3 min-h-[18px]" id="kana-quiz-feedback"></div>
+</div>
+<div class="grid grid-cols-2 gap-2.5 mt-3" id="kana-quiz-options"></div>
+<div class="hidden mt-3 text-center bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-4" id="kana-quiz-result">
+<div class="text-[9px] font-black uppercase tracking-widest text-slate-500">Hasil latihan</div><div class="text-3xl font-black text-[#181818] mt-1" id="kana-quiz-result-score">0 / 10</div><div class="text-xs font-bold text-slate-600 mt-1" id="kana-quiz-result-text"></div>
+<div class="flex gap-2 mt-3"><button class="flex-1 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818]" onclick="restartKanaQuiz()">Ulangi</button><button class="flex-1 py-2 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818]" onclick="closeKanaQuiz()">Selesai</button></div>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[1200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="custom-toast-modal">
+<div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
+<div class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3" id="toast-icon">
+<i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
+</div>
+<h4 class="font-black text-[#181818] text-lg mb-1" id="toast-title">Informasi</h4>
+<p class="text-slate-700 text-xs font-medium mb-5" id="toast-message">Pesan notifikasi di sini...</p>
+<button class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" onclick="closeToast()">
+            Mengerti
+        </button>
+</div>
+</div>
+<script src="assets/js/app-legacy.js"></script>
+<script src="assets/js/resume-router.js"></script>
+<script src="assets/js/chat-media.js"></script>
+</body>
+</html>

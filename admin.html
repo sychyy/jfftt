@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFT-Basic — Admin</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/tus-js-client@4/dist/tus.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="assets/js/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen flex flex-col" data-page="admin">
+<header class="bg-white shadow-sm sticky top-0 z-50 hidden" id="main-header">
+<div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
+<i class="fa-solid fa-language text-brand-600 text-2xl"></i>
+<div>
+<h1 class="text-lg font-bold text-slate-800 leading-tight">JFT-Basic Practice</h1>
+<p class="text-xs text-slate-500 hidden sm:block">Simulasi Latihan Bahasa Jepang</p>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1" onclick="navigate('history')">
+<i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+                </button>
+<button class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+</nav>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center p-4 max-w-7xl mx-auto w-full">
+<div class="screen active w-full max-w-6xl mt-4 mx-auto px-2" id="screen-admin">
+<div class="bg-[#fffdf8] p-6 sm:p-8 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] mb-12">
+<!-- HEADER ADMIN PANEL -->
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 border-b-[3px] border-[#181818] pb-5 gap-4">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl">
+<i class="fa-solid fa-shield-halved text-[#181818]"></i>
+</div>
+<div>
+<h2 class="text-2xl font-black text-[#181818] tracking-tight">Admin Control Panel</h2>
+<p class="text-xs font-bold text-slate-500 uppercase tracking-wider">Kelola Akses Pengguna &amp; Bank Soal JFT-Basic</p>
+</div>
+</div>
+<div class="flex flex-wrap items-center gap-2">
+<button class="px-5 py-2.5 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center gap-2" onclick="openAdminGlobalChat()">
+<i class="fa-solid fa-comments"></i> Global Chat
+                        </button>
+<button class="px-5 py-2.5 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all flex items-center gap-2" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i> Keluar Sistem
+                        </button>
+</div>
+</div>
+<!-- KONTROL ROOM CHAT DI ADMIN PANEL -->
+<div class="mb-5 bg-[#ffe45c] p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex justify-between items-center">
+<div>
+<h4 class="font-black text-[#181818] text-sm">Status Ruang Global Chat</h4>
+<p class="text-xs text-slate-700">Tutup room untuk menghentikan siswa mengirim pesan.</p>
+</div>
+<button class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition" id="btn-toggle-room" onclick="adminToggleRoomChat()">
+        Tutup Room Chat
+    </button>
+</div>
+<!-- PROFIL NAMA ADMIN UNTUK GLOBAL CHAT -->
+<div class="mb-5 bg-white p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-10 h-10 rounded-xl bg-[#62bddb] border-[2px] border-[#181818] shadow-[2px_2px_0_#181818] flex items-center justify-center shrink-0">
+<i class="fa-solid fa-user-shield text-[#181818]"></i>
+</div>
+<div class="min-w-0">
+<div class="text-[10px] font-black uppercase tracking-wider text-slate-500">Identitas Global Chat</div>
+<div class="font-black text-[#181818] truncate"><span id="admin-chat-name-display">Belum diatur</span></div>
+</div>
+</div>
+<button class="px-4 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition shrink-0" onclick="openAdminChatNameModal()">
+<i class="fa-solid fa-pen-to-square mr-1"></i> Ganti Nama Admin
+    </button>
+</div>
+<!-- Kontrol Khusus Admin -->
+<div id="admin-chat-controls" style="display: none; margin: 12px 0; padding: 12px 16px; background: #ffe4e6; border: 3px solid #000000; border-radius: 12px; box-shadow: 4px 4px 0px #000000; align-items: center; justify-content: space-between;">
+<span style="font-size: 13px; font-weight: 800; color: #000000;">Panel Kontrol Admin</span>
+<button id="jft-clear-chat-btn" style="background: #ff4d4d; color: white; border: 2px solid #000000; padding: 6px 14px; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; box-shadow: 2px 2px 0px #000000;">
+        🗑 Clear All Chat
+    </button>
+</div>
+<!-- Custom Modal Konfirmasi Hapus Chat -->
+<div id="jft-confirm-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10000; align-items: center; justify-content: center;">
+<div style="background: #ffffff; width: 85%; max-width: 360px; padding: 20px; border: 3px solid #000000; border-radius: 12px; box-shadow: 5px 5px 0px #000000; text-align: center; transform: scale(1); animation: jftScaleUp 0.2s ease;">
+<div style="font-size: 32px; margin-bottom: 8px;">⚠️</div>
+<h3 style="margin: 0 0 8px 0; color: #000000; font-size: 16px; font-weight: 800;">Hapus Semua Chat?</h3>
+<p style="margin: 0 0 20px 0; color: #333333; font-size: 13px; line-height: 1.4;">Tindakan ini akan menghapus seluruh riwayat percakapan secara permanen.</p>
+<div style="display: flex; gap: 10px; justify-content: center;">
+<button id="jft-cancel-btn" style="flex: 1; background: #e0e0e0; color: #000; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">Batal</button>
+<button id="jft-yes-delete-btn" style="flex: 1; background: #ff4d4d; color: white; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">Hapus</button>
+</div>
+</div>
+</div>
+<!-- Custom Modal Sukses Hapus Chat -->
+<div id="jft-success-modal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.5); z-index: 10001; align-items: center; justify-content: center;">
+<div style="background: #ffffff; width: 85%; max-width: 360px; padding: 20px; border: 3px solid #000000; border-radius: 12px; box-shadow: 5px 5px 0px #000000; text-align: center; animation: jftScaleUp 0.2s ease;">
+<div style="font-size: 32px; margin-bottom: 8px;">🎉</div>
+<h3 style="margin: 0 0 8px 0; color: #000000; font-size: 16px; font-weight: 800;">Berhasil!</h3>
+<p style="margin: 0 0 20px 0; color: #333333; font-size: 13px; line-height: 1.4;">Semua riwayat chat berhasil dibersihkan dari database.</p>
+<button id="jft-success-ok-btn" style="width: 100%; background: #4ade80; color: #000; border: 2px solid #000; padding: 8px; border-radius: 8px; font-weight: 700; cursor: pointer; box-shadow: 2px 2px 0px #000;">OK</button>
+</div>
+</div>
+<style>
+@keyframes jftScaleUp {
+    0% { opacity: 0; transform: scale(0.8); }
+    100% { opacity: 1; transform: scale(1); }
+}
+</style>
+<!-- TAB NAVIGASI ADMIN -->
+<div class="flex gap-3 mb-6">
+<button class="px-5 py-2.5 rounded-xl text-sm font-black border-[2px] border-[#181818] bg-[#ffe45c] text-[#181818] shadow-[3px_3px_0_#181818] transition-all flex items-center gap-2" id="tab-users" onclick="switchAdminTab('users')">
+<i class="fa-solid fa-users"></i> Data Pengguna &amp; Sesi
+                    </button>
+<button class="px-5 py-2.5 rounded-xl text-sm font-black border-[2px] border-[#181818] bg-white text-slate-700 shadow-[3px_3px_0_#181818] hover:bg-slate-50 transition-all flex items-center gap-2" id="tab-questions" onclick="switchAdminTab('questions')">
+<i class="fa-solid fa-book-open"></i> Kunci Jawaban Soal
+                    </button>
+</div>
+<!-- VIEW 1: DATA PENGGUNA -->
+<div class="block" id="admin-view-users">
+<div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-5 gap-3">
+<div>
+<h3 class="font-black text-slate-800 text-lg flex items-center gap-2">
+<span class="w-3 h-3 bg-[#43c9bd] border-[2px] border-[#181818] rounded-full inline-block"></span> 
+                                Manajemen Akun Terdaftar
+                            </h3>
+<p class="text-xs text-slate-500 font-medium">Pantau perangkat aktif dan riwayat skor tiap akun siswa.</p>
+</div>
+<button class="px-4 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] hover:bg-[#62bddb] transition-all flex items-center gap-2" onclick="toggleAddUserForm()">
+<i class="fa-solid fa-user-plus text-sm"></i> Tambah Akun Baru
+                        </button>
+</div>
+<!-- FORM TAMBAH USER -->
+<div class="hidden bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] mb-6 transition-all mt-2" id="add-user-form">
+<div class="flex justify-between items-center border-b-2 border-[#181818] pb-3 mb-4">
+<h4 class="font-black text-slate-800 text-sm uppercase tracking-wider flex items-center gap-2">
+<i class="fa-solid fa-circle-plus text-brand-600"></i> Form Registrasi Pengguna Baru
+                            </h4>
+<button class="text-slate-500 hover:text-red-500 font-bold" onclick="toggleAddUserForm()"><i class="fa-solid fa-xmark text-lg"></i></button>
+</div>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+<div>
+<label class="block text-xs font-black uppercase text-slate-700 mb-1">Nama Lengkap</label>
+<input class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium" id="new-name" placeholder="Mis: Budi Santoso" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-black uppercase text-slate-700 mb-1">Email (Opsional)</label>
+<input class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium" id="new-email" placeholder="budi@email.com" type="email"/>
+</div>
+<div>
+<label class="block text-xs font-black uppercase text-slate-700 mb-1">Auth Code (Password)</label>
+<input class="w-full px-4 py-3 border-[2px] border-[#181818] rounded-xl text-sm focus:outline-none focus:shadow-[4px_4px_0_#181818] focus:-translate-y-0.5 transition-all bg-white font-medium" id="new-authcode" placeholder="Kode Unik Login" type="text"/>
+</div>
+<div>
+<label class="block text-xs font-black uppercase text-slate-700 mb-1">Maks. Perangkat &amp; Role</label>
+<div class="flex gap-2">
+<input class="w-1/2 px-3 py-3 border-[2px] border-[#181818] rounded-xl text-sm font-black text-center bg-white" id="new-max-users" min="1" placeholder="Kuota" title="Batas perangkat" type="number" value="1"/>
+<select class="w-1/2 px-2 py-3 border-[2px] border-[#181818] rounded-xl text-xs font-black bg-[#ffe45c] text-[#181818] cursor-pointer" id="new-role">
+<option value="user">User</option>
+<option value="admin">Admin</option>
+</select>
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-3 pt-2 border-t border-slate-200">
+<button class="px-5 py-2.5 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition-all" onclick="toggleAddUserForm()">Batal</button>
+<button class="px-6 py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 hover:bg-[#62bddb] transition-all" id="btn-simpan-user" onclick="simpanUserBaru()">Simpan Data Akun</button>
+</div>
+</div>
+<!-- TABEL PENGGUNA (CARD / TABLE HYBRID YANG ESTETIK) -->
+<div class="overflow-x-auto border-[2.5px] border-[#181818] rounded-2xl shadow-[5px_5px_0_#181818] bg-white">
+<table class="w-full text-left text-sm text-slate-700">
+<thead class="bg-[#ffe45c] text-[#181818] font-black uppercase text-xs border-b-[2.5px] border-[#181818]">
+<tr>
+<th class="px-5 py-4 border-r-[2px] border-[#181818]">Informasi Akun &amp; Perangkat</th>
+<th class="px-5 py-4 border-r-[2px] border-[#181818]">Auth Code</th>
+<th class="px-5 py-4 border-r-[2px] border-[#181818] text-center">Status Kuota</th>
+<th class="px-5 py-4 border-r-[2px] border-[#181818]">Level Role</th>
+<th class="px-5 py-4 text-center">Tindakan</th>
+</tr>
+</thead>
+<tbody class="divide-y-[2px] divide-[#181818]" id="admin-user-table">
+<tr><td class="px-5 py-10 text-center font-bold text-slate-400" colspan="5">Memuat data dari database...</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- VIEW 2: BANK SOAL -->
+<div class="hidden" id="admin-view-questions">
+<div class="flex justify-between items-center mb-5 bg-[#f0ede5] p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818]">
+<div>
+<h3 class="font-black text-slate-800 text-base">Daftar Bank Soal &amp; Kunci Jawaban</h3>
+<p class="text-xs text-slate-500 font-medium">Seluruh modul pertanyaan simulasi JFT-Basic.</p>
+</div>
+<span class="bg-[#ffe45c] text-[#181818] px-3 py-1.5 rounded-lg text-xs font-black border-[2px] border-[#181818] shadow-[2px_2px_0_#181818]" id="total-questions-count">0 Soal</span>
+</div>
+<div class="space-y-4 max-h-[600px] overflow-y-auto pr-2" id="admin-questions-list"></div>
+</div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-[5000] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" id="custom-confirm-modal" style="z-index:5000 !important;">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
+<h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+<i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
+                </h3>
+<p class="text-slate-700 font-medium mb-6" id="custom-confirm-msg">Pesan di sini</p>
+<div class="flex justify-end gap-3">
+<button class="px-4 py-2 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" onclick="hideCustomConfirm()">Batal</button>
+<button class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" id="btn-confirm-ok">Ya</button>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[230] hidden items-center justify-center bg-black/50 backdrop-blur-sm px-4" id="admin-chat-name-modal">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full">
+<div class="flex items-start gap-3 mb-4">
+<div class="w-11 h-11 rounded-xl bg-[#62bddb] border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex items-center justify-center text-lg shrink-0">
+<i class="fa-solid fa-user-shield"></i>
+</div>
+<div>
+<div class="text-[10px] font-black uppercase tracking-widest text-slate-500">Identitas Moderator</div>
+<h3 class="text-xl font-black text-[#181818]">Atur Nama Admin</h3>
+</div>
+</div>
+<p class="text-sm text-slate-700 font-medium mb-4">Nama ini akan tampil di Global Chat. Gunakan nama yang ingin dilihat siswa.</p>
+<div class="bg-[#e9f8fc] border-[2px] border-[#181818] rounded-xl px-3 py-2 mb-3 text-xs font-black text-[#181818]">
+<i class="fa-solid fa-circle-check text-[#1597b5] mr-1"></i> Pesan admin akan tampil menggunakan nama yang kamu pilih.
+        </div>
+<input autocomplete="off" class="w-full px-4 py-3 rounded-xl border-[2px] border-[#181818] bg-white font-bold uppercase focus:outline-none focus:ring-2 focus:ring-[#62bddb]" id="admin-chat-name-input" maxlength="30" placeholder="Contoh: SENSEI / ADMIN JFT" type="text"/>
+<p class="hidden text-rose-500 text-xs font-bold mt-2" id="admin-chat-name-error"></p>
+<div class="flex gap-2 mt-4">
+<button class="flex-1 px-4 py-3 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]" onclick="closeAdminChatNameModal()">Batal</button>
+<button class="flex-1 px-4 py-3 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition shadow-[3px_3px_0_#181818]" onclick="saveAdminChatName()">Simpan Nama</button>
+</div>
+</div>
+</div>
+<div class="hidden fixed inset-0 z-[1000] flex items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="global-chat-modal" onclick="if(event.target===this) toggleGlobalChat();">
+<div class="bg-[#fffdf8] w-full max-w-lg h-[550px] rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] flex flex-col overflow-hidden">
+<!-- Header Chat -->
+<div class="bg-[#ffe45c] p-3 border-b-[3px] border-[#181818] flex justify-between items-center gap-3">
+<div class="min-w-0">
+<h3 class="font-black text-[#181818] text-base flex items-center gap-2">
+<i class="fa-solid fa-earth-asia text-brand-600"></i> Global Chat JFT-Basic
+                </h3>
+<p class="mt-0.5 text-[9px] font-bold text-slate-600 uppercase tracking-wide truncate">
+                    Aktif sebagai <span class="font-black text-[#181818]" id="chat-current-name">USER1</span> • Geser bubble ke kanan untuk balas
+                </p>
+</div>
+<button class="w-8 h-8 bg-white border-[2px] border-[#181818] rounded-lg font-black shadow-[2px_2px_0_#181818] hover:bg-rose-300 transition flex items-center justify-center" onclick="toggleGlobalChat()">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+<!-- Area Pesan Masuk -->
+<div class="flex-grow p-4 overflow-y-auto space-y-3 bg-[#f8f3e8]" id="chat-messages-container">
+<p class="text-center text-xs text-slate-400 font-bold">Memuat pesan...</p>
+</div>
+<!-- Preview Kotak Reply (Jika sedang mereply) -->
+<div class="hidden px-4 py-2 bg-slate-100 border-t-[2px] border-[#181818] flex justify-between items-center text-xs" id="reply-preview-box">
+<div>
+<span class="font-black text-brand-700" id="reply-preview-user"></span>
+<p class="text-slate-600 truncate max-w-[380px]" id="reply-preview-text"></p>
+</div>
+<button class="text-slate-500 hover:text-rose-600 font-bold" onclick="cancelReply()"><i class="fa-solid fa-xmark text-sm"></i></button>
+</div>
+<!-- Input, Tag, & Tombol Kirim -->
+
+<div class="hidden bg-[#f0ede5] border-[2px] border-[#181818] rounded-xl p-2 text-[10px]" id="chat-attachment-preview"></div>
+<div class="hidden bg-white border-[1.5px] border-[#181818] rounded-lg p-1.5" id="chat-upload-progress">
+<div class="flex justify-between text-[9px] font-black mb-1"><span id="chat-upload-progress-text">Mengunggah 0%</span></div>
+<div class="h-2 bg-slate-200 border border-[#181818] rounded-full overflow-hidden"><div class="h-full bg-[#43c9bd]" id="chat-upload-progress-bar" style="width:0%"></div></div>
+</div>
+<div class="text-[9px] font-black text-rose-600 min-h-[12px]" id="chat-record-status"></div>
+<div class="flex gap-1 overflow-x-auto pb-1 text-[10px] hidden" id="tag-suggestions"></div><div class="p-3 bg-white border-t-[3px] border-[#181818] flex flex-col gap-2">
+<!-- Pilihan Tag User Cepat -->
+
+<div class="flex gap-2 items-end">
+<input accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar,.7z" class="hidden" id="chat-file-input" onchange="handleChatFileSelected(event)" type="file"/>
+<button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" onclick="toggleChatFilePicker()" title="Kirim file" type="button"><i class="fa-solid fa-paperclip"></i></button>
+<button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" id="chat-record-btn" title="Voice note" type="button"><i class="fa-solid fa-microphone"></i></button>
+<input class="flex-grow min-w-0 px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" id="chat-input-msg" oninput="checkChatInput(event)" onkeypress="handleChatKeyPress(event)" placeholder="Tulis pesan (gunakan @ untuk tag)..." type="text"/>
+<button class="px-5 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-sm shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" id="chat-send-btn" onclick="sendGlobalMessage()">
+        Kirim <i class="fa-solid fa-paper-plane ml-1"></i>
+</button>
+</div>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[1100] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="chat-action-modal" onclick="if(event.target===this) closeChatActionModal();">
+<div class="bg-[#fffdf8] w-full max-w-xs rounded-2xl border-[3px] border-[#181818] shadow-[6px_6px_0_#181818] p-4 flex flex-col gap-2.5 text-center">
+<h4 class="font-black text-[#181818] text-base border-b-2 border-[#181818] pb-2" data-chat-action-title="">Opsi Pesan</h4>
+<button class="w-full py-2.5 px-4 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" id="btn-action-edit" onclick="handleActionEdit()">
+<i class="fa-solid fa-pen-to-square"></i> Edit Pesan
+        </button>
+<button class="w-full py-2.5 px-4 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" id="btn-action-delete" onclick="handleActionDelete()">
+<i class="fa-solid fa-trash-can"></i> Hapus Pesan
+        </button>
+<button class="w-full py-2.5 px-4 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-black shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition flex items-center justify-center gap-2" onclick="selectedMessageForAction &amp;&amp; triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();">
+<i class="fa-solid fa-reply"></i> Balas Pesan
+        </button>
+<button class="w-full py-2 px-4 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-xs font-bold shadow-[2px_2px_0_#181818] transition mt-1" onclick="closeChatActionModal()">
+            Batal
+        </button>
+</div>
+</div>
+<div class="fixed inset-0 z-[1200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="custom-toast-modal">
+<div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
+<div class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3" id="toast-icon">
+<i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
+</div>
+<h4 class="font-black text-[#181818] text-lg mb-1" id="toast-title">Informasi</h4>
+<p class="text-slate-700 text-xs font-medium mb-5" id="toast-message">Pesan notifikasi di sini...</p>
+<button class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" onclick="closeToast()">
+            Mengerti
+        </button>
+</div>
+</div>
+<script src="assets/js/app-legacy.js"></script>
+<script src="assets/js/resume-router.js"></script>
+<script src="assets/js/chat-media.js"></script>
+</body>
+</html>

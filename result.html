@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFT-Basic — Hasil</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="assets/js/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen flex flex-col" data-page="result">
+<header class="bg-white shadow-sm sticky top-0 z-50" id="main-header">
+<div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
+<i class="fa-solid fa-language text-brand-600 text-2xl"></i>
+<div>
+<h1 class="text-lg font-bold text-slate-800 leading-tight">JFT-Basic Practice</h1>
+<p class="text-xs text-slate-500 hidden sm:block">Simulasi Latihan Bahasa Jepang</p>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1" onclick="navigate('history')">
+<i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+                </button>
+<button class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+</nav>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center p-4 max-w-4xl mx-auto w-full">
+<div class="screen active w-full mt-4" id="screen-result">
+<div class="flex justify-between items-center mb-4 px-2">
+<h2 class="text-xl font-bold text-slate-800">Hasil Latihan</h2>
+<div class="flex gap-2">
+<button class="bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 px-4 py-2 rounded-lg text-sm font-medium transition" onclick="navigate('home')">Beranda</button>
+<button class="bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition flex items-center gap-2" onclick="window.print()">
+<i class="fa-solid fa-print"></i> Cetak
+                    </button>
+</div>
+</div>
+<div class="certificate-container p-6 sm:p-8 mb-8" id="certificate-area">
+<div class="flex flex-col sm:flex-row justify-between items-start border-b-2 border-slate-200 pb-6 mb-6">
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="text-2xl font-black tracking-tighter text-slate-800">JFT-Basic</span>
+<span class="text-xs text-slate-500 japanese-text mt-1">国際交流基金 日本語基礎テスト</span>
+</div>
+<h1 class="text-lg font-bold text-slate-800 japanese-text">模擬試験 判定結果通知書</h1>
+<h2 class="text-sm text-slate-600">Japan Foundation Test for Basic Japanese Practice Assessment Result</h2>
+</div>
+<div class="mt-4 sm:mt-0 flex flex-col items-end text-brand-700 opacity-80">
+<i class="fa-brands fa-pagelines text-3xl mb-1"></i>
+<span class="text-xs font-semibold">JAPAN FOUNDATION</span>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row gap-6 mb-8">
+<div class="w-32 h-40 bg-slate-100 flex flex-col items-center justify-center text-slate-300 border border-slate-200 mx-auto sm:mx-0 shrink-0 relative cursor-pointer group overflow-hidden" onclick="document.getElementById('photo-upload').click()" title="Klik untuk mengubah foto">
+<img alt="User Photo" class="w-full h-full object-cover hidden absolute inset-0 z-10" id="user-photo-img" src=""/>
+<div class="flex flex-col items-center p-2 text-center z-0" id="photo-placeholder">
+<i class="fa-solid fa-camera text-4xl mb-2 text-slate-400"></i>
+<span class="text-[10px] text-slate-500 font-medium leading-tight">Klik untuk<br/>pasang foto</span>
+</div>
+<input accept="image/*" class="hidden" id="photo-upload" onchange="handlePhotoUpload(event)" type="file"/>
+</div>
+<div class="flex-grow text-sm grid grid-cols-[120px_1fr] gap-y-2 gap-x-4 items-center">
+<div class="text-slate-500 japanese-text">受験番号<br/><span class="text-[10px] block -mt-1">Registration Number</span></div>
+<div class="font-medium">: <span id="res-reg-num"></span></div>
+<div class="text-slate-500 japanese-text">氏名<br/><span class="text-[10px] block -mt-1">Name</span></div>
+<div class="font-medium text-lg flex items-center gap-2">
+                            : <span id="res-name"></span>
+<button class="text-slate-400 hover:text-brand-600 transition p-1 bg-slate-50 hover:bg-slate-100 rounded" onclick="editName()" title="Edit Nama">
+<i class="fa-solid fa-pen text-xs"></i>
+</button>
+</div>
+<div class="text-slate-500 japanese-text">国籍<br/><span class="text-[10px] block -mt-1">Nationality</span></div>
+<div class="font-medium">: Indonesia</div>
+<div class="text-slate-500 japanese-text">受験地<br/><span class="text-[10px] block -mt-1">Test Location</span></div>
+<div class="font-medium">: Practice Online</div>
+<div class="text-slate-500 japanese-text">受験日<br/><span class="text-[10px] block -mt-1">Test Date</span></div>
+<div class="font-medium">: <span id="res-date"></span></div>
+</div>
+</div>
+<div class="border border-slate-200 p-6 bg-slate-50/50">
+<div class="flex flex-col sm:flex-row justify-between mb-8">
+<div class="flex gap-12">
+<div>
+<div class="text-slate-500 text-sm japanese-text">総合得点:<br/><span class="text-xs block">Total Score</span></div>
+<div class="text-4xl font-bold text-slate-800 mt-2" id="res-total-score"></div>
+</div>
+<div>
+<div class="text-slate-500 text-sm japanese-text">判定結果:<br/><span class="text-xs block">Assessment Results</span></div>
+<div class="text-3xl font-bold text-slate-800 mt-2" id="res-level"></div>
+</div>
+</div>
+</div>
+<div class="score-bar-container">
+<div class="score-marker" style="left: 0%;"><span>10</span></div>
+<div class="score-marker" style="left: 56.25%;"><span>145<br/><span class="text-[10px] font-normal">A1</span></span></div>
+<div class="score-marker" style="left: 68.75%;"><span>175<br/><span class="text-[10px] font-normal">A2.1</span></span></div>
+<div class="score-marker" style="left: 79.16%;"><span>200<br/><span class="text-[10px] font-normal">A2.2(A2)</span></span></div>
+<div class="score-marker" style="left: 100%;"><span>250</span></div>
+<div class="score-indicator" id="res-score-indicator" style="left: 10%;"><span class="score-indicator-value" id="res-score-val-float">10</span></div>
+</div>
+<div class="mt-16 border-t border-slate-200 pt-6">
+<div class="grid gap-4" id="res-sections-container"></div>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-8">
+<h3 class="text-lg font-bold text-slate-800 mb-4 border-b pb-2">Detail Evaluasi</h3>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6">
+<div class="bg-slate-50 p-3 rounded-lg text-center"><div class="text-xs text-slate-500">Total Soal</div><div class="text-xl font-bold" id="eval-total">0</div></div>
+<div class="bg-green-50 p-3 rounded-lg text-center"><div class="text-xs text-green-600">Benar</div><div class="text-xl font-bold text-green-700" id="eval-correct">0</div></div>
+<div class="bg-red-50 p-3 rounded-lg text-center"><div class="text-xs text-red-600">Salah</div><div class="text-xl font-bold text-red-700" id="eval-wrong">0</div></div>
+<div class="bg-blue-50 p-3 rounded-lg text-center"><div class="text-xs text-blue-600">Akurasi</div><div class="text-xl font-bold text-blue-700" id="eval-accuracy">0%</div></div>
+</div>
+<h4 class="font-medium text-slate-700 mb-3">Review Jawaban yang Salah</h4>
+<div class="space-y-4" id="mistakes-container"></div>
+</div>
+</div>
+</main>
+<div class="fixed inset-0 z-[5000] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" id="custom-confirm-modal" style="z-index:5000 !important;">
+<div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
+<h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
+<i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
+                </h3>
+<p class="text-slate-700 font-medium mb-6" id="custom-confirm-msg">Pesan di sini</p>
+<div class="flex justify-end gap-3">
+<button class="px-4 py-2 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" onclick="hideCustomConfirm()">Batal</button>
+<button class="px-4 py-2 bg-[#ff7373] text-[#181818] border-[2px] border-[#181818] rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818] hover:-translate-y-1 hover:shadow-[5px_5px_0_#181818] transition-all" id="btn-confirm-ok">Ya</button>
+</div>
+</div>
+</div>
+<div class="fixed inset-0 z-[1200] hidden items-center justify-center bg-black/40 backdrop-blur-sm p-4" id="custom-toast-modal">
+<div class="bg-[#fffdf8] w-full max-w-sm rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] p-6 text-center">
+<div class="w-12 h-12 bg-[#ffe45c] border-[2px] border-[#181818] rounded-xl flex items-center justify-center shadow-[3px_3px_0_#181818] text-xl mx-auto mb-3" id="toast-icon">
+<i class="fa-solid fa-circle-exclamation text-[#181818]"></i>
+</div>
+<h4 class="font-black text-[#181818] text-lg mb-1" id="toast-title">Informasi</h4>
+<p class="text-slate-700 text-xs font-medium mb-5" id="toast-message">Pesan notifikasi di sini...</p>
+<button class="w-full py-2.5 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black text-xs shadow-[3px_3px_0_#181818] hover:-translate-y-0.5 transition" onclick="closeToast()">
+            Mengerti
+        </button>
+</div>
+</div>
+<script src="assets/js/app-legacy.js"></script>
+<script src="assets/js/resume-router.js"></script>
+<script src="assets/js/chat-media.js"></script>
+</body>
+</html>

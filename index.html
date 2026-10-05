@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFT-Basic — Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<script src="assets/js/tailwind-config.js"></script>
+<link rel="stylesheet" href="assets/css/app.css">
+</head>
+<body class="min-h-screen flex flex-col" data-page="auth">
+<header class="bg-white shadow-sm sticky top-0 z-50 hidden" id="main-header">
+<div class="max-w-4xl mx-auto px-4 py-3 flex justify-between items-center">
+<div class="flex items-center gap-2 cursor-pointer" onclick="navigate('home')">
+<i class="fa-solid fa-language text-brand-600 text-2xl"></i>
+<div>
+<h1 class="text-lg font-bold text-slate-800 leading-tight">JFT-Basic Practice</h1>
+<p class="text-xs text-slate-500 hidden sm:block">Simulasi Latihan Bahasa Jepang</p>
+</div>
+</div>
+<nav class="flex items-center gap-4">
+<button class="text-slate-600 hover:text-brand-600 transition font-medium text-sm flex items-center gap-1" onclick="navigate('history')">
+<i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+                </button>
+<button class="text-red-500 hover:text-red-600 transition font-medium text-sm flex items-center gap-1" onclick="handleLogout()">
+<i class="fa-solid fa-right-from-bracket"></i> Keluar
+                </button>
+</nav>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center p-4 max-w-4xl mx-auto w-full">
+<div class="screen active w-full max-w-md mt-12 mx-auto" id="screen-auth">
+<div class="bg-white p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
+<i class="fa-solid fa-lock text-brand-500 text-4xl mb-4"></i>
+<h2 class="text-2xl font-bold text-slate-800 mb-2">Masuk ke JFT-Basic</h2>
+<p class="text-slate-500 mb-6 text-sm">Silakan login untuk mengakses simulasi latihan atau hubungi admin jika belum terdaftar.</p>
+<div class="text-left mb-4">
+<label class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 block">Email</label>
+<input class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition" id="login-email" placeholder="email@contoh.com" type="email"/>
+</div>
+<div class="text-left mb-6">
+<label class="text-xs font-bold text-slate-700 uppercase tracking-wider mb-2 block">Password (Auth Code)</label>
+<input class="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:border-brand-500 transition" id="login-password" placeholder="••••••••" type="password"/>
+</div>
+<button class="w-full bg-brand-600 hover:bg-brand-700 text-white font-semibold py-3 px-8 rounded-xl shadow-md transition-all flex items-center justify-center gap-2" id="btn-login" onclick="handleLogin()">
+                    Masuk <i class="fa-solid fa-right-to-bracket"></i>
+</button>
+<p class="text-red-500 text-sm mt-3 hidden" id="login-error">Email atau password salah.</p>
+</div>
+</div>
+</main>
+
+<script src="assets/js/app-legacy.js"></script>
+<script src="assets/js/resume-router.js"></script>
+<script src="assets/js/chat-media.js"></script>
+</body>
+</html>
