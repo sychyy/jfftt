@@ -112,8 +112,7 @@ function announcementPlayerMarkup(url,duration,mime){
   const bars=Array.from({length:52},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
   return `<div class="jft-vn-player jft-ann-audio jft-ann-audio-premium" data-vn-player data-vn-duration="${Number(duration)||0}">
     <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${attr(url)}" type="${attr(mime||'audio/mpeg')}"></audio>
-    <div class="jft-ann-audio-glow"></div>
-    <div class="jft-ann-audio-icon"><i class="fa-solid fa-music"></i></div>
+    <div class="jft-ann-audio-icon" aria-hidden="true"><i class="fa-solid fa-music"></i></div>
     <div class="jft-ann-audio-center">
       <div class="jft-ann-audio-top"><span class="jft-ann-audio-label">AUDIO</span><span class="jft-ann-audio-name">Pengumuman JFT-Basic</span><span class="jft-ann-audio-time" data-vn-time>0:00 / ${formatAnnTime(duration)}</span></div>
       <button type="button" class="jft-vn-wave jft-ann-audio-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-track" data-vn-track></span><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
@@ -257,9 +256,19 @@ async function sendAnnouncement(){
       if(typeof window.uploadChatFile!=='function')throw new Error('Modul upload belum siap.');
       uploadMeta=await window.uploadChatFile(file,{subfolder:'announcements'});
     }
-    const now=new Date(); const expires=new Date(now.getTime()+DAY); const mediaType=uploadMeta.publicUrl?mediaTypeFromFile(file):null;
+    const now=new Date(); const expires=new Date(now.getTime()+DAY);
+    const resolvedMime=String(uploadMeta.mime_type||file?.type||'').toLowerCase();
+    const mediaType=uploadMeta.publicUrl ? mediaTypeFromFile({type:resolvedMime}) : null;
     const effectiveMode=mediaType==='video' ? (mediaMode==='gif' ? 'gif' : 'video') : (mediaType?mediaType:'none');
-    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,media_mode:effectiveMode,duration_seconds:mediaDuration};
+    let mediaDuration=null;
+    // Durasi hanya disimpan untuk AUDIO. Video/GIF tidak perlu disimpan ke database.
+    if(file && mediaType==='audio') {
+      try {
+        const durationFile = file.type ? file : new File([file], file.name||'announcement-audio', {type:resolvedMime||'audio/mpeg'});
+        mediaDuration=await getAnnouncementMediaDuration(durationFile);
+      } catch(_) { mediaDuration=null; }
+    }
+    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:resolvedMime||null,file_size:file?.size||null,media_type:mediaType,media_mode:effectiveMode,duration_seconds:mediaType==='audio'?mediaDuration:null};
     const {error}=await window.supabaseClient.from('chat_announcements').insert([payload]);
     if(error){ if(uploadMeta.path&&typeof window.deleteChatStoragePaths==='function')await window.deleteChatStoragePaths([uploadMeta.path]); throw error; }
     if(titleInput)titleInput.value=''; if(messageInput)messageInput.value=''; if(fileInput)fileInput.value='';

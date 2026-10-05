@@ -39,8 +39,8 @@
         :root { --nb-bg: #f8f3e8; --nb-paper: #fffdf8; --nb-black: #181818; --nb-yellow: #ffe45c; --nb-coral: #ff7373; --nb-purple: #9b82f3; --nb-teal: #43c9bd; --nb-blue: #62bddb; --nb-gray: #f0ede5; --nb-border: 2.5px solid var(--nb-black); --nb-shadow: 5px 5px 0 var(--nb-black); --nb-shadow-small: 3px 3px 0 var(--nb-black); --nb-radius: 14px; }
         * { box-sizing: border-box; }
         html { scroll-behavior: smooth; }
-        body { font-family: 'Inter', sans-serif !important; color: var(--nb-black) !important; background: radial-gradient(circle at 15% 15%, rgba(255,228,92,.18), transparent 22%), radial-gradient(circle at 85% 20%, rgba(67,201,189,.13), transparent 20%), var(--nb-bg) !important; -webkit-tap-highlight-color: transparent; }
-        body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .18; background-image: radial-gradient(rgba(24,24,24,.18) .7px, transparent .7px); background-size: 7px 7px; }
+        body { font-family: 'Inter', sans-serif !important; color: var(--nb-black) !important; background: var(--nb-bg) !important; -webkit-tap-highlight-color: transparent; }
+        body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1; opacity: .18; background-image: none; background-size: 7px 7px; }
         .japanese-text { font-family: 'Noto Sans JP', sans-serif !important; }
         .screen { display: none; animation: nbScreenIn .28s ease-out; }
         .screen.active { display: block; }
@@ -60,11 +60,11 @@
         #screen-quiz > div:nth-child(2) { background: var(--nb-paper) !important; border: var(--nb-border) !important; border-top-width: 0 !important; border-radius: 0 0 var(--nb-radius) var(--nb-radius) !important; box-shadow: var(--nb-shadow); min-height: 430px !important; }
         #quiz-section-badge { background: var(--nb-yellow) !important; color: var(--nb-black) !important; border: 2px solid var(--nb-black); box-shadow: 2px 2px 0 var(--nb-black); border-radius: 7px !important; font-weight: 800 !important; }
         #quiz-progress-text { color: var(--nb-black) !important; font-weight: 800 !important; }
-        #quiz-progress-bar { background: repeating-linear-gradient(135deg, var(--nb-coral) 0, var(--nb-coral) 8px, #ff8585 8px, #ff8585 16px) !important; border-right: 2px solid var(--nb-black); transition: width .35s ease !important; }
+        #quiz-progress-bar { background: var(--nb-coral) !important; border-right: 2px solid var(--nb-black); transition: width .35s ease !important; }
         #screen-quiz > div:first-child .w-full.sm\:w-1\/2 { border: 2px solid var(--nb-black); background: var(--nb-gray) !important; height: 13px !important; box-shadow: 2px 2px 0 var(--nb-black); }
         #quiz-timer { color: var(--nb-black) !important; background: var(--nb-yellow); border: 2px solid var(--nb-black); padding: 6px 10px; border-radius: 8px; box-shadow: 2px 2px 0 var(--nb-black); font-weight: 800 !important; }
         #quiz-instruction { display: inline-block; color: var(--nb-black) !important; background: #f0ede5; border-left: 5px solid var(--nb-purple); padding: 7px 10px; font-weight: 600; border-radius: 5px; }
-        #quiz-question { color: var(--nb-black) !important; font-weight: 650 !important; line-height: 1.9 !important; background: linear-gradient(135deg, rgba(255,228,92,.16), transparent 55%); padding: 18px; border-left: 5px solid var(--nb-teal); border-radius: 5px; }
+        #quiz-question { color: var(--nb-black) !important; font-weight: 650 !important; line-height: 1.9 !important; background: #fff8c9; padding: 18px; border-left: 5px solid var(--nb-teal); border-radius: 5px; }
         .option-label { cursor: pointer; transition: transform .15s ease; }
         .option-content { position: relative; background: var(--nb-paper) !important; color: var(--nb-black) !important; border: var(--nb-border) !important; border-radius: 10px !important; box-shadow: 3px 3px 0 var(--nb-black); transition: transform .15s ease, box-shadow .15s ease, background .15s ease; }
         .option-label:hover .option-content { transform: translate(-2px,-2px); box-shadow: 6px 6px 0 var(--nb-black); background: #fff8c9 !important; }
@@ -84,7 +84,7 @@
         .certificate-container::before { content: ""; position: absolute; width: 70px; height: 12px; top: -9px; left: 28px; background: var(--nb-coral); border-left: 2px solid var(--nb-black); border-right: 2px solid var(--nb-black); }
         .certificate-container .border.border-slate-200 { background: #fffaf0 !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small); }
         #res-total-score, #res-level { color: var(--nb-black) !important; font-weight: 900 !important; }
-        .score-bar-container { position: relative; height: 15px; margin-top: 2.5rem; margin-bottom: 3.8rem; margin-left: 12px; margin-right: 12px; border: 2px solid var(--nb-black); border-radius: 999px; background: linear-gradient(to right, var(--nb-coral) 0%, #ff9b58 28%, var(--nb-yellow) 52%, #a9d83e 75%, #53c96b 100%); box-shadow: 3px 3px 0 var(--nb-black); }
+        .score-bar-container { position: relative; height: 15px; margin-top: 2.5rem; margin-bottom: 3.8rem; margin-left: 12px; margin-right: 12px; border: 2px solid var(--nb-black); border-radius: 999px; background: var(--nb-yellow); box-shadow: 3px 3px 0 var(--nb-black); }
         .score-marker { position: absolute; top: -7px; width: 3px; height: 29px; background: var(--nb-black); z-index: 2; }
         .score-marker span { position: absolute; top: 34px; left: 50%; transform: translateX(-50%); font-size: .75rem; font-weight: 800; color: var(--nb-black); white-space: nowrap; text-align: center; }
         .score-marker:nth-child(1) span { left: 0; transform: none; text-align: left; }
@@ -94,7 +94,7 @@
         .section-bar-indicator { display: none !important; }
         #res-sections-container { gap: 18px !important; }
         .section-bar-bg { height: 15px; background: #e4e0d6 !important; border: 2px solid var(--nb-black); border-radius: 999px; box-shadow: 2px 2px 0 var(--nb-black); }
-        .section-bar-fill { height: 100%; background: linear-gradient(90deg, var(--nb-purple), var(--nb-teal)) !important; border-radius: 999px; transition: width 1s cubic-bezier(.2,.8,.2,1) !important; }
+        .section-bar-fill { height: 100%; background: var(--nb-teal) !important; border-radius: 999px; transition: width 1s cubic-bezier(.2,.8,.2,1) !important; }
         #screen-result .bg-slate-50, #screen-result .bg-green-50, #screen-result .bg-red-50 { border: 2px solid var(--nb-black); box-shadow: 3px 3px 0 var(--nb-black); }
         #history-container > div { background: var(--nb-paper) !important; border: var(--nb-border) !important; box-shadow: var(--nb-shadow-small) !important; transition: transform .15s ease, box-shadow .15s ease; }
         #history-container > div:hover { transform: translate(-2px,-2px); box-shadow: 5px 5px 0 var(--nb-black) !important; }
@@ -128,7 +128,7 @@
             #certificate-area, #certificate-area * { visibility: visible !important; }
             #certificate-area { position: absolute !important; left: 0 !important; top: 0 !important; width: 100% !important; max-width: none !important; margin: 0 !important; padding: 10mm !important; background: #fff !important; border: 2px solid #111 !important; border-radius: 0 !important; box-shadow: none !important; box-sizing: border-box !important; }
             #screen-result > div:not(#certificate-area) { display: none !important; }
-            .score-bar-container { position: relative !important; width: calc(100% - 8px) !important; height: 10px !important; margin-left: 4px !important; margin-right: 4px !important; border: 2px solid #111 !important; background: linear-gradient(to right, #ff6b6b 0%, #ff9f43 35%, #ffe66d 55%, #a8d84e 80%, #55c667 100%) !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+            .score-bar-container { position: relative !important; width: calc(100% - 8px) !important; height: 10px !important; margin-left: 4px !important; margin-right: 4px !important; border: 2px solid #111 !important; background: #ffe66d !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .score-marker { position: absolute !important; top: -7px !important; width: 2px !important; height: 22px !important; background: #111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
             .score-marker span { position: absolute !important; top: 25px !important; color: #111 !important; font-size: 10px !important; }
             .score-indicator { border: 3px solid #111 !important; -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
