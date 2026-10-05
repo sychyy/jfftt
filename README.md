@@ -31,16 +31,16 @@ The chat UI now supports:
 
 - images
 - video
-- PDF/Office/text/archive documents
+- semua tipe file, termasuk HTML/CSS/JS/JSON/ZIP dan format lain yang dipilih browser
 - normal audio/music files
 - voice notes recorded through `MediaRecorder`
 - upload progress
 - image/video/audio inline playback
-- existing tag/reply/edit/delete/room-lock/realtime behavior
+- existing tag/reply/edit/delete/room-lock/realtime behavior, termasuk penghapusan file Storage saat pesan media dihapus
 
 Files are stored in Supabase Storage, while `global_chats` stores only message/file metadata.
 
-Run `supabase/chat-media.sql` in Supabase SQL Editor before using media uploads.
+Run `supabase/chat-media.sql` in Supabase SQL Editor before using media uploads. Jika memakai versi sebelumnya, jalankan SQL ini lagi agar bucket `chat-media` menerima semua MIME type dan policy DELETE ikut dibuat.
 
 ### Important security note
 

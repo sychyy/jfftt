@@ -21,19 +21,12 @@ values (
   'chat-media',
   true,
   26214400,
-  array[
-    'image/*','video/*','audio/*',
-    'application/pdf',
-    'application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-    'application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-    'application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.presentationml.presentation',
-    'text/plain','application/zip','application/x-rar-compressed','application/x-7z-compressed'
-  ]
+  null
 )
 on conflict (id) do update set
   public = excluded.public,
   file_size_limit = excluded.file_size_limit,
-  allowed_mime_types = excluded.allowed_mime_types;
+  allowed_mime_types = null;
 
 -- The existing custom-auth application has no auth.jwt() identity to enforce in Storage.
 -- Restrict object paths to the chat/ prefix, but allow public read/upload for compatibility.
@@ -47,5 +40,7 @@ create policy "JFT chat media public upload"
 on storage.objects for insert to public
 with check (bucket_id = 'chat-media' and (storage.foldername(name))[1] = 'chat');
 
--- Deliberately no public DELETE policy. Deleting the chat row won't delete the Storage object;
--- this avoids giving browser clients broad destructive Storage permissions.
+drop policy if exists "JFT chat media public delete" on storage.objects;
+create policy "JFT chat media public delete"
+on storage.objects for delete to public
+using (bucket_id = 'chat-media' and (storage.foldername(name))[1] = 'chat');

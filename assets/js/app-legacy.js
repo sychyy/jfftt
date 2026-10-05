@@ -8505,11 +8505,22 @@ const modal = document.getElementById("custom-confirm-modal");
         if (confirmModal) confirmModal.style.display = "none";
     });
 
-    // Eksekusi hapus database saat tombol Hapus diklik
+    // Eksekusi hapus Storage + database saat tombol Hapus diklik
     yesDeleteBtn?.addEventListener("click", async () => {
         if (confirmModal) confirmModal.style.display = "none";
 
         try {
+            const { data: chatRows, error: readError } = await supabaseClient
+                .from('global_chats')
+                .select('id,file_path');
+            if (readError) throw readError;
+
+            const paths = (chatRows || []).map(row => row.file_path).filter(Boolean);
+            if (paths.length && typeof window.deleteChatStoragePaths === 'function') {
+                const storageResult = await window.deleteChatStoragePaths(paths);
+                if (storageResult?.error) throw storageResult.error;
+            }
+
             const { error } = await supabaseClient
                 .from('global_chats')
                 .delete()
@@ -8517,16 +8528,13 @@ const modal = document.getElementById("custom-confirm-modal");
 
             if (error) throw error;
 
-            // Kosongkan tampilan chat lokal
             const chatContainer = document.getElementById("chat-messages-container");
             if (chatContainer) chatContainer.innerHTML = "";
 
-            // Munculkan modal sukses
             if (successModal) successModal.style.display = "flex";
-
         } catch (err) {
-            console.error("Gagal menghapus chat:", err.message);
-            alert("Gagal menghapus chat. Coba lagi.");
+            console.error("Gagal menghapus chat/file:", err);
+            alert("Gagal menghapus chat atau file. Coba lagi.");
         }
     });
 
@@ -8547,10 +8555,21 @@ async function clearAllChats() {
     if (!confirmation) return;
 
     try {
+        const { data: chatRows, error: readError } = await supabaseClient
+            .from('global_chats')
+            .select('id,file_path');
+        if (readError) throw readError;
+
+        const paths = (chatRows || []).map(row => row.file_path).filter(Boolean);
+        if (paths.length && typeof window.deleteChatStoragePaths === 'function') {
+            const storageResult = await window.deleteChatStoragePaths(paths);
+            if (storageResult?.error) throw storageResult.error;
+        }
+
         const { error } = await supabaseClient
             .from('global_chats')
             .delete()
-            .neq('id', 0); // Menghapus semua baris data
+            .neq('id', 0);
 
         if (error) throw error;
 
@@ -9374,27 +9393,35 @@ async function handleActionDelete() {
     }
 
     const messageId = selectedMessageForAction.id;
+    const filePath = String(selectedMessageForAction.file_path || '').trim();
     closeChatActionModal();
 
-    // Confirm dibuat di layer paling atas agar tidak tertutup room chat.
+    // Hapus file Storage terlebih dahulu, lalu baris database, agar tidak meninggalkan orphan file.
     showCustomConfirm('Yakin ingin menghapus pesan ini?', async () => {
-        const query = window.supabaseClient
-            .from('global_chats')
-            .delete()
-            .eq('id', messageId);
+        try {
+            if (filePath && typeof window.deleteChatStoragePaths === 'function') {
+                const storageResult = await window.deleteChatStoragePaths([filePath]);
+                if (storageResult?.error) throw storageResult.error;
+            }
 
-        const role = localStorage.getItem('jft_user_role');
-        const result = String(role || '').trim().toLowerCase() === 'admin'
-            ? await query
-            : await query.eq('sender_id', getChatIdentity());
+            const query = window.supabaseClient
+                .from('global_chats')
+                .delete()
+                .eq('id', messageId);
 
-        if (result.error) {
-            showToast('Gagal', result.error.message, true);
-            return;
+            const role = localStorage.getItem('jft_user_role');
+            const result = String(role || '').trim().toLowerCase() === 'admin'
+                ? await query
+                : await query.eq('sender_id', getChatIdentity());
+
+            if (result.error) throw result.error;
+
+            await fetchChatMessages();
+            showToast('Berhasil', 'Pesan dan file-nya telah dihapus.');
+        } catch (err) {
+            console.error('Gagal menghapus pesan/file:', err);
+            showToast('Gagal', err?.message || 'Pesan atau file gagal dihapus.', true);
         }
-
-        await fetchChatMessages();
-        showToast('Berhasil', 'Pesan telah dihapus.');
     }, 'Hapus');
 }
 

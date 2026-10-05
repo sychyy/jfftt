@@ -2,6 +2,27 @@
 (function modularChatMedia(){
 const CHAT_BUCKET = 'chat-media';
     const MAX_CHAT_FILE_BYTES = 25 * 1024 * 1024;
+    const MIME_BY_EXT = {
+        html:'text/html', htm:'text/html', css:'text/css', js:'text/javascript', mjs:'text/javascript', cjs:'text/javascript',
+        json:'application/json', map:'application/json', xml:'application/xml', csv:'text/csv', txt:'text/plain', md:'text/markdown',
+        pdf:'application/pdf', zip:'application/zip', rar:'application/vnd.rar', '7z':'application/x-7z-compressed', gz:'application/gzip',
+        tar:'application/x-tar', wasm:'application/wasm',
+        doc:'application/msword', docx:'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+        xls:'application/vnd.ms-excel', xlsx:'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        ppt:'application/vnd.ms-powerpoint', pptx:'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+        odt:'application/vnd.oasis.opendocument.text', ods:'application/vnd.oasis.opendocument.spreadsheet', odp:'application/vnd.oasis.opendocument.presentation',
+        png:'image/png', jpg:'image/jpeg', jpeg:'image/jpeg', gif:'image/gif', webp:'image/webp', svg:'image/svg+xml', ico:'image/x-icon',
+        mp4:'video/mp4', webm:'video/webm', mov:'video/quicktime', mkv:'video/x-matroska', avi:'video/x-msvideo',
+        mp3:'audio/mpeg', wav:'audio/wav', ogg:'audio/ogg', m4a:'audio/mp4', flac:'audio/flac'
+    };
+
+    function getChatFileMime(file){
+        const reported=String(file?.type||'').trim().toLowerCase();
+        if(reported) return reported;
+        const name=String(file?.name||'');
+        const ext=(name.includes('.') ? name.split('.').pop() : '').toLowerCase();
+        return MIME_BY_EXT[ext] || 'application/octet-stream';
+    }
     let selectedChatFile = null;
     let recordedVoiceBlob = null;
     let voiceRecorder = null;
@@ -70,6 +91,7 @@ const CHAT_BUCKET = 'chat-media';
     window.formatBytes=formatBytes;
 
     async function uploadChatFile(file){
+        const contentType=getChatFileMime(file);
         const userId=localStorage.getItem('jft_user_id')||'guest'; const deviceId=getOrCreateDeviceId();
         const safeName=String(file.name||'file').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-120);
         const path=`chat/${userId}/${deviceId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safeName}`;
@@ -79,7 +101,7 @@ const CHAT_BUCKET = 'chat-media';
                 const projectId=(SUPABASE_URL.match(/^https?:\/\/([^.]+)\.supabase\.co/i)||[])[1];
                 const storageEndpoint=projectId ? `https://${projectId}.storage.supabase.co/storage/v1/upload/resumable` : `${SUPABASE_URL}/storage/v1/upload/resumable`;
                 const result=await new Promise((resolve,reject)=>{
-                    const upload=new tus.Upload(file,{endpoint:storageEndpoint,retryDelays:[0,3000,5000,10000,20000],headers:{authorization:`Bearer ${SUPABASE_ANON_KEY}`,apikey:SUPABASE_ANON_KEY},uploadDataDuringCreation:true,removeFingerprintOnSuccess:true,chunkSize:6*1024*1024,metadata:{bucketName:CHAT_BUCKET,objectName:path,contentType:file.type||'application/octet-stream',cacheControl:'3600'},onError:reject,onProgress:(bytes,total)=>setUploadStatus(`Mengunggah ${Math.round(bytes/total*100)}%`,bytes/total*100),onSuccess:()=>resolve(true)});
+                    const upload=new tus.Upload(file,{endpoint:storageEndpoint,retryDelays:[0,3000,5000,10000,20000],headers:{authorization:`Bearer ${SUPABASE_ANON_KEY}`,apikey:SUPABASE_ANON_KEY},uploadDataDuringCreation:true,removeFingerprintOnSuccess:true,chunkSize:6*1024*1024,metadata:{bucketName:CHAT_BUCKET,objectName:path,contentType,cacheControl:'3600'},onError:reject,onProgress:(bytes,total)=>setUploadStatus(`Mengunggah ${Math.round(bytes/total*100)}%`,bytes/total*100),onSuccess:()=>resolve(true)});
                     upload.findPreviousUploads().then(prev=>{if(prev.length) upload.resumeFromPreviousUpload(prev[0]); upload.start();}).catch(reject);
                 });
                 if(!result) throw new Error('Upload TUS gagal.');
@@ -87,7 +109,7 @@ const CHAT_BUCKET = 'chat-media';
                 setUploadStatus('Selesai',100); return {path,publicUrl};
             }catch(e){ console.warn('TUS upload gagal, fallback ke standard upload:',e); }
         }
-        const {data,error}=await window.supabaseClient.storage.from(CHAT_BUCKET).upload(path,file,{cacheControl:'3600',contentType:file.type||'application/octet-stream',upsert:false});
+        const {data,error}=await window.supabaseClient.storage.from(CHAT_BUCKET).upload(path,file,{cacheControl:'3600',contentType,upsert:false});
         if(error) throw error;
         const publicUrl=window.supabaseClient.storage.from(CHAT_BUCKET).getPublicUrl(path).data.publicUrl;
         setUploadStatus('Selesai',100);
@@ -127,6 +149,24 @@ const CHAT_BUCKET = 'chat-media';
         }
     }
     window.copyChatLink=copyLink;
+
+    async function deleteChatStoragePaths(paths){
+        const unique=[...new Set((Array.isArray(paths)?paths:[paths]).map(v=>String(v||'').trim()).filter(v=>v.startsWith('chat/')))];
+        if(!unique.length) return {error:null, deleted:[]};
+        const deleted=[];
+        for(let i=0;i<unique.length;i+=1000){
+            const batch=unique.slice(i,i+1000);
+            const {data,error}=await window.supabaseClient.storage.from(CHAT_BUCKET).remove(batch);
+            if(error) return {error, deleted};
+            deleted.push(...batch);
+        }
+        return {error:null, deleted};
+    }
+    window.deleteChatStoragePaths=deleteChatStoragePaths;
+
+    async function getChatFilePathsForRows(rows){
+        return (Array.isArray(rows)?rows:[]).map(row=>String(row?.file_path||'').trim()).filter(Boolean);
+    }
 
     function mediaHTML(msg){
         const type=String(msg.message_type||'text'); const url=String(msg.file_url||''); const name=escapeHtml(msg.file_name||'File'); const mime=String(msg.mime_type||'');
@@ -181,7 +221,12 @@ const CHAT_BUCKET = 'chat-media';
         try{
             if(voice){
                 const fileObj=new File([voice],`voice-note-${Date.now()}.webm`,{type:voice.type||'audio/webm'}); uploadMeta=await uploadChatFile(fileObj); uploadMeta.message_type='voice'; uploadMeta.file_name=fileObj.name; uploadMeta.mime_type=fileObj.type; uploadMeta.file_size=fileObj.size; uploadMeta.duration=Math.round((Date.now()-voiceStartedAt)/1000);
-            } else if(file){ uploadMeta=await uploadChatFile(file); uploadMeta.message_type=file.type?.startsWith('image/')?'image':file.type?.startsWith('video/')?'video':file.type?.startsWith('audio/')?'audio':'document'; uploadMeta.file_name=file.name; uploadMeta.mime_type=file.type||'application/octet-stream'; uploadMeta.file_size=file.size; }
+            } else if(file){
+                const fileMime=getChatFileMime(file);
+                uploadMeta=await uploadChatFile(file);
+                uploadMeta.message_type=fileMime.startsWith('image/')?'image':fileMime.startsWith('video/')?'video':fileMime.startsWith('audio/')?'audio':'document';
+                uploadMeta.file_name=file.name; uploadMeta.mime_type=fileMime; uploadMeta.file_size=file.size;
+            }
             const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || '',reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
             const {error}=await window.supabaseClient.from('global_chats').insert([payload]);
             if(error) throw error;
