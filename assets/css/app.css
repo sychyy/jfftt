@@ -541,3 +541,150 @@
     0% { opacity: 0; transform: scale(0.8); }
     100% { opacity: 1; transform: scale(1); }
 }
+
+/* ===== JFT GLOBAL CHAT - PREMIUM VOICE NOTE PLAYER ===== */
+.jft-vn-player{
+    --vn-yellow:#ffe45c;
+    --vn-ink:#181818;
+    position:relative;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    width:100%;
+    min-width:0;
+    padding:10px 11px;
+    margin:0;
+    border:2px solid var(--vn-ink);
+    border-radius:18px;
+    background:var(--vn-yellow);
+    box-shadow:3px 3px 0 var(--vn-ink);
+    overflow:hidden;
+}
+.jft-vn-play,
+.jft-vn-speed{
+    appearance:none;
+    -webkit-appearance:none;
+    flex:0 0 auto;
+    border:2px solid var(--vn-ink);
+    color:var(--vn-ink);
+    background:var(--vn-yellow);
+    font-weight:1000;
+    cursor:pointer;
+    transition:transform .14s ease, background .14s ease;
+}
+.jft-vn-play{
+    width:42px;
+    height:42px;
+    border-radius:50%;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    font-size:15px;
+}
+.jft-vn-play:hover,
+.jft-vn-speed:hover{ transform:translateY(-1px); }
+.jft-vn-play:active,
+.jft-vn-speed:active{ transform:translateY(1px) scale(.98); }
+.jft-vn-player.is-playing .jft-vn-play{ background:var(--vn-ink); color:var(--vn-yellow); }
+.jft-vn-speed{
+    min-width:43px;
+    height:34px;
+    padding:0 8px;
+    border-radius:11px;
+    font-size:11px;
+}
+.jft-vn-content{ min-width:0; flex:1; }
+.jft-vn-meta{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-bottom:5px;
+    font-size:9px;
+    font-weight:1000;
+    color:var(--vn-ink);
+}
+.jft-vn-title{
+    display:inline-flex;
+    align-items:center;
+    gap:5px;
+    min-width:0;
+    text-transform:uppercase;
+    letter-spacing:.04em;
+}
+.jft-vn-wave{
+    position:relative;
+    width:100%;
+    height:29px;
+    padding:0;
+    border:0;
+    background:transparent;
+    cursor:pointer;
+    overflow:hidden;
+    display:flex;
+    align-items:center;
+    gap:2px;
+}
+.jft-vn-bars{
+    position:absolute;
+    inset:2px 0;
+    display:flex;
+    align-items:center;
+    gap:2px;
+    pointer-events:none;
+}
+.jft-vn-bar{
+    display:block;
+    width:3px;
+    min-width:3px;
+    height:calc(7px + ((var(--i) * 17) % 17) * 1px);
+    max-height:24px;
+    border-radius:999px;
+    background:rgba(24,24,24,.28);
+    transition:background .12s ease, height .12s ease;
+}
+.jft-vn-player.is-playing .jft-vn-bar{ animation:jftVNBar 1.05s ease-in-out infinite alternate; animation-delay:calc(var(--i) * -0.035s); }
+.jft-vn-progress{
+    position:absolute;
+    left:0;
+    top:50%;
+    height:5px;
+    width:0;
+    border-radius:999px;
+    transform:translateY(-50%);
+    background:var(--vn-ink);
+    z-index:2;
+    pointer-events:none;
+    opacity:.18;
+}
+.jft-vn-audio{
+    position:absolute !important;
+    width:1px !important;
+    height:1px !important;
+    opacity:0 !important;
+    pointer-events:none !important;
+    overflow:hidden !important;
+}
+.jft-vn-player + .jft-vn-links,
+.jft-vn-player + div{ margin-top:8px; }
+@keyframes jftVNBar{
+    from{ transform:scaleY(.65); opacity:.45; }
+    to{ transform:scaleY(1.05); opacity:.9; }
+}
+
+/* Voice-note file actions: keep the visual language yellow instead of native gray/white controls. */
+.chat-bubble-card .jft-vn-player + div a,
+.chat-bubble-card .jft-vn-player + div button,
+.chat-bubble-card .jft-vn-player + .jft-vn-links a,
+.chat-bubble-card .jft-vn-player + .jft-vn-links button{
+    background:#ffe45c !important;
+}
+.chat-bubble-card audio:not(.jft-vn-audio){ accent-color:#181818; }
+
+@media (max-width:480px){
+    .jft-vn-player{ gap:8px; padding:9px 10px; border-radius:16px; }
+    .jft-vn-play{ width:39px; height:39px; }
+    .jft-vn-speed{ min-width:39px; height:31px; padding:0 7px; font-size:10px; }
+    .jft-vn-meta{ font-size:8px; }
+    .jft-vn-wave{ height:27px; }
+}

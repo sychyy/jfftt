@@ -174,9 +174,88 @@ const CHAT_BUCKET = 'chat-media';
         const linkButtons=`<div class="flex items-center gap-1 mt-2"><a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-[10px] font-black"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka</a><button type="button" onclick="copyChatLink('${escapeAttr(url)}')" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white text-[10px] font-black"><i class="fa-regular fa-copy"></i> Salin link</button></div>`;
         if(type==='image') return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer" class="block"><img src="${escapeAttr(url)}" alt="Gambar" loading="lazy" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72 object-cover"></a>${linkButtons}`;
         if(type==='video') return `<video controls preload="metadata" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></video>${linkButtons}`;
-        if(type==='voice' || type==='audio') return `<div class="flex items-center gap-2"><i class="fa-solid ${type==='voice'?'fa-microphone':'fa-music'}"></i><div class="min-w-0 flex-1"><audio controls preload="metadata" class="w-full mt-1"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio>${linkButtons}</div></div>`;
+        if(type==='voice' || type==='audio') {
+            const fallbackDuration=Number(msg.duration_seconds)||0;
+            const bars=Array.from({length:34},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
+            return `<div class="jft-vn-player" data-vn-player data-vn-duration="${fallbackDuration}">
+                <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio>
+                <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar voice note"><i class="fa-solid fa-play"></i></button>
+                <div class="jft-vn-content">
+                    <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-microphone"></i> Voice note</span><span data-vn-time>0:00 / ${formatDuration(fallbackDuration)}</span></div>
+                    <button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi voice note"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
+                </div>
+                <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
+            </div>${linkButtons}`;
+        }
         return `<div class="flex items-center gap-2 bg-black/5 rounded-xl p-2 border border-[#181818]"><span class="w-9 h-9 rounded-lg bg-white border-[2px] border-[#181818] flex items-center justify-center"><i class="fa-solid fa-file"></i></span><span class="min-w-0 flex-1"><span class="block font-black text-xs truncate">${name}</span><span class="block text-[9px] text-slate-500">${formatBytes(msg.file_size||0)}</span></span></div>${linkButtons}`;
     }
+    function formatDuration(seconds){
+        const n=Math.max(0,Number(seconds)||0);
+        const mins=Math.floor(n/60);
+        const secs=Math.floor(n%60);
+        return `${mins}:${String(secs).padStart(2,'0')}`;
+    }
+
+    function setVNProgress(player, audio){
+        const duration=Number.isFinite(audio.duration)&&audio.duration>0 ? audio.duration : Number(player.dataset.vnDuration)||0;
+        const current=Number(audio.currentTime)||0;
+        const pct=duration>0 ? Math.min(100,Math.max(0,(current/duration)*100)) : 0;
+        const progress=player.querySelector('[data-vn-progress]');
+        if(progress) progress.style.width=`${pct}%`;
+        const time=player.querySelector('[data-vn-time]');
+        if(time) time.textContent=`${formatDuration(current)} / ${formatDuration(duration)}`;
+        player.style.setProperty('--vn-progress',`${pct}%`);
+        player.classList.toggle('is-playing',!audio.paused);
+    }
+
+    function bindVNPlayer(player){
+        if(!player || player.dataset.vnBound==='1') return;
+        const audio=player.querySelector('.jft-vn-audio');
+        const playBtn=player.querySelector('[data-vn-play]');
+        const seekBtn=player.querySelector('[data-vn-seek]');
+        const speedBtn=player.querySelector('[data-vn-speed]');
+        if(!audio || !playBtn) return;
+        player.dataset.vnBound='1';
+        audio.addEventListener('loadedmetadata',()=>setVNProgress(player,audio));
+        audio.addEventListener('timeupdate',()=>setVNProgress(player,audio));
+        audio.addEventListener('play',()=>setVNProgress(player,audio));
+        audio.addEventListener('pause',()=>setVNProgress(player,audio));
+        audio.addEventListener('ended',()=>{ audio.currentTime=0; setVNProgress(player,audio); });
+        playBtn.addEventListener('click',async e=>{
+            e.preventDefault(); e.stopPropagation();
+            try{
+                document.querySelectorAll('.jft-vn-audio').forEach(other=>{if(other!==audio&&!other.paused) other.pause();});
+                if(audio.paused){ await audio.play(); } else { audio.pause(); }
+                setVNProgress(player,audio);
+            }catch(err){ console.warn('Voice note playback failed:',err); }
+        });
+        if(seekBtn){
+            seekBtn.addEventListener('click',e=>{
+                e.preventDefault(); e.stopPropagation();
+                const rect=seekBtn.getBoundingClientRect();
+                const ratio=Math.max(0,Math.min(1,(e.clientX-rect.left)/rect.width));
+                const duration=Number.isFinite(audio.duration)&&audio.duration>0 ? audio.duration : Number(player.dataset.vnDuration)||0;
+                if(duration>0){ audio.currentTime=duration*ratio; setVNProgress(player,audio); }
+            });
+        }
+        if(speedBtn){
+            const speeds=[1,1.25,1.5,2];
+            speedBtn.addEventListener('click',e=>{
+                e.preventDefault(); e.stopPropagation();
+                const current=Number(audio.playbackRate)||1;
+                const idx=speeds.indexOf(current);
+                const next=speeds[(idx+1)%speeds.length];
+                audio.playbackRate=next;
+                speedBtn.textContent=`${next}x`;
+            });
+        }
+        setVNProgress(player,audio);
+    }
+
+    function initVNPlayers(root=document){
+        root.querySelectorAll?.('[data-vn-player]').forEach(bindVNPlayer);
+    }
+
     function escapeAttr(v){ return escapeHtml(String(v||'')); }
     function isPlaceholderMessage(msg){
         const type=String(msg.message_type||'');
@@ -196,6 +275,7 @@ const CHAT_BUCKET = 'chat-media';
         const div=document.createElement('div'); div.className=`chat-message-row w-full flex flex-col ${isMe?'items-end':'items-start'} relative select-none`;
         div.innerHTML=`<div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">${isAdmin?'<span class="text-[12px] leading-none text-[#2f80ed]" title="Admin"><i class="fa-solid fa-crown"></i></span>':''}<span class="text-[10px] font-black uppercase truncate" style="color:${nameColor}">${escapeHtml(senderName)}</span><span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span></div><div class="chat-bubble-wrap relative max-w-[84%]" data-message-id="${escapeHtml(String(msg.id||''))}"><div class="chat-swipe-indicator absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 opacity-0 pointer-events-none text-[#181818] font-black text-sm">↪</div><div class="chat-bubble-card ${bubbleColorClass} p-3 rounded-2xl border-[2px] border-[#181818] text-left text-xs font-medium shadow-[3px_3px_0_#181818] relative cursor-pointer touch-pan-y will-change-transform">${htmlReplyPart}${media}${messageText}</div></div>`;
         const bubbleWrap=div.querySelector('.chat-bubble-wrap'); const bubble=div.querySelector('.chat-bubble-card'); const indicator=div.querySelector('.chat-swipe-indicator');
+        initVNPlayers(div);
         div.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation(); copyLink(btn.getAttribute('data-copy-link')||'');}));
         div.querySelectorAll('.chat-link-open, .chat-link, video, audio, img, button').forEach(el=>el.addEventListener('pointerdown',e=>e.stopPropagation()));
         let startX=0,startY=0,currentDx=0,swiping=false,longPressTimer=null;
