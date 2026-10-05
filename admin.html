@@ -65,6 +65,29 @@
         Tutup Room Chat
     </button>
 </div>
+<!-- PANEL PENGUMUMAN ADMIN -->
+<div class="mb-6 rounded-2xl border-[3px] border-[#181818] bg-[#ffe45c] shadow-[6px_6px_0_#181818] overflow-hidden" id="admin-announcement-panel">
+  <div class="p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="flex items-start gap-4 min-w-0">
+      <div class="w-14 h-14 shrink-0 rounded-2xl bg-white border-[3px] border-[#181818] shadow-[3px_3px_0_#181818] flex items-center justify-center text-xl">
+        <i class="fa-solid fa-bullhorn"></i>
+      </div>
+      <div class="min-w-0">
+        <div class="text-[10px] font-black uppercase tracking-[0.18em] text-slate-600">Pusat Informasi</div>
+        <h3 class="text-xl font-black text-[#181818] mt-0.5">Pengumuman Admin</h3>
+        <p class="text-sm font-semibold text-slate-700 mt-1 leading-relaxed">Buat pengumuman yang tampil di Home. Pengumuman aktif selama 24 jam dan bisa berisi judul, teks, foto, video, atau lagu.</p>
+      </div>
+    </div>
+    <button type="button" onclick="openAnnouncementCenter()" class="shrink-0 px-5 py-3 bg-[#43c9bd] text-[#181818] border-[3px] border-[#181818] rounded-xl font-black shadow-[4px_4px_0_#181818] hover:-translate-y-0.5 hover:shadow-[5px_5px_0_#181818] transition flex items-center justify-center gap-2">
+      <i class="fa-solid fa-pen-to-square"></i> Buat Pengumuman
+    </button>
+  </div>
+  <div class="px-5 py-3 border-t-[3px] border-[#181818] bg-[#fffdf8] flex flex-wrap items-center gap-x-5 gap-y-2 text-xs font-bold text-slate-700">
+    <span><i class="fa-regular fa-clock mr-1"></i> Otomatis hilang setelah 24 jam</span>
+    <span><i class="fa-solid fa-photo-film mr-1"></i> Foto · Video · Lagu</span>
+    <span><i class="fa-solid fa-house mr-1"></i> Tampil di Home, bukan Global Chat</span>
+  </div>
+</div>
 <!-- PROFIL NAMA ADMIN UNTUK GLOBAL CHAT -->
 <div class="mb-5 bg-white p-4 rounded-xl border-[2px] border-[#181818] shadow-[3px_3px_0_#181818] flex flex-col sm:flex-row sm:items-center justify-between gap-3">
 <div class="flex items-center gap-3 min-w-0">
