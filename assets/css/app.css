@@ -781,8 +781,26 @@
 .jft-ann-mode-option.is-active span{background:#43c9bd;transform:translate(-1px,-1px);box-shadow:2px 2px 0 #181818}
 .jft-ann-video-gif{position:relative}
 .jft-ann-video-gif video{display:block;width:100%;max-height:360px;object-fit:cover;background:#181818}
-.jft-ann-loop-pill{position:absolute;left:10px;bottom:10px;padding:5px 8px;border:2px solid #181818;border-radius:10px;background:#ffe45c;color:#181818;font-size:8px;font-weight:1000;box-shadow:2px 2px 0 #181818}
 .jft-ann-badge-gif{background:#43c9bd}
+.jft-ann-audio-premium{display:flex;align-items:stretch;gap:10px;padding:11px;background:linear-gradient(135deg,#ffe45c 0%,#ffec83 52%,#43c9bd 150%);box-shadow:0 0 0 1px rgba(24,24,24,.05),3px 3px 0 #181818}
+.jft-ann-audio-main{display:flex;align-items:center;gap:10px;min-width:0;flex:1}
+.jft-ann-audio-play{width:48px;height:48px;box-shadow:3px 3px 0 #181818}
+.jft-ann-audio-actions{display:flex;align-items:center;gap:6px;flex:0 0 auto}
+.jft-ann-audio-skip{width:39px;height:34px;display:flex;align-items:center;justify-content:center;gap:2px;border:2px solid #181818;border-radius:10px;background:#fffdf8;color:#181818;font-size:9px;font-weight:1000;cursor:pointer;box-shadow:2px 2px 0 #181818}
+.jft-ann-audio-skip span{font-size:7px;line-height:1}
+.jft-ann-audio-skip:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #181818}
+.jft-ann-audio-premium .jft-vn-wave{height:38px}
+.jft-ann-audio-premium .jft-vn-bar{width:3px;min-width:3px;max-height:29px}
+.jft-ann-audio-premium .jft-vn-progress{height:7px;opacity:.24}
+.jft-ann-audio-premium .jft-vn-speed{background:#181818;color:#ffe45c;min-width:47px}
+@media(max-width:520px){
+  .jft-ann-audio-premium{gap:8px;padding:9px}
+  .jft-ann-audio-main{gap:8px}
+  .jft-ann-audio-play{width:42px;height:42px}
+  .jft-ann-audio-actions{gap:4px}
+  .jft-ann-audio-skip{width:34px;height:30px}
+  .jft-ann-audio-premium .jft-vn-speed{min-width:39px}
+}
 @media (max-width:520px){.jft-ann-media-mode-head{flex-direction:column}.jft-ann-media-mode-head small{text-align:left}.jft-ann-mode-option span{min-height:48px}.jft-ann-mode-option small{font-size:6.5px}}
 
 .jft-ann-modal{position:fixed;inset:0;z-index:1250;display:flex;align-items:center;justify-content:center;padding:14px}
@@ -874,4 +892,73 @@
   .jft-ann-summary{padding:10px}
   .jft-ann-badge{display:none}
   .jft-ann-dialog{width:100%}
+}
+
+
+/* ===== JFT DESKTOP EXPERIENCE — 900px+ only ===== */
+@media (min-width:900px){
+  body[data-page="home"] #main-header > div,
+  body[data-page="quiz"] #main-header > div,
+  body[data-page="history"] #main-header > div,
+  body[data-page="result"] #main-header > div,
+  body[data-page="auth"] #main-header > div,
+  body[data-page="admin"] #main-header > div{max-width:1180px!important;padding-left:28px!important;padding-right:28px!important}
+
+  body[data-page="home"] > main,
+  body[data-page="quiz"] > main,
+  body[data-page="history"] > main,
+  body[data-page="result"] > main,
+  body[data-page="admin"] > main{max-width:1240px!important;padding-left:28px!important;padding-right:28px!important}
+
+  body[data-page="home"] #screen-home{max-width:1120px!important;margin-top:26px!important}
+  body[data-page="home"] #screen-home > .bg-white{padding:38px 42px 44px!important;border-radius:28px!important;box-shadow:10px 10px 0 #181818!important}
+  body[data-page="home"] #screen-home .grid.sm\:grid-cols-2{grid-template-columns:1fr 1fr!important;gap:18px!important}
+  body[data-page="home"] #screen-home .grid.grid-cols-2.sm\:grid-cols-4{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+  body[data-page="home"] #screen-home .mt-3.grid.grid-cols-1.sm\:grid-cols-2{grid-template-columns:1.1fr 1fr!important;gap:18px!important}
+  body[data-page="home"] #screen-home h2{font-size:2.1rem!important}
+
+  body[data-page="admin"] #screen-admin{max-width:1180px!important;margin-top:22px!important}
+  body[data-page="admin"] #screen-admin > .bg-\[\#fffdf8\]{padding:34px!important;border-radius:28px!important;box-shadow:10px 10px 0 #181818!important}
+  body[data-page="admin"] #admin-announcement-panel{box-shadow:8px 8px 0 #181818!important}
+  body[data-page="admin"] #admin-announcement-panel .p-5.sm\:p-6{padding:26px!important}
+
+  body[data-page="history"] #screen-history{max-width:920px!important;margin-top:24px!important}
+  body[data-page="history"] #history-container{display:grid!important;grid-template-columns:1fr 1fr;gap:18px!important}
+  body[data-page="history"] #history-container > *{margin:0!important}
+
+  body[data-page="quiz"] #screen-quiz{max-width:1080px!important;margin-top:22px!important}
+  body[data-page="quiz"] #screen-quiz > div:first-child{padding:18px 22px!important}
+  body[data-page="quiz"] #screen-quiz > div:nth-child(2){padding:36px 42px!important;min-height:560px!important}
+  body[data-page="quiz"] #quiz-question{font-size:1.65rem!important;max-width:900px}
+  body[data-page="quiz"] #quiz-options{display:grid!important;grid-template-columns:1fr 1fr;gap:16px!important;align-content:start}
+
+  body[data-page="result"] main > .screen{max-width:1040px!important}
+
+  .jft-ann-dialog{width:min(100%,820px)!important;max-height:min(88vh,900px)!important;border-radius:28px!important;box-shadow:12px 12px 0 #181818!important}
+  .jft-ann-dialog-head{padding:18px 20px!important}
+  .jft-ann-dialog-icon{width:50px;height:50px;font-size:19px}
+  .jft-ann-dialog-title h3{font-size:20px}
+  .jft-ann-dialog-title p{font-size:9px}
+  .jft-ann-list-head{padding:15px 18px 10px!important}
+  .jft-ann-list{padding:0 18px 20px!important}
+  .jft-ann-item{border-radius:18px!important;box-shadow:4px 4px 0 #181818!important}
+  .jft-ann-summary{padding:15px!important}
+  .jft-ann-summary-icon{width:40px;height:40px;font-size:15px}
+  .jft-ann-summary-body strong{font-size:13px}
+  .jft-ann-summary-body small{font-size:9px}
+  .jft-ann-detail{padding:0 15px 15px!important}
+  .jft-ann-detail-title{font-size:19px}
+  .jft-ann-detail-date{font-size:9px}
+  .jft-ann-detail-message{font-size:13px;padding:14px;line-height:1.7}
+  .jft-ann-media{margin:0 -15px 14px!important}
+  .jft-ann-image img,.jft-ann-video video{max-height:520px!important}
+  .jft-ann-audio-wrap{padding:14px!important}
+  .jft-ann-audio-premium{padding:14px!important;border-radius:16px!important;box-shadow:4px 4px 0 #181818!important}
+  .jft-ann-audio-play{width:56px;height:56px;font-size:18px}
+  .jft-ann-audio-skip{width:43px;height:38px}
+  .jft-ann-audio-premium .jft-vn-wave{height:48px}
+  .jft-ann-audio-premium .jft-vn-bar{max-height:36px;width:4px;min-width:4px}
+  .jft-ann-compose{margin:16px 18px 8px!important;padding:16px!important}
+  .jft-ann-input{height:44px!important;font-size:12px!important}
+  .jft-ann-compose textarea{min-height:120px!important;font-size:12px!important}
 }

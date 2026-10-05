@@ -100,12 +100,21 @@ function mediaTypeFromFile(file){
   return 'document';
 }
 function announcementPlayerMarkup(url,duration,mime){
-  const bars=Array.from({length:38},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
-  return `<div class="jft-vn-player jft-ann-audio" data-vn-player data-vn-duration="${Number(duration)||0}">
+  const bars=Array.from({length:46},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
+  return `<div class="jft-vn-player jft-ann-audio jft-ann-audio-premium" data-vn-player data-vn-duration="${Number(duration)||0}">
     <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${attr(url)}" type="${attr(mime||'audio/mpeg')}"></audio>
-    <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
-    <div class="jft-vn-content"><div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-music"></i> Musik / Audio</span><span data-vn-time>0:00</span></div><button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button></div>
-    <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
+    <div class="jft-ann-audio-main">
+      <button type="button" class="jft-vn-play jft-ann-audio-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
+      <div class="jft-vn-content">
+        <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-headphones"></i> Audio Pengumuman</span><span data-vn-time>0:00 / 0:00</span></div>
+        <button type="button" class="jft-vn-wave jft-ann-audio-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
+      </div>
+    </div>
+    <div class="jft-ann-audio-actions">
+      <button type="button" class="jft-ann-audio-skip" data-vn-skip="-10" aria-label="Mundur 10 detik"><i class="fa-solid fa-rotate-left"></i><span>10</span></button>
+      <button type="button" class="jft-ann-audio-skip" data-vn-skip="10" aria-label="Maju 10 detik"><i class="fa-solid fa-rotate-right"></i><span>10</span></button>
+      <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
+    </div>
   </div>`;
 }
 function announcementMediaMarkup(item){
@@ -114,7 +123,7 @@ function announcementMediaMarkup(item){
   const mode=String(item.media_mode||'video').toLowerCase();
   if(type==='image') return `<div class="jft-ann-media jft-ann-image"><a href="${attr(url)}" target="_blank" rel="noopener noreferrer"><img src="${attr(url)}" alt="Media pengumuman" loading="lazy"></a></div>`;
   if(type==='video'){
-    if(mode==='gif') return `<div class="jft-ann-media jft-ann-video jft-ann-video-gif"><video autoplay muted loop playsinline preload="auto" aria-label="Video GIF pengumuman"><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video><span class="jft-ann-loop-pill"><i class="fa-solid fa-repeat"></i> GIF · loop terus</span></div>`;
+    if(mode==='gif') return `<div class="jft-ann-media jft-ann-video jft-ann-video-gif"><video autoplay muted loop playsinline preload="auto" aria-label="Media animasi pengumuman"><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video></div>`;
     return `<div class="jft-ann-media jft-ann-video"><video controls preload="metadata" playsinline><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video></div>`;
   }
   if(type==='audio') return `<div class="jft-ann-media jft-ann-audio-wrap">${announcementPlayerMarkup(url,item.duration_seconds,item.mime_type)}</div>`;
@@ -277,7 +286,7 @@ function ensureAnnouncementUI(){
   if(isAdmin()){
     let slot=mount.querySelector('#announcement-admin-slot');
     if(slot && !slot.querySelector('#announcement-title-input')){
-      slot.innerHTML=`<div class="jft-ann-compose"><div class="jft-ann-compose-title"><i class="fa-solid fa-bullhorn"></i><span>Buat pengumuman baru</span><small>Judul, isi, dan media opsional</small></div><input id="announcement-title-input" maxlength="120" placeholder="Judul pengumuman..." class="jft-ann-input" type="text"><textarea id="announcement-input" maxlength="4000" placeholder="Tulis isi pengumuman..."></textarea><div class="jft-ann-compose-row"><label class="jft-ann-filepick"><input id="announcement-file-input" accept="image/*,video/*,audio/*" type="file"><i class="fa-solid fa-paperclip"></i><span>Tambah foto, video, atau lagu</span></label><button type="button" id="announcement-send" class="jft-ann-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div><div id="announcement-media-mode-wrap" class="jft-ann-media-mode hidden"><div class="jft-ann-media-mode-head"><span><i class="fa-solid fa-sliders"></i> Mode video</span><small>GIF = autoplay + loop terus tanpa tombol pause</small></div><div class="jft-ann-media-mode-options"><label class="jft-ann-mode-option is-active"><input type="radio" name="announcement-media-mode" value="video" checked><span><i class="fa-solid fa-video"></i><b>Video</b><small>Bisa pause &amp; atur menit</small></span></label><label class="jft-ann-mode-option"><input type="radio" name="announcement-media-mode" value="gif"><span><i class="fa-solid fa-repeat"></i><b>GIF</b><small>Jalan terus, loop otomatis</small></span></label></div></div><div id="announcement-file-preview" class="jft-ann-file-preview hidden"></div></div>`;
+      slot.innerHTML=`<div class="jft-ann-compose"><div class="jft-ann-compose-title"><i class="fa-solid fa-bullhorn"></i><span>Buat pengumuman baru</span><small>Judul, isi, dan media opsional</small></div><input id="announcement-title-input" maxlength="120" placeholder="Judul pengumuman..." class="jft-ann-input" type="text"><textarea id="announcement-input" maxlength="4000" placeholder="Tulis isi pengumuman..."></textarea><div class="jft-ann-compose-row"><label class="jft-ann-filepick"><input id="announcement-file-input" accept="image/*,video/*,audio/*" type="file"><i class="fa-solid fa-paperclip"></i><span>Tambah foto, video, atau lagu</span></label><button type="button" id="announcement-send" class="jft-ann-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div><div id="announcement-media-mode-wrap" class="jft-ann-media-mode hidden"><div class="jft-ann-media-mode-head"><span><i class="fa-solid fa-sliders"></i> Mode video</span><small>Pilih cara media ini diputar</small></div><div class="jft-ann-media-mode-options"><label class="jft-ann-mode-option is-active"><input type="radio" name="announcement-media-mode" value="video" checked><span><i class="fa-solid fa-video"></i><b>Video</b><small>Bisa pause &amp; atur menit</small></span></label><label class="jft-ann-mode-option"><input type="radio" name="announcement-media-mode" value="gif"><span><i class="fa-solid fa-repeat"></i><b>GIF</b><small>Autoplay tanpa kontrol</small></span></label></div></div><div id="announcement-file-preview" class="jft-ann-file-preview hidden"></div></div>`;
     }
     const sendBtn=mount.querySelector('#announcement-send');
     if(sendBtn && !sendBtn.dataset.bound){sendBtn.dataset.bound='1';sendBtn.addEventListener('click',sendAnnouncement)}

@@ -23,3 +23,9 @@ Jalankan kembali `supabase/chat-media.sql` di Supabase SQL Editor agar kolom pen
 
 ### Mode video pengumuman
 Video pengumuman sekarang punya dua mode: `Video` (bisa pause/seeking) dan `GIF` (autoplay, muted, loop terus tanpa kontrol pause). Tambahkan kolom `media_mode` ke tabel `chat_announcements` melalui SQL terbaru.
+
+
+## v9 update
+- Removed the visible GIF loop overlay from announcement media.
+- Upgraded announcement audio to a custom interactive player with seek, +/-10s and speed controls.
+- Added desktop-only refinements at 900px+ while preserving the existing mobile layout.

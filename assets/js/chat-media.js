@@ -230,6 +230,8 @@ const CHAT_BUCKET = 'chat-media';
         if(time) time.textContent=`${formatDuration(current)} / ${formatDuration(duration)}`;
         player.style.setProperty('--vn-progress',`${pct}%`);
         player.classList.toggle('is-playing',!audio.paused);
+        const icon=player.querySelector('[data-vn-play] i');
+        if(icon){ icon.className = audio.paused ? 'fa-solid fa-play' : 'fa-solid fa-pause'; }
     }
 
     function bindVNPlayer(player){
@@ -273,6 +275,12 @@ const CHAT_BUCKET = 'chat-media';
                 speedBtn.textContent=`${next}x`;
             });
         }
+        player.querySelectorAll('[data-vn-skip]').forEach(btn=>btn.addEventListener('click',e=>{
+            e.preventDefault(); e.stopPropagation();
+            const delta=Number(btn.dataset.vnSkip)||0;
+            const duration=Number.isFinite(audio.duration)&&audio.duration>0 ? audio.duration : Number(player.dataset.vnDuration)||0;
+            if(duration>0){ audio.currentTime=Math.max(0,Math.min(duration,(Number(audio.currentTime)||0)+delta)); setVNProgress(player,audio); }
+        }));
         setVNProgress(player,audio);
     }
 
