@@ -277,7 +277,7 @@
 <!-- Pilihan Tag User Cepat -->
 
 <div class="flex gap-2 items-end">
-<input accept="image/*,video/*,audio/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.zip,.rar,.7z" class="hidden" id="chat-file-input" onchange="handleChatFileSelected(event)" type="file"/>
+<input accept="*/*" class="hidden" id="chat-file-input" onchange="handleChatFileSelected(event)" type="file"/>
 <button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" onclick="toggleChatFilePicker()" title="Kirim file" type="button"><i class="fa-solid fa-paperclip"></i></button>
 <button class="shrink-0 w-11 h-11 bg-[#f0ede5] text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[2px_2px_0_#181818]" id="chat-record-btn" title="Voice note" type="button"><i class="fa-solid fa-microphone"></i></button>
 <input class="flex-grow min-w-0 px-3 py-2 border-[2px] border-[#181818] rounded-xl text-sm font-medium focus:outline-none focus:shadow-[3px_3px_0_#181818]" id="chat-input-msg" oninput="checkChatInput(event)" onkeypress="handleChatKeyPress(event)" placeholder="Tulis pesan (gunakan @ untuk tag)..." type="text"/>

@@ -25,7 +25,7 @@ const CHAT_BUCKET = 'chat-media';
     }
     function showAttachmentPreview(file, kind){
         const preview=document.getElementById('chat-attachment-preview'); if(!preview) return;
-        const label=kind==='voice'?'Voice note':`${file.name||'Audio'}`;
+        const label=kind==='voice'?'Voice note':`${file.name||'File'}`;
         preview.classList.remove('hidden'); preview.innerHTML=`<div class="flex items-center gap-2 min-w-0"><span class="shrink-0 w-8 h-8 rounded-lg border-[2px] border-[#181818] bg-white flex items-center justify-center"><i class="fa-solid ${kind==='voice'?'fa-microphone':file.type?.startsWith('image/')?'fa-image':file.type?.startsWith('video/')?'fa-video':file.type?.startsWith('audio/')?'fa-music':'fa-file'}"></i></span><div class="min-w-0 flex-1"><div class="font-black truncate">${escapeHtml(label)}</div><div class="text-[9px] text-slate-500">${formatBytes(file.size||0)}</div></div><button type="button" onclick="clearChatAttachment()" class="shrink-0 text-rose-600 font-black"><i class="fa-solid fa-xmark"></i></button></div>`;
     }
     window.clearChatAttachment=clearChatAttachment;
@@ -74,7 +74,6 @@ const CHAT_BUCKET = 'chat-media';
         const safeName=String(file.name||'file').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-120);
         const path=`chat/${userId}/${deviceId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safeName}`;
         setUploadStatus('Mengunggah 0%',0);
-        // Use the SDK for small files. For large files, use TUS when the library is available; otherwise fall back to SDK upload.
         if(file.size>6*1024*1024 && window.tus){
             try{
                 const projectId=(SUPABASE_URL.match(/^https?:\/\/([^.]+)\.supabase\.co/i)||[])[1];
@@ -95,15 +94,55 @@ const CHAT_BUCKET = 'chat-media';
         return {path,publicUrl};
     }
 
+    function linkifyText(text){
+        const raw=String(text||'');
+        if(!raw) return '';
+        const urlRe=/(https?:\/\/[^\s<]+|www\.[^\s<]+)/gi;
+        let out=''; let last=0; let match;
+        while((match=urlRe.exec(raw))){
+            const before=raw.slice(last,match.index);
+            out+=escapeHtml(before);
+            let display=match[0];
+            let trailing='';
+            const trailingMatch=display.match(/[),.!?;:]+$/);
+            if(trailingMatch){ trailing=trailingMatch[0]; display=display.slice(0,-trailing.length); }
+            const href=display.toLowerCase().startsWith('www.')?`https://${display}`:display;
+            const safeHref=escapeAttr(href);
+            const safeDisplay=escapeHtml(display);
+            out+=`<span class="chat-link-wrap inline-flex max-w-full items-center gap-1 align-middle"><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link underline font-bold break-all">${safeDisplay}</a><button type="button" class="chat-link-copy shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-white hover:bg-slate-100" data-copy-link="${safeHref}" title="Salin link" aria-label="Salin link"><i class="fa-regular fa-copy text-[10px]"></i></button><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link-open shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-[#ffe45c]" title="Buka link" aria-label="Buka link"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a></span>${escapeHtml(trailing)}`;
+            last=urlRe.lastIndex;
+        }
+        out+=escapeHtml(raw.slice(last));
+        return out.replace(/\n/g,'<br>');
+    }
+
+    async function copyLink(url){
+        try{
+            await navigator.clipboard.writeText(url);
+            if(typeof showToast==='function') showToast('Link disalin','Link sudah disalin ke clipboard.');
+        }catch(e){
+            const ta=document.createElement('textarea'); ta.value=url; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.select();
+            try{document.execCommand('copy'); if(typeof showToast==='function') showToast('Link disalin','Link sudah disalin ke clipboard.');}catch(_){ if(typeof showToast==='function') showToast('Gagal menyalin','Tidak bisa mengakses clipboard.',true); }
+            ta.remove();
+        }
+    }
+    window.copyChatLink=copyLink;
+
     function mediaHTML(msg){
         const type=String(msg.message_type||'text'); const url=String(msg.file_url||''); const name=escapeHtml(msg.file_name||'File'); const mime=String(msg.mime_type||'');
         if(!url || type==='text') return '';
-        if(type==='image') return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener" class="block"><img src="${escapeAttr(url)}" alt="${name}" loading="lazy" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72 object-cover"></a><div class="text-[10px] font-bold mt-1 truncate">${name}</div>`;
-        if(type==='video') return `<video controls preload="metadata" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></video><a href="${escapeAttr(url)}" target="_blank" rel="noopener" class="block text-[10px] font-bold mt-1 truncate">${name}</a>`;
-        if(type==='voice' || type==='audio') return `<div class="flex items-center gap-2"><i class="fa-solid ${type==='voice'?'fa-microphone':'fa-music'}"></i><div class="min-w-0 flex-1"><div class="text-[10px] font-black truncate">${name}</div><audio controls preload="metadata" class="w-full mt-1"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio></div></div>`;
-        return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener" class="flex items-center gap-2 bg-black/5 rounded-xl p-2 border border-[#181818]"><span class="w-9 h-9 rounded-lg bg-white border-[2px] border-[#181818] flex items-center justify-center"><i class="fa-solid fa-file"></i></span><span class="min-w-0"><span class="block font-black text-xs truncate">${name}</span><span class="block text-[9px] text-slate-500">${formatBytes(msg.file_size||0)}</span></span><i class="fa-solid fa-arrow-up-right-from-square ml-auto"></i></a>`;
+        const linkButtons=`<div class="flex items-center gap-1 mt-2"><a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-[#ffe45c] text-[10px] font-black"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka</a><button type="button" onclick="copyChatLink('${escapeAttr(url)}')" class="inline-flex items-center gap-1 px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white text-[10px] font-black"><i class="fa-regular fa-copy"></i> Salin link</button></div>`;
+        if(type==='image') return `<a href="${escapeAttr(url)}" target="_blank" rel="noopener noreferrer" class="block"><img src="${escapeAttr(url)}" alt="Gambar" loading="lazy" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72 object-cover"></a>${linkButtons}`;
+        if(type==='video') return `<video controls preload="metadata" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></video>${linkButtons}`;
+        if(type==='voice' || type==='audio') return `<div class="flex items-center gap-2"><i class="fa-solid ${type==='voice'?'fa-microphone':'fa-music'}"></i><div class="min-w-0 flex-1"><audio controls preload="metadata" class="w-full mt-1"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio>${linkButtons}</div></div>`;
+        return `<div class="flex items-center gap-2 bg-black/5 rounded-xl p-2 border border-[#181818]"><span class="w-9 h-9 rounded-lg bg-white border-[2px] border-[#181818] flex items-center justify-center"><i class="fa-solid fa-file"></i></span><span class="min-w-0 flex-1"><span class="block font-black text-xs truncate">${name}</span><span class="block text-[9px] text-slate-500">${formatBytes(msg.file_size||0)}</span></span></div>${linkButtons}`;
     }
     function escapeAttr(v){ return escapeHtml(String(v||'')); }
+    function isPlaceholderMessage(msg){
+        const type=String(msg.message_type||'');
+        const value=String(msg.message||'').trim().toLowerCase();
+        return type!=='text' && ['[foto]','[video]','[audio]','[voice note]','[dokumen]','[file]'].includes(value);
+    }
 
     window.appendMessageElement=function(msg,container){
         const senderId=String(msg.sender_id||''); const senderName=(msg.sender_name||'SISWA').trim().toUpperCase(); const isMe=isCurrentDeviceMessage(msg); const isAdmin=msg.sender_role==='admin';
@@ -112,13 +151,16 @@ const CHAT_BUCKET = 'chat-media';
         const editedTag=msg.edited_at?' <span class="text-[9px] italic opacity-60">(diedit)</span>':'';
         let htmlReplyPart=''; if(msg.reply_to) htmlReplyPart=`<div class="reply-card bg-black/5 border-l-[3px] border-[#181818] p-2 mb-2 rounded-lg text-[10px]"><span class="font-black text-slate-700">${escapeHtml(msg.reply_user||'Seseorang')}</span><p class="truncate text-slate-600 mt-0.5">${escapeHtml(msg.reply_to)}</p></div>`;
         const bubbleColorClass=isAdmin?'bg-[#62bddb] text-[#181818]':isMe?'bg-[#ffe45c] text-[#181818]':'bg-white text-[#181818]';
-        const messageText=msg.message ? `<div class="chat-message-text">${escapeHtml(msg.message)}${editedTag}</div>` : '';
+        const messageText=(!isPlaceholderMessage(msg) && msg.message) ? `<div class="chat-message-text">${linkifyText(msg.message)}${editedTag}</div>` : '';
         const media=mediaHTML(msg);
         const div=document.createElement('div'); div.className=`chat-message-row w-full flex flex-col ${isMe?'items-end':'items-start'} relative select-none`;
         div.innerHTML=`<div class="chat-author flex items-center gap-1 px-1 mb-1 max-w-[90%]">${isAdmin?'<span class="text-[12px] leading-none text-[#2f80ed]" title="Admin"><i class="fa-solid fa-crown"></i></span>':''}<span class="text-[10px] font-black uppercase truncate" style="color:${nameColor}">${escapeHtml(senderName)}</span><span class="text-[9px] text-slate-400 whitespace-nowrap">• ${timeStr}</span></div><div class="chat-bubble-wrap relative max-w-[84%]" data-message-id="${escapeHtml(String(msg.id||''))}"><div class="chat-swipe-indicator absolute left-0 top-1/2 -translate-y-1/2 -translate-x-8 opacity-0 pointer-events-none text-[#181818] font-black text-sm">↪</div><div class="chat-bubble-card ${bubbleColorClass} p-3 rounded-2xl border-[2px] border-[#181818] text-left text-xs font-medium shadow-[3px_3px_0_#181818] relative cursor-pointer touch-pan-y will-change-transform">${htmlReplyPart}${media}${messageText}</div></div>`;
-        const bubbleWrap=div.querySelector('.chat-bubble-wrap'); const bubble=div.querySelector('.chat-bubble-card'); const indicator=div.querySelector('.chat-swipe-indicator'); let startX=0,startY=0,currentDx=0,swiping=false,longPressTimer=null;
+        const bubbleWrap=div.querySelector('.chat-bubble-wrap'); const bubble=div.querySelector('.chat-bubble-card'); const indicator=div.querySelector('.chat-swipe-indicator');
+        div.querySelectorAll('[data-copy-link]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation(); copyLink(btn.getAttribute('data-copy-link')||'');}));
+        div.querySelectorAll('.chat-link-open, .chat-link, video, audio, img, button').forEach(el=>el.addEventListener('pointerdown',e=>e.stopPropagation()));
+        let startX=0,startY=0,currentDx=0,swiping=false,longPressTimer=null;
         const reset=()=>{bubble.style.transform='';bubble.style.transition='transform .18s ease';indicator.style.opacity='0';indicator.style.transform='translate(-2rem,-50%)';currentDx=0;swiping=false;};
-        bubble.addEventListener('pointerdown',e=>{if(e.pointerType==='mouse'&&e.button!==0)return;startX=e.clientX;startY=e.clientY;currentDx=0;swiping=true;bubble.style.transition='none';try{bubble.setPointerCapture(e.pointerId)}catch(_){};longPressTimer=setTimeout(()=>{if(Math.abs(currentDx)>=8||!swiping)return;selectedMessageForAction=msg;openChatActionModal(msg)},550)});
+        bubble.addEventListener('pointerdown',e=>{if(e.target.closest('a,button,video,audio,img'))return;if(e.pointerType==='mouse'&&e.button!==0)return;startX=e.clientX;startY=e.clientY;currentDx=0;swiping=true;bubble.style.transition='none';try{bubble.setPointerCapture(e.pointerId)}catch(_){};longPressTimer=setTimeout(()=>{if(Math.abs(currentDx)>=8||!swiping)return;selectedMessageForAction=msg;openChatActionModal(msg)},550)});
         bubble.addEventListener('pointermove',e=>{if(Math.abs(e.clientX-startX)>12||Math.abs(e.clientY-startY)>12){clearTimeout(longPressTimer)} if(!swiping)return; const dx=e.clientX-startX,dy=e.clientY-startY; if(Math.abs(dy)>Math.abs(dx)&&Math.abs(dy)>10){swiping=false;reset();return;} if(dx>8){currentDx=Math.min(dx,95);bubble.style.transform=`translateX(${currentDx}px)`;indicator.style.opacity=String(Math.min(currentDx/55,1));indicator.style.transform=`translate(${Math.min(-32+currentDx*.25,-2)}px,-50%)`}});
         bubble.addEventListener('pointerup',e=>{clearTimeout(longPressTimer);if(!swiping)return;try{bubble.releasePointerCapture(e.pointerId)}catch(_){} if(currentDx>=55){bubble.style.transition='transform .15s ease';bubble.style.transform='translateX(35px)';setTimeout(()=>{reset();triggerReply(senderName,msg.message||'',senderId)},120)}else reset()});
         bubble.addEventListener('pointercancel',()=>{clearTimeout(longPressTimer);reset()}); bubble.addEventListener('contextmenu',e=>{e.preventDefault();clearTimeout(longPressTimer);selectedMessageForAction=msg;openChatActionModal(msg)});
@@ -140,14 +182,7 @@ const CHAT_BUCKET = 'chat-media';
             if(voice){
                 const fileObj=new File([voice],`voice-note-${Date.now()}.webm`,{type:voice.type||'audio/webm'}); uploadMeta=await uploadChatFile(fileObj); uploadMeta.message_type='voice'; uploadMeta.file_name=fileObj.name; uploadMeta.mime_type=fileObj.type; uploadMeta.file_size=fileObj.size; uploadMeta.duration=Math.round((Date.now()-voiceStartedAt)/1000);
             } else if(file){ uploadMeta=await uploadChatFile(file); uploadMeta.message_type=file.type?.startsWith('image/')?'image':file.type?.startsWith('video/')?'video':file.type?.startsWith('audio/')?'audio':'document'; uploadMeta.file_name=file.name; uploadMeta.mime_type=file.type||'application/octet-stream'; uploadMeta.file_size=file.size; }
-            const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || (
-                uploadMeta.message_type === 'image' ? '[Foto]' :
-                uploadMeta.message_type === 'video' ? '[Video]' :
-                uploadMeta.message_type === 'audio' ? '[Audio]' :
-                uploadMeta.message_type === 'voice' ? '[Voice Note]' :
-                uploadMeta.message_type === 'document' ? '[Dokumen]' :
-                '[File]'
-            ),reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
+            const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || '',reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
             const {error}=await window.supabaseClient.from('global_chats').insert([payload]);
             if(error) throw error;
             input.value=''; cancelReply(); clearChatAttachment(); const status=document.getElementById('chat-record-status'); if(status) status.textContent=''; const tagSuggestions=document.getElementById('tag-suggestions'); if(tagSuggestions) tagSuggestions.classList.add('hidden'); await fetchChatMessages();
@@ -161,7 +196,6 @@ const CHAT_BUCKET = 'chat-media';
     const oldToggle=window.toggleGlobalChat;
     window.toggleGlobalChat=async function(){ initMediaControls(); return oldToggle.apply(this,arguments); };
 
-    // Also make old reply action safe for media messages.
     const oldActionReply = document.querySelector('#chat-action-modal button[onclick*="triggerReply"]');
     if(oldActionReply) oldActionReply.setAttribute('onclick',"selectedMessageForAction && triggerReply((selectedMessageForAction.sender_name || 'Seseorang').toUpperCase(), selectedMessageForAction.message || '', selectedMessageForAction.sender_id || ''); closeChatActionModal();");
 
