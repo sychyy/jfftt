@@ -91,11 +91,14 @@ const CHAT_BUCKET = 'chat-media';
     }
     window.formatBytes=formatBytes;
 
-    async function uploadChatFile(file){
+    async function uploadChatFile(file, options={}){
         const contentType=getChatFileMime(file);
+        const subfolder=String(options?.subfolder||'').replace(/[^a-zA-Z0-9_-]+/g,'').slice(0,40);
+
         const userId=localStorage.getItem('jft_user_id')||'guest'; const deviceId=getOrCreateDeviceId();
         const safeName=String(file.name||'file').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-120);
-        const path=`chat/${userId}/${deviceId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safeName}`;
+        const baseFolder=subfolder?`chat/${subfolder}`:`chat/${userId}/${deviceId}`;
+        const path=`${baseFolder}/${userId}-${deviceId}-${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safeName}`;
         setUploadStatus('Mengunggah 0%',0);
         if(file.size>6*1024*1024 && window.tus && !/^text\/(html|css|javascript)|application\/(json|xml)$/i.test(contentType)){
             try{
@@ -122,8 +125,9 @@ const CHAT_BUCKET = 'chat-media';
         }
         const publicUrl=window.supabaseClient.storage.from(CHAT_BUCKET).getPublicUrl(path).data.publicUrl;
         setUploadStatus('Selesai',100);
-        return {path,publicUrl};
+        return {path,publicUrl,mime_type:contentType};
     }
+    window.uploadChatFile=uploadChatFile;
 
     function linkifyText(text){
         const raw=String(text||'');
@@ -142,8 +146,12 @@ const CHAT_BUCKET = 'chat-media';
             const safeDisplay=escapeHtml(display);
             let parsedUrl=null; try{parsedUrl=new URL(href);}catch(_){ }
             const isJftSite=parsedUrl && parsedUrl.hostname.toLowerCase()==='jft.shuraa.web.id';
+            const isTikTok=parsedUrl && /(^|\.)tiktok\.com$/i.test(parsedUrl.hostname.toLowerCase());
+            const isTikTokShort=parsedUrl && /^(vt\.tiktok(?:\.com)?)$/i.test(parsedUrl.hostname.toLowerCase());
             if(isJftSite){
                 out+=`<span class="jft-site-link-card"><span class="jft-site-link-icon"><i class="fa-solid fa-graduation-cap"></i></span><span class="jft-site-link-body"><strong>JFT-Basic Shuraa</strong><small>jft.shuraa.web.id</small></span><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="jft-site-link-open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka</a><button type="button" class="jft-site-link-copy" data-copy-link="${safeHref}" title="Salin link"><i class="fa-regular fa-copy"></i></button></span>${escapeHtml(trailing)}`;
+            }else if(isTikTok || isTikTokShort){
+                out+=`<span class="jft-tiktok-link-card"><span class="jft-tiktok-link-icon"><i class="fa-brands fa-tiktok"></i></span><span class="jft-tiktok-link-body"><strong>TikTok</strong><small>${safeDisplay}</small></span><button type="button" class="jft-tiktok-copy" data-copy-link="${safeHref}" title="Salin link"><i class="fa-regular fa-copy"></i></button><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="jft-tiktok-open"><i class="fa-solid fa-play"></i> Buka</a></span>${escapeHtml(trailing)}`;
             }else{
                 out+=`<span class="chat-link-wrap inline-flex max-w-full items-center gap-1 align-middle"><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link underline font-bold break-all">${safeDisplay}</a><button type="button" class="chat-link-copy shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-white hover:bg-slate-100" data-copy-link="${safeHref}" title="Salin link" aria-label="Salin link"><i class="fa-regular fa-copy text-[10px]"></i></button><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link-open shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-[#ffe45c]" title="Buka link" aria-label="Buka link"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a></span>${escapeHtml(trailing)}`;
             }
@@ -152,6 +160,7 @@ const CHAT_BUCKET = 'chat-media';
         out+=escapeHtml(raw.slice(last));
         return out.replace(/\n/g,'<br>');
     }
+    window.jftLinkifyText=linkifyText;
 
     async function copyLink(url){
         try{
@@ -270,6 +279,7 @@ const CHAT_BUCKET = 'chat-media';
     function initVNPlayers(root=document){
         root.querySelectorAll?.('[data-vn-player]').forEach(bindVNPlayer);
     }
+    window.initJftVNPlayers=initVNPlayers;
 
     function escapeAttr(v){ return escapeHtml(String(v||'')); }
     function isPlaceholderMessage(msg){

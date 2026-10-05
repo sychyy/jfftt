@@ -1,7 +1,8 @@
-/* JFT Global Chat UX — mentions, notifications, announcements, stickers & rich links. */
+/* JFT Global Chat UX + Home Announcement Center — mentions, notifications, announcements, stickers & rich links. */
 (function(){
 'use strict';
 const DAY=24*60*60*1000;
+const MAX_ANNOUNCEMENT_FILE_BYTES=25*1024*1024;
 let usersCache=[];
 let announcementCache=[];
 let featureChannel=null;
@@ -13,6 +14,8 @@ function role(){ return String(localStorage.getItem('jft_user_role')||'').trim()
 function esc(v){ return typeof escapeHtml==='function' ? escapeHtml(String(v??'')) : String(v??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m])); }
 function attr(v){ return typeof escapeAttr==='function' ? escapeAttr(String(v??'')) : esc(v); }
 function toast(t,m,e=false){ if(typeof showToast==='function') showToast(t,m,e); }
+function isAdmin(){ return role()==='admin'; }
+function currentUserName(){ try{return typeof getCurrentChatName==='function'?String(getCurrentChatName()||'ADMIN'):String(localStorage.getItem('jft_chat_name')||'ADMIN')}catch(_){return 'ADMIN'} }
 
 async function loadChatUsers(force=false){
   if(usersCache.length && !force) return usersCache;
@@ -69,89 +72,217 @@ async function markNotificationsRead(){
   const {error}=await window.supabaseClient.from('chat_notifications').update({read_at:new Date().toISOString()}).eq('recipient_id',identity()).is('read_at',null);
   if(error) console.warn('Gagal menandai notifikasi tag:',error);
 }
-async function hasUnreadNotifications(){
+async function hasUnreadTagNotifications(){
   if(!window.supabaseClient) return false;
-  const [{data:n}, {data:a}]=await Promise.all([
-    window.supabaseClient.from('chat_notifications').select('id').eq('recipient_id',identity()).is('read_at',null).limit(1),
-    window.supabaseClient.from('announcement_reads').select('announcement_id').eq('reader_id',identity()).limit(100)
-  ]);
-  const readIds=new Set((a||[]).map(x=>String(x.announcement_id)));
-  const now=new Date().toISOString();
-  const {data:anns}=await window.supabaseClient.from('chat_announcements').select('id').gt('expires_at',now).limit(100);
-  const unreadAnn=(anns||[]).some(x=>!readIds.has(String(x.id)));
-  return !!(n?.length || unreadAnn);
+  const {data,error}=await window.supabaseClient.from('chat_notifications').select('id').eq('recipient_id',identity()).is('read_at',null).limit(1);
+  if(error) return false;
+  return !!(data&&data.length);
 }
 async function refreshChatDot(){
   const dot=document.getElementById('chat-notification-dot'); if(!dot)return;
-  const unread=await hasUnreadNotifications(); dot.classList.toggle('hidden',!unread);
+  const unread=await hasUnreadTagNotifications(); dot.classList.toggle('hidden',!unread);
   try{localStorage.setItem('jft_has_unread_tag',unread?'true':'false');}catch(_){ }
 }
 
-function announcementMarkup(item, unread){
-  const admin=role()==='admin';
-  return `<article class="jft-announcement-card ${unread?'is-unread':''}" data-announcement-id="${attr(item.id)}">
-    <div class="jft-announcement-head"><div class="jft-announcement-icon"><i class="fa-solid fa-bullhorn"></i></div><div class="min-w-0 flex-1"><div class="jft-announcement-label">PENGUMUMAN ADMIN ${unread?'<span class="jft-unread-pill"><i class="fa-solid fa-envelope"></i> Belum dibuka</span>':''}</div><div class="jft-announcement-title">${esc(item.admin_name||'ADMIN')}</div></div><div class="jft-announcement-time">${new Date(item.created_at).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'})}</div></div>
-    <div class="jft-announcement-message">${typeof linkifyText==='function'?linkifyText(item.message||''):esc(item.message||'')}</div>
-    <div class="jft-announcement-foot"><span><i class="fa-regular fa-clock"></i> Berlaku 24 jam</span>${admin?`<button type="button" class="jft-announcement-delete" data-delete-ann="${attr(item.id)}"><i class="fa-solid fa-trash"></i> Hapus</button>`:''}</div>
+function formatAnnDate(value){
+  const d=new Date(value);
+  return d.toLocaleString('id-ID',{weekday:'long',day:'2-digit',month:'long',year:'numeric',hour:'2-digit',minute:'2-digit'});
+}
+function formatAnnShort(value){
+  const d=new Date(value);
+  return d.toLocaleDateString('id-ID',{day:'2-digit',month:'short',year:'numeric'});
+}
+function mediaTypeFromFile(file){
+  const t=String(file?.type||'').toLowerCase();
+  if(t.startsWith('image/')) return 'image';
+  if(t.startsWith('video/')) return 'video';
+  if(t.startsWith('audio/')) return 'audio';
+  return 'document';
+}
+function announcementPlayerMarkup(url,duration,mime){
+  const bars=Array.from({length:38},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
+  return `<div class="jft-vn-player jft-ann-audio" data-vn-player data-vn-duration="${Number(duration)||0}">
+    <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${attr(url)}" type="${attr(mime||'audio/mpeg')}"></audio>
+    <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
+    <div class="jft-vn-content"><div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-music"></i> Musik / Audio</span><span data-vn-time>0:00</span></div><button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button></div>
+    <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
+  </div>`;
+}
+function announcementMediaMarkup(item){
+  const url=String(item.file_url||''); if(!url)return '';
+  const type=String(item.media_type||'').toLowerCase();
+  if(type==='image') return `<div class="jft-ann-media jft-ann-image"><a href="${attr(url)}" target="_blank" rel="noopener noreferrer"><img src="${attr(url)}" alt="Media pengumuman" loading="lazy"></a></div>`;
+  if(type==='video') return `<div class="jft-ann-media jft-ann-video"><video controls preload="metadata" playsinline><source src="${attr(url)}" type="${attr(item.mime_type||'video/*')}"></video></div>`;
+  if(type==='audio') return `<div class="jft-ann-media jft-ann-audio-wrap">${announcementPlayerMarkup(url,item.duration_seconds,item.mime_type)}</div>`;
+  return `<div class="jft-ann-media jft-ann-file"><a href="${attr(url)}" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-arrow-down"></i><span>${esc(item.file_name||'Lampiran pengumuman')}</span></a></div>`;
+}
+function mediaBadge(item){
+  const type=String(item.media_type||'').toLowerCase();
+  if(type==='image') return '<span class="jft-ann-badge"><i class="fa-solid fa-image"></i> Foto</span>';
+  if(type==='video') return '<span class="jft-ann-badge"><i class="fa-solid fa-video"></i> Video</span>';
+  if(type==='audio') return '<span class="jft-ann-badge"><i class="fa-solid fa-music"></i> Lagu</span>';
+  if(type==='document') return '<span class="jft-ann-badge"><i class="fa-solid fa-paperclip"></i> File</span>';
+  return '';
+}
+function announcementListItem(item, unread){
+  const media=mediaBadge(item);
+  return `<article class="jft-ann-item ${unread?'is-unread':''}" data-announcement-id="${attr(item.id)}">
+    <button type="button" class="jft-ann-summary" data-ann-open="${attr(item.id)}">
+      <span class="jft-ann-summary-icon"><i class="fa-solid fa-bullhorn"></i></span>
+      <span class="jft-ann-summary-body"><strong>${esc(item.title||'Pengumuman Admin')}</strong><small>${formatAnnDate(item.created_at)}</small></span>
+      <span class="jft-ann-summary-meta">${media}${unread?'<span class="jft-ann-unread" title="Belum dibuka"><i class="fa-solid fa-envelope"></i></span>':''}<i class="fa-solid fa-chevron-down jft-ann-chevron"></i></span>
+    </button>
+    <div class="jft-ann-detail" aria-hidden="true">
+      ${announcementMediaMarkup(item)}
+      <div class="jft-ann-detail-title">${esc(item.title||'Pengumuman Admin')}</div>
+      <div class="jft-ann-detail-date"><i class="fa-regular fa-calendar"></i> ${formatAnnDate(item.created_at)}</div>
+      <div class="jft-ann-detail-message">${typeof window.jftLinkifyText==='function'?window.jftLinkifyText(item.message||''):esc(item.message||'')}</div>
+      <div class="jft-ann-detail-foot"><span><i class="fa-regular fa-clock"></i> Berlaku sampai ${formatAnnDate(item.expires_at)}</span>${isAdmin()?`<button type="button" class="jft-ann-delete" data-delete-ann="${attr(item.id)}"><i class="fa-solid fa-trash"></i> Hapus</button>`:''}</div>
+    </div>
   </article>`;
 }
-
-async function loadAnnouncements(markRead=false){
-  const box=document.getElementById('chat-announcements'); if(!box||!window.supabaseClient)return;
+async function activeAnnouncements(){
+  if(!window.supabaseClient) return [];
   const now=new Date().toISOString();
-  const {data,error}=await window.supabaseClient.from('chat_announcements').select('*').gt('expires_at',now).order('created_at',{ascending:false}).limit(20);
-  if(error){console.warn('Pengumuman gagal dimuat:',error);box.classList.add('hidden');return;}
-  announcementCache=data||[];
-  if(!announcementCache.length){box.classList.add('hidden');box.innerHTML='';return;}
-  const {data:reads}=await window.supabaseClient.from('announcement_reads').select('announcement_id').eq('reader_id',identity());
-  const readSet=new Set((reads||[]).map(r=>String(r.announcement_id)));
-  box.classList.remove('hidden');
-  box.innerHTML=`<div class="jft-announcement-titlebar"><div><span class="jft-announcement-kicker">PUSAT INFORMASI</span><strong>Pengumuman</strong></div><span class="jft-announcement-count">${announcementCache.length}</span></div>${announcementCache.map(a=>announcementMarkup(a,!readSet.has(String(a.id)))).join('')}`;
-  box.querySelectorAll('[data-delete-ann]').forEach(btn=>btn.addEventListener('click',()=>deleteAnnouncement(btn.dataset.deleteAnn)));
-  if(markRead && role()!=='admin') setTimeout(()=>markAnnouncementsRead(),350);
+  const {data,error}=await window.supabaseClient.from('chat_announcements').select('*').gt('expires_at',now).order('created_at',{ascending:false}).limit(30);
+  if(error){console.warn('Pengumuman gagal dimuat:',error);return []}
+  return data||[];
 }
-async function markAnnouncementsRead(){
-  if(!announcementCache.length||!window.supabaseClient)return;
-  const rows=announcementCache.map(a=>({announcement_id:String(a.id),reader_id:identity(),read_at:new Date().toISOString()}));
-  const {error}=await window.supabaseClient.from('announcement_reads').upsert(rows,{onConflict:'announcement_id,reader_id'});
-  if(error) console.warn('Gagal menandai pengumuman dibaca:',error);
-  document.querySelectorAll('.jft-unread-pill').forEach(x=>x.remove());
-  document.querySelectorAll('.jft-announcement-card.is-unread').forEach(x=>x.classList.remove('is-unread'));
-  refreshChatDot();
+async function cleanupExpiredAnnouncements(){
+  if(!isAdmin()||!window.supabaseClient)return;
+  try{
+    const now=new Date().toISOString();
+    const {data}=await window.supabaseClient.from('chat_announcements').select('id,file_path').lte('expires_at',now).limit(100);
+    if(!data?.length)return;
+    const paths=data.map(x=>x.file_path).filter(Boolean);
+    if(paths.length&&typeof window.deleteChatStoragePaths==='function') await window.deleteChatStoragePaths(paths);
+    await window.supabaseClient.from('chat_announcements').delete().in('id',data.map(x=>x.id));
+  }catch(e){console.warn('Cleanup pengumuman kadaluarsa gagal:',e)}
 }
-window.markAnnouncementsRead=markAnnouncementsRead;
+async function readAnnouncement(id){
+  if(!window.supabaseClient||!id)return;
+  const {error}=await window.supabaseClient.from('announcement_reads').upsert([{announcement_id:String(id),reader_id:identity(),read_at:new Date().toISOString()}],{onConflict:'announcement_id,reader_id'});
+  if(error)console.warn('Gagal menandai pengumuman dibaca:',error);
+}
+async function loadAnnouncementReads(){
+  if(!window.supabaseClient)return new Set();
+  const {data}=await window.supabaseClient.from('announcement_reads').select('announcement_id').eq('reader_id',identity()).limit(500);
+  return new Set((data||[]).map(x=>String(x.announcement_id)));
+}
+async function renderAnnouncementCenter(){
+  const list=document.getElementById('announcement-list'); if(!list)return;
+  await cleanupExpiredAnnouncements();
+  announcementCache=await activeAnnouncements();
+  const readSet=await loadAnnouncementReads();
+  const box=document.getElementById('announcement-center-empty');
+  if(!announcementCache.length){list.innerHTML='';if(box)box.classList.remove('hidden');refreshAnnouncementDot();return}
+  if(box)box.classList.add('hidden');
+  list.innerHTML=announcementCache.map(a=>announcementListItem(a,!readSet.has(String(a.id)))).join('');
+  list.querySelectorAll('[data-ann-open]').forEach(btn=>btn.addEventListener('click',async()=>{
+    const card=btn.closest('.jft-ann-item'); const id=btn.dataset.annOpen; const opened=card.classList.contains('is-open');
+    document.querySelectorAll('.jft-ann-item.is-open').forEach(other=>{if(other!==card){other.classList.remove('is-open');other.querySelector('.jft-ann-detail')?.setAttribute('aria-hidden','true')}});
+    if(opened){card.classList.remove('is-open');card.querySelector('.jft-ann-detail')?.setAttribute('aria-hidden','true');return}
+    card.classList.add('is-open');card.querySelector('.jft-ann-detail')?.setAttribute('aria-hidden','false');
+    await readAnnouncement(id);
+    const unread=card.classList.contains('is-unread'); if(unread){card.classList.remove('is-unread');card.querySelector('.jft-ann-unread')?.remove();}
+    if(typeof window.initJftVNPlayers==='function') window.initJftVNPlayers(card);
+    await refreshAnnouncementDot();
+  }));
+  list.querySelectorAll('[data-delete-ann]').forEach(btn=>btn.addEventListener('click',e=>{e.stopPropagation();deleteAnnouncement(btn.dataset.deleteAnn)}));
+  if(typeof window.initJftVNPlayers==='function') window.initJftVNPlayers(list);
+  refreshAnnouncementDot();
+}
+async function hasUnreadAnnouncements(){
+  if(!window.supabaseClient)return false;
+  const active=await activeAnnouncements(); if(!active.length)return false;
+  const readSet=await loadAnnouncementReads(); return active.some(x=>!readSet.has(String(x.id)));
+}
+async function refreshAnnouncementDot(){
+  const dot=document.getElementById('announcement-notification-dot'); if(!dot)return;
+  const unread=await hasUnreadAnnouncements(); dot.classList.toggle('hidden',!unread); dot.setAttribute('aria-hidden',unread?'false':'true');
+}
+function openAnnouncementCenter(){
+  const modal=document.getElementById('announcement-center-modal'); if(!modal)return;
+  modal.classList.remove('hidden');modal.classList.add('flex');document.body.classList.add('jft-modal-open');
+  renderAnnouncementCenter();
+}
+function closeAnnouncementCenter(){
+  const modal=document.getElementById('announcement-center-modal'); if(!modal)return;
+  modal.classList.add('hidden');modal.classList.remove('flex');document.body.classList.remove('jft-modal-open');
+}
+window.openAnnouncementCenter=openAnnouncementCenter;
+window.closeAnnouncementCenter=closeAnnouncementCenter;
+window.toggleAnnouncementCenter=function(){const modal=document.getElementById('announcement-center-modal'); if(modal?.classList.contains('hidden'))openAnnouncementCenter();else closeAnnouncementCenter();};
+
 async function sendAnnouncement(){
-  if(role()!=='admin'){toast('Tidak diizinkan','Hanya admin yang bisa membuat pengumuman.',true);return;}
-  const input=document.getElementById('announcement-input'); const text=String(input?.value||'').trim(); if(!text)return;
+  if(!isAdmin()){toast('Tidak diizinkan','Hanya admin yang bisa membuat pengumuman.',true);return}
+  if(!window.supabaseClient)return;
+  const titleInput=document.getElementById('announcement-title-input');
+  const messageInput=document.getElementById('announcement-input');
+  const fileInput=document.getElementById('announcement-file-input');
+  const title=String(titleInput?.value||'').trim(); const text=String(messageInput?.value||'').trim();
+  const file=fileInput?.files?.[0]||null;
+  if(!title){toast('Judul belum diisi','Tambahkan judul pengumuman dulu.',true);return}
+  if(!text&&!file){toast('Isi pengumuman kosong','Tulis pesan atau pilih media.',true);return}
+  if(file&&file.size>MAX_ANNOUNCEMENT_FILE_BYTES){toast('File terlalu besar','Maksimal 25 MB.',true);return}
   const btn=document.getElementById('announcement-send'); if(btn)btn.disabled=true;
-  const now=new Date(); const expires=new Date(now.getTime()+DAY);
-  const {error}=await window.supabaseClient.from('chat_announcements').insert([{admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:(typeof getCurrentChatName==='function'?getCurrentChatName():'ADMIN'),message:text,expires_at:expires.toISOString()}]);
+  try{
+    let uploadMeta={};
+    if(file){
+      if(typeof window.uploadChatFile!=='function')throw new Error('Modul upload belum siap.');
+      uploadMeta=await window.uploadChatFile(file,{subfolder:'announcements'});
+    }
+    const now=new Date(); const expires=new Date(now.getTime()+DAY); const mediaType=uploadMeta.publicUrl?mediaTypeFromFile(file):null;
+    const payload={admin_id:String(localStorage.getItem('jft_user_id')||''),admin_name:currentUserName(),title,message:text,created_at:now.toISOString(),expires_at:expires.toISOString(),file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:file?.name||null,mime_type:uploadMeta.mime_type||file?.type||null,file_size:file?.size||null,media_type:mediaType,duration_seconds:null};
+    const {error}=await window.supabaseClient.from('chat_announcements').insert([payload]);
+    if(error){ if(uploadMeta.path&&typeof window.deleteChatStoragePaths==='function')await window.deleteChatStoragePaths([uploadMeta.path]); throw error; }
+    if(titleInput)titleInput.value=''; if(messageInput)messageInput.value=''; if(fileInput)fileInput.value='';
+    const preview=document.getElementById('announcement-file-preview'); if(preview){preview.innerHTML='';preview.classList.add('hidden');}
+    toast('Pengumuman diterbitkan','Pengumuman aktif selama 24 jam.');
+    await renderAnnouncementCenter();
+  }catch(e){console.error(e);toast('Pengumuman gagal',e.message||'Tidak bisa menerbitkan pengumuman.',true)}
   if(btn)btn.disabled=false;
-  if(error){toast('Pengumuman gagal',error.message,true);return;}
-  input.value=''; toast('Pengumuman terkirim','Semua orang bisa melihatnya selama 24 jam.'); await loadAnnouncements();
 }
 window.sendAnnouncement=sendAnnouncement;
 async function deleteAnnouncement(id){
-  if(role()!=='admin')return;
-  if(typeof showCustomConfirm==='function'){
-    showCustomConfirm('Hapus pengumuman ini?',async()=>{await doDeleteAnnouncement(id)},'Hapus');
-  }else if(confirm('Hapus pengumuman ini?')) await doDeleteAnnouncement(id);
-}
-async function doDeleteAnnouncement(id){
-  const {error}=await window.supabaseClient.from('chat_announcements').delete().eq('id',id);
-  if(error){toast('Gagal menghapus',error.message,true);return;}
-  toast('Terhapus','Pengumuman berhasil dihapus.'); await loadAnnouncements();
+  if(!isAdmin()||!window.supabaseClient)return;
+  const perform=async()=>{
+    const item=announcementCache.find(x=>String(x.id)===String(id));
+    try{
+      if(item?.file_path&&typeof window.deleteChatStoragePaths==='function')await window.deleteChatStoragePaths([item.file_path]);
+      const {error}=await window.supabaseClient.from('chat_announcements').delete().eq('id',id); if(error)throw error;
+      toast('Terhapus','Pengumuman dan medianya berhasil dihapus.'); await renderAnnouncementCenter();
+    }catch(e){toast('Gagal menghapus',e.message||'Tidak dapat menghapus pengumuman.',true)}
+  };
+  if(typeof showCustomConfirm==='function')showCustomConfirm('Hapus pengumuman ini beserta medianya?',perform,'Hapus');else if(confirm('Hapus pengumuman ini beserta medianya?'))perform();
 }
 
 function ensureAnnouncementUI(){
-  const modal=document.getElementById('global-chat-modal'); if(!modal||document.getElementById('chat-announcements'))return;
-  const messages=document.getElementById('chat-messages-container'); if(!messages)return;
-  const box=document.createElement('div'); box.id='chat-announcements'; box.className='hidden';
-  messages.parentNode.insertBefore(box,messages);
-  if(role()==='admin'){
-    const composer=document.createElement('div'); composer.id='admin-announcement-composer'; composer.innerHTML=`<div class="jft-announcement-compose"><div class="jft-compose-label"><i class="fa-solid fa-bullhorn"></i> Buat pengumuman</div><textarea id="announcement-input" maxlength="1200" placeholder="Tulis pengumuman untuk semua siswa..."></textarea><button type="button" id="announcement-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div>`;
-    messages.parentNode.insertBefore(composer,messages);
-    composer.querySelector('#announcement-send').addEventListener('click',sendAnnouncement);
+  let mount=document.getElementById('announcement-center-modal');
+  if(!mount){
+    mount=document.createElement('div'); mount.id='announcement-center-modal'; mount.className='jft-ann-modal hidden';
+    mount.innerHTML=`<div class="jft-ann-backdrop" data-ann-close></div><section class="jft-ann-dialog" role="dialog" aria-modal="true" aria-label="Pengumuman"><header class="jft-ann-dialog-head"><div class="jft-ann-dialog-title"><span class="jft-ann-dialog-icon"><i class="fa-solid fa-envelope-open-text"></i></span><div><span class="jft-ann-dialog-kicker">PUSAT INFORMASI</span><h3>Pengumuman JFT-Basic</h3><p>Informasi dari admin · aktif 24 jam</p></div></div><button type="button" class="jft-ann-dialog-close" data-ann-close><i class="fa-solid fa-xmark"></i></button></header><div id="announcement-admin-slot"></div><div class="jft-ann-list-head"><div><span class="jft-ann-list-kicker">ARSIP AKTIF</span><strong>Daftar pengumuman</strong></div><span class="jft-ann-list-note">Tekan judul untuk membuka</span></div><div id="announcement-list" class="jft-ann-list"></div><div id="announcement-center-empty" class="jft-ann-empty hidden"><i class="fa-regular fa-envelope-open"></i><strong>Belum ada pengumuman</strong><span>Pengumuman dari admin akan muncul di sini.</span></div></section>`;
+    document.body.appendChild(mount);
+  }
+  mount.querySelectorAll('[data-ann-close]').forEach(el=>{if(!el.dataset.bound){el.dataset.bound='1';el.addEventListener('click',closeAnnouncementCenter)}});
+  if(isAdmin()){
+    let slot=mount.querySelector('#announcement-admin-slot');
+    if(slot && !slot.querySelector('#announcement-title-input')){
+      slot.innerHTML=`<div class="jft-ann-compose"><div class="jft-ann-compose-title"><i class="fa-solid fa-bullhorn"></i><span>Buat pengumuman baru</span><small>Judul, isi, dan media opsional</small></div><input id="announcement-title-input" maxlength="120" placeholder="Judul pengumuman..." class="jft-ann-input" type="text"><textarea id="announcement-input" maxlength="4000" placeholder="Tulis isi pengumuman..."></textarea><div class="jft-ann-compose-row"><label class="jft-ann-filepick"><input id="announcement-file-input" accept="image/*,video/*,audio/*" type="file"><i class="fa-solid fa-paperclip"></i><span>Tambah foto, video, atau lagu</span></label><button type="button" id="announcement-send" class="jft-ann-send"><i class="fa-solid fa-paper-plane"></i> Terbitkan 24 jam</button></div><div id="announcement-file-preview" class="jft-ann-file-preview hidden"></div></div>`;
+    }
+    const sendBtn=mount.querySelector('#announcement-send');
+    if(sendBtn && !sendBtn.dataset.bound){sendBtn.dataset.bound='1';sendBtn.addEventListener('click',sendAnnouncement)}
+    const fileInput=mount.querySelector('#announcement-file-input');
+    if(fileInput && !fileInput.dataset.bound){
+      fileInput.dataset.bound='1';
+      fileInput.addEventListener('change',e=>{
+        const file=e.target.files?.[0]; const preview=mount.querySelector('#announcement-file-preview'); if(!preview)return;
+        if(!file){preview.classList.add('hidden');preview.innerHTML='';return}
+        const type=mediaTypeFromFile(file); const icon=type==='image'?'fa-image':type==='video'?'fa-video':type==='audio'?'fa-music':'fa-file';
+        preview.classList.remove('hidden'); preview.innerHTML=`<span class="jft-ann-preview-icon"><i class="fa-solid ${icon}"></i></span><span class="min-w-0 flex-1"><strong>${esc(file.name)}</strong><small>${typeof formatBytes==='function'?formatBytes(file.size):Math.round(file.size/1024)+' KB'}</small></span><button type="button" id="announcement-file-clear"><i class="fa-solid fa-xmark"></i></button>`;
+        preview.querySelector('#announcement-file-clear')?.addEventListener('click',()=>{fileInput.value='';preview.classList.add('hidden');preview.innerHTML='';});
+      });
+    }
   }
 }
 
@@ -159,17 +290,12 @@ function highlightMentions(){
   document.querySelectorAll('#chat-messages-container .chat-message-text').forEach(el=>{
     if(el.dataset.mentionsStyled)return;
     el.dataset.mentionsStyled='1';
-    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);
-    const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT); const nodes=[]; while(walker.nextNode())nodes.push(walker.currentNode);
     nodes.forEach(node=>{
-      const text=node.nodeValue||''; if(!/@/.test(text))return;
-      const frag=document.createDocumentFragment(); let last=0; const re=/(^|\s)(@[A-Z0-9_\-\. ]{1,80})(?=\s|$|[.,!?])/gi; let m;
-      while((m=re.exec(text))){
-        const raw=m[2]; const known=usersCache.some(u=>raw.slice(1).trim().toUpperCase()===u.name);
-        if(!known)continue;
-        frag.append(document.createTextNode(text.slice(last,m.index)+m[1])); const span=document.createElement('span'); span.className='jft-mention'; span.textContent=raw.trim(); frag.append(span); last=m.index+m[1].length+raw.length;
-      }
-      if(last){frag.append(document.createTextNode(text.slice(last)));node.parentNode.replaceChild(frag,node);}
+      const text=node.nodeValue||'';if(!/@/.test(text))return;
+      const frag=document.createDocumentFragment();let last=0;const re=/(^|\s)(@[A-Z0-9_\-\. ]{1,80})(?=\s|$|[.,!?])/gi;let m;
+      while((m=re.exec(text))){const raw=m[2];const known=usersCache.some(u=>raw.slice(1).trim().toUpperCase()===u.name);if(!known)continue;frag.append(document.createTextNode(text.slice(last,m.index)+m[1]));const span=document.createElement('span');span.className='jft-mention';span.textContent=raw.trim();frag.append(span);last=m.index+m[1].length+raw.length;}
+      if(last){frag.append(document.createTextNode(text.slice(last)));node.parentNode.replaceChild(frag,node)}
     });
   });
 }
@@ -177,28 +303,25 @@ function highlightMentions(){
 async function setupFeatures(){
   ensureAnnouncementUI();
   await loadChatUsers();
-  await loadAnnouncements();
+  await renderAnnouncementCenter();
+  await refreshAnnouncementDot();
   await refreshChatDot();
   if(featureChannel||!window.supabaseClient)return;
-  featureChannel=window.supabaseClient.channel('jft-chat-features')
-    .on('postgres_changes',{event:'*',schema:'public',table:'chat_announcements'},()=>loadAnnouncements())
+  featureChannel=window.supabaseClient.channel('jft-chat-features-v6')
     .on('postgres_changes',{event:'INSERT',schema:'public',table:'chat_notifications',filter:`recipient_id=eq.${identity()}`},()=>{refreshChatDot();toast('Kamu ditag','Ada pesan baru yang menyebut kamu di Global Chat.');})
+    .on('postgres_changes',{event:'*',schema:'public',table:'chat_announcements'},()=>{renderAnnouncementCenter();refreshAnnouncementDot();})
     .subscribe();
 }
 
 const oldToggle=window.toggleGlobalChat;
 window.toggleGlobalChat=async function(){
-  ensureAnnouncementUI();
   const wasHidden=document.getElementById('global-chat-modal')?.classList.contains('hidden');
   const result=oldToggle?await oldToggle.apply(this,arguments):undefined;
-  if(wasHidden){ await setupFeatures(); await loadAnnouncements(true); await markNotificationsRead(); setTimeout(refreshChatDot,100); }
+  if(wasHidden){await loadChatUsers();await markNotificationsRead();setTimeout(refreshChatDot,120);}
   return result;
 };
-
 const oldRender=window.renderMessages;
-if(typeof oldRender==='function'){
-  window.renderMessages=function(messages){ const r=oldRender.apply(this,arguments); highlightMentions(); return r; };
-}
+if(typeof oldRender==='function')window.renderMessages=function(messages){const r=oldRender.apply(this,arguments);highlightMentions();return r;};
 
-document.addEventListener('DOMContentLoaded',()=>{ setTimeout(()=>{ensureAnnouncementUI();setupFeatures();},300); });
+document.addEventListener('DOMContentLoaded',()=>{setTimeout(()=>{ensureAnnouncementUI();setupFeatures();},300);});
 })();
