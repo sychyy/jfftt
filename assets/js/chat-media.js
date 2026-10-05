@@ -63,13 +63,14 @@ const CHAT_BUCKET = 'chat-media';
         if(voiceRecorder){ voiceRecorder.stop(); return; }
         if(!navigator.mediaDevices?.getUserMedia || !window.MediaRecorder){ showToast('Voice Note','Browser ini tidak mendukung perekaman suara.',true); return; }
         try{
-            const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+            const stream=await navigator.mediaDevices.getUserMedia({audio:{channelCount:1,echoCancellation:true,noiseSuppression:true,autoGainControl:true,sampleRate:48000}});
             voiceChunks=[]; voiceStartedAt=Date.now(); recordedVoiceBlob=null; selectedChatFile=null;
-            voiceRecorder=new MediaRecorder(stream);
+            const preferredMime=['audio/webm;codecs=opus','audio/webm','audio/ogg;codecs=opus'].find(t=>window.MediaRecorder.isTypeSupported?.(t));
+            voiceRecorder=new MediaRecorder(stream, preferredMime ? {mimeType:preferredMime,audioBitsPerSecond:128000} : {audioBitsPerSecond:128000});
             voiceRecorder.ondataavailable=e=>{ if(e.data?.size) voiceChunks.push(e.data); };
             voiceRecorder.onstop=()=>{
                 stream.getTracks().forEach(t=>t.stop());
-                const mime=voiceRecorder?.mimeType || 'audio/webm';
+                const mime=voiceRecorder?.mimeType || preferredMime || 'audio/webm';
                 recordedVoiceBlob=new Blob(voiceChunks,{type:mime});
                 const minutes=Math.floor((Date.now()-voiceStartedAt)/60000); const seconds=Math.floor(((Date.now()-voiceStartedAt)/1000)%60);
                 const fakeFile={name:`voice-note-${Date.now()}.webm`,size:recordedVoiceBlob.size,type:mime};
@@ -96,7 +97,7 @@ const CHAT_BUCKET = 'chat-media';
         const safeName=String(file.name||'file').replace(/[^a-zA-Z0-9._-]+/g,'_').slice(-120);
         const path=`chat/${userId}/${deviceId}/${Date.now()}-${Math.random().toString(36).slice(2,8)}-${safeName}`;
         setUploadStatus('Mengunggah 0%',0);
-        if(file.size>6*1024*1024 && window.tus){
+        if(file.size>6*1024*1024 && window.tus && !/^text\/(html|css|javascript)|application\/(json|xml)$/i.test(contentType)){
             try{
                 const projectId=(SUPABASE_URL.match(/^https?:\/\/([^.]+)\.supabase\.co/i)||[])[1];
                 const storageEndpoint=projectId ? `https://${projectId}.storage.supabase.co/storage/v1/upload/resumable` : `${SUPABASE_URL}/storage/v1/upload/resumable`;
@@ -109,8 +110,16 @@ const CHAT_BUCKET = 'chat-media';
                 setUploadStatus('Selesai',100); return {path,publicUrl};
             }catch(e){ console.warn('TUS upload gagal, fallback ke standard upload:',e); }
         }
-        const {data,error}=await window.supabaseClient.storage.from(CHAT_BUCKET).upload(path,file,{cacheControl:'3600',contentType,upsert:false});
-        if(error) throw error;
+        let result=await window.supabaseClient.storage.from(CHAT_BUCKET).upload(path,file,{cacheControl:'3600',contentType,upsert:false});
+        if(result.error && contentType !== 'application/octet-stream'){
+            console.warn('Upload dengan MIME spesifik gagal, mencoba application/octet-stream:', result.error);
+            result=await window.supabaseClient.storage.from(CHAT_BUCKET).upload(path,file,{cacheControl:'3600',contentType:'application/octet-stream',upsert:false});
+        }
+        if(result.error){
+            const e=new Error(result.error.message || 'Upload file gagal.');
+            e.statusCode=result.error.statusCode; e.storageError=result.error;
+            throw e;
+        }
         const publicUrl=window.supabaseClient.storage.from(CHAT_BUCKET).getPublicUrl(path).data.publicUrl;
         setUploadStatus('Selesai',100);
         return {path,publicUrl};
@@ -131,7 +140,13 @@ const CHAT_BUCKET = 'chat-media';
             const href=display.toLowerCase().startsWith('www.')?`https://${display}`:display;
             const safeHref=escapeAttr(href);
             const safeDisplay=escapeHtml(display);
-            out+=`<span class="chat-link-wrap inline-flex max-w-full items-center gap-1 align-middle"><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link underline font-bold break-all">${safeDisplay}</a><button type="button" class="chat-link-copy shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-white hover:bg-slate-100" data-copy-link="${safeHref}" title="Salin link" aria-label="Salin link"><i class="fa-regular fa-copy text-[10px]"></i></button><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link-open shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-[#ffe45c]" title="Buka link" aria-label="Buka link"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a></span>${escapeHtml(trailing)}`;
+            let parsedUrl=null; try{parsedUrl=new URL(href);}catch(_){ }
+            const isJftSite=parsedUrl && parsedUrl.hostname.toLowerCase()==='jft.shuraa.web.id';
+            if(isJftSite){
+                out+=`<span class="jft-site-link-card"><span class="jft-site-link-icon"><i class="fa-solid fa-graduation-cap"></i></span><span class="jft-site-link-body"><strong>JFT-Basic Shuraa</strong><small>jft.shuraa.web.id</small></span><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="jft-site-link-open"><i class="fa-solid fa-arrow-up-right-from-square"></i> Buka</a><button type="button" class="jft-site-link-copy" data-copy-link="${safeHref}" title="Salin link"><i class="fa-regular fa-copy"></i></button></span>${escapeHtml(trailing)}`;
+            }else{
+                out+=`<span class="chat-link-wrap inline-flex max-w-full items-center gap-1 align-middle"><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link underline font-bold break-all">${safeDisplay}</a><button type="button" class="chat-link-copy shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-white hover:bg-slate-100" data-copy-link="${safeHref}" title="Salin link" aria-label="Salin link"><i class="fa-regular fa-copy text-[10px]"></i></button><a href="${safeHref}" target="_blank" rel="noopener noreferrer" class="chat-link-open shrink-0 inline-flex items-center justify-center w-6 h-6 rounded-md border border-[#181818] bg-[#ffe45c]" title="Buka link" aria-label="Buka link"><i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i></a></span>${escapeHtml(trailing)}`;
+            }
             last=urlRe.lastIndex;
         }
         out+=escapeHtml(raw.slice(last));
@@ -308,13 +323,47 @@ const CHAT_BUCKET = 'chat-media';
                 uploadMeta.file_name=file.name; uploadMeta.mime_type=fileMime; uploadMeta.file_size=file.size;
             }
             const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || '',reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
-            const {error}=await window.supabaseClient.from('global_chats').insert([payload]);
+            const {data:inserted,error}=await window.supabaseClient.from('global_chats').insert([payload]).select('*').single();
             if(error) throw error;
+            if(inserted && typeof window.createTagNotifications === 'function') await window.createTagNotifications(inserted);
             input.value=''; cancelReply(); clearChatAttachment(); const status=document.getElementById('chat-record-status'); if(status) status.textContent=''; const tagSuggestions=document.getElementById('tag-suggestions'); if(tagSuggestions) tagSuggestions.classList.add('hidden'); await fetchChatMessages();
         }catch(e){console.error(e);showToast('Gagal mengirim',e.message||'Upload gagal.',true)}
     };
 
+    function bindChatPaste(){
+        const input=document.getElementById('chat-input-msg');
+        if(!input || input.dataset.pasteBound) return;
+        input.dataset.pasteBound='1';
+        input.addEventListener('paste', e=>{
+            const items=[...(e.clipboardData?.items||[])];
+            const imageItem=items.find(item=>item.kind==='file' && String(item.type||'').startsWith('image/'));
+            if(!imageItem) return;
+            const file=imageItem.getAsFile();
+            if(!file) return;
+            e.preventDefault();
+            if(file.size>MAX_CHAT_FILE_BYTES){ showToast('Sticker/Gambar terlalu besar','Maksimal 25 MB.',true); return; }
+            selectedChatFile=new File([file], `sticker-${Date.now()}.${(file.type.split('/')[1]||'png').replace('jpeg','jpg')}`, {type:file.type});
+            recordedVoiceBlob=null;
+            showAttachmentPreview(selectedChatFile,'file');
+            showToast('Sticker siap','Tekan Kirim untuk mengirim gambar dari keyboard.');
+        });
+    }
+
+    function bindLinkCopyButtons(){
+        document.querySelectorAll('[data-copy-link]').forEach(btn=>{
+            if(btn.dataset.boundCopy) return;
+            btn.dataset.boundCopy='1';
+            btn.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();copyLink(btn.getAttribute('data-copy-link')||'');});
+        });
+    }
+    const _oldAppendMessageElement=window.appendMessageElement;
+    if(typeof _oldAppendMessageElement==='function'){
+        window.appendMessageElement=function(){ const r=_oldAppendMessageElement.apply(this,arguments); bindLinkCopyButtons(); return r; };
+    }
+
     function initMediaControls(){
+        bindLinkCopyButtons();
+        bindChatPaste();
         const fi=chatFileInput(); if(fi&&!fi.dataset.bound){fi.dataset.bound='1';fi.addEventListener('change',window.handleChatFileSelected)}
         const rb=document.getElementById('chat-record-btn'); if(rb&&!rb.dataset.bound){rb.dataset.bound='1';rb.addEventListener('click',window.startVoiceRecording)}
     }

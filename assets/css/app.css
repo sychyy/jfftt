@@ -688,3 +688,69 @@
     .jft-vn-meta{ font-size:8px; }
     .jft-vn-wave{ height:27px; }
 }
+
+/* ===== RESUME QUIZ CARD — MORE BREATHING ROOM ===== */
+#resume-quiz-card{
+    margin-top:18px !important;
+    margin-bottom:22px !important;
+    padding:0 !important;
+}
+#resume-quiz-card > *{
+    margin:0 !important;
+}
+#resume-quiz-card .resume-card,
+#resume-quiz-card > div{
+    border-radius:22px !important;
+}
+
+/* ===== TAGS / STICKER PASTE / ANNOUNCEMENTS ===== */
+.jft-tag-suggestion{display:inline-flex;align-items:center;gap:7px;max-width:220px;padding:7px 10px;background:#ffe45c;border:2px solid #181818;border-radius:12px;box-shadow:2px 2px 0 #181818;font-size:10px;font-weight:900;white-space:nowrap;cursor:pointer}
+.jft-tag-suggestion:active{transform:translate(1px,1px);box-shadow:1px 1px 0 #181818}
+.jft-tag-avatar{width:22px;height:22px;border:2px solid #181818;border-radius:8px;background:#62bddb;display:inline-flex;align-items:center;justify-content:center;font-size:9px;font-weight:1000;flex:0 0 auto}
+.jft-mention{display:inline-block;padding:0 4px;border-radius:6px;background:#ffe45c;color:#181818;font-weight:1000;box-shadow:1px 1px 0 #181818}
+#chat-announcements{flex:0 0 auto;padding:10px 12px 0;background:#f6f1e7}
+.jft-announcement-titlebar{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;margin-bottom:8px;background:#181818;color:#ffe45c;border-radius:14px 14px 6px 6px;border:2px solid #181818;box-shadow:3px 3px 0 #ffe45c}
+.jft-announcement-titlebar strong{display:block;font-size:13px;line-height:1.1;color:#fffdf8}
+.jft-announcement-kicker{display:block;font-size:7px;font-weight:1000;letter-spacing:.14em;color:#ffe45c;margin-bottom:3px}
+.jft-announcement-count{min-width:25px;height:25px;border-radius:50%;background:#ffe45c;color:#181818;border:2px solid #ffe45c;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:1000}
+.jft-announcement-card{padding:10px 11px;margin-bottom:9px;background:#ffe45c;color:#181818;border:2px solid #181818;border-radius:16px;box-shadow:3px 3px 0 #181818}
+.jft-announcement-card.is-unread{outline:3px solid #43c9bd;outline-offset:1px}
+.jft-announcement-head{display:flex;align-items:center;gap:8px}
+.jft-announcement-icon{width:34px;height:34px;flex:0 0 auto;border:2px solid #181818;border-radius:10px;background:#fffdf8;display:flex;align-items:center;justify-content:center;font-size:14px}
+.jft-announcement-label{font-size:8px;font-weight:1000;letter-spacing:.07em;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.jft-announcement-title{font-size:11px;font-weight:1000;margin-top:2px}
+.jft-announcement-time{font-size:8px;font-weight:900;opacity:.65;align-self:flex-start}
+.jft-unread-pill{display:inline-flex;align-items:center;gap:3px;padding:3px 5px;background:#43c9bd;border:2px solid #181818;border-radius:7px;font-size:7px;letter-spacing:0}
+.jft-announcement-message{margin:9px 0 8px;padding:9px 10px;background:#fffdf8;border:2px solid #181818;border-radius:11px;font-size:11px;line-height:1.5;font-weight:600;white-space:pre-wrap;overflow-wrap:anywhere}
+.jft-announcement-message a{font-weight:1000;text-decoration:underline;color:#005c9d}
+.jft-announcement-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:8px;font-weight:900;opacity:.78}
+.jft-announcement-delete{border:2px solid #181818;background:#ff7373;border-radius:8px;padding:4px 7px;font-size:8px;font-weight:1000;cursor:pointer}
+.jft-announcement-compose{margin:9px 12px 0;padding:10px;background:#181818;border:2px solid #181818;border-radius:16px;box-shadow:3px 3px 0 #ffe45c;display:grid;grid-template-columns:1fr auto;gap:8px}
+.jft-compose-label{grid-column:1/-1;color:#ffe45c;font-size:9px;font-weight:1000;text-transform:uppercase;letter-spacing:.08em}
+.jft-announcement-compose textarea{min-height:56px;resize:none;border:2px solid #181818;border-radius:11px;padding:8px 9px;font-size:11px;font-weight:700;outline:none;background:#fffdf8;color:#181818}
+.jft-announcement-compose button{border:2px solid #181818;border-radius:11px;background:#ffe45c;color:#181818;padding:8px 10px;font-size:9px;font-weight:1000;box-shadow:2px 2px 0 #ffe45c;cursor:pointer}
+.jft-announcement-compose button:disabled{opacity:.5}
+#chat-notification-dot{background:#ff7373 !important;box-shadow:0 0 0 2px #fffdf8,0 0 0 4px #181818;}
+@media(max-width:480px){
+  .jft-announcement-compose{grid-template-columns:1fr;margin-left:8px;margin-right:8px}
+  .jft-announcement-compose button{width:100%}
+  #chat-announcements{padding-left:8px;padding-right:8px}
+}
+.resume-action-button{min-width:118px !important;padding:11px 17px !important;border-radius:14px !important;font-size:12px !important;white-space:nowrap !important}
+#resume-quiz-card .resume-card-text{padding-right:10px}
+
+/* ===== SPECIAL LINK CARD ===== */
+.jft-site-link-card{display:flex;align-items:center;gap:9px;width:min(100%,360px);margin:7px 0 2px;padding:9px 10px;background:#ffe45c;border:2px solid #181818;border-radius:14px;box-shadow:3px 3px 0 #181818;vertical-align:middle}
+.jft-site-link-icon{width:35px;height:35px;flex:0 0 auto;border:2px solid #181818;border-radius:10px;background:#62bddb;display:flex;align-items:center;justify-content:center;font-size:15px}
+.jft-site-link-body{min-width:0;flex:1;display:flex;flex-direction:column;gap:2px}
+.jft-site-link-body strong{font-size:11px;font-weight:1000;line-height:1.1}
+.jft-site-link-body small{font-size:8px;font-weight:800;opacity:.65;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jft-site-link-open,.jft-site-link-copy{display:inline-flex;align-items:center;justify-content:center;gap:4px;border:2px solid #181818;border-radius:9px;background:#fffdf8;color:#181818;min-height:30px;padding:0 8px;font-size:9px;font-weight:1000;cursor:pointer;white-space:nowrap}
+.jft-site-link-open{background:#43c9bd;text-decoration:none}
+.jft-site-link-copy{width:31px;padding:0}
+.jft-site-link-open:active,.jft-site-link-copy:active{transform:translate(1px,1px)}
+@media(max-width:520px){
+  #resume-quiz-card .resume-card-main{flex-direction:column;gap:16px !important}
+  #resume-quiz-card .resume-card-text{width:100%;max-width:none !important;padding-right:0}
+  #resume-quiz-card .resume-action-button{width:100%;min-width:0 !important}
+}

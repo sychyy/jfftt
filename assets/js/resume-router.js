@@ -243,7 +243,7 @@
         const total=Number(saved.questionCount||saved.questions?.length||0);
         const answered=(saved.userAnswers||[]).filter(x=>x!==null && x!==undefined).length;
         host.classList.remove('hidden');
-        host.innerHTML=`<div class="bg-[#43c9bd] border-[2px] border-[#181818] rounded-xl p-4 shadow-[3px_3px_0_#181818]"><div class="flex items-start justify-between gap-3"><div><div class="text-[10px] font-black uppercase tracking-wider">Latihan tersimpan</div><div class="font-black text-base mt-1">Lanjutkan ${total} soal</div><div class="text-xs font-bold text-slate-700 mt-1">Posisi: soal ${idx}/${total} · ${answered} jawaban tersimpan</div></div><button onclick="continueQuiz()" class="shrink-0 px-3 py-2 bg-white text-[#181818] border-[2px] border-[#181818] rounded-lg font-black text-xs shadow-[2px_2px_0_#181818]">Lanjutkan</button></div><button onclick="discardSavedQuiz()" class="mt-3 text-[10px] font-bold underline">Hapus latihan tersimpan</button></div>`;
+        host.innerHTML=`<div class="resume-card bg-[#43c9bd] border-[2px] border-[#181818] rounded-2xl p-5 shadow-[4px_4px_0_#181818]"><div class="resume-card-main flex items-start justify-between gap-5"><div class="resume-card-text min-w-0 flex-1"><div class="text-[10px] font-black uppercase tracking-wider">Latihan tersimpan</div><div class="font-black text-lg mt-1">Lanjutkan ${total} soal</div><div class="text-sm font-bold text-slate-700 mt-2 leading-6">Posisi: soal ${idx}/${total} · ${answered} jawaban tersimpan</div></div><button onclick="continueQuiz()" class="resume-action-button shrink-0 bg-white text-[#181818] border-[2px] border-[#181818] rounded-xl font-black shadow-[3px_3px_0_#181818]">Lanjutkan</button></div><div class="mt-5 pt-3 border-t-2 border-[#181818]/20"><button onclick="discardSavedQuiz()" class="text-[10px] font-black underline">Hapus latihan tersimpan</button></div></div>`;
     };
     window.continueQuiz = function(){ window.location.href='quiz.html'; };
     window.discardSavedQuiz = function(){ showCustomConfirm('Hapus latihan yang tersimpan dan mulai dari awal?', () => { clearQuizProgress(); renderResumeCard(); }, 'Hapus'); };
@@ -281,4 +281,20 @@
             return;
         }
     };
+})();
+
+// Visual polish for the saved-practice card: keep the action separated from the progress copy.
+(function(){
+  function polishResume(){
+    const card=document.getElementById('resume-quiz-card');
+    if(!card || card.dataset.polished==='1') return;
+    if(!card.innerHTML.trim()) return;
+    card.dataset.polished='1';
+    const buttons=[...card.querySelectorAll('button')];
+    buttons.forEach(b=>{ b.classList.add('resume-action-button'); });
+    const text=card.querySelector('.resume-card-text'); if(text) text.style.maxWidth='58%';
+  }
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(polishResume,250));
+  const obs=new MutationObserver(polishResume);
+  document.addEventListener('DOMContentLoaded',()=>{ const el=document.getElementById('resume-quiz-card'); if(el) obs.observe(el,{childList:true,subtree:true}); });
 })();
