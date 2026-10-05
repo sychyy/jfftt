@@ -525,6 +525,38 @@
 }
 </style>
 
+
+<style id="modal-layer-hardening">
+/* ===== MODAL LAYER HARDENING =====
+   Global Chat: 1000
+   Chat Action: 1100
+   Toast: 1200
+   Confirm: 5000 (PALING ATAS)
+*/
+#custom-confirm-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 5000 !important;
+    isolation: isolate !important;
+    pointer-events: auto !important;
+}
+
+#custom-confirm-modal #custom-confirm-box {
+    position: relative !important;
+    z-index: 5001 !important;
+    pointer-events: auto !important;
+}
+
+/* Admin clear-chat confirmation/success tetap di atas Global Chat juga. */
+#jft-confirm-modal,
+#jft-success-modal {
+    position: fixed !important;
+    inset: 0 !important;
+    z-index: 6000 !important;
+    isolation: isolate !important;
+}
+</style>
+
 </head>
 <body class="min-h-screen flex flex-col">
 
@@ -1096,7 +1128,7 @@
 
 
         <!-- CUSTOM CONFIRM MODAL (NEO-BRUTALISM) -->
-        <div id="custom-confirm-modal" class="fixed inset-0 z-[210] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4">
+        <div id="custom-confirm-modal" class="fixed inset-0 z-[5000] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" style="z-index:5000 !important;">
             <div class="bg-[#fffdf8] p-6 rounded-2xl border-[3px] border-[#181818] shadow-[8px_8px_0_#181818] max-w-sm w-full transform transition-all scale-95 opacity-0" id="custom-confirm-box">
                 <h3 class="text-xl font-black text-[#181818] mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-triangle-exclamation text-[#ff7373]"></i> Konfirmasi
