@@ -140,37 +140,14 @@ const CHAT_BUCKET = 'chat-media';
             if(voice){
                 const fileObj=new File([voice],`voice-note-${Date.now()}.webm`,{type:voice.type||'audio/webm'}); uploadMeta=await uploadChatFile(fileObj); uploadMeta.message_type='voice'; uploadMeta.file_name=fileObj.name; uploadMeta.mime_type=fileObj.type; uploadMeta.file_size=fileObj.size; uploadMeta.duration=Math.round((Date.now()-voiceStartedAt)/1000);
             } else if(file){ uploadMeta=await uploadChatFile(file); uploadMeta.message_type=file.type?.startsWith('image/')?'image':file.type?.startsWith('video/')?'video':file.type?.startsWith('audio/')?'audio':'document'; uploadMeta.file_name=file.name; uploadMeta.mime_type=file.type||'application/octet-stream'; uploadMeta.file_size=file.size; }
-            const senderId = getChatIdentity();
-const senderName = getCurrentChatName();
-const userRole = localStorage.getItem('jft_user_role') || 'user';
-
-const messageType =
-    file.messageType ||
-    (file.type?.startsWith('image/') ? 'image' :
-    file.type?.startsWith('video/') ? 'video' :
-    file.type?.startsWith('audio/') ? 'audio' :
-    'document');
-
-const mediaLabels = {
-    image: '[Foto]',
-    video: '[Video]',
-    document: '[Dokumen]',
-    audio: '[Audio]',
-    voice: '[Voice Note]'
-};
-
-const payload = {
-    sender_id: senderId,
-    sender_name: senderName,
-    sender_role: userRole,
-    message: mediaLabels[messageType] || '[File]',
-    message_type: messageType,
-    file_url: fileUrl,
-    file_name: file.name,
-    file_path: filePath,
-    mime_type: file.type,
-    file_size: file.size
-};
+            const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || (
+                uploadMeta.message_type === 'image' ? '[Foto]' :
+                uploadMeta.message_type === 'video' ? '[Video]' :
+                uploadMeta.message_type === 'audio' ? '[Audio]' :
+                uploadMeta.message_type === 'voice' ? '[Voice Note]' :
+                uploadMeta.message_type === 'document' ? '[Dokumen]' :
+                '[File]'
+            ),reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
             const {error}=await window.supabaseClient.from('global_chats').insert([payload]);
             if(error) throw error;
             input.value=''; cancelReply(); clearChatAttachment(); const status=document.getElementById('chat-record-status'); if(status) status.textContent=''; const tagSuggestions=document.getElementById('tag-suggestions'); if(tagSuggestions) tagSuggestions.classList.add('hidden'); await fetchChatMessages();
