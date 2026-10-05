@@ -148,10 +148,14 @@ const CHAT_BUCKET = 'chat-media';
     voice: '[Voice Note]'
 };
 
+const senderId = getChatIdentity();
+const senderName = getCurrentChatName();
+const userRole = localStorage.getItem('jft_user_role') || 'user';
+
 const payload = {
-    sender_id,
-    sender_name,
-    sender_role,
+    sender_id: senderId,
+    sender_name: senderName,
+    sender_role: userRole,
     message: mediaLabels[message_type] || '[File]',
     message_type,
     file_url,
