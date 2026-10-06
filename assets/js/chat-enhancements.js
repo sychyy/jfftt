@@ -125,7 +125,12 @@ function announcementPlayerMarkup(url,duration,mime){
     </div>
   </div>`;
 }
-function formatAnnTime(seconds){ const n=Math.max(0,Number(seconds)||0); return formatDuration(n); }
+function formatAnnTime(seconds){
+  const n=Math.max(0,Number(seconds)||0);
+  const mins=Math.floor(n/60);
+  const secs=Math.floor(n%60);
+  return `${mins}:${String(secs).padStart(2,'0')}`;
+}
 function announcementMediaMarkup(item){
   const url=String(item.file_url||''); if(!url)return '';
   const type=String(item.media_type||'').toLowerCase();
