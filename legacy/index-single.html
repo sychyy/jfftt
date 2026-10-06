@@ -1026,6 +1026,152 @@
     0% { opacity: 0; transform: scale(0.8); }
     100% { opacity: 1; transform: scale(1); }
 }
+
+
+/* ===== MEDIA ANNOUNCEMENT — MINIMAL CLEAN STYLE ===== */
+/* Video/GIF dibuat sama dengan media foto: tanpa frame biru/teal tambahan. */
+.jft-ann-media.jft-ann-video,
+.jft-ann-media.jft-ann-video-gif{
+    margin:0 -11px 10px !important;
+    padding:0 !important;
+    background:transparent !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+}
+.jft-ann-media.jft-ann-video video,
+.jft-ann-media.jft-ann-video-gif video{
+    display:block !important;
+    width:100% !important;
+    max-height:320px !important;
+    object-fit:cover !important;
+    background:#181818 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    box-shadow:none !important;
+}
+
+/* Audio pengumuman dibuat minimal: play + judul/waktu + satu indikator progres yang selalu terlihat. */
+.jft-ann-media.jft-ann-audio-wrap{
+    margin:0 -11px 10px !important;
+    padding:8px 10px !important;
+    background:transparent !important;
+    border:0 !important;
+}
+.jft-ann-audio-premium{
+    display:flex !important;
+    align-items:center !important;
+    gap:9px !important;
+    width:100% !important;
+    min-width:0 !important;
+    padding:8px 9px !important;
+    background:#fffdf8 !important;
+    border:2px solid #181818 !important;
+    border-radius:12px !important;
+    box-shadow:2px 2px 0 #181818 !important;
+    overflow:hidden !important;
+}
+.jft-ann-audio-icon,
+.jft-ann-audio-label,
+.jft-ann-audio-skip,
+.jft-ann-audio-speed{
+    display:none !important;
+}
+.jft-ann-audio-center{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+}
+.jft-ann-audio-top{
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:7px !important;
+    margin:0 0 5px !important;
+}
+.jft-ann-audio-name{
+    min-width:0 !important;
+    flex:1 1 auto !important;
+    overflow:hidden !important;
+    text-overflow:ellipsis !important;
+    white-space:nowrap !important;
+    font-size:10px !important;
+    font-weight:900 !important;
+}
+.jft-ann-audio-time{
+    flex:0 0 auto !important;
+    padding:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    font-size:8px !important;
+    font-weight:800 !important;
+    opacity:.62 !important;
+}
+.jft-ann-audio-wave{
+    height:18px !important;
+    padding:0 !important;
+    border:0 !important;
+    border-radius:0 !important;
+    background:transparent !important;
+    box-shadow:none !important;
+}
+.jft-ann-audio-wave .jft-vn-track{
+    left:0 !important;
+    right:0 !important;
+    top:50% !important;
+    height:4px !important;
+    background:rgba(24,24,24,.16) !important;
+    border-radius:999px !important;
+}
+.jft-ann-audio-wave .jft-vn-progress{
+    left:0 !important;
+    top:50% !important;
+    height:4px !important;
+    max-width:none !important;
+    background:#43c9bd !important;
+    border-radius:999px !important;
+    opacity:1 !important;
+}
+.jft-ann-audio-wave .jft-vn-bars{display:none !important;}
+.jft-ann-audio-controls{
+    order:-1 !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    flex:0 0 auto !important;
+    padding:0 !important;
+}
+.jft-ann-audio-play{
+    width:36px !important;
+    height:36px !important;
+    min-width:36px !important;
+    min-height:36px !important;
+    border-radius:10px !important;
+    border:2px solid #181818 !important;
+    background:#ffe45c !important;
+    color:#181818 !important;
+    box-shadow:2px 2px 0 #181818 !important;
+    font-size:12px !important;
+}
+.jft-ann-audio-premium.is-playing .jft-ann-audio-play{
+    background:#181818 !important;
+    color:#ffe45c !important;
+}
+.jft-ann-audio-premium::after,
+.jft-ann-audio-premium::before{display:none !important;}
+
+@media(max-width:520px){
+    .jft-ann-media.jft-ann-video,
+    .jft-ann-media.jft-ann-video-gif{margin:0 -15px 14px !important;}
+    .jft-ann-media.jft-ann-video video,
+    .jft-ann-media.jft-ann-video-gif video{max-height:520px !important;}
+    .jft-ann-media.jft-ann-audio-wrap{margin:0 -15px 14px !important;padding:8px 10px !important;}
+    .jft-ann-audio-premium{gap:8px !important;padding:7px 8px !important;}
+    .jft-ann-audio-play{width:34px !important;height:34px !important;min-width:34px !important;min-height:34px !important;}
+    .jft-ann-audio-name{font-size:9px !important;}
+    .jft-ann-audio-time{font-size:7px !important;}
+    .jft-ann-audio-wave{height:16px !important;}
+}
 </style>
 
 
