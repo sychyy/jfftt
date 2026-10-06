@@ -109,19 +109,13 @@ async function getAnnouncementMediaDuration(file){
   });
 }
 function announcementPlayerMarkup(url,duration,mime){
-  const bars=Array.from({length:52},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
+  const bars=Array.from({length:40},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
   return `<div class="jft-vn-player jft-ann-audio jft-ann-audio-premium" data-vn-player data-vn-duration="${Number(duration)||0}">
     <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${attr(url)}" type="${attr(mime||'audio/mpeg')}"></audio>
-    <div class="jft-ann-audio-icon" aria-hidden="true"><i class="fa-solid fa-music"></i></div>
+    <button type="button" class="jft-ann-audio-play jft-vn-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
     <div class="jft-ann-audio-center">
-      <div class="jft-ann-audio-top"><span class="jft-ann-audio-label">AUDIO</span><span class="jft-ann-audio-name">Pengumuman JFT-Basic</span><span class="jft-ann-audio-time" data-vn-time>0:00 / ${formatAnnTime(duration)}</span></div>
+      <div class="jft-ann-audio-top"><span class="jft-ann-audio-label">AUDIO</span><span class="jft-ann-audio-time" data-vn-time>0:00 / ${formatAnnTime(duration)}</span></div>
       <button type="button" class="jft-vn-wave jft-ann-audio-wave" data-vn-seek aria-label="Atur posisi audio"><span class="jft-vn-track" data-vn-track></span><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
-    </div>
-    <div class="jft-ann-audio-controls">
-      <button type="button" class="jft-ann-audio-skip" data-vn-skip="-10" aria-label="Mundur 10 detik"><i class="fa-solid fa-rotate-left"></i><span>10</span></button>
-      <button type="button" class="jft-ann-audio-play jft-vn-play" data-vn-play aria-label="Putar audio pengumuman"><i class="fa-solid fa-play"></i></button>
-      <button type="button" class="jft-ann-audio-skip" data-vn-skip="10" aria-label="Maju 10 detik"><i class="fa-solid fa-rotate-right"></i><span>10</span></button>
-      <button type="button" class="jft-vn-speed jft-ann-audio-speed" data-vn-speed>1x</button>
     </div>
   </div>`;
 }
