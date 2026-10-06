@@ -29,7 +29,6 @@ const CHAT_BUCKET = 'chat-media';
     let voiceChunks = [];
     let voiceStartedAt = 0;
     let voiceTimer = null;
-    let selectedChatMediaDuration = null;
 
     function chatFileInput(){ return document.getElementById('chat-file-input'); }
     function setUploadStatus(text, pct){
@@ -41,7 +40,7 @@ const CHAT_BUCKET = 'chat-media';
         if(pct>=100) setTimeout(()=>box.classList.add('hidden'),700);
     }
     function clearChatAttachment(){
-        selectedChatFile=null; recordedVoiceBlob=null; selectedChatMediaDuration=null;
+        selectedChatFile=null; recordedVoiceBlob=null;
         const fi=chatFileInput(); if(fi) fi.value='';
         const preview=document.getElementById('chat-attachment-preview'); if(preview){ preview.classList.add('hidden'); preview.innerHTML=''; }
     }
@@ -52,25 +51,10 @@ const CHAT_BUCKET = 'chat-media';
     }
     window.clearChatAttachment=clearChatAttachment;
 
-    function getMediaDuration(file){
-        return new Promise(resolve=>{
-            if(!file || !/^(audio|video)\//i.test(String(file.type||''))){ resolve(null); return; }
-            const el=document.createElement(file.type.startsWith('audio/')?'audio':'video');
-            const url=URL.createObjectURL(file);
-            let done=false;
-            const finish=(value)=>{ if(done)return; done=true; URL.revokeObjectURL(url); el.remove(); resolve(Number.isFinite(value)&&value>0?Math.round(value):null); };
-            el.preload='metadata';
-            el.onloadedmetadata=()=>finish(el.duration);
-            el.onerror=()=>finish(null);
-            setTimeout(()=>finish(null),5000);
-            el.src=url;
-        });
-    }
-        window.handleChatFileSelected=async function(e){
+    window.handleChatFileSelected=function(e){
         const file=e.target.files?.[0]; if(!file) return;
         if(file.size>MAX_CHAT_FILE_BYTES){ showToast('File terlalu besar', 'Maksimal 25 MB per file.', true); e.target.value=''; return; }
-        selectedChatFile=file; recordedVoiceBlob=null; selectedChatMediaDuration=null; showAttachmentPreview(file,'file');
-        if(/^(audio|video)\//i.test(String(file.type||''))){ selectedChatMediaDuration=await getMediaDuration(file); }
+        selectedChatFile=file; recordedVoiceBlob=null; showAttachmentPreview(file,'file');
     };
 
     window.toggleChatFilePicker=function(){ const fi=chatFileInput(); if(fi) fi.click(); };
@@ -217,15 +201,12 @@ const CHAT_BUCKET = 'chat-media';
         if(type==='voice' || type==='audio') {
             const fallbackDuration=Number(msg.duration_seconds)||0;
             const bars=Array.from({length:34},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
-            const isAudio=type==='audio';
-            const title=isAudio?'Audio':'Voice note';
-            const icon=isAudio?'fa-music':'fa-microphone';
-            return `<div class="jft-vn-player ${isAudio?'is-audio-file':''}" data-vn-player data-vn-duration="${fallbackDuration}">
+            return `<div class="jft-vn-player" data-vn-player data-vn-duration="${fallbackDuration}">
                 <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio>
-                <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar ${title.toLowerCase()}"><i class="fa-solid fa-play"></i></button>
+                <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar voice note"><i class="fa-solid fa-play"></i></button>
                 <div class="jft-vn-content">
-                    <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid ${icon}"></i> ${title}</span><span data-vn-time>0:00 / ${formatDuration(fallbackDuration)}</span></div>
-                    <button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi ${title.toLowerCase()}"><span class="jft-vn-track" data-vn-track></span><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
+                    <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-microphone"></i> Voice note</span><span data-vn-time>0:00 / ${formatDuration(fallbackDuration)}</span></div>
+                    <button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi voice note"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
                 </div>
                 <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
             </div>${linkButtons}`;
@@ -357,7 +338,7 @@ const CHAT_BUCKET = 'chat-media';
                 const fileMime=getChatFileMime(file);
                 uploadMeta=await uploadChatFile(file);
                 uploadMeta.message_type=fileMime.startsWith('image/')?'image':fileMime.startsWith('video/')?'video':fileMime.startsWith('audio/')?'audio':'document';
-                uploadMeta.file_name=file.name; uploadMeta.mime_type=fileMime; uploadMeta.file_size=file.size; uploadMeta.duration=selectedChatMediaDuration;
+                uploadMeta.file_name=file.name; uploadMeta.mime_type=fileMime; uploadMeta.file_size=file.size;
             }
             const payload={sender_id:getChatIdentity(),sender_name:senderName,sender_role:userRole,message: message || '',reply_to:activeReplyData?activeReplyData.text:null,reply_user:activeReplyData?activeReplyData.sender:null,message_type:uploadMeta.message_type||'text',file_url:uploadMeta.publicUrl||null,file_path:uploadMeta.path||null,file_name:uploadMeta.file_name||null,mime_type:uploadMeta.mime_type||null,file_size:uploadMeta.file_size||null,duration_seconds:uploadMeta.duration||null};
             const {data:inserted,error}=await window.supabaseClient.from('global_chats').insert([payload]).select('*').single();
