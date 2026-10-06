@@ -200,13 +200,18 @@ const CHAT_BUCKET = 'chat-media';
         if(type==='video') return `<video controls preload="metadata" class="max-w-full rounded-xl border-[2px] border-[#181818] max-h-72"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></video>${linkButtons}`;
         if(type==='voice' || type==='audio') {
             const fallbackDuration=Number(msg.duration_seconds)||0;
+            const isVoice=type==='voice';
+            const mediaLabel=isVoice?'Voice note':'Audio';
+            const mediaIcon=isVoice?'fa-microphone':'fa-music';
+            const playLabel=isVoice?'Putar voice note':'Putar audio';
+            const seekLabel=isVoice?'Atur posisi voice note':'Atur posisi audio';
             const bars=Array.from({length:34},(_,i)=>`<span class="jft-vn-bar" style="--i:${i}"></span>`).join('');
-            return `<div class="jft-vn-player" data-vn-player data-vn-duration="${fallbackDuration}">
+            return `<div class="jft-vn-player ${isVoice?'is-voice':'is-audio'}" data-vn-player data-vn-duration="${fallbackDuration}">
                 <audio class="jft-vn-audio" preload="metadata" aria-hidden="true"><source src="${escapeAttr(url)}" type="${escapeAttr(mime)}"></audio>
-                <button type="button" class="jft-vn-play" data-vn-play aria-label="Putar voice note"><i class="fa-solid fa-play"></i></button>
+                <button type="button" class="jft-vn-play" data-vn-play aria-label="${playLabel}"><i class="fa-solid fa-play"></i></button>
                 <div class="jft-vn-content">
-                    <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid fa-microphone"></i> Voice note</span><span data-vn-time>0:00 / ${formatDuration(fallbackDuration)}</span></div>
-                    <button type="button" class="jft-vn-wave" data-vn-seek aria-label="Atur posisi voice note"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
+                    <div class="jft-vn-meta"><span class="jft-vn-title"><i class="fa-solid ${mediaIcon}"></i> ${mediaLabel}</span><span data-vn-time>0:00 / ${formatDuration(fallbackDuration)}</span></div>
+                    <button type="button" class="jft-vn-wave" data-vn-seek aria-label="${seekLabel}"><span class="jft-vn-progress" data-vn-progress></span><span class="jft-vn-bars">${bars}</span></button>
                 </div>
                 <button type="button" class="jft-vn-speed" data-vn-speed>1x</button>
             </div>${linkButtons}`;
