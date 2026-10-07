@@ -33,3 +33,15 @@ Video pengumuman sekarang punya dua mode: `Video` (bisa pause/seeking) dan `GIF`
 - Removed the visible GIF loop overlay from announcement media.
 - Upgraded announcement audio to a custom interactive player with seek, +/-10s and speed controls.
 - Added desktop-only refinements at 900px+ while preserving the existing mobile layout.
+
+
+## v11 — Bank Soal & Anti-Pengulangan
+- Bank soal utama diganti total menjadi **500 soal baru** (ID 1–500).
+- Pembagian bank: **125 Vocabulary, 125 Grammar, 125 Listening, 125 Reading**.
+- Teks soal baru tidak sama dengan 490 soal lama yang diganti.
+- Pemilihan soal memprioritaskan **100% soal yang belum pernah diberikan** kepada akun tersebut.
+- Riwayat versi bank disimpan dengan versi `jft-basic-500-v2-2026-10-07`, sehingga riwayat bank lama tidak mengganggu bank baru.
+- Riwayat disinkronkan ke Supabase melalui kolom `question_history`; bila kolom belum tersedia, aplikasi otomatis memakai `localStorage` sebagai fallback.
+
+### Aktivasi anti-pengulangan lintas perangkat
+Jalankan `supabase/question-history.sql` sekali di Supabase SQL Editor. Alternatifnya, perubahan yang sama juga sudah dicantumkan di akhir `supabase/chat-media.sql`.
