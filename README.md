@@ -45,3 +45,12 @@ Video pengumuman sekarang punya dua mode: `Video` (bisa pause/seeking) dan `GIF`
 
 ### Aktivasi anti-pengulangan lintas perangkat
 Jalankan `supabase/question-history.sql` sekali di Supabase SQL Editor. Alternatifnya, perubahan yang sama juga sudah dicantumkan di akhir `supabase/chat-media.sql`.
+
+
+## v14 — Fix Mulai Latihan
+- Memperbaiki tombol "Mulai Latihan" yang sebelumnya dapat menampilkan pesan gagal setelah sesi selesai.
+- Tombol sekarang memakai ID khusus dan memanggil `window.startQuiz()` secara eksplisit.
+- State quiz dan bank soal diekspos melalui bridge `window.JFT_STATE`, `window.JFT_QUESTION_BANK`, dan `window.JFTQuiz` agar tidak bentrok dengan fungsi lama.
+- Koneksi/permintaan Supabase tidak lagi menjadi syarat untuk memulai latihan; localStorage dipakai sebagai fallback.
+- Sinkronisasi riwayat online diberi batas waktu agar kegagalan jaringan/database tidak mengunci tombol.
+- Progres sesi lama selalu dibersihkan sebelum membuat sesi latihan baru.

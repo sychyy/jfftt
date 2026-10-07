@@ -52,21 +52,23 @@
     }
 
     window.saveQuizProgress = function(){
-        if (!state || !Array.isArray(state.questions) || !state.questions.length) return;
+        const quizState = window.JFT_STATE || (typeof state !== 'undefined' ? state : null);
+        if (!quizState || !Array.isArray(quizState.questions) || !quizState.questions.length) return;
         try {
             const payload = {
-                version: 2,
-                attemptId: state.attemptId || `ATTEMPT-${Date.now()}`,
-                questionCount: state.questions.length,
-                questions: state.questions,
-                currentQuestionIndex: state.currentQuestionIndex,
-                userAnswers: state.userAnswers,
-                startTime: state.startTime,
-                selectedPeriod: state.selectedPeriod || 'sep-nov',
+                version: 3,
+                bankVersion: window.JFT_QUESTION_BANK_VERSION || 'jft-basic-500-v2-2026-10-07',
+                attemptId: quizState.attemptId || `ATTEMPT-${Date.now()}`,
+                questionCount: quizState.questions.length,
+                questions: quizState.questions,
+                currentQuestionIndex: quizState.currentQuestionIndex,
+                userAnswers: quizState.userAnswers,
+                startTime: quizState.startTime,
+                selectedPeriod: quizState.selectedPeriod || 'sep-nov',
                 audioPlayCounts: (typeof audioPlayCounts !== 'undefined' ? audioPlayCounts : {}),
                 savedAt: Date.now()
             };
-            state.attemptId = payload.attemptId;
+            quizState.attemptId = payload.attemptId;
             localStorage.setItem(window.getQuizStorageKey(), JSON.stringify(payload));
         } catch (e) {
             console.warn('Gagal menyimpan progres quiz:', e);
@@ -80,23 +82,25 @@
     window.restoreActiveQuiz = function(){
         const saved = readActiveQuiz();
         if (!saved) return false;
-        state.questions = saved.questions;
-        state.currentQuestionIndex = Math.max(0, Math.min(Number(saved.currentQuestionIndex || 0), state.questions.length - 1));
-        state.userAnswers = Array.isArray(saved.userAnswers)
-            ? saved.userAnswers.slice(0, state.questions.length).concat(new Array(Math.max(0, state.questions.length - saved.userAnswers.length)).fill(null))
-            : new Array(state.questions.length).fill(null);
-        state.userAnswers.length = state.questions.length;
-        state.startTime = Number(saved.startTime) || Date.now();
-        state.endTime = null;
-        state.selectedPeriod = saved.selectedPeriod || 'sep-nov';
-        state.attemptId = saved.attemptId || `ATTEMPT-${Date.now()}`;
+        const quizState = window.JFT_STATE || (typeof state !== 'undefined' ? state : null);
+        if (!quizState) return false;
+        quizState.questions = saved.questions;
+        quizState.currentQuestionIndex = Math.max(0, Math.min(Number(saved.currentQuestionIndex || 0), quizState.questions.length - 1));
+        quizState.userAnswers = Array.isArray(saved.userAnswers)
+            ? saved.userAnswers.slice(0, quizState.questions.length).concat(new Array(Math.max(0, quizState.questions.length - saved.userAnswers.length)).fill(null))
+            : new Array(quizState.questions.length).fill(null);
+        quizState.userAnswers.length = quizState.questions.length;
+        quizState.startTime = Number(saved.startTime) || Date.now();
+        quizState.endTime = null;
+        quizState.selectedPeriod = saved.selectedPeriod || 'sep-nov';
+        quizState.attemptId = saved.attemptId || `ATTEMPT-${Date.now()}`;
         audioPlayCounts = saved.audioPlayCounts || {}; 
 
-        clearInterval(state.timerInterval);
-        state.timerInterval = setInterval(() => {
+        clearInterval(quizState.timerInterval);
+        quizState.timerInterval = setInterval(() => {
             const timer = document.getElementById('quiz-timer');
             if (!timer) return;
-            const s = Math.floor((Date.now() - state.startTime) / 1000);
+            const s = Math.floor((Date.now() - quizState.startTime) / 1000);
             timer.innerHTML = `<i class="fa-regular fa-clock"></i> <span>${Math.floor(s/60).toString().padStart(2,'0')}:${(s%60).toString().padStart(2,'0')}</span>`;
         }, 1000);
 
@@ -107,9 +111,9 @@
     // Start quiz: gunakan bank + riwayat anti-repeat versi terbaru.
     // Jangan bergantung pada navigate('quiz') karena halaman quiz adalah multi-page.
     window.startQuiz = async function(){
-        const btn = document.querySelector('button[onclick="startQuiz()"]');
+        const btn = document.getElementById('btn-start-quiz');
+        if (btn?.dataset.starting === '1') return;
         if (btn) {
-            if (btn.dataset.starting === '1') return;
             btn.dataset.starting = '1';
             btn.disabled = true;
             btn.classList.add('opacity-70', 'cursor-wait');
@@ -117,7 +121,7 @@
 
         try {
             const nameInput = document.getElementById('user-name-input');
-            const userName = nameInput ? userName.value.trim() : '';
+            const userName = nameInput ? nameInput.value.trim() : '';
             if (!userName) {
                 showCustomConfirm('Silakan masukkan nama Anda terlebih dahulu!', null, 'Oke');
                 return;
@@ -135,48 +139,84 @@
             localStorage.setItem('jft_user_name', normalizedName);
 
             const qCountRadio = document.querySelector('input[name="q_count"]:checked');
-            const reqCount = qCountRadio ? parseInt(qCountRadio.value, 10) : 10;
+            const requestedCount = Math.max(1, parseInt(qCountRadio?.value || '10', 10) || 10);
             const periodRadio = document.querySelector('input[name="period"]:checked');
-            const selectedPeriod = periodRadio ? periodRadio.value : 'sep-nov';
+            const selectedPeriod = periodRadio?.value || 'sep-nov';
 
-            // Hapus sesi lama sebelum membuat sesi baru.
-            // Ini mencegah sesi selesai/tertinggal mengunci tombol Mulai Latihan.
-            if (typeof window.clearQuizProgress === 'function') {
-                window.clearQuizProgress();
+            // Bersihkan progres lama agar tombol selalu membuat sesi baru.
+            window.clearQuizProgress();
+
+            const quizState = window.JFT_STATE || (typeof state !== 'undefined' ? state : null);
+            const api = window.JFTQuiz;
+            const bank = api?.getQuestionBank?.() || window.JFT_QUESTION_BANK || [];
+            if (!quizState || !Array.isArray(bank) || !bank.length) {
+                throw new Error('Bank soal atau state kuis tidak tersedia.');
             }
 
-            // Selalu gunakan history bank v2 agar soal yang sudah keluar
-            // tidak dipilih lagi sampai seluruh bank habis.
-            const questionHistory = (typeof loadQuestionHistory === 'function')
-                ? await loadQuestionHistory()
-                : { bankVersion: 'jft-basic-500-v2-2026-10-07', seen: {} };
+            // Riwayat lokal selalu tersedia dan tidak boleh menghalangi dimulainya latihan.
+            let history = { bankVersion: window.JFT_QUESTION_BANK_VERSION || 'jft-basic-500-v2-2026-10-07', seen: {}, updatedAt: null };
+            try {
+                const key = api?.getHistoryStorageKey?.();
+                const raw = key ? localStorage.getItem(key) : null;
+                history = api?.normalizeHistory?.(raw) || history;
+            } catch (e) {
+                console.warn('Riwayat lokal tidak dapat dibaca, memakai riwayat kosong.', e);
+            }
 
-            const selected = (typeof selectQuizQuestions === 'function')
-                ? selectQuizQuestions(reqCount, questionHistory)
+            // Coba sinkronkan dari web, tetapi batasi waktunya supaya internet/database
+            // tidak pernah membuat tombol Mulai Latihan macet.
+            if (api?.loadQuestionHistory) {
+                try {
+                    const remoteHistory = await Promise.race([
+                        api.loadQuestionHistory(),
+                        new Promise((resolve) => setTimeout(() => resolve(null), 2500))
+                    ]);
+                    if (remoteHistory?.seen) history = remoteHistory;
+                } catch (e) {
+                    console.warn('Sinkronisasi riwayat dilewati:', e);
+                }
+            }
+
+            const selected = api?.selectQuizQuestions
+                ? api.selectQuizQuestions(requestedCount, history)
                 : [];
 
-            if (!Array.isArray(selected) || selected.length === 0) {
-                throw new Error('Bank soal tidak menghasilkan soal. Silakan refresh halaman.');
+            if (!Array.isArray(selected) || !selected.length) {
+                throw new Error('Tidak ada soal yang dapat dipilih dari bank.');
             }
 
-            if (typeof markQuestionsSeen === 'function') {
-                const updatedHistory = markQuestionsSeen(questionHistory, selected);
-                await saveQuestionHistory(updatedHistory);
+            // Tandai soal sebagai pernah diberikan sebelum berpindah halaman.
+            const updatedHistory = api?.markQuestionsSeen
+                ? api.markQuestionsSeen(history, selected)
+                : history;
+
+            // Simpan lokal segera. Simpan ke web secara asynchronous agar tidak memblokir start.
+            try {
+                const key = api?.getHistoryStorageKey?.();
+                if (key) localStorage.setItem(key, JSON.stringify(updatedHistory));
+            } catch (e) {
+                console.warn('Riwayat lokal gagal disimpan:', e);
             }
 
-            state.questions = selected;
-            state.currentQuestionIndex = 0;
-            state.userAnswers = new Array(selected.length).fill(null);
-            state.endTime = null;
-            state.startTime = Date.now();
-            state.selectedPeriod = selectedPeriod;
-            state.attemptId = `ATTEMPT-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
+            const syncPromise = api?.saveQuestionHistory
+                ? api.saveQuestionHistory(updatedHistory).catch(e => console.warn('Sinkronisasi riwayat gagal:', e))
+                : Promise.resolve();
+            // Beri kesempatan request mulai, tetapi jangan menunggu network lebih lama.
+            await Promise.race([syncPromise, new Promise(resolve => setTimeout(resolve, 350))]);
+
+            quizState.questions = selected;
+            quizState.currentQuestionIndex = 0;
+            quizState.userAnswers = new Array(selected.length).fill(null);
+            quizState.endTime = null;
+            quizState.startTime = Date.now();
+            quizState.selectedPeriod = selectedPeriod;
+            quizState.attemptId = `ATTEMPT-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
+
             if (typeof audioPlayCounts !== 'undefined') audioPlayCounts = {};
-
             window.saveQuizProgress();
 
-            // Multi-page routing: jangan panggil navigate('quiz') dari home.html.
-            window.location.href = 'quiz.html';
+            // Pindah hanya setelah state lokal tersimpan.
+            window.location.assign('quiz.html');
         } catch (error) {
             console.error('Gagal memulai latihan:', error);
             showCustomConfirm(
@@ -329,7 +369,7 @@
   document.addEventListener('DOMContentLoaded',()=>{ const el=document.getElementById('resume-quiz-card'); if(el) obs.observe(el,{childList:true,subtree:true}); });
 
     window.addEventListener('pageshow', function(){
-        const btn = document.querySelector('button[onclick="startQuiz()"]');
+        const btn = document.getElementById('btn-start-quiz');
         if (btn) {
             btn.dataset.starting = '0';
             btn.disabled = false;

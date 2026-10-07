@@ -7226,9 +7226,20 @@
         
         const MAX_AUDIO_PLAYS = 2;
 let audioPlayCounts = {};
+        // Stable public references used by the multi-page router.
+        // This avoids relying on window.* for top-level let/const bindings.
+        window.JFT_STATE = state;
+        window.JFT_GET_DEVICE_ID = getOrCreateDeviceId;
         const SUPABASE_URL = 'https://lnthciiomeppirzucqwu.supabase.co';
         const SUPABASE_ANON_KEY = 'sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
-        window.supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        try {
+            window.supabaseClient = (window.supabase && typeof window.supabase.createClient === 'function')
+                ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+                : null;
+        } catch (e) {
+            console.warn('Supabase tidak tersedia; fitur kuis tetap memakai penyimpanan lokal.', e);
+            window.supabaseClient = null;
+        }
 
         function navigate(screenId) {
             document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
@@ -10090,3 +10101,27 @@ window.addEventListener('DOMContentLoaded', () => {
     // Ini memastikan setiap kali tombol kirim dikunci, nama yang dipakai dari memori browser terbaru
     console.log("Sistem sinkronisasi nama aktif!");
 });
+
+
+/* ============================================================
+   JFT PUBLIC QUIZ API — stable bridge for multi-page router
+   ============================================================ */
+(function(){
+    try {
+        window.JFT_QUESTION_BANK = QUESTION_BANK;
+        window.JFT_QUESTION_BANK_VERSION = QUESTION_BANK_VERSION;
+        window.JFTQuiz = {
+            getState: () => state,
+            getQuestionBank: () => QUESTION_BANK,
+            loadQuestionHistory: () => loadQuestionHistory(),
+            saveQuestionHistory: (history) => saveQuestionHistory(history),
+            markQuestionsSeen: (history, questions) => markQuestionsSeen(history, questions),
+            selectQuizQuestions: (count, history) => selectQuizQuestions(count, history),
+            getHistoryStorageKey: () => getQuestionHistoryStorageKey(),
+            normalizeHistory: (raw) => normalizeQuestionHistory(raw),
+            mergeHistories: (a,b) => mergeQuestionHistories(a,b)
+        };
+    } catch (e) {
+        console.warn('Quiz API bridge gagal dibuat:', e);
+    }
+})();
