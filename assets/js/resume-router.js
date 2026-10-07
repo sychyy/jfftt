@@ -104,63 +104,93 @@
         return true;
     };
 
-    // New startQuiz: preserves the original question selection logic while writing the attempt immediately.
-    window.startQuiz = function(){
-        const nameInput = document.getElementById('user-name-input');
-        const userName = nameInput ? nameInput.value.trim() : '';
-        if (!userName) {
-            showCustomConfirm('Silakan masukkan nama Anda terlebih dahulu!', null, 'Oke');
-            return;
+    // Start quiz: gunakan bank + riwayat anti-repeat versi terbaru.
+    // Jangan bergantung pada navigate('quiz') karena halaman quiz adalah multi-page.
+    window.startQuiz = async function(){
+        const btn = document.querySelector('button[onclick="startQuiz()"]');
+        if (btn) {
+            if (btn.dataset.starting === '1') return;
+            btn.dataset.starting = '1';
+            btn.disabled = true;
+            btn.classList.add('opacity-70', 'cursor-wait');
         }
-        const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
-        const normalizedName = userName.toUpperCase();
-        if (normalizedName === accountName) {
-            showCustomConfirm('Nama tidak boleh sama dengan nama yang dibuat admin!', null, 'Oke');
-            return;
-        }
-        localStorage.setItem(getChatNameStorageKey(), normalizedName);
-        localStorage.setItem('jft_display_name', normalizedName);
-        localStorage.setItem('jft_user_name', normalizedName);
 
-        const qCountRadio = document.querySelector('input[name="q_count"]:checked');
-        const reqCount = qCountRadio ? parseInt(qCountRadio.value, 10) : 10;
-        const periodRadio = document.querySelector('input[name="period"]:checked');
-        const selectedPeriod = periodRadio ? periodRadio.value : 'sep-nov';
-        const qStats = JSON.parse(localStorage.getItem('jft_question_stats') || '{}');
-        const sectionOrder = ['vocab', 'grammar', 'listening', 'reading'];
-        const totalQuestions = Math.min(reqCount, QUESTION_BANK.length);
-        const baseCount = Math.floor(totalQuestions / sectionOrder.length);
-        const remainder = totalQuestions % sectionOrder.length;
-        const counts = Object.fromEntries(sectionOrder.map(sec => [sec, baseCount]));
-        const remainderSections = shuffleArray([...sectionOrder]).slice(0, remainder);
-        remainderSections.forEach(sec => counts[sec]++);
-
-        let selected = [];
-        const usedQuestionKeys = new Set();
-        const getQuestionKey = q => String(q.text || '').replace(/\s+/g, ' ').trim().toLowerCase();
-        sectionOrder.forEach(sec => {
-            let qs = QUESTION_BANK.filter(q => q.section === sec && !usedQuestionKeys.has(getQuestionKey(q)));
-            if (selectedPeriod !== 'random') {
-                const periodQs = qs.filter(q => !q.period || q.period === selectedPeriod);
-                if (periodQs.length >= Math.min(counts[sec], qs.length)) qs = periodQs;
+        try {
+            const nameInput = document.getElementById('user-name-input');
+            const userName = nameInput ? userName.value.trim() : '';
+            if (!userName) {
+                showCustomConfirm('Silakan masukkan nama Anda terlebih dahulu!', null, 'Oke');
+                return;
             }
-            const picks = weightedSample(qs, Math.min(counts[sec], qs.length), qStats);
-            picks.forEach(q => usedQuestionKeys.add(getQuestionKey(q)));
-            selected.push(...picks);
-        });
-        selected.forEach(q => qStats[q.id] = getQuestionSeenCount(q, qStats) + 1);
-        localStorage.setItem('jft_question_stats', JSON.stringify(qStats));
 
-        state.questions = selected;
-        state.currentQuestionIndex = 0;
-        state.userAnswers = new Array(state.questions.length).fill(null);
-        state.endTime = null;
-        state.startTime = Date.now();
-        state.selectedPeriod = selectedPeriod;
-        state.attemptId = `ATTEMPT-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
-        audioPlayCounts = {};
-        window.saveQuizProgress();
-        window.location.href = 'quiz.html';
+            const accountName = (localStorage.getItem('jft_account_name') || '').trim().toUpperCase();
+            const normalizedName = userName.toUpperCase();
+            if (normalizedName === accountName) {
+                showCustomConfirm('Nama tidak boleh sama dengan nama yang dibuat admin!', null, 'Oke');
+                return;
+            }
+
+            localStorage.setItem(getChatNameStorageKey(), normalizedName);
+            localStorage.setItem('jft_display_name', normalizedName);
+            localStorage.setItem('jft_user_name', normalizedName);
+
+            const qCountRadio = document.querySelector('input[name="q_count"]:checked');
+            const reqCount = qCountRadio ? parseInt(qCountRadio.value, 10) : 10;
+            const periodRadio = document.querySelector('input[name="period"]:checked');
+            const selectedPeriod = periodRadio ? periodRadio.value : 'sep-nov';
+
+            // Hapus sesi lama sebelum membuat sesi baru.
+            // Ini mencegah sesi selesai/tertinggal mengunci tombol Mulai Latihan.
+            if (typeof window.clearQuizProgress === 'function') {
+                window.clearQuizProgress();
+            }
+
+            // Selalu gunakan history bank v2 agar soal yang sudah keluar
+            // tidak dipilih lagi sampai seluruh bank habis.
+            const questionHistory = (typeof loadQuestionHistory === 'function')
+                ? await loadQuestionHistory()
+                : { bankVersion: 'jft-basic-500-v2-2026-10-07', seen: {} };
+
+            const selected = (typeof selectQuizQuestions === 'function')
+                ? selectQuizQuestions(reqCount, questionHistory)
+                : [];
+
+            if (!Array.isArray(selected) || selected.length === 0) {
+                throw new Error('Bank soal tidak menghasilkan soal. Silakan refresh halaman.');
+            }
+
+            if (typeof markQuestionsSeen === 'function') {
+                const updatedHistory = markQuestionsSeen(questionHistory, selected);
+                await saveQuestionHistory(updatedHistory);
+            }
+
+            state.questions = selected;
+            state.currentQuestionIndex = 0;
+            state.userAnswers = new Array(selected.length).fill(null);
+            state.endTime = null;
+            state.startTime = Date.now();
+            state.selectedPeriod = selectedPeriod;
+            state.attemptId = `ATTEMPT-${Date.now()}-${Math.random().toString(36).slice(2,8).toUpperCase()}`;
+            if (typeof audioPlayCounts !== 'undefined') audioPlayCounts = {};
+
+            window.saveQuizProgress();
+
+            // Multi-page routing: jangan panggil navigate('quiz') dari home.html.
+            window.location.href = 'quiz.html';
+        } catch (error) {
+            console.error('Gagal memulai latihan:', error);
+            showCustomConfirm(
+                'Latihan tidak dapat dimulai. Silakan coba lagi. Jika masih gagal, refresh halaman.',
+                null,
+                'Oke'
+            );
+        } finally {
+            if (btn) {
+                btn.dataset.starting = '0';
+                btn.disabled = false;
+                btn.classList.remove('opacity-70', 'cursor-wait');
+            }
+        }
     };
 
     // Save after every answer and every render, so reload is safe even before pressing Next.
@@ -297,4 +327,14 @@
   document.addEventListener('DOMContentLoaded',()=>setTimeout(polishResume,250));
   const obs=new MutationObserver(polishResume);
   document.addEventListener('DOMContentLoaded',()=>{ const el=document.getElementById('resume-quiz-card'); if(el) obs.observe(el,{childList:true,subtree:true}); });
+
+    window.addEventListener('pageshow', function(){
+        const btn = document.querySelector('button[onclick="startQuiz()"]');
+        if (btn) {
+            btn.dataset.starting = '0';
+            btn.disabled = false;
+            btn.classList.remove('opacity-70', 'cursor-wait');
+        }
+    });
+
 })();
