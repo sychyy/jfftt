@@ -13,12 +13,8 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
 .ja{font-family:"Noto Sans JP",sans-serif}
 .card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 30px rgba(15,23,42,.06)}
 .war-accent{background:#181818;color:#ffe45c}
-.player-card{transition:.2s}
-.player-card.me{border-color:#181818;box-shadow:4px 4px 0 #181818}
+.player-card{transition:.2s}.player-card.me{border-color:#181818;box-shadow:4px 4px 0 #181818}
 .progress{height:7px;background:#e9edf2;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:#181818;border-radius:999px;transition:width .3s}
-.reaction{animation:pop .2s ease-out}.fadeout{animation:fadeout 10s linear forwards}
-@keyframes pop{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
-@keyframes fadeout{0%,85%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
 </style>
 </head>
 <body class="min-h-screen">
@@ -42,7 +38,7 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
         <button onclick="showJoin()" class="py-3 rounded-xl border-2 border-slate-900 font-black"><i class="fa-solid fa-right-to-bracket mr-2"></i>Join Room</button>
       </div>
       <div class="mt-6 p-4 rounded-xl bg-slate-50 text-xs text-slate-600 leading-relaxed">
-        <b>Sistem War:</b> semua pemain mendapat set soal dan waktu mulai yang sama. Pemenang bukan yang paling cepat, tetapi yang memperoleh <b>JFT Score tertinggi sampai 250</b>.
+        <b>Sistem War:</b> semua pemain mendapat set soal yang sama dan mulai serentak. Penentunya adalah <b>Score War sampai 250</b>, bukan siapa paling cepat.
       </div>
     </div>
     <div class="card p-6">
@@ -52,7 +48,8 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
         <p>• Minimal pemain: <b>2</b> — maksimal: <b>bebas</b>.</p>
         <p>• Skor: <b>benar ÷ total × 250</b>.</p>
         <p>• Rank: D &lt;100, C 100–149, B 150–199, A 200–249, S = 250.</p>
-        <p>• War Point = skor akhir; total point dipakai untuk leaderboard jangka panjang.</p>
+        <p>• Target waktu hanya acuan; <b>tidak perlu menunggu</b> untuk menyelesaikan War.</p>
+        <p>• War Point = Score akhir dan ditambahkan ke total point pemain.</p>
       </div>
     </div>
   </section>
@@ -60,7 +57,7 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
   <section id="createPanel" class="hidden card p-6 max-w-xl mx-auto">
     <button onclick="backLobby()" class="text-sm font-bold mb-4"><i class="fa-solid fa-arrow-left mr-1"></i>Kembali</button>
     <h2 class="text-2xl font-black">Host Room</h2>
-    <p class="text-sm text-slate-500 mt-1">Pilih jumlah soal. Setelah room dibuat, kirim code kepada lawan.</p>
+    <p class="text-sm text-slate-500 mt-1">Pilih jumlah soal, lalu kirim code room kepada lawan.</p>
     <div class="grid grid-cols-4 gap-2 mt-5">
       <button class="countBtn py-3 rounded-xl border-2 border-slate-900 font-black" data-count="10">10</button>
       <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="20">20</button>
@@ -106,44 +103,9 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
 
     <div id="waitingBox" class="card p-6 text-center">
       <div class="text-4xl mb-2">⚔️</div>
-      <h2 class="text-xl font-black">Menunggu semua siap</h2>
-      <p class="text-sm text-slate-500 mt-1">Minimal 2 pemain. Host yang menekan Mulai War.</p>
+      <h2 id="waitingTitle" class="text-xl font-black">Menunggu semua siap</h2>
+      <p id="waitingText" class="text-sm text-slate-500 mt-1">Minimal 2 pemain. Host yang menekan Mulai War.</p>
     </div>
-
-    <div id="quizPanel" class="hidden">
-      <div class="card p-5">
-        <div class="flex flex-col sm:flex-row justify-between gap-3 mb-5">
-          <div>
-            <div id="quizSection" class="text-xs font-black uppercase tracking-wider text-slate-400"></div>
-            <div id="quizProgress" class="text-lg font-black mt-1"></div>
-          </div>
-          <div class="text-right">
-            <div id="timer" class="text-2xl font-black">00:00</div>
-            <div id="liveScore" class="text-xs font-bold text-slate-500">Score sementara: 0</div>
-          </div>
-        </div>
-        <div class="progress mb-5"><div id="quizProgressBar" style="width:0%"></div></div>
-        <div id="question" class="ja text-xl sm:text-2xl font-medium leading-relaxed min-h-28"></div>
-        <div id="options" class="grid gap-3 mt-5"></div>
-        <div class="mt-5 text-center text-xs text-slate-400" id="minTimeHint"></div>
-      </div>
-    </div>
-
-    <div id="resultPanel" class="hidden card p-6 text-center">
-      <div id="resultRank" class="text-5xl font-black"></div>
-      <h2 class="text-2xl font-black mt-2">War selesai</h2>
-      <div id="resultScore" class="text-4xl font-black mt-3">0 / 250</div>
-      <div id="resultDetail" class="text-sm text-slate-500 mt-2"></div>
-      <div class="flex justify-center gap-3 mt-6">
-        <button onclick="backLobby()" class="px-5 py-3 rounded-xl border border-slate-300 font-black">Menu</button>
-        <button onclick="backToRoom()" class="px-5 py-3 rounded-xl bg-slate-900 text-white font-black">Kembali ke Room</button>
-      </div>
-    </div>
-
-    <div id="reactionBar" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-white/95 backdrop-blur border border-slate-200 shadow-2xl rounded-2xl px-3 py-2 flex gap-1">
-      <button class="reactionBtn text-xl" data-e="🔥">🔥</button><button class="reactionBtn text-xl" data-e="😹">😹</button><button class="reactionBtn text-xl" data-e="😋">😋</button><button class="reactionBtn text-xl" data-e="🤪">🤪</button><button class="reactionBtn text-xl" data-e="😲">😲</button><button class="reactionBtn text-xl" data-e="🤓">🤓</button><button class="reactionBtn text-xl" data-e="😠">😠</button><button class="reactionBtn text-xl" data-e="😂">😂</button><button class="reactionBtn text-xl" data-e="😎">😎</button><button class="reactionBtn text-xl" data-e="👏">👏</button><button class="reactionBtn text-xl" data-e="💀">💀</button>
-    </div>
-    <div id="reactionFeed" class="fixed right-4 bottom-20 z-50 flex flex-col items-end gap-2 pointer-events-none"></div>
   </section>
 </div>
 
@@ -153,40 +115,38 @@ const SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const BANK_URL='data/question-bank-v2.json';
 const RULES={10:300,20:600,30:1800,50:3600};
-let bank=[], room=null, player=null, channel=null, timerHandle=null, progressHandle=null;
-let selectedCount=10, quiz=[], idx=0, correct=0, startedAt=null, finished=false, answerLocked=false, lastReactionIds=new Set();
+let bank=[],room=null,player=null,channel=null,selectedCount=10,leaving=false;
 const playerTokenKey='jft_war_player_token';
 let playerToken=localStorage.getItem(playerTokenKey);
 if(!playerToken){playerToken=crypto.randomUUID();localStorage.setItem(playerTokenKey,playerToken)}
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const nameEl=()=>document.getElementById('nameInput');
-const getName=()=>((localStorage.getItem('jft_display_name')||localStorage.getItem('jft_user_name')||nameEl()?.value||'').trim().toUpperCase());
-function token(){return crypto.randomUUID().replaceAll('-','').slice(0,16)}
-function saveWarSession(hostToken=''){sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}));}
-async function restoreWarSession(){const raw=sessionStorage.getItem('jft_war_session');if(!raw)return false;try{const x=JSON.parse(raw);if(!x.roomId||!x.playerId)return false;const [{data:r},{data:p}]=await Promise.all([sb.from('jft_war_rooms').select('*').eq('id',x.roomId).single(),sb.from('jft_war_players').select('*').eq('id',x.playerId).single()]);if(!r||!p||p.status==='kicked')return false;room=r;player=p;await enterRoom();return true}catch(e){console.warn(e);return false}}
-function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
-function formatTime(sec){sec=Math.max(0,Math.floor(sec||0));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
-function rank(score){return score===250?'S':score>=200?'A':score>=150?'B':score>=100?'C':'D'}
-function scoreOf(c,t){return t?Math.round((c/t)*250):0}
-function sectionName(sec){return ({vocab:'Vocabulary',grammar:'Grammar',listening:'Listening',reading:'Reading'})[sec]||sec||'-'}
-function randomize(a){a=[...a];for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-async function loadBank(){const r=await fetch(BANK_URL);bank=await r.json()}
-function setName(){const n=getName(); if(n) nameEl().value=n}
-function showCreate(){const n=getName();if(!n){alert('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('createPanel').classList.remove('hidden')}
-function showJoin(){const n=getName();if(!n){alert('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('joinPanel').classList.remove('hidden')}
-function hideLobby(){document.getElementById('screenLobby').classList.add('hidden');document.getElementById('createPanel').classList.add('hidden');document.getElementById('joinPanel').classList.add('hidden')}
-function backLobby(){if(channel)channel.unsubscribe();location.reload()}
-function backToRoom(){document.getElementById('resultPanel').classList.add('hidden');document.getElementById('roomPanel').classList.remove('hidden');document.getElementById('reactionBar').classList.remove('hidden');renderPlayers()}
+const getName=()=>((localStorage.getItem('jft_display_name')||localStorage.getItem('jft_user_name')||document.getElementById('nameInput')?.value||'').trim().toUpperCase());
+const formatTime=sec=>{sec=Math.max(0,Math.floor(sec||0));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`};
+const rank=score=>{score=Number(score||0);return score===250?'S':score>=200?'A':score>=150?'B':score>=100?'C':'D'};
+const scoreOf=(c,t)=>t?Math.round((Number(c||0)/Number(t))*250):0;
+const sectionName=sec=>({vocab:'Vocabulary',grammar:'Grammar',listening:'Listening',reading:'Reading'})[sec]||sec||'-';
+const randomize=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
 function toast(msg){const d=document.createElement('div');d.className='fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+function saveWarSession(hostToken=''){sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}))}
+async function loadBank(){const r=await fetch(BANK_URL);bank=await r.json()}
+function setName(){const n=getName();if(n){const el=document.getElementById('nameInput');if(el)el.value=n}}
+function hideLobby(){document.getElementById('screenLobby').classList.add('hidden');document.getElementById('createPanel').classList.add('hidden');document.getElementById('joinPanel').classList.add('hidden')}
+function backLobby(){if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_quiz_redirect');location.reload()}
+function showCreate(){if(!getName()){alert('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('createPanel').classList.remove('hidden')}
+function showJoin(){if(!getName()){alert('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('joinPanel').classList.remove('hidden')}
+function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
+
 async function createRoom(){
-  const count=selectedCount,n=getName(); if(!n)return;
-  const hostToken=token(), roomCode=code();
+  const count=selectedCount,n=getName();if(!n)return;
+  const hostToken=crypto.randomUUID(),roomCode=code();
   const {data,error}=await sb.from('jft_war_rooms').insert({code:roomCode,host_token:hostToken,host_name:n,question_count:count,question_ids:[],status:'waiting'}).select().single();
   if(error){alert('Gagal membuat room: '+error.message);return}
   const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'host'}).select().single();
-  if(pe){alert('Gagal membuat pemain: '+pe.message);return}
-  room=data;player=p;saveWarSession(hostToken);await enterRoom()
+  if(pe){alert('Gagal membuat pemain: '+pe.message);await sb.from('jft_war_rooms').delete().eq('id',data.id);return}
+  room=data;player=p;saveWarSession(hostToken);await enterRoom();
 }
+
 async function joinRoom(){
   const n=getName(),c=document.getElementById('codeInput').value.trim().toUpperCase();if(!n||c.length!==6){alert('Masukkan code 6 karakter.');return}
   const {data,error}=await sb.from('jft_war_rooms').select('*').eq('code',c).maybeSingle();
@@ -194,156 +154,132 @@ async function joinRoom(){
   if(data.status!=='waiting'){alert('Room sudah dimulai atau ditutup.');return}
   const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'member'}).select().single();
   if(pe){alert('Gagal join: '+pe.message);return}
-  room=data;player=p;saveWarSession('');await enterRoom()
+  room=data;player=p;saveWarSession('');await enterRoom();
 }
+
+async function restoreWarSession(){
+  const raw=sessionStorage.getItem('jft_war_session');if(!raw)return false;
+  try{
+    const x=JSON.parse(raw);if(!x.roomId||!x.playerId)return false;
+    const [{data:r},{data:p}]=await Promise.all([
+      sb.from('jft_war_rooms').select('*').eq('id',x.roomId).single(),
+      sb.from('jft_war_players').select('*').eq('id',x.playerId).single()
+    ]);
+    if(!r||!p||p.status==='kicked')return false;
+    room=r;player=p;await enterRoom();return true;
+  }catch(e){console.warn(e);return false}
+}
+
 async function enterRoom(){
-  hideLobby();document.getElementById('roomPanel').classList.remove('hidden');document.getElementById('reactionBar').classList.remove('hidden');
+  hideLobby();
+  document.getElementById('roomPanel').classList.remove('hidden');
   document.getElementById('roomCode').textContent=room.code;
-  document.getElementById('roomInfo').textContent=`${room.question_count} soal • minimal ${formatTime(RULES[room.question_count])} • host: ${room.host_name}`;
-  document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host');
-  if(player.role==='host')document.getElementById('startBtn').disabled=true;
-  subscribeRoom();await refreshPlayers();await refreshRoom()
+  document.getElementById('roomInfo').textContent=`${room.question_count} soal • target ${formatTime(RULES[room.question_count])} • host: ${room.host_name}`;
+  document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='waiting');
+  subscribeRoom();
+  await refreshPlayers();
+  await refreshRoom();
 }
+
 function subscribeRoom(){
   if(channel)channel.unsubscribe();
-  channel=sb.channel('jft-war-'+room.id);
-  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_rooms',filter:'id=eq.'+room.id},payload=>{room=payload.new||room;onRoomChange()});
-  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_players',filter:'room_id=eq.'+room.id},payload=>{if(payload.eventType==='DELETE'&&payload.old?.id===player.id&&!leaving){handleKicked()} refreshPlayers()});
-  channel.on('broadcast',{event:'reaction'},payload=>showReaction(payload.payload||{}));
-  channel.subscribe(status=>{if(status==='SUBSCRIBED') channel.send({type:'broadcast',event:'hello',payload:{}})});
+  channel=sb.channel('jft-war-room-'+room.id);
+  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_rooms',filter:'id=eq.'+room.id},payload=>{if(payload.new){room=payload.new;onRoomChange()}});
+  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_players',filter:'room_id=eq.'+room.id},payload=>{if(payload.eventType==='DELETE'&&payload.old?.id===player.id&&!leaving){handleKicked();return}refreshPlayers()});
+  channel.subscribe();
 }
-let leaving=false;
 async function refreshRoom(){const {data}=await sb.from('jft_war_rooms').select('*').eq('id',room.id).single();if(data){room=data;onRoomChange()}}
 async function refreshPlayers(){const {data}=await sb.from('jft_war_players').select('*').eq('room_id',room.id).order('created_at');window.warPlayers=data||[];renderPlayers()}
+
 function renderPlayers(){
   const ps=[...(window.warPlayers||[])].sort((a,b)=>{
-    const sa=a.status==='finished'?a.score:scoreOf(a.correct,a.current_question||0);
-    const sb=b.status==='finished'?b.score:scoreOf(b.correct,b.current_question||0);
-    return sb-sa;
+    const sa=a.status==='finished'?Number(a.score||0):scoreOf(a.correct,a.current_question||0);
+    const sbv=b.status==='finished'?Number(b.score||0):scoreOf(b.correct,b.current_question||0);
+    return sbv-sa||Number(b.correct||0)-Number(a.correct||0)||Number(a.created_at||0)-Number(b.created_at||0);
   });
-  const grid=document.getElementById('playersGrid');
-  document.getElementById('startBtn').disabled=ps.length<2;
+  const grid=document.getElementById('playersGrid');if(!grid)return;
+  const start=document.getElementById('startBtn');
+  start.disabled=ps.length<2;
+  start.classList.toggle('hidden',player?.role!=='host'||room?.status!=='waiting');
   let lastScore=null,lastRank=0;
   grid.innerHTML=ps.map((p,i)=>{
-    const liveScore=room?.status==='running'?scoreOf(p.correct,p.current_question||0):p.score||0;
-    const displayScore=p.status==='finished'?p.score:liveScore;
-    if(displayScore!==lastScore)lastRank=i+1;
-    lastScore=displayScore;
+    const liveScore=room?.status==='running'?scoreOf(p.correct,p.current_question||0):Number(p.score||0);
+    const displayScore=p.status==='finished'?Number(p.score||0):liveScore;
+    if(displayScore!==lastScore)lastRank=i+1;lastScore=displayScore;
     const me=p.id===player?.id;
     const status=p.status==='finished'?'Selesai':p.status==='kicked'?'Kicked':room?.status==='running'?'Mengerjakan':'Menunggu';
-    const q=Math.min(p.current_question||0,room?.question_count||0);
+    const q=Math.min(Number(p.current_question||0),Number(room?.question_count||0));
     const pct=room?.question_count?Math.round(q/room.question_count*100):0;
+    const section=p.current_section?sectionName(p.current_section):'-';
     return `<div class="player-card ${me?'me':''} rounded-xl border border-slate-200 p-3 bg-white">
       <div class="flex justify-between gap-2"><div class="font-black truncate">#${lastRank} ${esc(p.player_name)} ${me?'<span class="text-[10px] text-slate-400">(KAMU)</span>':''}</div><span class="text-xs font-black">${rank(displayScore)}</span></div>
-      <div class="text-[11px] text-slate-500 mt-1">${status} • ${sectionName(p.current_section)}</div>
+      <div class="text-[11px] text-slate-500 mt-1">${status} • ${esc(section)}</div>
       <div class="flex justify-between text-xs font-bold mt-3"><span>Soal ${q}/${room?.question_count||0}</span><span>${formatTime(p.elapsed_seconds)} • ${displayScore}/250</span></div>
       <div class="progress mt-2"><div style="width:${pct}%"></div></div>
-      ${player?.role==='host'&&p.id!==player.id&&p.status!=='finished'?`<button onclick="kickPlayer('${p.id}')" class="mt-2 text-[10px] font-black text-red-600">Kick</button>`:''}
-    </div>`
-  }).join('');
+      ${player?.role==='host'&&p.id!==player.id&&p.status!=='finished'&&room?.status==='waiting'?`<button onclick="kickPlayer('${p.id}')" class="mt-2 text-[10px] font-black text-red-600">Kick</button>`:''}
+    </div>`;
+  }).join('')||'<div class="text-sm text-slate-400 col-span-full text-center py-6">Belum ada pemain.</div>';
 }
+
 function onRoomChange(){
-  document.getElementById('topStatus').textContent=room.status==='running'?'WAR BERJALAN':room.status==='finished'?'SELESAI':'WAITING ROOM';
-  if(room.status==='running'&&!sessionStorage.getItem('jft_war_quiz_redirect')){sessionStorage.setItem('jft_war_quiz_redirect','1');location.href='war-quiz.html';return;}
-  if(room.status==='waiting'){document.getElementById('waitingBox').classList.remove('hidden');document.getElementById('quizPanel').classList.add('hidden');}
-  if(room.status==='finished'&&!finished)showFinishedRoom();
-}
-async function kickPlayer(id){if(player.role!=='host')return; if(!confirm('Kick pemain ini dari room?'))return;await sb.from('jft_war_players').delete().eq('id',id).eq('room_id',room.id);toast('Pemain dikeluarkan')}
-function handleKicked(){if(leaving)return;clearIntervals();document.getElementById('roomPanel').classList.add('hidden');document.getElementById('reactionBar').classList.add('hidden');alert('Kamu dikeluarkan dari room oleh host.');location.reload()}
-async function startWar(){
-  if(player.role!=='host'||(window.warPlayers||[]).length<2)return;
-  const ids=randomize(bank).slice(0,room.question_count).map(q=>q.id);
-  const started=new Date(Date.now()+1500).toISOString();
-  const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
-  if(error)toast('Gagal memulai: '+error.message)
-}
-function startLocalWar(){
-  startedAt=new Date(room.started_at).getTime();quiz=room.question_ids.map(id=>bank.find(q=>Number(q.id)===Number(id))).filter(Boolean);idx=0;correct=0;finished=false;
-  document.getElementById('waitingBox').classList.add('hidden');document.getElementById('quizPanel').classList.remove('hidden');document.getElementById('monitorHint').textContent='Live • semua pemain mulai dari waktu yang sama';
-  renderQuiz();clearIntervals();timerHandle=setInterval(tick,250);progressHandle=setInterval(pushProgress,5000);pushProgress()
-}
-function tick(){
-  if(!startedAt)return;const elapsed=Math.max(0,Math.floor((Date.now()-startedAt)/1000));document.getElementById('timer').textContent=formatTime(elapsed);
-  const min=RULES[room.question_count],remain=Math.max(0,min-elapsed);
-  if(idx===quiz.length-1&&answerLocked===true){
-    const btn=document.getElementById('finishWarBtn');
-    if(btn){
-      if(remain>0){btn.disabled=true;btn.textContent=`Tunggu ${formatTime(remain)}`;btn.classList.add('opacity-50','cursor-not-allowed')}
-      else {btn.disabled=false;btn.textContent='Selesai & Lihat Hasil';btn.classList.remove('opacity-50','cursor-not-allowed')}
-    }
-  } else if(idx<quiz.length-1){
-    document.getElementById('minTimeHint').textContent='';
+  const status=room.status||'waiting';
+  document.getElementById('topStatus').textContent=status==='running'?'WAR BERJALAN':status==='finished'?'SELESAI':'WAITING ROOM';
+  document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host'||status!=='waiting');
+  const waitingBox=document.getElementById('waitingBox');
+  const title=document.getElementById('waitingTitle');
+  const text=document.getElementById('waitingText');
+  if(status==='waiting'){
+    waitingBox.classList.remove('hidden');title.textContent='Menunggu host memulai';text.textContent='Minimal 2 pemain. Setelah host menekan Mulai War, semua pemain masuk ke War Quiz serentak.';
+    document.getElementById('monitorHint').textContent='Menunggu host memulai...';
+    return;
   }
-  if(player)document.getElementById('liveScore').textContent=`Score sementara: ${scoreOf(correct,Math.max(1,Math.min(idx+1,quiz.length)))} / 250`;
-}
-function renderQuiz(){
-  if(!quiz[idx])return;const q=quiz[idx];answerLocked=false;
-  document.getElementById('quizSection').textContent=sectionName(q.section);
-  document.getElementById('quizProgress').textContent=`Soal ${idx+1} / ${quiz.length}`;
-  document.getElementById('quizProgressBar').style.width=((idx)/quiz.length*100)+'%';
-  document.getElementById('question').textContent=q.text;
-  const opts=document.getElementById('options');opts.innerHTML='';
-  randomize(q.options.map((v,i)=>({v,i}))).forEach(o=>{const b=document.createElement('button');b.className='text-left p-4 rounded-xl border-2 border-slate-200 hover:border-slate-900 font-medium transition';b.textContent=o.v;b.onclick=()=>answer(o.i,b);opts.appendChild(b)})
-}
-async function answer(choice,btn){
-  if(answerLocked||finished)return;answerLocked=true;
-  const q=quiz[idx], buttons=[...document.getElementById('options').children];buttons.forEach(b=>b.disabled=true);
-  const ok=choice===q.answer;if(ok)correct++;
-  btn.classList.remove('border-slate-200');btn.classList.add(ok?'border-green-500':'border-red-500');
-  buttons.forEach((b,i)=>{const mapped=b.textContent===q.options[i]});
-  setTimeout(async()=>{
-    if(idx===quiz.length-1){
-      document.getElementById('minTimeHint').innerHTML = `<button id="finishWarBtn" onclick="completeWar()" class="mt-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black opacity-50 cursor-not-allowed" disabled>Menunggu waktu minimum...</button>`;
-      pushProgress();
-      return;
+  if(status==='running'){
+    waitingBox.classList.remove('hidden');title.textContent=player?.status==='finished'?'Kamu sudah selesai':'War sedang berjalan';text.textContent=player?.status==='finished'?'Tetap di room ini untuk melihat lawan menyelesaikan soal.':'Memulai / melanjutkan War Quiz...';
+    document.getElementById('monitorHint').textContent='LIVE • progres lawan diperbarui otomatis';
+    if(player?.status!=='finished'&&!sessionStorage.getItem('jft_war_quiz_redirect')){
+      sessionStorage.setItem('jft_war_quiz_redirect','1');location.href='war-quiz.html';
     }
-    idx++;
-    renderQuiz();pushProgress()
-  },350)
+    return;
+  }
+  if(status==='finished'){
+    waitingBox.classList.remove('hidden');title.textContent='War selesai';text.textContent='Semua pemain sudah selesai. Hasil tetap dapat dilihat dari halaman War Result.';document.getElementById('monitorHint').textContent='FINAL • semua pemain selesai';
+  }
 }
-async function pushProgress(){
-  if(!player||!room||finished)return;
-  const elapsed=Math.max(0,Math.floor((Date.now()-startedAt)/1000));
-  const current=quiz[Math.min(idx,quiz.length-1)];
-  const {error}=await sb.from('jft_war_players').update({
-    current_question:Math.min(idx + (answerLocked ? 1 : 0),room.question_count),
-    current_section:current?.section||quiz[quiz.length-1]?.section||null,
-    elapsed_seconds:elapsed,
-    correct,
-    score:scoreOf(correct,Math.max(1,idx)),
-    status:'running',
-    last_seen_at:new Date().toISOString()
-  }).eq('id',player.id);
-  if(error)console.warn(error.message)
+
+async function kickPlayer(id){if(player?.role!=='host'||room?.status!=='waiting')return;if(!confirm('Kick pemain ini dari room?'))return;const {error}=await sb.from('jft_war_players').delete().eq('id',id).eq('room_id',room.id);if(error)toast('Gagal kick: '+error.message);else toast('Pemain dikeluarkan')}
+function handleKicked(){if(leaving)return;if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');alert('Kamu dikeluarkan dari room oleh host.');location.reload()}
+
+async function startWar(){
+  if(player?.role!=='host'||room?.status!=='waiting'||(window.warPlayers||[]).length<2)return;
+  if(!bank.length)await loadBank();
+  const ids=randomize(bank).slice(0,room.question_count).map(q=>q.id);
+  const started=new Date(Date.now()+1200).toISOString();
+  const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
+  if(error){toast('Gagal memulai: '+error.message);return}
+  sessionStorage.removeItem('jft_war_quiz_redirect');
 }
-async function completeWar(){
-  if(finished)return;finished=true;clearIntervals();const elapsed=Math.max(0,Math.floor((Date.now()-startedAt)/1000));const finalScore=scoreOf(correct,quiz.length);
-  const min=RULES[room.question_count];
-  if(elapsed<min){finished=false;answerLocked=true;idx=quiz.length-1;document.getElementById('minTimeHint').innerHTML=`<button id="finishWarBtn" onclick="completeWar()" class="mt-2 px-5 py-2.5 rounded-xl bg-slate-900 text-white font-black opacity-50 cursor-not-allowed" disabled>Tunggu ${formatTime(min-elapsed)}</button>`;timerHandle=setInterval(tick,250);return}
-  await sb.from('jft_war_players').update({current_question:room.question_count,current_section:quiz[quiz.length-1]?.section||null,elapsed_seconds:elapsed,correct,score:finalScore,status:'finished',completed_at:new Date().toISOString(),last_seen_at:new Date().toISOString()}).eq('id',player.id);
-  localStorage.setItem('jft_war_last_score',String(finalScore));
-  document.getElementById('quizPanel').classList.add('hidden');document.getElementById('resultPanel').classList.remove('hidden');document.getElementById('resultRank').textContent=rank(finalScore);document.getElementById('resultScore').textContent=`${finalScore} / 250`;document.getElementById('resultDetail').textContent=`${correct}/${quiz.length} benar • ${formatTime(elapsed)} • War Point +${finalScore}`;
-  await refreshPlayers();await maybeCloseRoom()
+
+async function leaveRoom(){
+  if(!room||!player)return;
+  leaving=true;
+  if(channel)channel.unsubscribe();
+  await sb.from('jft_war_players').delete().eq('id',player.id);
+  if(player.role==='host')await sb.from('jft_war_rooms').update({status:'closed',expires_at:new Date().toISOString()}).eq('id',room.id);
+  sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');location.reload();
 }
-async function maybeCloseRoom(){
-  await new Promise(r=>setTimeout(r,700));const {data}=await sb.from('jft_war_players').select('status').eq('room_id',room.id);if(data?.length&&data.every(x=>x.status==='finished'))await sb.from('jft_war_rooms').update({status:'finished',expires_at:new Date(Date.now()+30*60*1000).toISOString()}).eq('id',room.id)
-}
-function showFinishedRoom(){document.getElementById('waitingBox').classList.add('hidden');document.getElementById('quizPanel').classList.add('hidden');document.getElementById('resultPanel').classList.remove('hidden');refreshPlayers()}
-function clearIntervals(){if(timerHandle)clearInterval(timerHandle);if(progressHandle)clearInterval(progressHandle);timerHandle=null;progressHandle=null}
-async function leaveRoom(){if(!room)return;leaving=true;clearIntervals();await sb.from('jft_war_players').delete().eq('id',player.id);if(player.role==='host')await sb.from('jft_war_rooms').update({status:'closed',expires_at:new Date().toISOString()}).eq('id',room.id);location.reload()}
-async function copyCode(){await navigator.clipboard?.writeText(room.code);toast('Code room disalin')}
-function backToRoom(){document.getElementById('resultPanel').classList.add('hidden');document.getElementById('roomPanel').classList.remove('hidden');document.getElementById('reactionBar').classList.remove('hidden');renderPlayers()}
-sessionStorage.removeItem('jft_war_quiz_redirect');
-restoreWarSession().then(ok=>{if(ok)document.getElementById('screenLobby')?.classList.add('hidden')});
-document.querySelectorAll('.countBtn').forEach(b=>b.onclick=()=>{selectedCount=Number(b.dataset.count);sessionStorage.removeItem('jft_war_quiz_redirect');
-restoreWarSession().then(ok=>{if(ok)document.getElementById('screenLobby')?.classList.add('hidden')});
-document.querySelectorAll('.countBtn').forEach(x=>x.classList.remove('border-slate-900'));b.classList.add('border-slate-900')});
-document.querySelectorAll('.reactionBtn').forEach(b=>b.onclick=()=>sendReaction(b.dataset.e));
-async function sendReaction(e){if(!channel||!room)return;await channel.send({type:'broadcast',event:'reaction',payload:{id:crypto.randomUUID(),emoji:e,name:getName(),ts:Date.now()}})}
-function showReaction(x){if(!x.id||lastReactionIds.has(x.id))return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction fadeout bg-white border border-slate-200 rounded-2xl shadow-xl px-3 py-2 text-2xl';d.textContent=`${x.emoji} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>d.remove(),10000);setTimeout(()=>lastReactionIds.delete(x.id),11000)}
-document.getElementById('ruleGrid').innerHTML=Object.entries(RULES).map(([n,t])=>`<div class="rounded-xl bg-slate-50 p-3"><div class="font-black">${n} soal</div><div class="text-xs text-slate-500 mt-1">min ${formatTime(t)}</div></div>`).join('');
-setName();loadBank().catch(e=>toast('Bank soal gagal dimuat'));
-window.addEventListener('beforeunload',()=>{if(player&&!finished)pushProgress()});
+async function copyCode(){try{await navigator.clipboard.writeText(room.code);toast('Code room disalin')}catch{toast('Salin manual: '+room.code)}}
+
+document.querySelectorAll('.countBtn').forEach(b=>b.onclick=()=>{
+  selectedCount=Number(b.dataset.count);
+  document.querySelectorAll('.countBtn').forEach(x=>{x.classList.remove('border-slate-900','border-2');x.classList.add('border','border-slate-200')});
+  b.classList.remove('border','border-slate-200');b.classList.add('border-2','border-slate-900');
+});
+
+document.getElementById('ruleGrid').innerHTML=Object.entries(RULES).map(([n,t])=>`<div class="rounded-xl bg-slate-50 p-3"><div class="font-black">${n} soal</div><div class="text-xs text-slate-500 mt-1">target ${formatTime(t)}</div></div>`).join('');
+
+setName();
+loadBank().catch(e=>console.warn('Bank soal gagal dimuat',e));
+restoreWarSession().then(ok=>{if(!ok)setName()});
 </script>
 </body>
 </html>
