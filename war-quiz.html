@@ -92,6 +92,13 @@ function hideWarConfirm(){
   if(!modal)return;box?.classList.add('scale-95','opacity-0');setTimeout(()=>{modal.classList.add('hidden');modal.classList.remove('flex');confirmAction=null},120);
 }
 document.getElementById('war-confirm-ok').onclick=()=>{const fn=confirmAction;hideWarConfirm();fn?.()};
+// Fisher-Yates shuffle: helper ini wajib tersedia sebelum renderQuestion dipanggil.
+function randomize(items){
+  const arr=Array.isArray(items)?items.slice():[];
+  for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}
+  return arr;
+}
+
 function renderQuestion(){
   const q=questions[idx];
   document.getElementById('quiz-progress-text').textContent=`Soal ${idx+1} / ${questions.length}`;
@@ -108,7 +115,13 @@ function renderQuestion(){
     a.onclick=()=>{if(plays>=2)return;plays++;if(window.speechSynthesis)window.speechSynthesis.cancel();const u=new SpeechSynthesisUtterance(q.audioText);u.lang='ja-JP';u.rate=.85;if(window.speechSynthesis)window.speechSynthesis.speak(u);a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;if(plays>=2)a.disabled=true};
   }
   const opts=document.getElementById('quiz-options');opts.innerHTML='';
-  if(!q._warOptions){q._warOptions=randomize(q.options.map((t,i)=>({t,i})));}
+  const sourceOptions=Array.isArray(q.options)?q.options:[];
+  if(sourceOptions.length<2){
+    opts.innerHTML='<div class="rounded-xl border-2 border-red-300 bg-red-50 p-4 text-sm text-red-700">Opsi jawaban soal ini tidak tersedia. Muat ulang halaman atau minta host memulai War baru.</div>';
+    toast('Opsi jawaban tidak tersedia untuk soal ini.');
+    updateNav();return;
+  }
+  if(!Array.isArray(q._warOptions)||q._warOptions.length!==sourceOptions.length){q._warOptions=randomize(sourceOptions.map((t,i)=>({t,i})));}
   q._warOptions.forEach((o,n)=>{
     const label=document.createElement('label');label.className='option-label block';
     label.innerHTML=`<input type="radio" name="warqo" value="${o.i}" class="option-input peer sr-only" ${answers[idx]===o.i?'checked':''}><div class="option-content flex items-center p-4 border rounded-xl hover:bg-slate-50 cursor-pointer transition-all"><div class="radio-letter w-8 h-8 flex items-center justify-center rounded bg-slate-100 font-bold mr-3">${['A','B','C','D'][n]}</div><span class="text-lg japanese-text">${esc(o.t)}</span></div>`;
