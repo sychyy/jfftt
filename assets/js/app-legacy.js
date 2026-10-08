@@ -9012,53 +9012,91 @@ function getNextSectionIndex(index) {
         function selectQuizQuestions(totalQuestions, history) {
             const total = Math.min(Math.max(1, Number(totalQuestions) || 10), QUESTION_BANK.length);
             const sectionOrder = ['vocab', 'grammar', 'listening', 'reading'];
+
+            // Satu cycle = semua 500 ID harus keluar dulu sebelum cycle berikutnya dimulai.
+            // Saat seluruh bank sudah terlihat, reset count menjadi 0 lalu buat urutan acak baru.
+            let workingHistory = normalizeQuestionHistory(history);
+            let unseen = QUESTION_BANK.filter(q => getQuestionSeenCount(q, workingHistory) === 0);
+            if (unseen.length === 0) {
+                // Mutasi object history yang sama supaya markQuestionsSeen() juga
+                // melihat cycle baru, bukan menaikkan count dari cycle lama.
+                if (history && typeof history === 'object' && !Array.isArray(history)) {
+                    history.bankVersion = QUESTION_BANK_VERSION;
+                    history.seen = {};
+                    history.updatedAt = new Date().toISOString();
+                    workingHistory = history;
+                } else {
+                    workingHistory = {
+                        bankVersion: QUESTION_BANK_VERSION,
+                        seen: {},
+                        updatedAt: new Date().toISOString()
+                    };
+                }
+                unseen = [...QUESTION_BANK];
+            }
+
+            const selected = [];
+            const chosen = new Set();
             const baseCount = Math.floor(total / sectionOrder.length);
             const remainder = total % sectionOrder.length;
             const counts = Object.fromEntries(sectionOrder.map(sec => [sec, baseCount]));
             shuffleArray([...sectionOrder]).slice(0, remainder).forEach(sec => counts[sec]++);
 
-            // Fase 1: ambil HANYA soal yang belum pernah dilihat.
-            const unseen = QUESTION_BANK.filter(q => getQuestionSeenCount(q, history) === 0);
-            const selected = [];
-            const chosen = new Set();
-
-            sectionOrder.forEach(sec => {
+            // Utamakan pembagian per bagian JFT, tetapi tidak pernah mengambil ID yang sama.
+            shuffleArray([...sectionOrder]).forEach(sec => {
                 const pool = randomSample(unseen.filter(q => q.section === sec), counts[sec]);
-                pool.forEach(q => { selected.push(q); chosen.add(String(q.id)); });
+                pool.forEach(q => {
+                    if (selected.length < total && !chosen.has(String(q.id))) {
+                        selected.push(q);
+                        chosen.add(String(q.id));
+                    }
+                });
             });
 
-            // Kalau satu bagian kekurangan soal baru, kekurangannya dipindah ke bagian lain
-            // yang masih punya soal baru. Jadi TIDAK mengulang sebelum bank global habis.
-            if (selected.length < Math.min(total, unseen.length)) {
-                const remainingUnseen = randomSample(unseen.filter(q => !chosen.has(String(q.id))), unseen.length);
-                for (const q of remainingUnseen) {
-                    if (selected.length >= Math.min(total, unseen.length)) break;
-                    selected.push(q);
-                    chosen.add(String(q.id));
-                }
-            }
-
-            // Fase 2: bank global sudah habis. Mulai lagi dari soal dengan jumlah kemunculan paling rendah.
+            // Jika sebuah bagian kekurangan soal, isi dari seluruh soal yang belum terlihat.
             if (selected.length < total) {
-                const repeatPool = shuffleArray([...QUESTION_BANK])
-                    .sort((a, b) => getQuestionSeenCount(a, history) - getQuestionSeenCount(b, history));
-                for (const q of repeatPool) {
-                    if (selected.length >= total) break;
-                    if (chosen.has(String(q.id))) continue;
-                    selected.push(q);
-                    chosen.add(String(q.id));
-                }
+                randomSample(unseen, unseen.length).forEach(q => {
+                    if (selected.length >= total) return;
+                    if (!chosen.has(String(q.id))) {
+                        selected.push(q);
+                        chosen.add(String(q.id));
+                    }
+                });
             }
 
-            // Tetap tampilkan blok bagian sesuai urutan JFT.
+            // Jika cycle baru tidak cukup untuk permintaan (hanya mungkin bila total > bank),
+            // gunakan ID dengan count paling rendah tanpa duplikasi dalam sesi.
+            if (selected.length < total) {
+                shuffleArray([...QUESTION_BANK])
+                    .sort((a, b) => getQuestionSeenCount(a, workingHistory) - getQuestionSeenCount(b, workingHistory))
+                    .forEach(q => {
+                        if (selected.length < total && !chosen.has(String(q.id))) {
+                            selected.push(q);
+                            chosen.add(String(q.id));
+                        }
+                    });
+            }
+
             return sectionOrder.flatMap(sec => selected.filter(q => q.section === sec));
         }
 
+let quizStartLock = false;
+
 async function startQuiz() {
+    // Mencegah dua klik cepat membuat dua sesi membaca history yang sama secara bersamaan.
+    if (quizStartLock) return;
+    quizStartLock = true;
+    const startBtn = document.getElementById('btn-start-quiz');
+    if (startBtn) {
+        startBtn.disabled = true;
+        startBtn.classList.add('opacity-60', 'cursor-wait');
+    }
     const nameInput = document.getElementById('user-name-input');
     const userName = nameInput ? nameInput.value.trim() : '';
 
     if (!userName) {
+        quizStartLock = false;
+        if (startBtn) { startBtn.disabled = false; startBtn.classList.remove('opacity-60', 'cursor-wait'); }
         showCustomConfirm("Silakan masukkan nama Anda terlebih dahulu!", null, "Oke");
         return;
     }
@@ -9075,6 +9113,8 @@ async function startQuiz() {
             null,
             "Oke"
         );
+        quizStartLock = false;
+        if (startBtn) { startBtn.disabled = false; startBtn.classList.remove('opacity-60', 'cursor-wait'); }
         return;
     }
 
