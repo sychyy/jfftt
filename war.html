@@ -128,11 +128,11 @@ const sectionName=sec=>({vocab:'Vocabulary',grammar:'Grammar',listening:'Listeni
 const randomize=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 function toast(msg){const d=document.createElement('div');d.className='fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
-function saveWarSession(hostToken=''){sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}))}
+function saveWarSession(hostToken=''){sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}))}
 async function loadBank(){const r=await fetch(BANK_URL);bank=await r.json()}
 function setName(){const n=getName();if(n){const el=document.getElementById('nameInput');if(el)el.value=n}}
 function hideLobby(){document.getElementById('screenLobby').classList.add('hidden');document.getElementById('createPanel').classList.add('hidden');document.getElementById('joinPanel').classList.add('hidden')}
-function backLobby(){if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_quiz_redirect');location.reload()}
+function backLobby(){if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');location.reload()}
 function showCreate(){if(!getName()){toast('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('createPanel').classList.remove('hidden')}
 function showJoin(){if(!getName()){toast('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('joinPanel').classList.remove('hidden')}
 function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
@@ -171,6 +171,12 @@ async function restoreWarSession(){
 }
 
 async function enterRoom(){
+  // Jika kembali dari War Result ke room, marker redirect War sebelumnya
+  // tidak boleh dipakai untuk ronde berikutnya.
+  if(room?.status==='waiting'){
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
+  }
   hideLobby();
   document.getElementById('roomPanel').classList.remove('hidden');
   document.getElementById('roomCode').textContent=room.code;
@@ -237,6 +243,11 @@ async function onRoomChange(){
   const title=document.getElementById('waitingTitle');
   const text=document.getElementById('waitingText');
   if(status==='waiting'){
+    // Setiap room yang kembali ke waiting menandai awal siklus baru.
+    // Ini penting untuk pemain yang kembali dari War Result: marker redirect
+    // ronde lama tidak boleh menghalangi redirect pada War berikutnya.
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
     waitingBox.classList.remove('hidden');
     const allFinished=(window.warPlayers||[]).length>=2 && (window.warPlayers||[]).every(p=>p.status==='finished');
     title.textContent=allFinished?'War selesai — siap mulai lagi':'Menunggu host memulai';
@@ -262,12 +273,19 @@ async function onRoomChange(){
       }
     }catch(e){console.warn('Gagal menyinkronkan status pemain:',e)}
     waitingBox.classList.remove('hidden');
-    const isFinished=latestPlayer?.status==='finished';
+    const currentRoundKey=String(room.started_at||room.id||'');
+    const finishedAt=latestPlayer?.completed_at?new Date(latestPlayer.completed_at).getTime():0;
+    const roundStartedAt=room.started_at?new Date(room.started_at).getTime():0;
+    const isFinished=latestPlayer?.status==='finished' && (!roundStartedAt || !finishedAt || finishedAt>=roundStartedAt);
+    const redirectedRound=sessionStorage.getItem('jft_war_quiz_round');
     title.textContent=isFinished?'Kamu sudah selesai':'War sedang berjalan';
     text.textContent=isFinished?'Tetap di room ini untuk melihat lawan menyelesaikan soal.':'Memulai / melanjutkan War Quiz...';
     document.getElementById('monitorHint').textContent='LIVE • progres lawan diperbarui otomatis';
-    if(!isFinished&&!sessionStorage.getItem('jft_war_quiz_redirect')){
+    // Gunakan started_at sebagai identitas ronde, bukan flag global '1'.
+    // Dengan begitu marker dari War pertama tidak dapat menghalangi War kedua.
+    if(!isFinished&&redirectedRound!==currentRoundKey){
       sessionStorage.setItem('jft_war_quiz_redirect','1');
+      sessionStorage.setItem('jft_war_quiz_round',currentRoundKey);
       location.href='war-quiz.html';
     }
     return;
@@ -326,6 +344,7 @@ async function startWar(){
     const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
     if(error){toast('Gagal memulai: '+error.message);return}
     sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
   }catch(e){toast('Gagal memulai War: '+(e?.message||'coba lagi'));}
   finally{startingWar=false}
 }
@@ -336,7 +355,7 @@ async function leaveRoom(){
   if(channel)channel.unsubscribe();
   await sb.from('jft_war_players').delete().eq('id',player.id);
   if(player.role==='host')await sb.from('jft_war_rooms').update({status:'closed',expires_at:new Date().toISOString()}).eq('id',room.id);
-  sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');location.reload();
+  sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');location.reload();
 }
 async function copyCode(){try{await navigator.clipboard.writeText(room.code);toast('Code room disalin')}catch{toast('Salin manual: '+room.code)}}
 

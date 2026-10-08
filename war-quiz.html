@@ -72,7 +72,13 @@ async function init(){
  const raw=sessionStorage.getItem('jft_war_session');if(!raw){location.href='war.html';return}try{session=JSON.parse(raw)}catch{location.href='war.html';return}
  const [{data:r,error:re},{data:p,error:pe}]=await Promise.all([sb.from('jft_war_rooms').select('*').eq('id',session.roomId).single(),sb.from('jft_war_players').select('*').eq('id',session.playerId).single()]);
  if(re||pe||!r||!p){redirectWithToast('Sesi War tidak ditemukan.');return} room=r;player=p;
- if(room.status==='waiting'){location.href='war.html';return} if(room.status==='finished'||p.status==='finished'){location.href='war-result.html';return}
+ if(room.status==='waiting'){location.href='war.html';return}
+ // Status 'finished' dari ronde sebelumnya boleh terbawa sesaat ke ronde baru.
+ // Hanya anggap selesai jika completed_at memang terjadi pada ronde aktif.
+ const roundStartedAt=room.started_at?new Date(room.started_at).getTime():0;
+ const completedAt=p.completed_at?new Date(p.completed_at).getTime():0;
+ const finishedThisRound=p.status==='finished' && (!roundStartedAt || (completedAt && completedAt>=roundStartedAt));
+ if(room.status==='finished'||finishedThisRound){location.href='war-result.html';return}
  const res=await fetch('data/question-bank-v2.json');bank=await res.json();questions=(room.question_ids||[]).map(id=>bank.find(q=>String(q.id)===String(id))).filter(Boolean);
  if(!questions.length){redirectWithToast('Bank soal War tidak ditemukan.');return}
  document.getElementById('roomCodeTop').textContent=room.code;document.getElementById('quiz-progress-text').textContent=`Soal 1 / ${questions.length}`;
