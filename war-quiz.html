@@ -30,7 +30,7 @@
 <div class="bg-white p-6 sm:p-8 rounded-b-2xl shadow-sm border border-t-0 border-slate-100 min-h-[400px] flex flex-col">
 <div class="mb-6"><p class="text-sm text-slate-500 mb-2 japanese-text" id="quiz-instruction">つぎの ぶんの （　　　）に なにを いれますか。</p>
 <button class="hidden mb-4 bg-brand-100 hover:bg-brand-200 text-brand-700 py-2 px-4 rounded-lg flex items-center gap-2 transition font-medium" id="btn-play-audio"><i class="fa-solid fa-volume-high"></i> Putar Audio</button>
-<button class="hidden mb-4 text-sm text-slate-500 hover:text-brand-600 underline transition" id="btn-show-transcript">Tampilkan transkrip</button>
+<button class="hidden mb-4 text-sm text-slate-500 hover:text-brand-600 underline transition" id="btn-show-transcript"></button>
 <div class="hidden mb-4 p-4 bg-slate-50 border border-slate-200 rounded-lg text-slate-700 japanese-text whitespace-pre-wrap text-sm leading-relaxed" id="audio-transcript-fallback"></div>
 <h3 class="text-xl sm:text-2xl font-medium text-slate-800 japanese-text leading-relaxed whitespace-pre-wrap" id="quiz-question"></h3></div>
 <div class="flex-grow flex flex-col gap-3" id="quiz-options"></div>
@@ -101,6 +101,8 @@ function randomize(items){
 
 function renderQuestion(){
   const q=questions[idx];
+  // Simpan progres tertinggi yang sudah dicapai agar monitor lawan ikut bergerak.
+  maxReached=Math.max(maxReached,idx+1);
   document.getElementById('quiz-progress-text').textContent=`Soal ${idx+1} / ${questions.length}`;
   document.getElementById('quiz-progress-bar').style.width=`${((idx+1)/questions.length)*100}%`;
   const sec=SECTIONS[q.section];

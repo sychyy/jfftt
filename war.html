@@ -189,7 +189,15 @@ function subscribeRoom(){
   channel.subscribe();
 }
 async function refreshRoom(){const {data}=await sb.from('jft_war_rooms').select('*').eq('id',room.id).single();if(data){room=data;onRoomChange()}}
-async function refreshPlayers(){const {data}=await sb.from('jft_war_players').select('*').eq('room_id',room.id).order('created_at');window.warPlayers=data||[];renderPlayers()}
+async function refreshPlayers(){
+  const {data}=await sb.from('jft_war_players').select('*').eq('room_id',room.id).order('created_at');
+  window.warPlayers=data||[];
+  // Sinkronkan objek player lokal juga. Ini penting setelah War pertama selesai,
+  // karena status lokal sebelumnya masih "finished" saat host memulai War berikutnya.
+  const me=window.warPlayers.find(p=>p.id===player?.id);
+  if(me) player=me;
+  renderPlayers();
+}
 
 function renderPlayers(){
   const ps=[...(window.warPlayers||[])].sort((a,b)=>{
@@ -221,7 +229,7 @@ function renderPlayers(){
   }).join('')||'<div class="text-sm text-slate-400 col-span-full text-center py-6">Belum ada pemain.</div>';
 }
 
-function onRoomChange(){
+async function onRoomChange(){
   const status=room.status||'waiting';
   document.getElementById('topStatus').textContent=status==='running'?'WAR BERJALAN':status==='finished'?'SELESAI':'WAITING ROOM';
   document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host'||status!=='waiting');
@@ -239,10 +247,28 @@ function onRoomChange(){
     return;
   }
   if(status==='running'){
-    waitingBox.classList.remove('hidden');title.textContent=player?.status==='finished'?'Kamu sudah selesai':'War sedang berjalan';text.textContent=player?.status==='finished'?'Tetap di room ini untuk melihat lawan menyelesaikan soal.':'Memulai / melanjutkan War Quiz...';
+    // Jangan mengandalkan objek player lama. Pada War kedua, event perubahan
+    // room bisa datang lebih cepat daripada event reset player sehingga status
+    // lokal masih "finished" dan redirect ke War Quiz terblokir.
+    let latestPlayer=player;
+    try{
+      const {data}=await sb.from('jft_war_players').select('*').eq('id',player?.id).single();
+      if(data){
+        player=data;
+        latestPlayer=data;
+        const meIndex=(window.warPlayers||[]).findIndex(p=>p.id===data.id);
+        if(meIndex>=0)window.warPlayers[meIndex]=data;
+        renderPlayers();
+      }
+    }catch(e){console.warn('Gagal menyinkronkan status pemain:',e)}
+    waitingBox.classList.remove('hidden');
+    const isFinished=latestPlayer?.status==='finished';
+    title.textContent=isFinished?'Kamu sudah selesai':'War sedang berjalan';
+    text.textContent=isFinished?'Tetap di room ini untuk melihat lawan menyelesaikan soal.':'Memulai / melanjutkan War Quiz...';
     document.getElementById('monitorHint').textContent='LIVE • progres lawan diperbarui otomatis';
-    if(player?.status!=='finished'&&!sessionStorage.getItem('jft_war_quiz_redirect')){
-      sessionStorage.setItem('jft_war_quiz_redirect','1');location.href='war-quiz.html';
+    if(!isFinished&&!sessionStorage.getItem('jft_war_quiz_redirect')){
+      sessionStorage.setItem('jft_war_quiz_redirect','1');
+      location.href='war-quiz.html';
     }
     return;
   }
@@ -290,6 +316,11 @@ async function startWar(){
     const selected=buildWarQuestions(Number(room.question_count)||10);
     if(selected.length!==Number(room.question_count)){toast('Bank soal tidak cukup untuk memulai War.');return}
     await resetPlayersForNewWar();
+    // Perbarui status lokal host sebelum room diubah menjadi running agar
+    // event realtime tidak sempat melihat status "finished" dari War sebelumnya.
+    const own=await sb.from('jft_war_players').select('*').eq('id',player.id).single();
+    if(own.data)player=own.data;
+    await refreshPlayers();
     const ids=selected.map(q=>q.id);
     const started=new Date(Date.now()+1500).toISOString();
     const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
