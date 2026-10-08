@@ -115,7 +115,7 @@ const SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
 const BANK_URL='data/question-bank-v2.json';
 const RULES={10:300,20:600,30:1800,50:3600};
-let bank=[],room=null,player=null,channel=null,selectedCount=10,leaving=false;
+let bank=[],room=null,player=null,channel=null,selectedCount=10,leaving=false,startingWar=false;
 const playerTokenKey='jft_war_player_token';
 let playerToken=localStorage.getItem(playerTokenKey);
 if(!playerToken){playerToken=crypto.randomUUID();localStorage.setItem(playerTokenKey,playerToken)}
@@ -229,8 +229,13 @@ function onRoomChange(){
   const title=document.getElementById('waitingTitle');
   const text=document.getElementById('waitingText');
   if(status==='waiting'){
-    waitingBox.classList.remove('hidden');title.textContent='Menunggu host memulai';text.textContent='Minimal 2 pemain. Setelah host menekan Mulai War, semua pemain masuk ke War Quiz serentak.';
-    document.getElementById('monitorHint').textContent='Menunggu host memulai...';
+    waitingBox.classList.remove('hidden');
+    const allFinished=(window.warPlayers||[]).length>=2 && (window.warPlayers||[]).every(p=>p.status==='finished');
+    title.textContent=allFinished?'War selesai — siap mulai lagi':'Menunggu host memulai';
+    text.textContent=allFinished
+      ?'Semua pemain sudah selesai. Host bisa langsung menekan Mulai War untuk pertandingan berikutnya.'
+      :'Minimal 2 pemain. Setelah host menekan Mulai War, semua pemain masuk ke War Quiz serentak.';
+    document.getElementById('monitorHint').textContent=allFinished?'Semua selesai • siap War baru':'Menunggu host memulai...';
     return;
   }
   if(status==='running'){
@@ -252,14 +257,46 @@ function onRoomChange(){
 async function kickPlayer(id){if(player?.role!=='host'||room?.status!=='waiting')return;if(!confirm('Kick pemain ini dari room?'))return;const {error}=await sb.from('jft_war_players').delete().eq('id',id).eq('room_id',room.id);if(error)toast('Gagal kick: '+error.message);else toast('Pemain dikeluarkan')}
 function handleKicked(){if(leaving)return;if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');toast('Kamu dikeluarkan dari room oleh host.');setTimeout(()=>location.reload(),1200)}
 
+function buildWarQuestions(total){
+  const sectionOrder=['vocab','grammar','listening','reading'];
+  const base=Math.floor(total/sectionOrder.length);
+  const remainder=total%sectionOrder.length;
+  const counts=Object.fromEntries(sectionOrder.map(sec=>[sec,base]));
+  randomize([...sectionOrder]).slice(0,remainder).forEach(sec=>counts[sec]++);
+  const selected=[];
+  sectionOrder.forEach(sec=>{
+    const pool=randomize(bank.filter(q=>q.section===sec));
+    pool.slice(0,counts[sec]).forEach(q=>selected.push(q));
+  });
+  return selected.slice(0,total);
+}
+
+async function resetPlayersForNewWar(){
+  const players=(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left');
+  for(const p of players){
+    const {error}=await sb.from('jft_war_players').update({
+      status:'running',current_question:0,current_section:null,elapsed_seconds:0,correct:0,score:0,completed_at:null,last_seen_at:new Date().toISOString()
+    }).eq('id',p.id).eq('room_id',room.id);
+    if(error) throw error;
+  }
+}
+
 async function startWar(){
-  if(player?.role!=='host'||room?.status!=='waiting'||(window.warPlayers||[]).length<2)return;
-  if(!bank.length)await loadBank();
-  const ids=randomize(bank).slice(0,room.question_count).map(q=>q.id);
-  const started=new Date(Date.now()+1200).toISOString();
-  const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
-  if(error){toast('Gagal memulai: '+error.message);return}
-  sessionStorage.removeItem('jft_war_quiz_redirect');
+  if(startingWar||player?.role!=='host'||room?.status!=='waiting'||(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left').length<2)return;
+  startingWar=true;
+  const startBtn=document.getElementById('startBtn');if(startBtn){startBtn.disabled=true;startBtn.classList.add('opacity-60','cursor-wait')}
+  try{
+    if(!bank.length)await loadBank();
+    const selected=buildWarQuestions(Number(room.question_count)||10);
+    if(selected.length!==Number(room.question_count)){toast('Bank soal tidak cukup untuk memulai War.');return}
+    await resetPlayersForNewWar();
+    const ids=selected.map(q=>q.id);
+    const started=new Date(Date.now()+1500).toISOString();
+    const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
+    if(error){toast('Gagal memulai: '+error.message);return}
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+  }catch(e){toast('Gagal memulai War: '+(e?.message||'coba lagi'));}
+  finally{startingWar=false}
 }
 
 async function leaveRoom(){
