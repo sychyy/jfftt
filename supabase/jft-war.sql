@@ -75,3 +75,9 @@ end $$;
 --   '*/10 * * * *',
 --   $$delete from public.jft_war_rooms where expires_at < now();$$
 -- );
+
+-- Optional persistent War Point (global account leaderboard).
+-- Jalankan bagian ini jika ingin War Point tetap tersimpan lintas perangkat/login.
+-- alter table public."Jft-Basic" add column if not exists war_points integer not null default 0;
+-- alter table public."Jft-Basic" add column if not exists war_matches integer not null default 0;
+-- alter table public."Jft-Basic" add column if not exists war_best_score integer not null default 0;

@@ -162,6 +162,8 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&
 const nameEl=()=>document.getElementById('nameInput');
 const getName=()=>((localStorage.getItem('jft_display_name')||localStorage.getItem('jft_user_name')||nameEl()?.value||'').trim().toUpperCase());
 function token(){return crypto.randomUUID().replaceAll('-','').slice(0,16)}
+function saveWarSession(hostToken=''){sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}));}
+async function restoreWarSession(){const raw=sessionStorage.getItem('jft_war_session');if(!raw)return false;try{const x=JSON.parse(raw);if(!x.roomId||!x.playerId)return false;const [{data:r},{data:p}]=await Promise.all([sb.from('jft_war_rooms').select('*').eq('id',x.roomId).single(),sb.from('jft_war_players').select('*').eq('id',x.playerId).single()]);if(!r||!p||p.status==='kicked')return false;room=r;player=p;await enterRoom();return true}catch(e){console.warn(e);return false}}
 function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
 function formatTime(sec){sec=Math.max(0,Math.floor(sec||0));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`}
 function rank(score){return score===250?'S':score>=200?'A':score>=150?'B':score>=100?'C':'D'}
@@ -183,7 +185,7 @@ async function createRoom(){
   if(error){alert('Gagal membuat room: '+error.message);return}
   const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'host'}).select().single();
   if(pe){alert('Gagal membuat pemain: '+pe.message);return}
-  room=data;player=p;sessionStorage.setItem('jft_war_host_token',hostToken);await enterRoom()
+  room=data;player=p;saveWarSession(hostToken);await enterRoom()
 }
 async function joinRoom(){
   const n=getName(),c=document.getElementById('codeInput').value.trim().toUpperCase();if(!n||c.length!==6){alert('Masukkan code 6 karakter.');return}
@@ -192,7 +194,7 @@ async function joinRoom(){
   if(data.status!=='waiting'){alert('Room sudah dimulai atau ditutup.');return}
   const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'member'}).select().single();
   if(pe){alert('Gagal join: '+pe.message);return}
-  room=data;player=p;sessionStorage.removeItem('jft_war_host_token');await enterRoom()
+  room=data;player=p;saveWarSession('');await enterRoom()
 }
 async function enterRoom(){
   hideLobby();document.getElementById('roomPanel').classList.remove('hidden');document.getElementById('reactionBar').classList.remove('hidden');
@@ -242,7 +244,7 @@ function renderPlayers(){
 }
 function onRoomChange(){
   document.getElementById('topStatus').textContent=room.status==='running'?'WAR BERJALAN':room.status==='finished'?'SELESAI':'WAITING ROOM';
-  if(room.status==='running'&&!startedAt)startLocalWar();
+  if(room.status==='running'&&!sessionStorage.getItem('jft_war_quiz_redirect')){sessionStorage.setItem('jft_war_quiz_redirect','1');location.href='war-quiz.html';return;}
   if(room.status==='waiting'){document.getElementById('waitingBox').classList.remove('hidden');document.getElementById('quizPanel').classList.add('hidden');}
   if(room.status==='finished'&&!finished)showFinishedRoom();
 }
@@ -331,7 +333,11 @@ function clearIntervals(){if(timerHandle)clearInterval(timerHandle);if(progressH
 async function leaveRoom(){if(!room)return;leaving=true;clearIntervals();await sb.from('jft_war_players').delete().eq('id',player.id);if(player.role==='host')await sb.from('jft_war_rooms').update({status:'closed',expires_at:new Date().toISOString()}).eq('id',room.id);location.reload()}
 async function copyCode(){await navigator.clipboard?.writeText(room.code);toast('Code room disalin')}
 function backToRoom(){document.getElementById('resultPanel').classList.add('hidden');document.getElementById('roomPanel').classList.remove('hidden');document.getElementById('reactionBar').classList.remove('hidden');renderPlayers()}
-document.querySelectorAll('.countBtn').forEach(b=>b.onclick=()=>{selectedCount=Number(b.dataset.count);document.querySelectorAll('.countBtn').forEach(x=>x.classList.remove('border-slate-900'));b.classList.add('border-slate-900')});
+sessionStorage.removeItem('jft_war_quiz_redirect');
+restoreWarSession().then(ok=>{if(ok)document.getElementById('screenLobby')?.classList.add('hidden')});
+document.querySelectorAll('.countBtn').forEach(b=>b.onclick=()=>{selectedCount=Number(b.dataset.count);sessionStorage.removeItem('jft_war_quiz_redirect');
+restoreWarSession().then(ok=>{if(ok)document.getElementById('screenLobby')?.classList.add('hidden')});
+document.querySelectorAll('.countBtn').forEach(x=>x.classList.remove('border-slate-900'));b.classList.add('border-slate-900')});
 document.querySelectorAll('.reactionBtn').forEach(b=>b.onclick=()=>sendReaction(b.dataset.e));
 async function sendReaction(e){if(!channel||!room)return;await channel.send({type:'broadcast',event:'reaction',payload:{id:crypto.randomUUID(),emoji:e,name:getName(),ts:Date.now()}})}
 function showReaction(x){if(!x.id||lastReactionIds.has(x.id))return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction fadeout bg-white border border-slate-200 rounded-2xl shadow-xl px-3 py-2 text-2xl';d.textContent=`${x.emoji} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>d.remove(),10000);setTimeout(()=>lastReactionIds.delete(x.id),11000)}
