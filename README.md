@@ -1,2 +1,94 @@
-# Project Repository
-Initialized automatically.
+JFT-Basic v10
+
+Perbaikan: toast selalu di atas modal pengumuman dan audio pengumuman mendapat border/visual card yang lebih kuat.
+
+# JFT-Basic Practice — v6
+
+Pembaruan v6 berfokus pada Pusat Pengumuman di Home dan rich media.
+
+## Pusat Pengumuman
+- Pengumuman berada di **Home**, bukan di dalam Global Chat.
+- Dibuka lewat kartu **Pengumuman**.
+- Daftar pengumuman tampil sebagai list; isi baru terbuka setelah item dipilih.
+- Setiap item menampilkan hari, tanggal, bulan, tahun, dan jam sebelum dibuka.
+- Admin dapat membuat pengumuman dengan **judul**, isi, serta satu lampiran foto/video/lagu.
+- Pengumuman aktif selama 24 jam dan dapat dihapus manual oleh admin.
+- Pengumuman yang dibuka akan ditandai sudah dibaca; indikator unread hilang.
+- Media tampil di atas isi pengumuman. Audio menggunakan player tema JFT, bukan kontrol source bawaan.
+- Media yang sudah kedaluwarsa atau dihapus akan dibersihkan dari Storage saat admin membuka pusat pengumuman.
+
+## Rich link
+- `https://jft.shuraa.web.id` memiliki kartu khusus JFT-Basic.
+- Link TikTok, termasuk `vt.tiktok.com`, memiliki kartu khusus TikTok dengan tombol buka dan salin.
+
+## Database
+Jalankan kembali `supabase/chat-media.sql` di Supabase SQL Editor agar kolom pengumuman/media terbaru tersedia.
+
+
+### Mode video pengumuman
+Video pengumuman sekarang punya dua mode: `Video` (bisa pause/seeking) dan `GIF` (autoplay, muted, loop terus tanpa kontrol pause). Tambahkan kolom `media_mode` ke tabel `chat_announcements` melalui SQL terbaru.
+
+
+## v9 update
+- Removed the visible GIF loop overlay from announcement media.
+- Upgraded announcement audio to a custom interactive player with seek, +/-10s and speed controls.
+- Added desktop-only refinements at 900px+ while preserving the existing mobile layout.
+
+
+## v11 — Bank Soal & Anti-Pengulangan
+- Bank soal utama diganti total menjadi **500 soal baru** (ID 1–500).
+- Pembagian bank: **125 Vocabulary, 125 Grammar, 125 Listening, 125 Reading**.
+- Teks soal baru tidak sama dengan 490 soal lama yang diganti.
+- Pemilihan soal memprioritaskan **100% soal yang belum pernah diberikan** kepada akun tersebut.
+- Riwayat versi bank disimpan dengan versi `jft-basic-500-v2-2026-10-07`, sehingga riwayat bank lama tidak mengganggu bank baru.
+- Riwayat disinkronkan ke Supabase melalui kolom `question_history`; bila kolom belum tersedia, aplikasi otomatis memakai `localStorage` sebagai fallback.
+
+### Aktivasi anti-pengulangan lintas perangkat
+Jalankan `supabase/question-history.sql` sekali di Supabase SQL Editor. Alternatifnya, perubahan yang sama juga sudah dicantumkan di akhir `supabase/chat-media.sql`.
+
+
+## v14 — Fix Mulai Latihan
+- Memperbaiki tombol "Mulai Latihan" yang sebelumnya dapat menampilkan pesan gagal setelah sesi selesai.
+- Tombol sekarang memakai ID khusus dan memanggil `window.startQuiz()` secara eksplisit.
+- State quiz dan bank soal diekspos melalui bridge `window.JFT_STATE`, `window.JFT_QUESTION_BANK`, dan `window.JFTQuiz` agar tidak bentrok dengan fungsi lama.
+- Koneksi/permintaan Supabase tidak lagi menjadi syarat untuk memulai latihan; localStorage dipakai sebagai fallback.
+- Sinkronisasi riwayat online diberi batas waktu agar kegagalan jaringan/database tidak mengunci tombol.
+- Progres sesi lama selalu dibersihkan sebelum membuat sesi latihan baru.
+
+
+## Reading / Dokkai update
+- Reading question text no longer includes generated labels such as `読解問題 638`.
+- Reading includes 160 passage-based comprehension items with varied everyday situations.
+- Visual-based Reading items remain available; passage cards are rendered from the JSON `visual` object (`type: "passage"`, `title`, `body`).
+- The question bank contains 1,000 unique IDs and unique question-text strings; visual and passage content are stored in `data/questions/` and rendered by the shared module `assets/js/core/question-bank.js`.
+
+## Pembaruan fitur (15 Oktober 2026)
+- Pemilihan soal menyaring duplikasi berdasarkan isi soal, opsi, audio, dan materi visual; ID tetap tidak berulang dalam satu sesi. Bank berisi 1.000 item: 179 Vocabulary, 145 Grammar, 338 Listening, dan 338 Reading. Jumlah per kategori memang tidak sama; pemilih soal berusaha membagi kategori secara seimbang pada setiap sesi.
+- Home memiliki toggle Listening ON (TTS) / OFF (transkrip teks).
+- Audio saat mengerjakan dibatasi dua kali putar per soal; layar review hasil memiliki pemutaran ulang terpisah. Dialog A/B dipisah menjadi giliran suara dan mencoba memilih voice Jepang berbeda berdasarkan nama/label gender yang tersedia di perangkat/browser.
+- Halaman hasil mengelompokkan jawaban salah per Vocabulary, Listening, Grammar, dan Reading. Kesalahan listening menampilkan transkrip dan tombol untuk memutar ulang audionya.
+- Dukungan furigana tersedia untuk teks yang ditulis dengan format `{漢字|かんじ}`; rendering ruby akan menampilkan bacaan di atas kanji. Kanji pada soal kosakata juga mendapat tampilan visual yang lebih menonjol.
+- Tidak ada perubahan skema, SQL, RLS, atau konfigurasi Supabase.
+
+Catatan TTS: pemilihan suara memakai Web Speech API dan voice Jepang yang dipasang/ditawarkan browser atau sistem operasi. Ketersediaan suara laki-laki/perempuan dan label gender bergantung pada perangkat; ini bukan bundel engine open-source yang dijamin sama di semua perangkat.
+
+
+## Listening TTS (male/female voices)
+
+The quiz now routes dialogue through `window.JFTSpeakDialogue`. Browser-native Japanese voices are selected by voice-name hints when available, but browser/Android voice inventories vary and do not expose a reliable gender field. For deterministic separate voices, configure a separately hosted VOICEVOX Engine and set `window.JFT_VOICEVOX_ENDPOINT` to its HTTPS base URL before `assets/js/core/resume-router.js` loads. Default speaker IDs are female `2` (Shikoku Metan) and male `13` (Aoyama Ryusei); override with `window.JFT_VOICEVOX_FEMALE_ID` and `window.JFT_VOICEVOX_MALE_ID` if your engine's speaker list differs. The VOICEVOX engine is an HTTP server and is not hosted by static Vercel pages themselves. Ensure the remote engine permits browser CORS requests and use a trusted deployment.
+
+Listening playback during an attempt is limited to two plays per question (including when navigating away and back). The result/review screen uses a separate replay path and has no play limit. War question selection now filters duplicate content and tracks used question IDs locally per account/device, starting a new cycle only when the available unique bank is exhausted.
+
+
+## Bank soal dan struktur folder (revisi)
+
+- `data/questions/vocab.json`: soal Vocabulary.
+- `data/questions/grammar.json`: soal Grammar.
+- `data/questions/listening.json`: soal Listening, termasuk `audioText`.
+- `data/questions/reading.json`: soal Reading dan materi `visual` seperti `title`, `body`, serta `rows`.
+- `assets/js/core/question-bank.js`: loader, validasi, pemilihan seimbang, dan renderer bersama.
+- `assets/js/quiz/app-legacy.js`: logika latihan biasa.
+- `assets/js/war/war-quiz.js`: logika War; monitoring pemain, reaction, dan skor tetap khusus War.
+- `assets/js/chat/`, `assets/js/audio/`, `assets/js/ui/`: modul berdasarkan fungsi.
+
+Untuk menambah soal, tambahkan objek ke file JSON kategori yang sesuai. Kedua mode memuat soal melalui `JFTQuestionBank`; tidak perlu menggandakan soal di file JavaScript.
