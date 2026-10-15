@@ -264,7 +264,7 @@
         const mistake = (result.mistakes || []).find(m => Number(m.n) - 1 === Number(questionNumber));
         const q = mistake?.q; if (!q?.audioText) return;
         try { if (window.JFTSpeakDialogue) await window.JFTSpeakDialogue(q.audioText, { rate: .86 }); else if (window.speechSynthesis) { const u = new SpeechSynthesisUtterance(q.audioText); u.lang='ja-JP'; u.rate=.86; window.speechSynthesis.speak(u); } }
-        catch (err) { console.warn('Pemutaran ulang audio gagal:', err); alert(err?.message || 'Audio gagal diputar. Aktifkan Text-to-speech pada perangkat atau gunakan mode teks.'); }
+        catch (err) { console.warn('Pemutaran ulang audio gagal; popup dinonaktifkan:', err); }
     };
 
     function setupListeningToggle() {

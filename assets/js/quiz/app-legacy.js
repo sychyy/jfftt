@@ -1895,11 +1895,14 @@ function getNextSectionIndex(index) {
             return [q.section, q.text, ...(q.options || []), q.audioText || '', q.visual?.title || '', q.visual?.body || '', JSON.stringify(q.visual?.rows || [])].map(norm).join('|');
         }
         function uniqueQuestionBank() {
-            const seen = new Set();
+            const seenIds = new Set();
+            const seenQuestions = new Set();
+            const norm = value => String(value ?? '').normalize('NFKC').toLowerCase().replace(/[\s　、。,.!?！？「」『』（）()【】［］\-‐‑–—]/g, '');
             return QUESTION_BANK.filter(q => {
-                const key = questionContentKey(q);
-                if (seen.has(key)) return false;
-                seen.add(key); return true;
+                const id = String(q?.id ?? '');
+                const key = `${String(q?.section || '').trim().toLowerCase()}|${norm(q?.text || '')}`;
+                if (!id || !norm(q?.text || '') || seenIds.has(id) || seenQuestions.has(key)) return false;
+                seenIds.add(id); seenQuestions.add(key); return true;
             });
         }
         function selectQuizQuestions(totalQuestions, history) {
@@ -2066,7 +2069,9 @@ async function startQuiz() {
                     vocabKanjiVisual = `<section class="jft-visual jft-kanji-card jft-kanji-minimal" aria-label="Kanji"><div class="jft-kanji-glyph">${renderJapaneseText(candidate)}</div></section>`;
                 }
             }
-            document.getElementById('quiz-question').innerHTML = window.JFTQuestionBank?.renderQuestionMarkup ? window.JFTQuestionBank.renderQuestionMarkup(q) : ((q.label ? `<div class="jft-question-label">${renderJapaneseText(q.label)}</div>` : '') + (q.visual ? renderQuestionVisual(q.visual) : vocabKanjiVisual) + `<div class="jft-question-text">${renderJapaneseText(q.text)}</div>`);
+            const questionEl = document.getElementById('quiz-question');
+            questionEl.innerHTML = window.JFTQuestionBank?.renderQuestionMarkup ? window.JFTQuestionBank.renderQuestionMarkup(q) : ((q.label ? `<div class="jft-question-label">${renderJapaneseText(q.label)}</div>` : '') + (q.visual ? renderQuestionVisual(q.visual) : vocabKanjiVisual) + `<div class="jft-question-text">${renderJapaneseText(q.text)}</div>`);
+            questionEl.classList.remove('jft-question-enter'); void questionEl.offsetWidth; questionEl.classList.add('jft-question-enter');
             
             const btnNext = document.getElementById('btn-next-question');
             const btnPrev = document.getElementById('btn-prev-question');
@@ -2119,7 +2124,7 @@ if (q.audioText) {
             try {
                 if (window.JFTSpeakDialogue) await window.JFTSpeakDialogue(q.audioText, { rate: .86 });
                 else { const u = new SpeechSynthesisUtterance(q.audioText); u.lang = 'ja-JP'; u.rate = .86; speechSynthesis.speak(u); }
-            } catch (err) { console.warn('TTS gagal:', err); showToast?.('Audio gagal diputar', err?.message || 'Aktifkan Text-to-speech di pengaturan perangkat atau gunakan mode teks.', true); }
+            } catch (err) { console.warn('TTS gagal; tidak menampilkan popup agar latihan tetap berjalan:', err); }
         };
     }
 }

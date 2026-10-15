@@ -28,13 +28,21 @@
     return [q.section, q.text, ...(Array.isArray(q.options) ? q.options : []), q.audioText || '',
       q.visual?.title || '', q.visual?.body || '', JSON.stringify(q.visual?.rows || [])].map(normalize).join('|');
   }
+  function questionIdentityKey(q) {
+    // Pertanyaan yang sama tetap dianggap duplikat meskipun ID, urutan opsi,
+    // atau metadata visualnya berbeda. Satu attempt hanya boleh memiliki satu salinan.
+    return `${String(q?.section || '').trim().toLowerCase()}|${normalize(q?.text || '')}`;
+  }
   function uniqueBank(bank) {
-    const seen = new Set();
+    const seenIds = new Set();
+    const seenQuestions = new Set();
     return (Array.isArray(bank) ? bank : []).filter(q => {
       if (!q || q.id == null || !q.section || !String(q.text || '').trim() || !Array.isArray(q.options) || q.options.length < 2) return false;
-      const key = contentKey(q);
-      if (seen.has(key)) return false;
-      seen.add(key);
+      const id = String(q.id);
+      const key = questionIdentityKey(q);
+      if (seenIds.has(id) || seenQuestions.has(key)) return false;
+      seenIds.add(id);
+      seenQuestions.add(key);
       return true;
     });
   }

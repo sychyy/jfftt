@@ -1068,3 +1068,12 @@
 .jft-passage .jft-visual-body{font-size:.98rem;line-height:2}
 .jft-visual-body ruby{ruby-position:over;ruby-align:center}
 .jft-visual-body rt{font-size:.58em;color:#64748b;font-weight:500}
+
+/* Shared page-entry and question transitions for the entire JFT app. */
+@keyframes jftPageEnter{from{opacity:0;transform:translateY(12px) scale(.995);filter:blur(2px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+@keyframes jftQuestionEnter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+body>main,body>#app,body>header{animation:jftPageEnter .38s cubic-bezier(.2,.75,.25,1) both}
+.jft-question-enter{animation:jftQuestionEnter .24s ease-out both}
+@media(min-width:900px){body[data-page="war-quiz"] #quiz-options{display:grid!important;grid-template-columns:1fr 1fr;gap:16px!important;align-content:start}}
+@media(max-width:899px){body[data-page="war-quiz"] #quiz-options{display:flex;flex-direction:column;gap:12px}}
+@media(prefers-reduced-motion:reduce){body>main,body>#app,body>header,.jft-question-enter{animation:none!important;transition:none!important}}
