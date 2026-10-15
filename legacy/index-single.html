@@ -557,8 +557,23 @@
 }
 </style>
 
+<link rel="stylesheet" href="../assets/css/page-loader.css">
+<script src="../assets/js/ui/page-loader.js" defer></script>
 </head>
 <body class="min-h-screen flex flex-col">
+<div id="jft-page-loader" role="status" aria-live="polite" aria-label="Memuat halaman">
+  <div class="jft-loader-card">
+    <div class="jft-loader-emblem" aria-hidden="true">
+      <div class="jft-loader-sun"></div>
+      <div class="jft-loader-orbit"></div>
+    </div>
+    <div class="jft-loader-brand">JFT BASIC</div>
+    <div class="jft-loader-japanese">日本語の学習</div>
+    <div class="jft-loader-message">Menyiapkan halaman…</div>
+    <div class="jft-loader-track" aria-hidden="true"><span></span></div>
+  </div>
+</div>
+
 
     <!-- Header & Navigasi -->
     <header id="main-header" class="bg-white shadow-sm sticky top-0 z-50 hidden">
