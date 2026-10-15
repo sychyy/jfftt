@@ -1,0 +1,117 @@
+/* JFT Basic themed page loader: Japanese-study inspired, lightweight and responsive */
+#jft-page-loader {
+  --jft-ink: #17243b;
+  --jft-red: #d83a4e;
+  --jft-muted: #728096;
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background:
+    radial-gradient(circle at 50% 38%, rgba(216,58,78,.08), transparent 30%),
+    linear-gradient(145deg, #f8fafc 0%, #eef2f8 100%);
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .32s ease, visibility .32s ease;
+  font-family: Inter, "Noto Sans JP", system-ui, sans-serif;
+}
+#jft-page-loader.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#jft-page-loader .jft-loader-card {
+  width: min(100%, 320px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px 24px 25px;
+  border: 1px solid rgba(148,163,184,.28);
+  border-radius: 24px;
+  background: rgba(255,255,255,.82);
+  box-shadow: 0 24px 70px rgba(23,36,59,.12);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  text-align: center;
+}
+#jft-page-loader .jft-loader-emblem {
+  width: 82px;
+  height: 82px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-bottom: 19px;
+}
+#jft-page-loader .jft-loader-sun {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--jft-red);
+  box-shadow: 0 0 0 8px rgba(216,58,78,.09), 0 0 0 17px rgba(216,58,78,.045);
+  animation: jft-sun-pulse 1.6s ease-in-out infinite;
+}
+#jft-page-loader .jft-loader-orbit {
+  position: absolute;
+  inset: 0;
+  border: 2px solid transparent;
+  border-top-color: var(--jft-ink);
+  border-right-color: rgba(23,36,59,.2);
+  border-radius: 50%;
+  animation: jft-orbit-spin .95s linear infinite;
+}
+#jft-page-loader .jft-loader-orbit::after {
+  content: "";
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  top: 8px;
+  right: 5px;
+  border-radius: 50%;
+  background: var(--jft-red);
+  box-shadow: 0 0 0 4px rgba(216,58,78,.12);
+}
+#jft-page-loader .jft-loader-brand {
+  color: var(--jft-ink);
+  font-size: 17px;
+  line-height: 1.3;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+#jft-page-loader .jft-loader-japanese {
+  margin-top: 5px;
+  color: var(--jft-red);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .18em;
+}
+#jft-page-loader .jft-loader-message {
+  margin-top: 17px;
+  color: var(--jft-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+#jft-page-loader .jft-loader-track {
+  width: 100%;
+  height: 4px;
+  margin-top: 17px;
+  overflow: hidden;
+  border-radius: 99px;
+  background: #e7ebf2;
+}
+#jft-page-loader .jft-loader-track span {
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--jft-ink), var(--jft-red));
+  animation: jft-progress 1.25s ease-in-out infinite;
+}
+@keyframes jft-orbit-spin { to { transform: rotate(360deg); } }
+@keyframes jft-sun-pulse { 0%,100% { transform: scale(.94); } 50% { transform: scale(1.04); } }
+@keyframes jft-progress { 0% { transform: translateX(-110%); } 100% { transform: translateX(260%); } }
+@media (prefers-reduced-motion: reduce) {
+  #jft-page-loader, #jft-page-loader * { animation: none !important; transition-duration: .01ms !important; }
+  #jft-page-loader .jft-loader-track span { width: 100%; }
+}
