@@ -44,13 +44,6 @@
 </header>
 <main class="flex-grow flex flex-col items-center p-4 max-w-4xl mx-auto w-full">
 <div class="screen active w-full max-w-2xl mt-8" id="screen-home">
-<div class="mb-5 rounded-2xl border border-amber-200 bg-amber-50 p-5 sm:p-6 text-left shadow-sm">
-<div class="flex items-center gap-4">
-<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-amber-200 text-amber-900"><i class="fa-solid fa-language text-2xl"></i></div>
-<div class="min-w-0 flex-1"><h2 class="text-lg font-extrabold text-slate-800">Latihan Kanji N5–N4</h2><p class="mt-1 text-sm text-slate-600">Mode terpisah dari JFT, Hiragana, dan Katakana. Bank kosakata dari PDF Bab 1–50.</p></div>
-</div>
-<button type="button" onclick="window.location.href='kanji.html'" class="mt-4 w-full rounded-xl bg-amber-500 px-4 py-3 font-bold text-white hover:bg-amber-600">Mulai Latihan Kanji <i class="fa-solid fa-arrow-right ml-1"></i></button>
-</div>
 <div class="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-slate-100 text-center">
 <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-brand-50 text-brand-600 mb-4">
 <i class="fa-solid fa-graduation-cap text-3xl"></i>
@@ -105,12 +98,12 @@
 <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
 <span class="font-semibold text-slate-700 z-10">30 Soal</span>
 </label>
+<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center"><input class="peer sr-only" name="q_count" type="radio" value="40"/><div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div><span class="font-semibold text-slate-700 z-10">40 Soal</span></label>
 <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
 <input class="peer sr-only" name="q_count" type="radio" value="50"/>
 <div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div>
 <span class="font-semibold text-slate-700 z-10">50 Soal</span>
 </label>
-<label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center"><input class="peer sr-only" name="q_count" type="radio" value="40"/><div class="flex w-full justify-between items-center peer-checked:border-brand-500 peer-checked:ring-2 peer-checked:ring-brand-500 rounded-lg absolute inset-0 pointer-events-none transition"></div><span class="font-semibold text-slate-700 z-10">40 Soal</span></label>
 
 
 
@@ -154,11 +147,11 @@
 <div class="flex items-center justify-between gap-3 mb-3">
 <div class="min-w-0">
 <h3 class="text-sm font-black text-slate-800 uppercase tracking-wider flex items-center gap-2">
-<i class="fa-solid fa-language text-brand-600"></i> Kuis Kana Pemula
+<i class="fa-solid fa-language text-brand-600"></i> Kuis Kana & Kanji Pemula
                             </h3>
-<p class="text-[11px] text-slate-500 mt-1">Latihan dasar. Hiragana dan Katakana dibuat terpisah.</p>
+<p class="text-[11px] text-slate-500 mt-1">Latihan dasar Hiragana, Katakana, dan Kanji dengan mode masing-masing.</p>
 </div>
-<span class="shrink-0 text-[9px] font-black px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white shadow-[2px_2px_0_#181818]">10 SOAL</span>
+<span class="shrink-0 text-[9px] font-black px-2 py-1 rounded-lg border-[2px] border-[#181818] bg-white shadow-[2px_2px_0_#181818]">Kana 10 · Kanji 10–100</span>
 </div>
 <div class="flex flex-wrap gap-2">
 <button class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#ffe45c] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black" onclick="openKanaQuiz('hiragana')">
@@ -166,6 +159,9 @@
 </button>
 <button class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#62bddb] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black" onclick="openKanaQuiz('katakana')">
 <span class="text-lg leading-none japanese-text">ア</span><span>Katakana</span>
+</button>
+<button class="kana-launch-btn inline-flex items-center gap-2 px-3 py-2 bg-[#43c9bd] text-[#181818] border-[2px] border-[#181818] rounded-lg shadow-[2px_2px_0_#181818] hover:-translate-y-0.5 transition text-xs font-black" onclick="window.location.href='kanji.html'">
+<span class="text-lg leading-none japanese-text">漢</span><span>Kanji</span>
 </button>
 </div>
 </div>

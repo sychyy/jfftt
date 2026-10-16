@@ -100,7 +100,16 @@ Untuk menambah soal, tambahkan objek ke file JSON kategori yang sesuai. Kedua mo
 - `data/kanji-bank.json` memuat **1.858 entri kosakata berkanji unik** yang diekstrak dari PDF `KOSA KATA BAB 1-50.pdf`, beserta kana sumber dan arti bahasa Indonesia. Romaji dibuat dari kana saat latihan.
 - Mode Kanji menyediakan jumlah 10, 20, 30, 40, 50, 60, 70, 80, 90, atau 100 soal; jawaban dapat dipilih berdasarkan arti atau romaji.
 - Jumlah soal simulasi JFT di Home dan War dibatasi menjadi 10, 20, 30, 40, atau 50.
-- Halaman War menyediakan pintasan menuju mode Kanji, tetapi latihan Kanji di halaman tersebut tetap sesi latihan mandiri dan tidak tercampur ke room War JFT.
+- Mode Kanji di Home berjalan sebagai latihan mandiri; pada War, host dapat memilih mode Kanji agar semua pemain satu room mengerjakan set soal yang sama. Pilihan jumlah soal War tetap 10, 20, 30, 40, atau 50.
 - Tampilan Admin Bank Soal dibuat lebih defensif terhadap soal yang tidak memiliki `options`, teks, atau penjelasan.
 
 Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang memberi label level N5/N4 per kata. Karena itu, jumlah 1.858 merujuk pada entri kosakata berkanji dari PDF, bukan klaim bahwa setiap entri telah diverifikasi sebagai kanji resmi N5/N4 atau pasti muncul di JFT.
+
+
+## Perbaikan mode Kanji dan War multiplayer
+- Mode Kanji ada di samping tombol Hiragana dan Katakana di Home.
+- Mode Kanji solo mendukung level N5 (Bab 1–25), N4 (Bab 26–50), gabungan N5+N4, jumlah 10–100, jawaban arti Indonesia atau romaji, dan koreksi soal salah setelah sesi selesai.
+- War sekarang menyediakan mode JFT atau Kanji. Host memilih level kanji dan jenis jawaban; semua pemain mengerjakan set soal Kanji yang sama.
+- **Penting untuk database Supabase yang sudah aktif:** jalankan `supabase/kanji-war-migration.sql` sekali di Supabase SQL Editor sebelum menggunakan War Kanji. File `supabase/jft-war.sql` juga sudah diperbarui untuk instalasi baru.
+- Pembagian Bab 1–25 menjadi N5 dan Bab 26–50 menjadi N4 mengikuti permintaan sebagai pengelompokan latihan; ini bukan klaim pemetaan level JLPT resmi.
+- Pilihan pengecoh diprioritaskan dari kosakata sejenis, bab berdekatan, serta panjang arti/bacaan yang mirip agar jawaban benar tidak terlalu mudah ditebak.
