@@ -1660,8 +1660,11 @@ async function clearAllChats() {
 
 
 
-        function renderAdminQuestions() {
+        async function renderAdminQuestions() {
             const qContainer = document.getElementById('admin-questions-list');
+            if (!qContainer) return;
+            qContainer.innerHTML = '<div class="p-4 text-sm text-slate-500">Memuat bank soal…</div>';
+            try { await ensureQuestionBankLoaded(); } catch (error) { qContainer.innerHTML = `<div class="p-4 text-sm text-rose-600">Bank soal gagal dimuat: ${String(error?.message || error).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</div>`; return; }
             document.getElementById('total-questions-count').textContent = `${QUESTION_BANK.length} Soal`;
             
             const totalPages = Math.ceil(QUESTION_BANK.length / questionsPerPage);
@@ -1676,11 +1679,11 @@ async function clearAllChats() {
                         <span class="text-xs font-bold bg-slate-200 px-2 py-1 rounded">ID: ${q.id}</span>
                         <span class="text-xs font-bold bg-brand-100 text-brand-700 px-2 py-1 rounded uppercase">${q.section}</span>
                     </div>
-                    <div class="japanese-text text-lg font-medium mb-3 whitespace-pre-wrap">${q.text}</div>
+                    <div class="japanese-text text-lg font-medium mb-3 whitespace-pre-wrap">${window.JFTQuestionBank?.renderJapaneseText ? window.JFTQuestionBank.renderJapaneseText(q.text) : String(q.text||'').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</div>
                     <div class="grid grid-cols-2 gap-2 mb-3">
-                        ${q.options.map((opt, idx) => `<div class="p-2 border rounded text-sm ${idx===q.answer?'bg-green-100 border-green-500 font-bold text-green-700':''}">${opt}</div>`).join('')}
+                        ${q.options.map((opt, idx) => `<div class="p-2 border rounded text-sm ${idx===q.answer?'bg-green-100 border-green-500 font-bold text-green-700':''}">${String(opt).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</div>`).join('')}
                     </div>
-                    <div class="text-xs bg-white p-3 border rounded text-slate-600"><strong>Penjelasan:</strong> ${q.explanation}</div>
+                    <div class="text-xs bg-white p-3 border rounded text-slate-600"><strong>Penjelasan:</strong> ${String(q.explanation || '—').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}</div>
                 </div>
             `).join('');
 
