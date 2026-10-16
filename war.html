@@ -73,8 +73,8 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
     <button onclick="backLobby()" class="text-sm font-bold mb-4"><i class="fa-solid fa-arrow-left mr-1"></i>Kembali</button>
     <h2 class="text-2xl font-black">Host Room</h2>
     <p class="text-sm text-slate-500 mt-1">Pilih jumlah soal, lalu kirim code room kepada lawan.</p>
-    <div class="grid grid-cols-5 gap-2 mt-5">
-      <button class="countBtn py-3 rounded-xl border-2 border-slate-900 font-black" data-count="10">10</button>
+    <div class="grid grid-cols-4 gap-2 mt-5">
+      <button class="countBtn py-3 rounded-xl border border-2 border-slate-900 font-black" data-count="10">10</button>
       <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="20">20</button>
       <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="30">30</button>
       <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="40">40</button>
@@ -157,7 +157,7 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
 const SUPABASE_URL='https://lnthciiomeppirzucqwu.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-const RULES={10:300,20:600,30:1800,40:2400,50:3000,60:3600,70:4200,80:4800,90:5400,100:6000};
+const RULES={10:300,20:600,30:900,40:1200,50:1500,60:1800,70:2100,80:2400,90:2700,100:3000};
 let bank=[],room=null,player=null,channel=null,selectedCount=10,leaving=false,startingWar=false;
 const playerTokenKey='jft_war_player_token';
 let playerToken=localStorage.getItem(playerTokenKey);
@@ -320,29 +320,22 @@ async function refreshPlayers(){
 }
 
 function renderPlayers(){
-  const ps=[...(window.warPlayers||[])].sort((a,b)=>{
-    const sa=a.status==='finished'?Number(a.score||0):scoreOf(a.correct,a.current_question||0);
-    const sbv=b.status==='finished'?Number(b.score||0):scoreOf(b.correct,b.current_question||0);
-    return sbv-sa||Number(b.correct||0)-Number(a.correct||0)||Number(a.created_at||0)-Number(b.created_at||0);
-  });
+  // Monitoring hanya menampilkan progres, bukan skor/kebenaran jawaban saat War berjalan.
+  const ps=[...(window.warPlayers||[])].sort((a,b)=>Number(b.current_question||0)-Number(a.current_question||0)||Number(a.created_at||0)-Number(b.created_at||0));
   const grid=document.getElementById('playersGrid');if(!grid)return;
   const start=document.getElementById('startBtn');
   start.disabled=ps.length<2;
   start.classList.toggle('hidden',player?.role!=='host'||room?.status!=='waiting');
-  let lastScore=null,lastRank=0;
   grid.innerHTML=ps.map((p,i)=>{
-    const liveScore=room?.status==='running'?scoreOf(p.correct,p.current_question||0):Number(p.score||0);
-    const displayScore=p.status==='finished'?Number(p.score||0):liveScore;
-    if(displayScore!==lastScore)lastRank=i+1;lastScore=displayScore;
     const me=p.id===player?.id;
     const status=p.status==='finished'?'Selesai':p.status==='kicked'?'Kicked':room?.status==='running'?'Mengerjakan':'Menunggu';
     const q=Math.min(Number(p.current_question||0),Number(room?.question_count||0));
     const pct=room?.question_count?Math.round(q/room.question_count*100):0;
     const section=p.current_section?sectionName(p.current_section):'-';
     return `<div class="player-card ${me?'me':''} rounded-xl border border-slate-200 p-3 bg-white">
-      <div class="flex justify-between gap-2"><div class="font-black truncate">#${lastRank} ${esc(p.player_name)} ${me?'<span class="text-[10px] text-slate-400">(KAMU)</span>':''}</div><span class="text-xs font-black">${rank(displayScore)}</span></div>
+      <div class="flex justify-between gap-2"><div class="font-black truncate">#${i+1} ${esc(p.player_name)} ${me?'<span class="text-[10px] text-slate-400">(KAMU)</span>':''}</div><span class="text-xs font-black">${status}</span></div>
       <div class="text-[11px] text-slate-500 mt-1">${status} • ${esc(section)}</div>
-      <div class="flex justify-between text-xs font-bold mt-3"><span>Soal ${q}/${room?.question_count||0}</span><span>${formatTime(p.elapsed_seconds)} • ${displayScore}/250</span></div>
+      <div class="flex justify-between text-xs font-bold mt-3"><span>Soal ${q}/${room?.question_count||0}</span><span>${formatTime(p.elapsed_seconds)}</span></div>
       <div class="progress mt-2"><div style="width:${pct}%"></div></div>
       ${player?.role==='host'&&p.id!==player.id&&p.status!=='finished'&&room?.status==='waiting'?`<button onclick="kickPlayer('${p.id}')" class="mt-2 text-[10px] font-black text-red-600">Kick</button>`:''}
     </div>`;
