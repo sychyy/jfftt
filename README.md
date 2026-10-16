@@ -113,3 +113,11 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - **Penting untuk database Supabase yang sudah aktif:** jalankan `supabase/kanji-war-migration.sql` sekali di Supabase SQL Editor sebelum menggunakan War Kanji. File `supabase/jft-war.sql` juga sudah diperbarui untuk instalasi baru.
 - Pembagian Bab 1–25 menjadi N5 dan Bab 26–50 menjadi N4 mengikuti permintaan sebagai pengelompokan latihan; ini bukan klaim pemetaan level JLPT resmi.
 - Pilihan pengecoh diprioritaskan dari kosakata sejenis, bab berdekatan, serta panjang arti/bacaan yang mirip agar jawaban benar tidak terlalu mudah ditebak.
+
+
+## Flashcard Kanji — progres database
+- Jalankan `supabase/kanji-flashcard-progress.sql` sekali di Supabase SQL Editor.
+- Progres menyimpan status `known`/`unknown`, jumlah lupa, dan waktu pembaruan per kosakata.
+- Progres disinkronkan berdasarkan ID perangkat; jika database tidak tersedia, browser memakai cadangan lokal.
+- `flashcards.html` memiliki daftar semua kosakata, pencarian, kategori, status hafalan, jumlah lupa, dan tombol menghafal/latihan ulang.
+- Pada kuis Kanji, mode romaji menampilkan arti sebagai petunjuk; mode arti menampilkan hiragana. Hasil menampilkan jawaban yang dipilih dan koreksi.
