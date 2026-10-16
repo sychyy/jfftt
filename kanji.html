@@ -29,10 +29,10 @@
 </section>
 <section id="quiz" class="hidden panel p-5 sm:p-8">
 <div class="flex items-center justify-between gap-3"><span id="counter" class="mini-tag">Soal 1/10</span><span id="levelBadge" class="mini-tag bg-[#62bddb]">N5</span></div><div class="h-3 border-[2px] border-[#181818] rounded-full bg-white mt-4 overflow-hidden"><div id="progress" class="h-full bg-[#43c9bd]" style="width:0%"></div></div>
-<div class="text-center py-8"><p id="prompt" class="text-sm text-slate-500 mb-4">Apa arti kosakata kanji berikut?</p><div id="kanjiWord" class="jp text-5xl sm:text-6xl font-bold break-words text-[#1c273a]"></div><div id="kanaHint" class="jp mt-3 text-lg font-bold text-slate-500 min-h-7"></div><div id="meaningHint" class="mt-1 text-sm text-slate-500 min-h-5"></div></div>
+<div class="text-center py-8"><p id="prompt" class="text-sm text-slate-500 mb-4">Apa arti kosakata kanji berikut?</p><div id="kanjiWord" class="jp text-5xl sm:text-6xl font-bold break-words text-[#1c273a]"></div><div id="kanaHint" class="jp mt-3 text-lg text-slate-500"></div></div>
 <div id="choices" class="grid sm:grid-cols-2 gap-3"></div><p id="selectionNote" class="mt-5 text-center text-sm text-slate-500 min-h-5">Pilih satu jawaban, lalu lanjutkan.</p><button id="nextBtn" disabled class="retro-btn w-full mt-2 bg-[#ffe45c] py-3 text-lg disabled:opacity-50">Soal berikutnya →</button>
 </section>
-<section id="result" class="hidden panel p-5 sm:p-8"><div class="text-center"><div class="text-5xl">📚</div><h2 class="text-2xl font-black mt-3">Latihan selesai!</h2><p id="resultScore" class="text-xl font-extrabold mt-3"></p><p id="resultDetail" class="text-sm text-slate-600 mt-2"></p></div><div class="mt-6"><h3 class="font-black text-lg">Koreksi jawaban</h3><p id="reviewSummary" class="text-sm text-slate-500 mt-1"></p><div id="reviewList" class="space-y-3 mt-4"></div></div><button id="retryBtn" class="retro-btn mt-7 w-full bg-[#ffe45c] py-3 text-lg">Latihan lagi</button><a href="home.html" class="block mt-5 text-center text-slate-600 font-bold">Kembali ke Home</a></section>
+<section id="result" class="hidden panel p-5 sm:p-8"><div class="text-center"><div class="text-5xl">📚</div><h2 class="text-2xl font-black mt-3">Latihan selesai!</h2><p id="resultScore" class="text-xl font-extrabold mt-3"></p><p id="resultDetail" class="text-sm text-slate-600 mt-2"></p></div><div class="mt-6"><h3 class="font-black text-lg">Review jawaban</h3><p id="reviewSummary" class="text-sm text-slate-500 mt-1"></p><div class="grid grid-cols-2 gap-3 mt-4"><button id="showCorrect" class="retro-btn bg-[#b9f4df] py-3">Benar (0)</button><button id="showWrong" class="retro-btn bg-[#ffd6d6] py-3">Salah (0)</button></div><div id="reviewList" class="space-y-3 mt-4"></div></div><button id="retryBtn" class="retro-btn mt-7 w-full bg-[#ffe45c] py-3 text-lg">Latihan lagi</button><a href="home.html" class="block mt-5 text-center text-slate-600 font-bold">Kembali ke Home</a></section>
 </main>
 <script>
 const DATA_URL='data/kanji-bank.json';let bank=[],questions=[],idx=0,count=10,mode='meaning',level='n5',answers=[],reviewRows=[];
@@ -82,10 +82,43 @@ function setLevel(next){level=next;document.querySelectorAll('.level-btn').forEa
 function updateBankInfo(){const list=currentBank();$('bankInfo').textContent=`Bank level ${level==='all'?'N5 + N4':level.toUpperCase()}: ${list.length.toLocaleString('id-ID')} kosakata tersedia. Pembagian level mengikuti Bab PDF, bukan verifikasi resmi JLPT/JFT.`;}
 async function init(){document.querySelectorAll('.level-btn').forEach(b=>b.onclick=()=>setLevel(b.dataset.level));renderCountButtons();try{const r=await fetch(DATA_URL);if(!r.ok)throw Error('HTTP '+r.status);const data=await r.json();bank=data.filter(x=>x.kanji&&x.kana&&x.meaning);updateBankInfo();$('startBtn').disabled=false}catch(e){$('bankInfo').textContent='Bank kanji gagal dimuat. Pastikan data/kanji-bank.json ikut diunggah bersama website.';}}
 function start(){const list=currentBank();if(list.length<count){$('bankInfo').textContent=`Jumlah soal melebihi bank level ini. Tersedia ${list.length} kosakata.`;return}mode=document.querySelector('input[name="answerMode"]:checked').value;questions=shuffle(list).slice(0,count).map(q=>({...q,_options:optionsFor(q,list,mode)}));answers=new Array(questions.length).fill(null);idx=0;reviewRows=[];$('setup').classList.add('hidden');$('result').classList.add('hidden');$('quiz').classList.remove('hidden');render()}
-function render(){const q=questions[idx];$('counter').textContent=`Soal ${idx+1}/${questions.length}`;$('levelBadge').textContent=(level==='all'?'N5 + N4':level.toUpperCase())+` • Bab ${q.chapter}`;$('progress').style.width=`${(idx/questions.length)*100}%`;$('prompt').textContent=mode==='meaning'?'Pilih arti bahasa Indonesia yang paling tepat.':'Pilih romaji yang sesuai dengan kosakata kanji.';$('kanjiWord').textContent=q.kanji;$('kanaHint').textContent=mode==='meaning'?`${q.kana} · ${kanaToRomaji(q.kana)}`:'';$('meaningHint').textContent=mode==='romaji'?`Arti: ${q.meaning}`:'';$('selectionNote').textContent=answers[idx]===null?'Klik satu jawaban, lalu tekan tombol lanjut.':'Jawaban tersimpan. Lanjutkan ke soal berikutnya.';$('nextBtn').disabled=answers[idx]===null;$('nextBtn').textContent=idx===questions.length-1?'Selesaikan latihan':'Soal berikutnya →';$('choices').replaceChildren();q._options.forEach((opt,i)=>{const b=document.createElement('button');b.type='button';b.className='choice'+(answers[idx]===opt?' selected':'');b.textContent=opt;b.onclick=()=>selectAnswer(opt);$('choices').appendChild(b)})}
+function render(){const q=questions[idx];$('counter').textContent=`Soal ${idx+1}/${questions.length}`;$('levelBadge').textContent=(level==='all'?'N5 + N4':level.toUpperCase())+` • Bab ${q.chapter}`;$('progress').style.width=`${(idx/questions.length)*100}%`;$('prompt').textContent=mode==='meaning'?'Pilih arti bahasa Indonesia yang paling tepat.':'Pilih romaji yang sesuai dengan kosakata kanji.';$('kanjiWord').textContent=q.kanji;$('kanaHint').textContent=mode==='romaji'?String(q.meaning||''):`${cleanKana(q.kana)} · ${kanaToRomaji(q.kana)}`;$('selectionNote').textContent=answers[idx]===null?'Klik satu jawaban, lalu tekan tombol lanjut.':'Jawaban tersimpan. Lanjutkan ke soal berikutnya.';$('nextBtn').disabled=answers[idx]===null;$('nextBtn').textContent=idx===questions.length-1?'Selesaikan latihan':'Soal berikutnya →';$('choices').replaceChildren();q._options.forEach((opt,i)=>{const b=document.createElement('button');b.type='button';b.className='choice'+(answers[idx]===opt?' selected':'');b.textContent=opt;b.onclick=()=>selectAnswer(opt);$('choices').appendChild(b)})}
 function selectAnswer(opt){answers[idx]=opt;[...$('choices').children].forEach(b=>{b.classList.toggle('selected',b.textContent===opt)});$('selectionNote').textContent='Jawaban tersimpan. Lanjutkan ke soal berikutnya.';$('nextBtn').disabled=false}
 function next(){if(answers[idx]===null)return;if(idx<questions.length-1){idx++;render();window.scrollTo({top:0,behavior:'smooth'});return}finish()}
-function finish(){let correct=0;reviewRows=[];questions.forEach((q,i)=>{const answer=mode==='meaning'?String(q.meaning).trim():kanaToRomaji(q.kana);const isCorrect=norm(answers[i])===norm(answer);if(isCorrect)correct++;reviewRows.push({q,selected:answers[i],answer,isCorrect})});$('quiz').classList.add('hidden');$('result').classList.remove('hidden');$('resultScore').textContent=`${correct} / ${questions.length} benar (${Math.round(correct/questions.length*100)}%)`;$('resultDetail').textContent=`${reviewRows.length} jawaban salah • Level ${level==='all'?'N5 + N4':level.toUpperCase()} • ${count} soal`;$('reviewSummary').textContent=`${reviewRows.filter(r=>r.isCorrect).length} benar • ${reviewRows.filter(r=>!r.isCorrect).length} salah. Semua soal ditampilkan beserta jawaban yang benar.`;$('reviewList').replaceChildren();reviewRows.forEach((r,i)=>{const card=document.createElement('article');card.className='review-item '+(r.isCorrect?'border-emerald-300':'border-red-300');const status=document.createElement('div');status.className='text-sm font-black '+(r.isCorrect?'text-emerald-700':'text-red-700');status.textContent=r.isCorrect?'✓ BENAR':'✕ SALAH';const word=document.createElement('div');word.className='jp text-2xl font-black';word.textContent=r.q.kanji;const reading=document.createElement('div');reading.className='jp text-sm text-slate-500 mt-1';reading.textContent=`${r.q.kana} · ${kanaToRomaji(r.q.kana)}`;const selected=document.createElement('p');selected.className='text-sm text-red-700 mt-3';selected.textContent=`Jawabanmu: ${r.selected||'Tidak dijawab'}`;const answer=document.createElement('p');answer.className='text-sm font-bold text-emerald-700 mt-1';answer.textContent=`Koreksi: ${r.answer}`;const meaning=document.createElement('p');meaning.className='text-xs text-slate-500 mt-2';meaning.textContent=`Arti: ${r.q.meaning} · Bab ${r.q.chapter}`;card.append(status,word,reading,selected,answer,meaning);$('reviewList').appendChild(card)})}
+function finish(){
+ let correctRows=[],wrongRows=[];
+ questions.forEach((q,i)=>{
+  const answer=mode==='meaning'?String(q.meaning).trim():kanaToRomaji(q.kana);
+  const row={q,selected:answers[i],answer,isCorrect:norm(answers[i])===norm(answer)};
+  (row.isCorrect?correctRows:wrongRows).push(row);
+ });
+ $('quiz').classList.add('hidden');$('result').classList.remove('hidden');
+ $('resultScore').textContent=`${correctRows.length} / ${questions.length} benar (${Math.round(correctRows.length/questions.length*100)}%)`;
+ $('resultDetail').textContent=`${wrongRows.length} jawaban salah • Level ${level==='all'?'N5 + N4':level.toUpperCase()} • ${count} soal`;
+ $('reviewSummary').textContent='Pilih kategori untuk melihat soal dan jawaban yang benar.';
+ const list=$('reviewList');let reviewMode='wrong';
+ function renderReview(){
+  const rows=reviewMode==='correct'?correctRows:wrongRows;
+  $('showCorrect').classList.toggle('bg-[#b9f4df]',reviewMode==='correct');
+  $('showWrong').classList.toggle('bg-[#ffd6d6]',reviewMode==='wrong');
+  list.replaceChildren();
+  if(!rows.length){list.innerHTML=`<p class="review-item">${reviewMode==='correct'?'Belum ada jawaban benar.':'Tidak ada jawaban salah. Bagus!'}</p>`;return}
+  rows.forEach((r,i)=>{
+   const card=document.createElement('article');card.className='review-item';
+   const word=document.createElement('div');word.className='jp text-2xl font-black';word.textContent=r.q.kanji;
+   const reading=document.createElement('div');reading.className='jp text-sm text-slate-500 mt-1';reading.textContent=`${r.q.kana} · ${kanaToRomaji(r.q.kana)}`;
+   const meaning=document.createElement('p');meaning.className='text-sm text-slate-600 mt-2';meaning.textContent=`Arti: ${r.q.meaning} · Bab ${r.q.chapter}`;
+   const selected=document.createElement('p');selected.className='text-sm mt-3 '+(r.isCorrect?'text-emerald-700':'text-red-700');selected.textContent=`Jawabanmu: ${r.selected||'Tidak dijawab'}`;
+   const answer=document.createElement('p');answer.className='text-sm font-bold text-emerald-700 mt-1';answer.textContent=`Jawaban benar: ${r.answer}`;
+   card.append(word,reading,meaning,selected,answer);list.appendChild(card);
+  });
+ }
+ $('showCorrect').textContent=`Benar (${correctRows.length})`;
+ $('showWrong').textContent=`Salah (${wrongRows.length})`;
+ $('showCorrect').onclick=()=>{reviewMode='correct';renderReview()};
+ $('showWrong').onclick=()=>{reviewMode='wrong';renderReview()};
+ renderReview();
+}
 $('startBtn').onclick=start;$('nextBtn').onclick=next;$('retryBtn').onclick=()=>{$('result').classList.add('hidden');$('setup').classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})};init();
 </script>
 </body></html>
