@@ -92,3 +92,15 @@ Listening playback during an attempt is limited to two plays per question (inclu
 - `assets/js/chat/`, `assets/js/audio/`, `assets/js/ui/`: modul berdasarkan fungsi.
 
 Untuk menambah soal, tambahkan objek ke file JSON kategori yang sesuai. Kedua mode memuat soal melalui `JFTQuestionBank`; tidak perlu menggandakan soal di file JavaScript.
+
+
+## Pembaruan mode Kanji dan perbaikan bank soal
+
+- `kanji.html` adalah mode latihan kanji terpisah dari simulasi JFT, Hiragana, dan Katakana.
+- `data/kanji-bank.json` memuat **1.858 entri kosakata berkanji unik** yang diekstrak dari PDF `KOSA KATA BAB 1-50.pdf`, beserta kana sumber dan arti bahasa Indonesia. Romaji dibuat dari kana saat latihan.
+- Mode Kanji menyediakan jumlah 10, 20, 30, 40, 50, 60, 70, 80, 90, atau 100 soal; jawaban dapat dipilih berdasarkan arti atau romaji.
+- Jumlah soal simulasi JFT di Home dan War dibatasi menjadi 10, 20, 30, 40, atau 50.
+- Halaman War menyediakan pintasan menuju mode Kanji, tetapi latihan Kanji di halaman tersebut tetap sesi latihan mandiri dan tidak tercampur ke room War JFT.
+- Tampilan Admin Bank Soal dibuat lebih defensif terhadap soal yang tidak memiliki `options`, teks, atau penjelasan.
+
+Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang memberi label level N5/N4 per kata. Karena itu, jumlah 1.858 merujuk pada entri kosakata berkanji dari PDF, bukan klaim bahwa setiap entri telah diverifikasi sebagai kanji resmi N5/N4 atau pasti muncul di JFT.

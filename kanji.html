@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Latihan Kanji N5–N4 | JFT Basic</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>body{font-family:Inter,sans-serif;background:#f7f8fb}.jp{font-family:"Noto Sans JP",sans-serif}.choice{min-height:58px;text-align:left;border:2px solid #e2e8f0;border-radius:14px;padding:13px;background:white;font-weight:600}.choice:hover{border-color:#f59e0b;background:#fffbeb}.choice:disabled{cursor:default}.choice.correct{border-color:#16a34a;background:#f0fdf4}.choice.wrong{border-color:#dc2626;background:#fef2f2}</style>
+</head>
+<body class="min-h-screen text-slate-800">
+<header class="bg-white border-b border-slate-200"><div class="max-w-3xl mx-auto px-4 py-4 flex items-center justify-between gap-3"><a href="home.html" class="font-bold text-slate-600">← Kembali ke Home</a><span class="text-xs font-bold uppercase tracking-wider text-amber-600">Mode Kanji</span></div></header>
+<main class="max-w-3xl mx-auto p-4 py-7">
+<section id="setup" class="rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-slate-100">
+<div class="text-center"><div class="text-5xl jp mb-3">漢字</div><h1 class="text-2xl font-extrabold">Latihan Kanji N5–N4</h1><p class="mt-2 text-slate-600">Bank kosakata berdasarkan PDF KOSA KATA Bab 1–50. Terpisah dari latihan JFT.</p></div>
+<div class="mt-7"><label class="block font-bold text-sm mb-3">Jumlah soal</label><div class="grid grid-cols-3 sm:grid-cols-5 gap-2" id="countChoices"></div></div>
+<div class="mt-6"><label class="block font-bold text-sm mb-3">Jenis jawaban</label><div class="grid sm:grid-cols-2 gap-3"><label class="border-2 rounded-xl p-4 flex gap-3 cursor-pointer has-[:checked]:border-amber-500"><input type="radio" name="answerMode" value="meaning" checked><span><b>Arti bahasa Indonesia</b><small class="block text-slate-500 mt-1">Pilih arti dari kanji yang ditampilkan</small></span></label><label class="border-2 rounded-xl p-4 flex gap-3 cursor-pointer has-[:checked]:border-amber-500"><input type="radio" name="answerMode" value="romaji"><span><b>Romaji</b><small class="block text-slate-500 mt-1">Pilih bacaan romaji dari kosakata</small></span></label></div></div>
+<p id="bankInfo" class="text-xs text-slate-500 mt-4"></p><button id="startBtn" class="w-full mt-5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold py-3.5">Mulai latihan</button>
+</section>
+<section id="quiz" class="hidden rounded-2xl bg-white p-5 sm:p-8 shadow-sm border border-slate-100">
+<div class="flex items-center justify-between gap-3 text-sm font-bold"><span id="counter">Soal 1/10</span><span id="scoreNow">Benar: 0</span></div><div class="w-full h-2 rounded-full bg-slate-100 mt-3 overflow-hidden"><div id="progress" class="h-full bg-amber-500" style="width:0%"></div></div>
+<div class="text-center py-8"><p id="prompt" class="text-sm text-slate-500 mb-3">Apa arti kanji berikut?</p><div id="kanjiWord" class="jp text-5xl sm:text-6xl font-bold break-words"></div><div id="kanaHint" class="jp mt-3 text-slate-500 text-lg"></div></div>
+<div id="choices" class="grid sm:grid-cols-2 gap-3"></div><p id="feedback" class="mt-4 text-center font-bold min-h-6"></p><button id="nextBtn" class="hidden w-full mt-4 rounded-xl bg-slate-900 text-white font-bold py-3">Soal berikutnya →</button>
+</section>
+<section id="result" class="hidden rounded-2xl bg-white p-6 sm:p-8 shadow-sm border border-slate-100 text-center"><div class="text-5xl">🎉</div><h2 class="text-2xl font-extrabold mt-3">Latihan selesai!</h2><p id="resultScore" class="text-lg mt-3"></p><p id="resultDetail" class="text-sm text-slate-500 mt-2"></p><button id="retryBtn" class="mt-6 w-full rounded-xl bg-amber-500 text-white font-extrabold py-3">Latihan lagi</button><a href="home.html" class="block mt-4 text-slate-600 font-semibold">Kembali ke Home</a></section>
+</main>
+<script>
+const DATA_URL='data/kanji-bank.json';
+let bank=[],questions=[],idx=0,correct=0,answered=false,count=10,mode='meaning';
+const $=id=>document.getElementById(id);
+const shuffle=a=>{const b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]]}return b};
+function kanaToRomaji(input){
+ const s=String(input||'').replace(/[～〜]/g,'').replace(/（.*?）/g,'');
+ const map={'あ':'a','い':'i','う':'u','え':'e','お':'o','か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko','さ':'sa','し':'shi','す':'su','せ':'se','そ':'so','た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to','な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no','は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho','ま':'ma','み':'mi','む':'mu','め':'me','も':'mo','や':'ya','ゆ':'yu','よ':'yo','ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro','わ':'wa','を':'o','ん':'n','が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go','ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo','だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do','ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo','ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po','ぁ':'a','ぃ':'i','ぅ':'u','ぇ':'e','ぉ':'o','っ':'','ゃ':'ya','ゅ':'yu','ょ':'yo','ー':'-'};
+ const dig={'きゃ':'kya','きゅ':'kyu','きょ':'kyo','しゃ':'sha','しゅ':'shu','しょ':'sho','ちゃ':'cha','ちゅ':'chu','ちょ':'cho','にゃ':'nya','にゅ':'nyu','にょ':'nyo','ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo','みゃ':'mya','みゅ':'myu','みょ':'myo','りゃ':'rya','りゅ':'ryu','りょ':'ryo','ぎゃ':'gya','ぎゅ':'gyu','ぎょ':'gyo','じゃ':'ja','じゅ':'ju','じょ':'jo','びゃ':'bya','びゅ':'byu','びょ':'byo','ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo'};
+ let h='';for(const c of s){const n=c.charCodeAt(0);h+=n>=0x30a1&&n<=0x30f6?String.fromCharCode(n-0x60):c}
+ let out='';for(let i=0;i<h.length;i++){const two=h.slice(i,i+2);if(dig[two]){out+=dig[two];i++;continue}if(h[i]==='っ'){let j=i+1;while(j<h.length&&!map[h[j]]&&j<h.length)j++;const next=dig[h.slice(j,j+2)]||map[h[j]]||'';out+=next[0]||'';continue}if(h[i]==='ん'&&/[あいうえおやゆよ]/.test(h[i+1]||''))out+="n'";else out+=map[h[i]]??(h[i]===' ' ? ' ':'');}
+ return out.replace(/-+/g,'-').replace(/^-|-$/g,'').trim();
+}
+function makeOptions(q){
+ const key=mode==='meaning'?'meaning':'romaji';
+ const answer=key==='meaning'?q.meaning:kanaToRomaji(q.kana);
+ const pool=bank.filter(x=>x!==q).map(x=>key==='meaning'?x.meaning:kanaToRomaji(x.kana)).filter(x=>x&&x!==answer);
+ const distractors=[...new Set(shuffle(pool))].slice(0,3);
+ return shuffle([...new Set([answer,...distractors])]).slice(0,4);
+}
+async function init(){
+ for(const n of [10,20,30,40,50,60,70,80,90,100]){const b=document.createElement('button');b.textContent=n;b.className='rounded-xl border-2 py-3 font-bold '+(n===10?'border-amber-500 bg-amber-50':'border-slate-200');b.onclick=()=>{count=n;[...$('countChoices').children].forEach(x=>x.className='rounded-xl border-2 py-3 font-bold border-slate-200');b.className='rounded-xl border-2 py-3 font-bold border-amber-500 bg-amber-50'};$('countChoices').appendChild(b)}
+ try{const r=await fetch(DATA_URL);if(!r.ok)throw Error('HTTP '+r.status);bank=await r.json();bank=bank.filter(x=>x.kanji&&x.kana&&x.meaning);$('bankInfo').textContent=`Tersedia ${bank.length.toLocaleString('id-ID')} kosakata berkanji dari PDF Bab 1–50.`;$('startBtn').disabled=false}catch(e){$('bankInfo').textContent='Bank kanji gagal dimuat. Pastikan data/kanji-bank.json ikut diunggah bersama website.';$('startBtn').disabled=true}
+}
+function start(){mode=document.querySelector('input[name="answerMode"]:checked').value;questions=shuffle(bank).slice(0,Math.min(count,bank.length));idx=0;correct=0;$('setup').classList.add('hidden');$('result').classList.add('hidden');$('quiz').classList.remove('hidden');render()}
+function render(){answered=false;const q=questions[idx];$('counter').textContent=`Soal ${idx+1}/${questions.length}`;$('scoreNow').textContent=`Benar: ${correct}`;$('progress').style.width=`${idx/questions.length*100}%`;$('prompt').textContent=mode==='meaning'?'Apa arti kosakata kanji berikut?':'Pilih romaji yang sesuai dengan kosakata berikut.';$('kanjiWord').textContent=q.kanji;$('kanaHint').textContent='';$('feedback').textContent='';$('nextBtn').classList.add('hidden');$('choices').replaceChildren();const opts=makeOptions(q);opts.forEach(opt=>{const b=document.createElement('button');b.className='choice';b.textContent=opt;b.onclick=()=>choose(b,opt,q,opts);$('choices').appendChild(b)})}
+function choose(btn,opt,q,opts){if(answered)return;answered=true;const ans=mode==='meaning'?q.meaning:kanaToRomaji(q.kana);[...$('choices').children].forEach(b=>{b.disabled=true;if(b.textContent===ans)b.classList.add('correct')});if(opt===ans){correct++;$('feedback').textContent='Benar!';$('feedback').className='mt-4 text-center font-bold min-h-6 text-green-700'}else{btn.classList.add('wrong');$('feedback').textContent='Belum tepat. Bacaan: '+kanaToRomaji(q.kana)+' • Arti: '+q.meaning;$('feedback').className='mt-4 text-center font-bold min-h-6 text-red-700'}$('scoreNow').textContent=`Benar: ${correct}`;$('progress').style.width=`${(idx+1)/questions.length*100}%`;$('nextBtn').textContent=idx===questions.length-1?'Lihat hasil':'Soal berikutnya →';$('nextBtn').classList.remove('hidden')}
+function next(){if(idx<questions.length-1){idx++;render()}else{$('quiz').classList.add('hidden');$('result').classList.remove('hidden');$('resultScore').textContent=`${correct} dari ${questions.length} benar (${Math.round(correct/questions.length*100)}%)`;$('resultDetail').textContent='Latihan kanji selesai. Hasil ini hanya untuk sesi latihan ini.'}}
+$('startBtn').onclick=start;$('nextBtn').onclick=next;$('retryBtn').onclick=()=>{$('result').classList.add('hidden');$('setup').classList.remove('hidden')};init();
+</script>
+</body></html>

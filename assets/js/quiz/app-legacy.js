@@ -1677,19 +1677,23 @@ async function clearAllChats() {
             
             const currentQs = QUESTION_BANK.slice(startIdx, endIdx);
 
-            let html = currentQs.map(q => `
-                <div class="bg-slate-50 border p-4 rounded-xl shadow-sm mb-3">
-                    <div class="flex justify-between mb-2">
+            let html = currentQs.map(q => {
+                const options = Array.isArray(q.options) ? q.options : [];
+                const optionHtml = options.length
+                    ? `<div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3">${options.map((opt, idx) => `<div class="p-2 border rounded text-sm break-words ${idx===Number(q.answer)?'bg-green-100 border-green-500 font-bold text-green-700':''}">${safe(opt)}</div>`).join('')}</div>`
+                    : `<div class="text-xs bg-amber-50 border border-amber-200 rounded p-3 mb-3 text-amber-800">Soal ini tidak memiliki pilihan ganda.</div>`;
+                const visualText = q.visual ? [q.visual.title, q.visual.body].filter(Boolean).join(' — ') : '';
+                return `
+                <div class="bg-slate-50 border p-4 rounded-xl shadow-sm mb-3 min-w-0">
+                    <div class="flex justify-between gap-2 mb-2">
                         <span class="text-xs font-bold bg-slate-200 px-2 py-1 rounded">ID: ${safe(q.id)}</span>
-                        <span class="text-xs font-bold bg-brand-100 text-brand-700 px-2 py-1 rounded uppercase">${safe(q.section)}</span>
+                        <span class="text-xs font-bold bg-brand-100 text-brand-700 px-2 py-1 rounded uppercase">${safe(q.section || 'umum')}</span>
                     </div>
-                    <div class="japanese-text text-lg font-medium mb-3 whitespace-pre-wrap">${safe(q.text)}</div>
-                    <div class="grid grid-cols-2 gap-2 mb-3">
-                        ${q.options.map((opt, idx) => `<div class="p-2 border rounded text-sm ${idx===q.answer?'bg-green-100 border-green-500 font-bold text-green-700':''}">${safe(opt)}</div>`).join('')}
-                    </div>
-                    <div class="text-xs bg-white p-3 border rounded text-slate-600"><strong>Penjelasan:</strong> ${safe(q.explanation)}</div>
-                </div>
-            `).join('');
+                    <div class="japanese-text text-lg font-medium mb-3 whitespace-pre-wrap break-words">${safe(q.text || q.question || visualText || '(Teks soal kosong)')}</div>
+                    ${optionHtml}
+                    <div class="text-xs bg-white p-3 border rounded text-slate-600 whitespace-pre-wrap break-words"><strong>Penjelasan:</strong> ${safe(q.explanation || q.reason || 'Tidak ada penjelasan.')}</div>
+                </div>`;
+            }).join('');
 
             html += `
                 <div class="flex justify-between items-center mt-6 bg-white p-3 rounded-xl border-[2px] border-slate-200 sticky bottom-0 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
