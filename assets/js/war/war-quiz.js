@@ -76,7 +76,7 @@ function renderQuestion(){
   const instruction=document.getElementById('quiz-instruction');
   if(instruction)instruction.textContent=q.type==='kanji'?(q.answer_mode==='romaji'?'Pilih bacaan romaji yang paling tepat untuk kosakata berikut.':'Pilih arti bahasa Indonesia yang paling tepat untuk kanji berikut.'):'つぎの ぶんの （　　　）に なにを いれますか。';
   const questionEl=document.getElementById('quiz-question');
-  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(q):`<div class="jft-question-text">${esc(q.text||'')}</div>`);
+  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div class="text-lg font-bold text-slate-600 mt-4">${q.answer_mode==='romaji'?`Arti: ${esc(q.meaning||'')}`:`${esc(q.kana||'')}`}</div><div class="text-xs text-slate-400 mt-3">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(q):`<div class="jft-question-text">${esc(q.text||'')}</div>`);
   questionEl.classList.remove('jft-question-enter');void questionEl.offsetWidth;questionEl.classList.add('jft-question-enter');
   const a=document.getElementById('btn-play-audio'),t=document.getElementById('btn-show-transcript'),fb=document.getElementById('audio-transcript-fallback');
   a.classList.add('hidden');t.classList.add('hidden');fb.classList.add('hidden');
@@ -158,8 +158,9 @@ async function completeWar(){
   }catch(e){console.warn('Gagal mengembalikan room ke waiting:',e)}
   sessionStorage.setItem('jft_war_result',JSON.stringify({roomId:room.id,playerId:player.id,score,correct,total:questions.length,elapsed,rank:warRank,warPoints:score,totalPoints:total}));
   if(room.quiz_mode==='kanji'){
-    const mistakes=[];questions.forEach((q,i)=>{if(answers[i]===q.answer)return;mistakes.push({kanji:q.kanji,kana:q.kana,meaning:q.meaning,chapter:q.chapter,mode:q.answer_mode,selected:answers[i]===null?'Tidak dijawab':q.options[answers[i]],answer:q.options[q.answer]})});
-    sessionStorage.setItem('jft_war_kanji_review',JSON.stringify({mistakes,mode:room.kanji_answer_mode||'meaning',total:questions.length,wrong:mistakes.length}));
+    const review=[];questions.forEach((q,i)=>{const isCorrect=answers[i]===q.answer;review.push({kanji:q.kanji,kana:q.kana,meaning:q.meaning,chapter:q.chapter,mode:q.answer_mode,selected:answers[i]===null?'Tidak dijawab':q.options[answers[i]],answer:q.options[q.answer],isCorrect})});
+    const mistakes=review.filter(x=>!x.isCorrect);
+    sessionStorage.setItem('jft_war_kanji_review',JSON.stringify({review,mistakes,mode:room.kanji_answer_mode||'meaning',total:questions.length,wrong:mistakes.length,correct:review.length-mistakes.length}));
   }else sessionStorage.removeItem('jft_war_kanji_review');
   location.href='war-result.html';
 }
