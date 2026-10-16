@@ -11,7 +11,7 @@ alter table public.jft_war_rooms drop constraint if exists jft_war_rooms_kanji_l
 alter table public.jft_war_rooms drop constraint if exists jft_war_rooms_kanji_answer_mode_check;
 
 alter table public.jft_war_rooms
-  add constraint jft_war_rooms_question_count_check check (question_count in (10,20,30,40,50)),
+  add constraint jft_war_rooms_question_count_check check (question_count in (10,20,30,40,50,60,70,80,90,100)),
   add constraint jft_war_rooms_quiz_mode_check check (quiz_mode in ('jft','kanji')),
   add constraint jft_war_rooms_kanji_level_check check (kanji_level in ('n5','n4','all')),
   add constraint jft_war_rooms_kanji_answer_mode_check check (kanji_answer_mode in ('meaning','romaji'));
