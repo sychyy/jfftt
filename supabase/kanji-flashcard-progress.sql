@@ -15,3 +15,7 @@ drop policy if exists "Kanji progress update for app" on public.kanji_flashcard_
 create policy "Kanji progress read for app" on public.kanji_flashcard_progress for select to anon, authenticated using (true);
 create policy "Kanji progress insert for app" on public.kanji_flashcard_progress for insert to anon, authenticated with check (true);
 create policy "Kanji progress update for app" on public.kanji_flashcard_progress for update to anon, authenticated using (true) with check (true);
+
+-- Izinkan perangkat menghapus progres miliknya saat fitur Reset progres kanji digunakan.
+drop policy if exists "Kanji progress delete for app" on public.kanji_flashcard_progress;
+create policy "Kanji progress delete for app" on public.kanji_flashcard_progress for delete to anon, authenticated using (true);
