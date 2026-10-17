@@ -1,6 +1,8 @@
 /* Shared minimal loading animation for JFT Basic pages. */
 (() => {
   'use strict';
+  if (window.__JFT_PAGE_LOADER_INITIALIZED__) return;
+  window.__JFT_PAGE_LOADER_INITIALIZED__ = true;
   const loader = document.getElementById('jft-page-loader');
   if (!loader) return;
   const reducedMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -1,5 +1,8 @@
 /* Shared responsive navigation for JFT Kanji. Adds navigation only; app logic is unchanged. */
 (() => {
+  'use strict';
+  if (window.__JFT_PIXEL_NAV_INITIALIZED__) return;
+  window.__JFT_PIXEL_NAV_INITIALIZED__ = true;
   const links = [
     { href: 'home.html', icon: '⌂', label: 'Home', key: ['home.html'] },
     { href: 'quiz.html', icon: '✎', label: 'Latihan', key: ['quiz.html', 'result.html'] },

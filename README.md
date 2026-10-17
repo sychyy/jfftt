@@ -121,3 +121,11 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - Progres disinkronkan berdasarkan ID perangkat; jika database tidak tersedia, browser memakai cadangan lokal.
 - `flashcards.html` memiliki daftar semua kosakata, pencarian, kategori, status hafalan, jumlah lupa, dan tombol menghafal/latihan ulang.
 - Pada kuis Kanji, mode romaji menampilkan arti sebagai petunjuk; mode arti menampilkan hiragana. Hasil menampilkan jawaban yang dipilih dan koreksi.
+
+
+## Pixel World visual redesign (2026-10-17)
+
+- Added `assets/css/pixel-world-redesign.css` as the final visual layer across the active HTML pages (and the legacy single-page file).
+- The new layer changes the overall color system, surfaces, spacing, controls, responsive layout treatment, and navigation styling without replacing application logic or question-bank data.
+- Shared pixel navigation and page-loader scripts now have one-time initialization guards to prevent duplicate setup if accidentally included twice.
+- This is a visual redesign pass, not a claim of a fully browser-tested release; verify auth, quiz start/answer/next/result, history, Kanji, flashcards, and War room flows in the deployed environment.
