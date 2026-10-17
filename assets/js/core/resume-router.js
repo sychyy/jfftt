@@ -279,42 +279,36 @@
         toggle.addEventListener('change', update); update();
     }
 
-    // Shared Japanese Listening TTS. Prefer the Node.js VOICEVOX proxy;
-    // fall back to device TTS when the engine is unavailable. A/B = female/male.
-    // Plain narration defaults to female; untagged multi-line text alternates voices.
+    // Shared Japanese dialogue TTS. Prefer configured VOICEVOX; otherwise use browser speech
+    // synthesis even when the device does not expose a Japanese voice in its voice inventory.
+    // Some Android browsers populate getVoices() asynchronously or expose only the default voice.
     window.JFTSpeakDialogue = async function(rawText, options = {}) {
         const turns = String(rawText || '').split(/\n+/).map(s => s.trim()).filter(Boolean);
         if (!turns.length) throw new Error('Teks audio kosong.');
-        const rate = Number(options.rate || .86);
-        const lines = turns.map((line, i) => {
-            const match = line.match(/^\s*([AB])[:：]\s*(.*)$/);
-            return { text: (match ? match[2] : line).trim(), role: match ? (match[1] === 'A' ? 'female' : 'male') : (i % 2 === 0 ? 'female' : 'male') };
-        }).filter(line => line.text);
-        if (!lines.length) throw new Error('Teks audio kosong.');
-
-        try {
-            for (const line of lines) {
-                const response = await fetch('/api/voicevox/synthesize', {
-                    method: 'POST', headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: line.text, role: line.role, rate })
-                });
-                if (!response.ok) throw new Error(`VOICEVOX proxy ${response.status}`);
-                const blob = await response.blob();
-                const url = URL.createObjectURL(blob);
-                try {
-                    await new Promise((resolve, reject) => {
-                        const audio = new Audio(url);
-                        audio.onended = resolve;
-                        audio.onerror = () => reject(new Error('Audio VOICEVOX gagal diputar'));
-                        audio.play().catch(reject);
-                    });
-                } finally { URL.revokeObjectURL(url); }
-            }
-            return { engine: 'voicevox', distinctVoices: true };
-        } catch (err) { console.warn('VOICEVOX belum tersedia; memakai TTS browser:', err); }
-
+        const endpoint = String(window.JFT_VOICEVOX_ENDPOINT || '').replace(/\/$/, '');
+        if (endpoint) {
+            try {
+                for (let i = 0; i < turns.length; i++) {
+                    const m = turns[i].match(/^\s*([AB])[:：]\s*(.*)$/);
+                    const spoken = (m ? m[2] : turns[i]).trim();
+                    if (!spoken) continue;
+                    const isA = m ? m[1] === 'A' : i % 2 === 0;
+                    const speakerId = isA ? Number(window.JFT_VOICEVOX_FEMALE_ID ?? 2) : Number(window.JFT_VOICEVOX_MALE_ID ?? 13);
+                    const queryResponse = await fetch(`${endpoint}/audio_query?text=${encodeURIComponent(spoken)}&speaker=${speakerId}`, { method: 'POST' });
+                    if (!queryResponse.ok) throw new Error(`VOICEVOX audio_query ${queryResponse.status}`);
+                    const query = await queryResponse.json();
+                    const audioResponse = await fetch(`${endpoint}/synthesis?speaker=${speakerId}`, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(query) });
+                    if (!audioResponse.ok) throw new Error(`VOICEVOX synthesis ${audioResponse.status}`);
+                    const blob = await audioResponse.blob();
+                    const url = URL.createObjectURL(blob);
+                    try { await new Promise((resolve, reject) => { const audio = new Audio(url); audio.onended = resolve; audio.onerror = () => reject(new Error('Audio VOICEVOX gagal diputar')); audio.play().catch(reject); }); }
+                    finally { URL.revokeObjectURL(url); }
+                }
+                return { engine: 'voicevox', distinctVoices: true };
+            } catch (err) { console.warn('VOICEVOX tidak dapat dijangkau; memakai TTS browser:', err); }
+        }
         if (!('speechSynthesis' in window) || !('SpeechSynthesisUtterance' in window)) {
-            throw new Error('Browser ini tidak menyediakan pembaca suara. Aktifkan mesin Text-to-speech di perangkat atau gunakan mode teks.');
+            throw new Error('Browser ini tidak menyediakan fitur pembaca suara. Aktifkan mesin Text-to-speech di pengaturan Android atau gunakan mode teks.');
         }
         const synth = window.speechSynthesis;
         synth.cancel();
@@ -332,15 +326,20 @@
         const femalePattern = /female|woman|kyoko|haruka|nanami|sakura|mei|kotonoha|metan/i;
         const malePattern = /male|man|ichiro|takumi|keita|ryusei|ryota|daichi|otoya/i;
         const female = japaneseVoices.find(v => femalePattern.test(v.name || '')) || japaneseVoices[0] || voices[0] || null;
-        const male = japaneseVoices.find(v => malePattern.test(v.name || '') && v.name !== female?.name)
-            || japaneseVoices.find(v => v.name !== female?.name) || null;
-        for (const line of lines) {
+        const male = japaneseVoices.find(v => malePattern.test(v.name || '') && v.name !== female?.name) || japaneseVoices.find(v => v.name !== female?.name) || null;
+        for (let i = 0; i < turns.length; i++) {
+            const m = turns[i].match(/^\s*([AB])[:：]\s*(.*)$/);
+            const spoken = (m ? m[2] : turns[i]).trim();
+            if (!spoken) continue;
+            const isA = m ? m[1] === 'A' : i % 2 === 0;
             await new Promise((resolve, reject) => {
-                const utterance = new SpeechSynthesisUtterance(line.text);
-                utterance.lang = 'ja-JP'; utterance.rate = rate;
-                const voice = line.role === 'female' ? female : male;
+                const utterance = new SpeechSynthesisUtterance(spoken);
+                utterance.lang = 'ja-JP';
+                utterance.rate = Number(options.rate || .86);
+                // If the device only has one voice, change pitch so speaker turns remain distinguishable.
+                const voice = isA ? female : male;
                 if (voice) utterance.voice = voice;
-                utterance.pitch = line.role === 'female' ? 1.12 : (male ? 0.9 : 0.78);
+                utterance.pitch = isA ? 1.12 : (male ? 0.9 : 0.78);
                 utterance.onend = resolve;
                 utterance.onerror = event => event.error === 'canceled' ? resolve() : reject(new Error(`Browser TTS: ${event.error || 'gagal memutar suara'}`));
                 synth.speak(utterance);
