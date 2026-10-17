@@ -66,4 +66,9 @@ app.post("/api/voicevox/synthesize", async (req, res) => {
 
 // Serve existing website files unchanged.
 app.use(express.static(ROOT_DIR, { index: "index.html", extensions: ["html"], dotfiles: "ignore" }));
-app.listen(PORT, "0.0.0.0", () => console.log(`JFT-Basic website is running on port ${PORT}`));
+// Render/local Node starts a persistent HTTP server; Vercel imports the app as a serverless function.
+if (require.main === module) {
+  app.listen(PORT, "0.0.0.0", () => console.log(`JFT-Basic website is running on port ${PORT}`));
+}
+
+module.exports = app;
