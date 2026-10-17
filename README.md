@@ -131,3 +131,10 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - If VOICEVOX is not configured or unreachable, the website falls back to the browser's Japanese TTS. That fallback cannot guarantee distinct male/female voices on every device.
 - Render does not host the VOICEVOX synthesis engine just by deploying this Node app. The engine must be hosted separately; the Node backend proxies requests to it to avoid browser-side CORS issues.
 - Website design and question data are unchanged by this audio update.
+
+## Deployment on Vercel
+
+- The website's existing HTML pages and assets are mirrored in `public/` so Vercel can serve them as static assets from the domain root.
+- `server.js` exports the Express application for Vercel and still supports `npm start` for local/persistent Node hosting.
+- Commit and push the contents of this project to the connected GitHub repository. Do not upload the ZIP file itself as the only repository file.
+- In Vercel, use the repository root as Root Directory. Leave Build Command and Output Directory at their automatic defaults. After pushing a new commit, Vercel should create a new deployment.

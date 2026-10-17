@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JFT-Basic — War Room</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@keyframes jftWarPageEnter{from{opacity:0;transform:translateY(12px) scale(.995);filter:blur(2px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
+body>#app{animation:jftWarPageEnter .38s cubic-bezier(.2,.75,.25,1) both}
+@media(prefers-reduced-motion:reduce){body>#app{animation:none!important}}
+body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
+.ja{font-family:"Noto Sans JP",sans-serif}
+.card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 30px rgba(15,23,42,.06)}
+.war-mode-btn.selected{border-color:#181818;box-shadow:3px 3px 0 #181818}
+.war-accent{background:#181818;color:#ffe45c}
+.player-card{transition:.2s}.player-card.me{border-color:#181818;box-shadow:4px 4px 0 #181818}
+.progress{height:7px;background:#e9edf2;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:#181818;border-radius:999px;transition:width .3s}
+</style>
+<link rel="stylesheet" href="assets/css/page-loader.css">
+<script src="assets/js/ui/page-loader.js" defer></script>
+</head>
+<body class="min-h-screen">
+<div id="jft-page-loader" aria-hidden="false" role="status" aria-label="Memuat halaman">
+  <div class="jft-loader-bars" aria-hidden="true">
+    <span class="jft-loader-bar"></span>
+    <span class="jft-loader-bar"></span>
+    <span class="jft-loader-bar"></span>
+  </div>
+</div>
+
+<div id="app" class="max-w-6xl mx-auto px-4 py-5">
+  <header class="flex items-center justify-between mb-5">
+    <button onclick="location.href='home.html'" class="font-black flex items-center gap-2"><span class="text-xl">JFT-Basic</span><span class="text-xs px-2 py-1 rounded-full bg-slate-100">WAR</span></button>
+    <div id="topStatus" class="text-xs font-bold text-slate-500"></div>
+  </header>
+
+<section id="screenLobby" class="grid lg:grid-cols-2 gap-5">
+    <div class="card p-6">
+      <div class="w-12 h-12 war-accent rounded-2xl flex items-center justify-center mb-4"><i class="fa-solid fa-crown"></i></div>
+      <h1 class="text-2xl font-black">War Room</h1>
+      <p class="text-sm text-slate-500 mt-1 mb-6">Buat room atau masuk menggunakan code dari host.</p>
+      <div class="mb-5">
+        <label class="text-xs font-black uppercase tracking-wider text-slate-500">Nama</label>
+        <input id="nameInput" class="w-full mt-2 px-4 py-3 rounded-xl border border-slate-200 outline-none focus:border-slate-900" maxlength="30" placeholder="Nama pemain">
+      </div>
+      <div class="grid sm:grid-cols-2 gap-3">
+        <button onclick="showCreate()" class="py-3 rounded-xl bg-slate-900 text-white font-black"><i class="fa-solid fa-plus mr-2"></i>Host Room</button>
+        <button onclick="showJoin()" class="py-3 rounded-xl border-2 border-slate-900 font-black"><i class="fa-solid fa-right-to-bracket mr-2"></i>Join Room</button>
+      </div>
+      <div class="mt-6 p-4 rounded-xl bg-slate-50 text-xs text-slate-600 leading-relaxed">
+        <b>Sistem War:</b> semua pemain mendapat set soal yang sama dan mulai serentak. Penentunya adalah <b>Score War sampai 250</b>, bukan siapa paling cepat.
+      </div>
+    </div>
+    <div class="card p-6">
+      <h2 class="font-black text-lg">Aturan yang dipakai</h2>
+      <div class="grid grid-cols-2 gap-3 mt-4" id="ruleGrid"></div>
+      <div class="mt-5 text-sm text-slate-600 space-y-2">
+        <p>• Minimal pemain: <b>2</b> — maksimal: <b>bebas</b>.</p>
+        <p>• Skor: <b>benar ÷ total × 250</b>.</p>
+        <p>• Rank: D &lt;100, C 100–149, B 150–199, A 200–249, S = 250.</p>
+        <p>• Target waktu hanya acuan; <b>tidak perlu menunggu</b> untuk menyelesaikan War.</p>
+        <p>• War Point = Score akhir dan ditambahkan ke total point pemain.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="createPanel" class="hidden card p-6 max-w-xl mx-auto">
+    <button onclick="backLobby()" class="text-sm font-bold mb-4"><i class="fa-solid fa-arrow-left mr-1"></i>Kembali</button>
+    <h2 class="text-2xl font-black">Host Room</h2>
+    <p class="text-sm text-slate-500 mt-1">Pilih jenis latihan dan jumlah soal. Semua pemain di room akan mendapat set soal yang sama.</p>
+    <div class="mt-5"><div class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Jenis latihan</div><div class="grid grid-cols-2 gap-3"><button id="modeJftBtn" onclick="setWarMode('jft')" class="war-mode-btn selected rounded-xl border-2 border-[#181818] bg-[#ffe45c] p-3 text-left shadow-[3px_3px_0_#181818]"><b>文字 JFT</b><span class="block text-xs mt-1">Bank soal JFT Basic</span></button><button id="modeKanjiBtn" onclick="setWarMode('kanji')" class="war-mode-btn rounded-xl border-2 border-slate-200 bg-white p-3 text-left"><b>漢字 Kanji</b><span class="block text-xs mt-1">Main Kanji bersama</span></button></div></div>
+    <div id="kanjiWarSettings" class="hidden mt-4 space-y-4">
+      <div><div class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Level Kanji</div><div class="grid grid-cols-3 gap-2"><button type="button" class="kanji-level-btn selected rounded-xl border-2 border-[#181818] bg-[#ffe45c] p-2 font-black" data-level="n5" onclick="setKanjiLevel('n5')">N5 <small class="block text-[10px]">Bab 1–25</small></button><button type="button" class="kanji-level-btn rounded-xl border-2 border-slate-200 bg-white p-2 font-black" data-level="n4" onclick="setKanjiLevel('n4')">N4 <small class="block text-[10px]">Bab 26–50</small></button><button type="button" class="kanji-level-btn rounded-xl border-2 border-slate-200 bg-white p-2 font-black" data-level="all" onclick="setKanjiLevel('all')">N5 + N4 <small class="block text-[10px]">Gabungan</small></button></div></div>
+      <div><div class="text-xs font-black uppercase tracking-wider text-slate-500 mb-2">Jenis jawaban</div><div class="grid grid-cols-2 gap-2"><label class="rounded-xl border-2 border-slate-200 bg-white p-3 flex items-center gap-2 has-[:checked]:border-[#181818] has-[:checked]:bg-[#fff2a8]"><input type="radio" name="warKanjiAnswer" value="meaning" checked><span class="text-sm font-bold">Arti Indonesia</span></label><label class="rounded-xl border-2 border-slate-200 bg-white p-3 flex items-center gap-2 has-[:checked]:border-[#181818] has-[:checked]:bg-[#c5effa]"><input type="radio" name="warKanjiAnswer" value="romaji"><span class="text-sm font-bold">Romaji</span></label></div></div>
+    </div>
+    <div class="text-xs font-black uppercase tracking-wider text-slate-500 mt-5">Jumlah soal</div>
+    <div class="grid grid-cols-3 sm:grid-cols-5 gap-2 mt-2">
+      <button class="countBtn py-3 rounded-xl border border-2 border-slate-900 font-black" data-count="10">10</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="20">20</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="30">30</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="40">40</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="50">50</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="60">60</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="70">70</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="80">80</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="90">90</button>
+      <button class="countBtn py-3 rounded-xl border border-slate-200 font-black" data-count="100">100</button>
+      
+      
+      
+      
+      
+    </div>
+    <button onclick="createRoom()" class="w-full mt-5 py-3 rounded-xl bg-slate-900 text-white font-black">Buat Room</button>
+  </section>
+
+  <section id="joinPanel" class="hidden card p-6 max-w-xl mx-auto">
+    <button onclick="backLobby()" class="text-sm font-bold mb-4"><i class="fa-solid fa-arrow-left mr-1"></i>Kembali</button>
+    <h2 class="text-2xl font-black">Join Room</h2>
+    <p class="text-sm text-slate-500 mt-1">Masukkan code yang diberikan host.</p>
+    <input id="codeInput" class="w-full mt-5 px-4 py-4 rounded-xl border-2 border-slate-200 text-center text-2xl font-black tracking-[.35em] uppercase" maxlength="6" placeholder="ABC123">
+    <button id="scanQrBtn" type="button" onclick="startQrScanner()" class="w-full mt-3 py-3 rounded-xl border-2 border-slate-900 font-black"><i class="fa-solid fa-camera mr-2"></i>Scan QR Code dengan Kamera</button>
+    <div id="qrScannerWrap" class="hidden mt-4">
+      <div id="qr-reader" class="w-full overflow-hidden rounded-xl border border-slate-200"></div>
+      <p class="text-xs text-slate-500 mt-2">Arahkan kamera ke QR code yang ditampilkan host. Kamera memerlukan izin browser dan koneksi HTTPS.</p>
+      <button type="button" onclick="stopQrScanner()" class="mt-2 w-full py-2 rounded-xl bg-slate-100 font-bold">Tutup Kamera</button>
+    </div>
+    <p id="qrScanStatus" class="hidden text-sm mt-3 text-slate-600"></p>
+    <button onclick="joinRoom()" class="w-full mt-4 py-3 rounded-xl bg-slate-900 text-white font-black">Masuk Room</button>
+  </section>
+
+  <section id="roomPanel" class="hidden">
+    <div class="card p-5 mb-4">
+      <div class="flex flex-col sm:flex-row justify-between gap-4">
+        <div>
+          <div class="text-xs uppercase font-black tracking-widest text-slate-400">Room Code</div>
+          <div class="flex items-center gap-2 mt-1">
+            <span id="roomCode" class="text-3xl font-black tracking-widest"></span>
+            <button onclick="copyCode()" class="px-3 py-2 rounded-lg border border-slate-200 text-xs font-black"><i class="fa-regular fa-copy mr-1"></i>Salin</button>
+          </div>
+          <div id="roomInfo" class="text-xs text-slate-500 mt-1"></div>
+        </div>
+        <div class="flex gap-2 items-start">
+          <button id="startBtn" onclick="startWar()" class="hidden px-5 py-3 rounded-xl bg-slate-900 text-white font-black">Mulai War</button>
+          <button onclick="leaveRoom()" class="px-4 py-3 rounded-xl border border-red-200 text-red-600 font-black text-sm">Keluar</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="hostQrCard" class="hidden card p-5 mb-4">
+      <div class="flex flex-col sm:flex-row items-center gap-5">
+        <div id="hostQrCode" class="bg-white p-3 rounded-xl border border-slate-200 min-w-[176px] min-h-[176px] flex items-center justify-center"></div>
+        <div class="flex-1 text-center sm:text-left">
+          <h3 class="font-black text-lg"><i class="fa-solid fa-qrcode mr-2"></i>QR Code untuk Join</h3>
+          <p class="text-sm text-slate-500 mt-1">Pemain lain dapat memindai QR ini dari menu Join Room. Code room tetap bisa disalin atau dimasukkan secara manual.</p>
+          <div class="flex flex-wrap gap-2 mt-3 justify-center sm:justify-start">
+            <button onclick="downloadRoomQr()" class="px-4 py-2 rounded-lg bg-slate-900 text-white text-sm font-black"><i class="fa-solid fa-download mr-1"></i>Unduh QR</button>
+            <button onclick="copyJoinLink()" class="px-4 py-2 rounded-lg border border-slate-300 text-sm font-black"><i class="fa-solid fa-link mr-1"></i>Salin Link Join</button>
+          </div>
+          <p class="text-xs text-slate-400 mt-2">QR berisi tautan aplikasi beserta code room, bukan kredensial Supabase.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="monitor" class="card p-4 mb-4">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="font-black"><i class="fa-solid fa-chart-line mr-2"></i>Monitoring Pemain</h3>
+        <span id="monitorHint" class="text-xs text-slate-400">Menunggu host memulai...</span>
+      </div>
+      <div id="playersGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+    </div>
+
+    <div id="waitingBox" class="card p-6 text-center">
+      <div class="text-4xl mb-2">⚔️</div>
+      <h2 id="waitingTitle" class="text-xl font-black">Menunggu semua siap</h2>
+      <p id="waitingText" class="text-sm text-slate-500 mt-1">Minimal 2 pemain. Host yang menekan Mulai War.</p>
+    </div>
+  </section>
+</div>
+
+<script src="assets/js/core/question-bank.js"></script>
+<script>
+const SUPABASE_URL='https://lnthciiomeppirzucqwu.supabase.co';
+const SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
+const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+const RULES={10:300,20:600,30:900,40:1200,50:1500,60:1800,70:2100,80:2400,90:2700,100:3000};
+let bank=[],kanjiBank=[],room=null,player=null,channel=null,selectedCount=10,selectedQuizMode='jft',selectedKanjiLevel='n5',leaving=false,startingWar=false;
+const playerTokenKey='jft_war_player_token';
+let playerToken=localStorage.getItem(playerTokenKey);
+if(!playerToken){playerToken=crypto.randomUUID();localStorage.setItem(playerTokenKey,playerToken)}
+const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
+const getName=()=>((localStorage.getItem('jft_display_name')||localStorage.getItem('jft_user_name')||document.getElementById('nameInput')?.value||'').trim().toUpperCase());
+const formatTime=sec=>{sec=Math.max(0,Math.floor(sec||0));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`};
+const rank=score=>{score=Number(score||0);return score===250?'S':score>=200?'A':score>=150?'B':score>=100?'C':'D'};
+const scoreOf=(c,t)=>t?Math.round((Number(c||0)/Number(t))*250):0;
+const sectionName=sec=>({vocab:'Vocabulary',grammar:'Grammar',listening:'Listening',reading:'Reading',kanji:'Kanji'})[sec]||sec||'-';
+const randomize=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+
+function toast(msg){const d=document.createElement('div');d.className='fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+function saveWarSession(hostToken=''){sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');sessionStorage.setItem('jft_war_session',JSON.stringify({roomId:room?.id,playerId:player?.id,hostToken:hostToken||'',playerToken}))}
+async function loadBank(){if(!window.JFTQuestionBank)throw new Error('Modul bank soal belum dimuat.');bank=await window.JFTQuestionBank.load()}
+function setName(){const n=getName();if(n){const el=document.getElementById('nameInput');if(el)el.value=n}}
+function hideLobby(){document.getElementById('screenLobby').classList.add('hidden');document.getElementById('createPanel').classList.add('hidden');document.getElementById('joinPanel').classList.add('hidden')}
+function backLobby(){stopQrScanner();if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');location.reload()}
+function showCreate(){if(!getName()){toast('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('createPanel').classList.remove('hidden')}
+function showJoin(){if(!getName()){toast('Masukkan nama terlebih dahulu.');return}hideLobby();document.getElementById('joinPanel').classList.remove('hidden')}
+function setWarMode(mode){selectedQuizMode=mode==='kanji'?'kanji':'jft';const j=document.getElementById('modeJftBtn'),k=document.getElementById('modeKanjiBtn'),isJft=selectedQuizMode==='jft';j.classList.toggle('selected',isJft);j.classList.toggle('bg-[#ffe45c]',isJft);j.classList.toggle('bg-white',!isJft);j.classList.toggle('border-[#181818]',isJft);j.classList.toggle('border-slate-200',!isJft);k.classList.toggle('selected',!isJft);k.classList.toggle('bg-[#62bddb]',!isJft);k.classList.toggle('bg-white',isJft);k.classList.toggle('border-[#181818]',!isJft);k.classList.toggle('border-slate-200',isJft);document.getElementById('kanjiWarSettings').classList.toggle('hidden',isJft)}
+function setKanjiLevel(level){selectedKanjiLevel=['n5','n4','all'].includes(level)?level:'n5';document.querySelectorAll('.kanji-level-btn').forEach(b=>{const on=b.dataset.level===selectedKanjiLevel;b.classList.toggle('selected',on);b.classList.toggle('bg-[#ffe45c]',on);b.classList.toggle('border-[#181818]',on);b.classList.toggle('border-slate-200',!on)})}
+
+function code(){return Math.random().toString(36).slice(2,8).toUpperCase()}
+
+let qrScanner=null,qrScannerRunning=false;
+
+function makeJoinUrl(){
+  const u=new URL(location.href);
+  u.searchParams.set('join',room?.code||'');
+  u.hash='';
+  return u.toString();
+}
+function renderHostQr(){
+  const card=document.getElementById('hostQrCard'),target=document.getElementById('hostQrCode');
+  const isHost=player?.role==='host'&&room?.status==='waiting';
+  card?.classList.toggle('hidden',!isHost);
+  if(!isHost||!target||!window.QRCode)return;
+  target.innerHTML='';
+  new QRCode(target,{text:makeJoinUrl(),width:160,height:160,colorDark:'#111827',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.M});
+}
+function downloadRoomQr(){
+  const canvas=document.querySelector('#hostQrCode canvas');
+  const img=document.querySelector('#hostQrCode img');
+  const url=canvas?.toDataURL('image/png')||img?.src;
+  if(!url){toast('QR code belum siap.');return}
+  const a=document.createElement('a');a.href=url;a.download=`war-room-${room?.code||'join'}.png`;document.body.appendChild(a);a.click();a.remove();
+}
+async function copyJoinLink(){
+  const link=makeJoinUrl();
+  try{await navigator.clipboard.writeText(link);toast('Link join disalin')}
+  catch{window.prompt('Salin link join ini:',link)}
+}
+function codeFromQr(decodedText){
+  const value=String(decodedText||'').trim();
+  try{
+    const u=new URL(value);
+    const c=u.searchParams.get('join')||u.searchParams.get('code');
+    if(c)return c.toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+  }catch(_){}
+  const match=value.match(/(?:JFTWAR:)?([A-Z0-9]{6})$/i);
+  return match?match[1].toUpperCase():'';
+}
+async function startQrScanner(){
+  if(!window.Html5Qrcode){toast('Fitur kamera gagal dimuat. Periksa koneksi internet.');return}
+  const wrap=document.getElementById('qrScannerWrap'),status=document.getElementById('qrScanStatus');
+  wrap.classList.remove('hidden');status.classList.add('hidden');
+  if(qrScannerRunning)return;
+  try{
+    qrScanner=new Html5Qrcode('qr-reader');
+    qrScannerRunning=true;
+    await qrScanner.start({facingMode:'environment'},{fps:10,qrbox:{width:230,height:230},aspectRatio:1.0},
+      async decodedText=>{
+        const c=codeFromQr(decodedText);
+        if(!c||c.length!==6){status.textContent='QR terbaca, tetapi tidak berisi code War yang valid.';status.classList.remove('hidden');return}
+        document.getElementById('codeInput').value=c;
+        status.textContent=`Code ${c} berhasil dipindai. Sedang masuk ke room...`;status.classList.remove('hidden');
+        await stopQrScanner();
+        await joinRoom();
+      },()=>{});
+  }catch(e){
+    qrScannerRunning=false;
+    status.textContent='Kamera tidak dapat dibuka. Izinkan akses kamera, gunakan HTTPS, atau masukkan code secara manual.';
+    status.classList.remove('hidden');
+    console.warn('QR scanner error:',e);
+  }
+}
+async function stopQrScanner(){
+  if(qrScanner&&qrScannerRunning){
+    try{await qrScanner.stop();await qrScanner.clear()}catch(e){console.warn('Scanner stop:',e)}
+  }
+  qrScannerRunning=false;qrScanner=null;
+  document.getElementById('qrScannerWrap')?.classList.add('hidden');
+}
+
+async function createRoom(){
+  const count=selectedCount,n=getName();if(!n)return;
+  if(![10,20,30,40,50,60,70,80,90,100].includes(Number(count))){toast('War menyediakan 10–100 soal.');return;}
+  const hostToken=crypto.randomUUID(),roomCode=code();
+  const kanjiAnswerMode=document.querySelector('input[name="warKanjiAnswer"]:checked')?.value||'meaning';
+  const {data,error}=await sb.from('jft_war_rooms').insert({code:roomCode,host_token:hostToken,host_name:n,question_count:count,question_ids:[],quiz_mode:selectedQuizMode,kanji_level:selectedQuizMode==='kanji'?selectedKanjiLevel:'all',kanji_answer_mode:selectedQuizMode==='kanji'?kanjiAnswerMode:'meaning',status:'waiting'}).select().single();
+  if(error){const needsMigration=/quiz_mode|kanji_level|kanji_answer_mode/i.test(String(error.message||''));toast(needsMigration?'Database War belum diperbarui. Jalankan supabase/kanji-war-migration.sql di Supabase SQL Editor.':'Gagal membuat room: '+error.message);return}
+  const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'host'}).select().single();
+  if(pe){toast('Gagal membuat pemain: '+pe.message);await sb.from('jft_war_rooms').delete().eq('id',data.id);return}
+  room=data;player=p;saveWarSession(hostToken);await enterRoom();
+}
+
+async function joinRoom(){
+  const n=getName(),c=document.getElementById('codeInput').value.trim().toUpperCase();if(!n||c.length!==6){toast('Masukkan code 6 karakter.');return}
+  const {data,error}=await sb.from('jft_war_rooms').select('*').eq('code',c).maybeSingle();
+  if(error||!data){toast('Room tidak ditemukan.');return}
+  if(data.status!=='waiting'){toast(data.status==='closed'?'Room sudah ditutup.':'Room sudah dimulai.');return}
+  const {data:p,error:pe}=await sb.from('jft_war_players').insert({room_id:data.id,player_token:playerToken,player_name:n,role:'member'}).select().single();
+  if(pe){toast('Gagal join: '+pe.message);return}
+  room=data;player=p;saveWarSession('');await enterRoom();
+}
+
+async function restoreWarSession(){
+  const raw=sessionStorage.getItem('jft_war_session');if(!raw)return false;
+  try{
+    const x=JSON.parse(raw);if(!x.roomId||!x.playerId)return false;
+    const [{data:r},{data:p}]=await Promise.all([
+      sb.from('jft_war_rooms').select('*').eq('id',x.roomId).single(),
+      sb.from('jft_war_players').select('*').eq('id',x.playerId).single()
+    ]);
+    if(!r||!p||p.status==='kicked')return false;
+    room=r;player=p;await enterRoom();return true;
+  }catch(e){console.warn(e);return false}
+}
+
+async function enterRoom(){
+  // Jika kembali dari War Result ke room, marker redirect War sebelumnya
+  // tidak boleh dipakai untuk ronde berikutnya.
+  if(room?.status==='waiting'){
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
+  }
+  hideLobby();
+  document.getElementById('roomPanel').classList.remove('hidden');
+  document.getElementById('roomCode').textContent=room.code;
+  const modeText=room.quiz_mode==='kanji'?`Kanji ${String(room.kanji_level||'all').toUpperCase()} • jawab ${room.kanji_answer_mode==='romaji'?'romaji':'arti Indonesia'}`:'JFT Basic';
+  document.getElementById('roomInfo').textContent=`${modeText} • ${room.question_count} soal • target ${formatTime(RULES[room.question_count])} • host: ${room.host_name}`;
+  document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='waiting');
+  renderHostQr();
+  subscribeRoom();
+  await refreshPlayers();
+  await refreshRoom();
+}
+
+function subscribeRoom(){
+  if(channel)channel.unsubscribe();
+  channel=sb.channel('jft-war-room-'+room.id);
+  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_rooms',filter:'id=eq.'+room.id},payload=>{if(payload.new){room=payload.new;onRoomChange()}});
+  channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_players',filter:'room_id=eq.'+room.id},payload=>{if(payload.eventType==='DELETE'&&payload.old?.id===player.id&&!leaving){handleKicked();return}refreshPlayers()});
+  channel.subscribe();
+}
+async function refreshRoom(){const {data}=await sb.from('jft_war_rooms').select('*').eq('id',room.id).single();if(data){room=data;onRoomChange()}}
+async function refreshPlayers(){
+  const {data}=await sb.from('jft_war_players').select('*').eq('room_id',room.id).order('created_at');
+  window.warPlayers=data||[];
+  // Sinkronkan objek player lokal juga. Ini penting setelah War pertama selesai,
+  // karena status lokal sebelumnya masih "finished" saat host memulai War berikutnya.
+  const me=window.warPlayers.find(p=>p.id===player?.id);
+  if(me) player=me;
+  renderPlayers();
+}
+
+function renderPlayers(){
+  // Monitoring hanya menampilkan progres, bukan skor/kebenaran jawaban saat War berjalan.
+  const ps=[...(window.warPlayers||[])].sort((a,b)=>Number(b.current_question||0)-Number(a.current_question||0)||Number(a.created_at||0)-Number(b.created_at||0));
+  const grid=document.getElementById('playersGrid');if(!grid)return;
+  const start=document.getElementById('startBtn');
+  start.disabled=ps.length<2;
+  start.classList.toggle('hidden',player?.role!=='host'||room?.status!=='waiting');
+  grid.innerHTML=ps.map((p,i)=>{
+    const me=p.id===player?.id;
+    const status=p.status==='finished'?'Selesai':p.status==='kicked'?'Kicked':room?.status==='running'?'Mengerjakan':'Menunggu';
+    const q=Math.min(Number(p.current_question||0),Number(room?.question_count||0));
+    const pct=room?.question_count?Math.round(q/room.question_count*100):0;
+    const section=p.current_section?sectionName(p.current_section):'-';
+    return `<div class="player-card ${me?'me':''} rounded-xl border border-slate-200 p-3 bg-white">
+      <div class="flex justify-between gap-2"><div class="font-black truncate">#${i+1} ${esc(p.player_name)} ${me?'<span class="text-[10px] text-slate-400">(KAMU)</span>':''}</div><span class="text-xs font-black">${status}</span></div>
+      <div class="text-[11px] text-slate-500 mt-1">${status} • ${esc(section)}</div>
+      <div class="flex justify-between text-xs font-bold mt-3"><span>Soal ${q}/${room?.question_count||0}</span><span>${formatTime(p.elapsed_seconds)}</span></div>
+      <div class="progress mt-2"><div style="width:${pct}%"></div></div>
+      ${player?.role==='host'&&p.id!==player.id&&p.status!=='finished'&&room?.status==='waiting'?`<button onclick="kickPlayer('${p.id}')" class="mt-2 text-[10px] font-black text-red-600">Kick</button>`:''}
+    </div>`;
+  }).join('')||'<div class="text-sm text-slate-400 col-span-full text-center py-6">Belum ada pemain.</div>';
+}
+
+async function onRoomChange(){
+  const status=room.status||'waiting';
+  document.getElementById('topStatus').textContent=status==='running'?'WAR BERJALAN':status==='finished'?'SELESAI':'WAITING ROOM';
+  document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host'||status!=='waiting');
+  renderHostQr();
+  const waitingBox=document.getElementById('waitingBox');
+  const title=document.getElementById('waitingTitle');
+  const text=document.getElementById('waitingText');
+  if(status==='waiting'){
+    // Setiap room yang kembali ke waiting menandai awal siklus baru.
+    // Ini penting untuk pemain yang kembali dari War Result: marker redirect
+    // ronde lama tidak boleh menghalangi redirect pada War berikutnya.
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
+    waitingBox.classList.remove('hidden');
+    const allFinished=(window.warPlayers||[]).length>=2 && (window.warPlayers||[]).every(p=>p.status==='finished');
+    title.textContent=allFinished?'War selesai — siap mulai lagi':'Menunggu host memulai';
+    text.textContent=allFinished
+      ?'Semua pemain sudah selesai. Host bisa langsung menekan Mulai War untuk pertandingan berikutnya.'
+      :'Minimal 2 pemain. Setelah host menekan Mulai War, semua pemain masuk ke War Quiz serentak.';
+    document.getElementById('monitorHint').textContent=allFinished?'Semua selesai • siap War baru':'Menunggu host memulai...';
+    return;
+  }
+  if(status==='running'){
+    // Jangan mengandalkan objek player lama. Pada War kedua, event perubahan
+    // room bisa datang lebih cepat daripada event reset player sehingga status
+    // lokal masih "finished" dan redirect ke War Quiz terblokir.
+    let latestPlayer=player;
+    try{
+      const {data}=await sb.from('jft_war_players').select('*').eq('id',player?.id).single();
+      if(data){
+        player=data;
+        latestPlayer=data;
+        const meIndex=(window.warPlayers||[]).findIndex(p=>p.id===data.id);
+        if(meIndex>=0)window.warPlayers[meIndex]=data;
+        renderPlayers();
+      }
+    }catch(e){console.warn('Gagal menyinkronkan status pemain:',e)}
+    waitingBox.classList.remove('hidden');
+    const currentRoundKey=String(room.started_at||room.id||'');
+    const finishedAt=latestPlayer?.completed_at?new Date(latestPlayer.completed_at).getTime():0;
+    const roundStartedAt=room.started_at?new Date(room.started_at).getTime():0;
+    const isFinished=latestPlayer?.status==='finished' && (!roundStartedAt || !finishedAt || finishedAt>=roundStartedAt);
+    const redirectedRound=sessionStorage.getItem('jft_war_quiz_round');
+    title.textContent=isFinished?'Kamu sudah selesai':'War sedang berjalan';
+    text.textContent=isFinished?'Tetap di room ini untuk melihat lawan menyelesaikan soal.':'Memulai / melanjutkan War Quiz...';
+    document.getElementById('monitorHint').textContent='LIVE • progres lawan diperbarui otomatis';
+    // Gunakan started_at sebagai identitas ronde, bukan flag global '1'.
+    // Dengan begitu marker dari War pertama tidak dapat menghalangi War kedua.
+    if(!isFinished&&redirectedRound!==currentRoundKey){
+      sessionStorage.setItem('jft_war_quiz_redirect','1');
+      sessionStorage.setItem('jft_war_quiz_round',currentRoundKey);
+      location.href='war-quiz.html';
+    }
+    return;
+  }
+  if(status==='closed'){
+    waitingBox.classList.remove('hidden');title.textContent='Room sudah ditutup';text.textContent='Room ini sudah tidak tersedia.';document.getElementById('monitorHint').textContent='ROOM CLOSED';toast('Room sudah ditutup.');setTimeout(()=>{sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');location.reload()},1200);return;
+  }
+  if(status==='finished'){
+    waitingBox.classList.remove('hidden');title.textContent='War selesai';text.textContent='Semua pemain sudah selesai. Hasil tetap dapat dilihat dari halaman War Result.';document.getElementById('monitorHint').textContent='FINAL • semua pemain selesai';
+  }
+}
+
+async function kickPlayer(id){if(player?.role!=='host'||room?.status!=='waiting')return;if(!confirm('Kick pemain ini dari room?'))return;const {error}=await sb.from('jft_war_players').delete().eq('id',id).eq('room_id',room.id);if(error)toast('Gagal kick: '+error.message);else toast('Pemain dikeluarkan')}
+function handleKicked(){if(leaving)return;if(channel)channel.unsubscribe();sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');toast('Kamu dikeluarkan dari room oleh host.');setTimeout(()=>location.reload(),1200)}
+
+function buildWarQuestions(total){
+  const helper=window.JFTQuestionBank;
+  const norm=v=>String(v??'').normalize('NFKC').toLowerCase().replace(/[\s　、。,.!?！？「」『』（）()【】［］\-‐‑–—]/g,'');
+  const keyOf=q=>helper?helper.contentKey(q):[q.section,q.text,...(q.options||[]),q.audioText||'',q.visual?.title||'',q.visual?.body||'',JSON.stringify(q.visual?.rows||[])].map(norm).join('|');
+  const seen=new Set();
+  const uniqueBank=(helper?helper.uniqueBank(bank):bank).filter(q=>{const key=keyOf(q);if(seen.has(key))return false;seen.add(key);return true;});
+  const totalSafe=Math.min(Math.max(0,Number(total)||0),uniqueBank.length);
+  const historyKey=`jft_war_question_history_v3_${localStorage.getItem('jft_user_id')||'guest'}_${localStorage.getItem('jft_device_id')||'unknown-device'}`;
+  let history;try{history=JSON.parse(localStorage.getItem(historyKey)||'{"seen":[]}')}catch(_){history={seen:[]}}
+  let seenIds=new Set(Array.isArray(history.seen)?history.seen.map(String):[]);
+  let unseen=uniqueBank.filter(q=>!seenIds.has(String(q.id)));
+  if(unseen.length<totalSafe){seenIds=new Set();unseen=[...uniqueBank];}
+  const selected=helper?helper.selectBalanced(unseen,totalSafe):randomize(unseen).slice(0,totalSafe);
+  selected.forEach(q=>seenIds.add(String(q.id)));
+  try{localStorage.setItem(historyKey,JSON.stringify({seen:[...seenIds],updatedAt:Date.now()}))}catch(_){}
+  return ['vocab','grammar','listening','reading'].flatMap(sec=>selected.filter(q=>q.section===sec));
+}
+async function resetPlayersForNewWar(){
+  const players=(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left');
+  for(const p of players){
+    const {error}=await sb.from('jft_war_players').update({
+      status:'running',current_question:0,current_section:null,elapsed_seconds:0,correct:0,score:0,completed_at:null,last_seen_at:new Date().toISOString()
+    }).eq('id',p.id).eq('room_id',room.id);
+    if(error) throw error;
+  }
+}
+
+function kanjiKanaToRomaji(input){
+ let h=String(input||'').replace(/[～〜]/g,'').replace(/（.*?）/g,'').replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+ const m={'あ':'a','い':'i','う':'u','え':'e','お':'o','か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko','さ':'sa','し':'shi','す':'su','せ':'se','そ':'so','た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to','な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no','は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho','ま':'ma','み':'mi','む':'mu','め':'me','も':'mo','や':'ya','ゆ':'yu','よ':'yo','ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro','わ':'wa','を':'o','ん':'n','が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go','ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo','だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do','ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo','ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po','ぁ':'a','ぃ':'i','ぅ':'u','ぇ':'e','ぉ':'o','ゃ':'ya','ゅ':'yu','ょ':'yo'};
+ const d={'きゃ':'kya','きゅ':'kyu','きょ':'kyo','しゃ':'sha','しゅ':'shu','しょ':'sho','ちゃ':'cha','ちゅ':'chu','ちょ':'cho','にゃ':'nya','にゅ':'nyu','にょ':'nyo','ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo','みゃ':'mya','みゅ':'myu','みょ':'myo','りゃ':'rya','りゅ':'ryu','りょ':'ryo','ぎゃ':'gya','ぎゅ':'gyu','ぎょ':'gyo','じゃ':'ja','じゅ':'ju','じょ':'jo','びゃ':'bya','びゅ':'byu','びょ':'byo','ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo'};
+ let out='';for(let i=0;i<h.length;i++){let c=h[i],two=h.slice(i,i+2);if(d[two]){out+=d[two];i++;continue}if(c==='っ'){let n=d[h.slice(i+1,i+3)]||m[h[i+1]]||'';out+=n[0]||'';continue}if(c==='ー'){out+=(out.match(/[aeiou](?!.*[aeiou])/)||[''])[0];continue}if(c==='/'||c==='／'){out+=' / ';continue}if(c==='ん'&&/[あいうえおやゆよ]/.test(h[i+1]||''))out+="n'";else out+=m[c]??(c===' '?' ':'');}return out.trim();
+}
+function kanjiChoiceCategory(q){
+ const k=String(q.kana||'').replace(/[～〜]/g,'').replace(/（.*?）|\(.*?\)/g,'').trim();
+ const raw=String(q.meaning||'').toLowerCase();
+ const m=raw.normalize('NFKC').replace(/[\u3000]/g,' ');
+ const has=(re)=>re.test(m);
+ if(/(ます|ました|ません|ましょう|てください|ている|ていました|てあります)$/.test(k)||/^(?:pergi|datang|pulang|bekerja|belajar|membaca|menulis|makan|minum|mencari|memeriksa|memperbaiki|membuat|menjual|membeli|mengirim|menerima|meminjam|meminjamkan|mengajar|mengambil|menaruh|meletakkan|memakai|mengenal|mengetahui|tinggal|meneliti|menghitung|mengukur|menimbang|memastikan|berangkat|tiba|berubah|menanam|memungut|meminta maaf|percaya|menyiapkan|mengatakan|melihat|mendengar|mengunjungi|bertemu|bermain|berenang|menjemput|menikah|berbelanja|berjalan|menghias|menentukan|memberitahukan|mengulang|berunding|menyelesaikan|mematikan|menyalakan|membuka|menutup|menunggu|membawa|memanggil|menghitung|mengembalikan|menyimpan|menyelesaikan|berusaha|berpikir|memikirkan|mendaftarkan|berpartisipasi|mengukur|membatalkan|menjelaskan|memilih|menyampaikan|meminta|menawarkan|melakukan|menghasilkan|mencoba|memakai|menolong|meminta bantuan)\b/.test(m))return'verb';
+ if(/（な）|\(な\)/.test(String(q.kana||''))||/\b(?:terkenal|praktis|sehat|ramai|tenang|senggang|baik hati|cantik|bersih|tampan|gagah|nyaman|berbahaya|mudah|susah|berat|ringan)\b/.test(m))return'na-adj';
+ if(/い$/.test(k)&&has(/\b(?:besar|kecil|baru|lama|tua|jelek|buruk|panas|dingin|sulit|gampang|mudah|mahal|murah|rendah|enak|sibuk|senang|putih|hitam|merah|biru|lemah|kuat|cepat|lambat|jauh|dekat|berat|ringan|manis|pedas|luas|sempit|tinggi|pendek|benar|betul|aneh|langka|menarik|menyenangkan|sedih|pahit|asin|panjang|pendek)\b/))return'i-adj';
+ if(has(/\b(?:merah|biru|putih|hitam|hijau|ungu|kuning|coklat|oranye|jingga|abu-abu|krem|merah muda|warna)\b/))return'color';
+ if(has(/\b(?:pagi|siang|malam|hari|minggu|bulan|tahun|jam|menit|tanggal|waktu|sekarang|besok|kemarin|lusa|musim|setiap hari|setiap minggu|pekan|akhir pekan|ulang tahun|dua minggu lagi|dua bulan lagi|dua tahun lagi|setengah tahun|pertama|mula-mula)\b/))return'time';
+ if(has(/\b(?:orang|ayah|ibu|anak|teman|guru|dosen|murid|siswa|pegawai|dokter|peneliti|keluarga|istri|suami|nenek|kakek|saudara|kakak|adik|remaja|tetangga|petugas|pemilik|manusia|bujangan|jomblo|pasangan|laki-laki|perempuan|laki laki|perempuan)\b/))return'person';
+ if(has(/\b(?:negara|jepang|indonesia|amerika|inggris|india|korea|china|tiongkok|jerman|perancis|italia|swis|spanyol|meksiko|australia|bahasa|orang jepang|orang asing|kewarganegaraan|dialek|logat)\b/))return'country-language';
+ if(has(/\b(?:makan|minum|daging|ikan|sayur|buah|roti|nasi|kopi|teh|air|jus|susu|telur|makanan|masakan|kue|sup|mi|mie|sosis|apel|jeruk|pisang|anggur|semangka|kentang|wortel|bawang|udang|kepiting|cumi-cumi|gurita|salmon|tuna|ayam|sapi|babi|ikan mackerel|ikan sarden|ikan kembung|kecap ikan|keju|es krim|cokelat|pizza|salad|tempura|sushi|kare|sandwich|hamburger|kroket)\b/))return'food';
+ if(has(/\b(?:anjing|kucing|gajah|panda|burung|kuda|sapi|babi|ayam|kambing|ikan|serangga|hewan|binatang)\b/)&&!has(/\b(?:daging|ikan mackerel|ikan sarden|ikan salmon|ikan tuna|ikan kakap)\b/))return'animal';
+ if(has(/\b(?:pohon|gunung|laut|sungai|hujan|salju|mendung|cuaca|pulau|desa|kampung|bunga|sakura|tanaman|tumbuhan|hutan|pantai|danau|awan|angin|udara|tanah|batu|maple|musim semi|musim panas|musim gugur|musim dingin)\b/))return'nature-weather';
+ if(has(/\b(?:mobil|kereta|pesawat|kapal|bus|taksi|sepeda|jalan kaki|stasiun|bandara|peron|shinkansen|kereta bawah tanah|transportasi|pelabuhan|berangkat|tiba)\b/))return'transport';
+ if(has(/\b(?:rumah|kamar|kantor|sekolah|kelas|universitas|rumah sakit|toko|restoran|tempat|kota|ruang|gedung|kuil|taman|perpustakaan|kantin|dapur|toilet|ruang makan|ruang rapat|lobi|asrama|apartemen|pintu masuk|tempat parkir|balaikota|kantor polisi|kantor pos|pabrik|perusahaan|gedung kesenian|museum|bioskop|kebun binatang|kebun raya|gereja|imigrasi|pelajaran di sekolah|kampus|pinggiran kota|luar kota|atap|lantai|koridor|tempat penjualan|basement)\b/))return'place';
+ if(has(/\b(?:olahraga|sepak bola|tenis|judo|kendo|renang|ski|skate|bowling|rugby|voli|pingpong|sumo|baseball|musik|lagu|konser|karaoke|anime|film|komedi|horor|misteri|percintaan|peperangan|dansa|tamasya|bermain|hiburan|pesta|perayaan|pertandingan|festival|seni|gambar|lukisan|drama|kabuki|opera|rock|pop|jazz|klasik|musik rakyat|nyanyian daerah)\b/))return'leisure-art';
+ if(has(/\b(?:buku|kamus|majalah|koran|pensil|bolpoin|pulpen|kunci|jam|arloji|payung|tas|meja|kursi|komputer|telepon|ponsel|hp|pakaian|kertas|surat|uang|karcis|tiket|kartu|alat|barang|peralatan|pintu|jendela|kotak|baterai|lemari|televisi|radio|kamera|buku catatan|agenda|kartu nama|perlengkapan|elektronik|produk|hadiah|oleh-oleh|perangko|kartu pos|amplop|garansi|kwitansi|dokumen|laporan|foto|video|obeng|gunting|pisau|sendok|garpu|selotip|penghapus|perabot|perlengkapan rumah)\b/))return'object';
+ if(has(/\b(?:badan|kepala|mata|telinga|mulut|hidung|tangan|kaki|jari|gigi|perut|punggung|rambut|leher|wajah|gigi|tubuh|dokter gigi)\b/))return'body';
+ if(has(/\b(?:angka|nomor|skor|nilai|jumlah|kali|buah|lembar|orang|unit|puluh|ratus|ribu|juta|yen|uang kecil|receh|berapa|setengah|persen|urutan|ke-)\b/))return'number-money';
+ if(has(/\b(?:saya|aku|kamu|dia|ini|itu|di sini|di situ|di sana|dimana|di mana|siapa|apa|bagaimana|kenapa|iya|tidak|sudah|belum|boleh|silakan|maaf|terima kasih|selamat|perkenalkan|tolong|sama-sama|begitu|mungkin|karena|setelah itu|kemudian|bersama-sama|selalu|kadang-kadang|cukup|sangat|kurang begitu|hanya|semua|berbagai|macam-macam|kapan|yang mana)\b/))return'expression';
+ if(has(/\b(?:ekonomi|arti|makna|alasan|masalah|urusan|janji|berita|informasi|data|bahan|kehidupan|pekerjaan|pengalaman|kesempatan|peraturan|aturan|cara|keadaan|kondisi|perasaan|rencana|tujuan|usaha|sebab|hasil|hubungan|pendapat|ingatan|perhatian|kekuatan|kesehatan|keamanan|bahaya|persiapan|pelajaran|kuliah|latihan|ujian|rapat|pertemuan|perundingan|pemberitahuan|pengumuman|pembatalan|permintaan|bantuan|jasa|kepercayaan|jaminan|kebiasaan|budaya|sejarah|masa depan|masa lalu|kehidupan)\b/))return'abstract';
+ return'other';
+}
+function kanjiOptionsFor(q,list,mode){
+ const answer=mode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();
+ const norm=v=>String(v||'').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]/gu,'');
+ const meaningIdentity=v=>norm(String(v||'').replace(/[（(].*?[）)]/g,'').replace(/[：:]/g,' ').trim());
+ const answerIdentity=meaningIdentity(answer),cat=kanjiChoiceCategory(q),len=answer.length,targetReading=kanjiKanaToRomaji(q.kana).length;
+ const pool=list.filter(x=>x!==q).map(x=>({q:x,text:mode==='romaji'?kanjiKanaToRomaji(x.kana):String(x.meaning||'').trim(),cat:kanjiChoiceCategory(x),chapter:Math.abs(Number(x.chapter)-Number(q.chapter)),len:(mode==='romaji'?kanjiKanaToRomaji(x.kana):String(x.meaning||'').trim()).length,reading:Math.abs(kanjiKanaToRomaji(x.kana).length-targetReading)}))
+ .filter(x=>x.text&&norm(x.text)!==norm(answer)&&(mode!=='meaning'||meaningIdentity(x.text)!==answerIdentity))
+ .map(x=>({...x,score:(x.cat===cat?0:100)+x.chapter*1.1+Math.abs(x.len-len)*1.4+(mode==='romaji'?x.reading*2:0)+Math.random()*5}));
+ pool.sort((a,b)=>a.score-b.score);const opts=[answer],used=new Set([norm(answer)]);
+ for(const x of pool){const key=norm(x.text);if(!key||used.has(key))continue;opts.push(x.text);used.add(key);if(opts.length===4)break}
+ return randomize(opts);
+}
+async function loadKanjiBank(){if(kanjiBank.length)return kanjiBank;const r=await fetch('data/kanji-bank.json');if(!r.ok)throw new Error('Bank kanji gagal dimuat.');kanjiBank=(await r.json()).filter(q=>q.kanji&&q.kana&&q.meaning);return kanjiBank}
+
+async function startWar(){
+  if(startingWar||player?.role!=='host'||room?.status!=='waiting'||(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left').length<2)return;
+  startingWar=true;
+  const startBtn=document.getElementById('startBtn');let didStart=false;if(startBtn){startBtn.disabled=true;startBtn.classList.add('opacity-60','cursor-wait')}
+  try{
+    let selected=[];
+    if(room.quiz_mode==='kanji'){
+      const all=await loadKanjiBank();
+      const source=all.filter(q=>room.kanji_level==='n5'?Number(q.chapter)<=25:room.kanji_level==='n4'?Number(q.chapter)>=26:true);
+      if(source.length<Number(room.question_count)){toast('Bank Kanji pada level ini tidak cukup untuk jumlah soal yang dipilih.');return}
+      const answerMode=room.kanji_answer_mode==='romaji'?'romaji':'meaning';
+      selected=randomize(source).slice(0,Number(room.question_count)).map((q)=>{const opts=kanjiOptionsFor(q,source,answerMode);const ans=answerMode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();return {id:'kanji-'+q.chapter+'-'+source.indexOf(q),type:'kanji',section:'kanji',chapter:q.chapter,kanji:q.kanji,kana:q.kana,meaning:q.meaning,answer_mode:answerMode,options:opts,answer:opts.findIndex(x=>String(x).normalize('NFKC').toLowerCase()===ans.normalize('NFKC').toLowerCase())}});
+    }else{
+      if(!bank.length)await loadBank();
+      selected=buildWarQuestions(Number(room.question_count)||10);
+    }
+    if(selected.length!==Number(room.question_count)){toast('Bank soal tidak cukup untuk memulai War.');return}
+    await resetPlayersForNewWar();
+    // Perbarui status lokal host sebelum room diubah menjadi running agar
+    // event realtime tidak sempat melihat status "finished" dari War sebelumnya.
+    const own=await sb.from('jft_war_players').select('*').eq('id',player.id).single();
+    if(own.data)player=own.data;
+    await refreshPlayers();
+    const ids=room.quiz_mode==='kanji'?selected:selected.map(q=>q.id);
+    const started=new Date(Date.now()+1500).toISOString();
+    const {error}=await sb.from('jft_war_rooms').update({question_ids:ids,status:'running',started_at:started}).eq('id',room.id).eq('status','waiting');
+    if(error){toast('Gagal memulai: '+error.message);return}
+    didStart=true;
+    sessionStorage.removeItem('jft_war_quiz_redirect');
+    sessionStorage.removeItem('jft_war_quiz_round');
+  }catch(e){toast('Gagal memulai War: '+(e?.message||'coba lagi'));}
+  finally{startingWar=false;if(!didStart&&startBtn){startBtn.disabled=false;startBtn.classList.remove('opacity-60','cursor-wait')}}
+}
+
+async function leaveRoom(){
+  if(!room||!player)return;
+  leaving=true;
+  if(channel)channel.unsubscribe();
+  await sb.from('jft_war_players').delete().eq('id',player.id);
+  if(player.role==='host')await sb.from('jft_war_rooms').update({status:'closed',expires_at:new Date().toISOString()}).eq('id',room.id);
+  sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');location.reload();
+}
+async function copyCode(){try{await navigator.clipboard.writeText(room.code);toast('Code room disalin')}catch{toast('Salin manual: '+room.code)}}
+
+document.querySelectorAll('.countBtn').forEach(b=>b.onclick=()=>{
+  selectedCount=Number(b.dataset.count);
+  document.querySelectorAll('.countBtn').forEach(x=>{x.classList.remove('border-slate-900','border-2');x.classList.add('border','border-slate-200')});
+  b.classList.remove('border','border-slate-200');b.classList.add('border-2','border-slate-900');
+});
+
+document.getElementById('ruleGrid').innerHTML=Object.entries(RULES).map(([n,t])=>`<div class="rounded-xl bg-slate-50 p-3"><div class="font-black">${n} soal</div><div class="text-xs text-slate-500 mt-1">target ${formatTime(t)}</div></div>`).join('');
+
+setName();
+const incomingJoin=new URLSearchParams(location.search).get('join');
+if(incomingJoin){
+  const normalized=String(incomingJoin).toUpperCase().replace(/[^A-Z0-9]/g,'').slice(0,6);
+  if(normalized.length===6){
+    document.getElementById('codeInput').value=normalized;
+    if(getName()) document.getElementById('screenLobby').classList.add('hidden');
+    document.getElementById('joinPanel').classList.remove('hidden');
+  }
+}
+loadBank().catch(e=>console.warn('Bank soal gagal dimuat',e));
+if(!incomingJoin){
+  restoreWarSession().then(ok=>{if(!ok)setName()});
+}
+</script>
+</body>
+</html>
