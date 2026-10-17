@@ -75,7 +75,7 @@ Catatan TTS: pemilihan suara memakai Web Speech API dan voice Jepang yang dipasa
 
 ## Listening TTS (male/female voices)
 
-The quiz now routes dialogue through `window.JFTSpeakDialogue`. Browser-native Japanese voices are selected by voice-name hints when available, but browser/Android voice inventories vary and do not expose a reliable gender field. For deterministic separate voices, configure a separately hosted VOICEVOX Engine and set `window.JFT_VOICEVOX_ENDPOINT` to its HTTPS base URL before `assets/js/core/resume-router.js` loads. Default speaker IDs are female `2` (Shikoku Metan) and male `13` (Aoyama Ryusei); override with `window.JFT_VOICEVOX_FEMALE_ID` and `window.JFT_VOICEVOX_MALE_ID` if your engine's speaker list differs. The VOICEVOX engine is an HTTP server and is not hosted by static Vercel pages themselves. Ensure the remote engine permits browser CORS requests and use a trusted deployment.
+The shared `window.JFTSpeakDialogue` function sends synthesis requests through the Node/Express endpoint `/api/voicevox/synthesize`. Configure the separately hosted VOICEVOX Engine on Render using `VOICEVOX_URL`; do not set the engine URL in browser JavaScript. Default speaker/style IDs are `2` (female) and `13` (male), but verify them with the engine's `/speakers` endpoint because IDs can vary by engine/version. `A:` lines use the female voice, `B:` lines use the male voice, and plain narration defaults to female. If VOICEVOX is unavailable, the website falls back to browser TTS, whose available voices vary by device.
 
 Listening playback during an attempt is limited to two plays per question (including when navigating away and back). The result/review screen uses a separate replay path and has no play limit. War question selection now filters duplicate content and tracks used question IDs locally per account/device, starting a new cycle only when the available unique bank is exhausted.
 
@@ -121,3 +121,13 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - Progres disinkronkan berdasarkan ID perangkat; jika database tidak tersedia, browser memakai cadangan lokal.
 - `flashcards.html` memiliki daftar semua kosakata, pencarian, kategori, status hafalan, jumlah lupa, dan tombol menghafal/latihan ulang.
 - Pada kuis Kanji, mode romaji menampilkan arti sebagai petunjuk; mode arti menampilkan hiragana. Hasil menampilkan jawaban yang dipilih dan koreksi.
+
+
+## VOICEVOX via Node.js (Listening audio)
+- Listening audio is routed through `POST /api/voicevox/synthesize` on the Node/Express server.
+- Set `VOICEVOX_URL` in the Render Web Service environment to the HTTPS base URL of a separately hosted, reachable VOICEVOX Engine.
+- Optional variables: `VOICEVOX_FEMALE_ID` (default `2`) and `VOICEVOX_MALE_ID` (default `13`). Confirm IDs using the engine's `/speakers` endpoint; IDs can differ by engine/version.
+- `A:` lines use the configured female voice; `B:` lines use the configured male voice. Single-line/plain narration defaults to female; untagged multi-line text alternates.
+- If VOICEVOX is not configured or unreachable, the website falls back to the browser's Japanese TTS. That fallback cannot guarantee distinct male/female voices on every device.
+- Render does not host the VOICEVOX synthesis engine just by deploying this Node app. The engine must be hosted separately; the Node backend proxies requests to it to avoid browser-side CORS issues.
+- Website design and question data are unchanged by this audio update.
