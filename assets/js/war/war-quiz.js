@@ -1,7 +1,7 @@
 const SUPABASE_URL='https://lnthciiomeppirzucqwu.supabase.co',SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
 const sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY), RULES={10:300,20:600,30:900,40:1200,50:1500,60:1800,70:2100,80:2400,90:2700,100:3000};
 const SECTIONS={vocab:['文字と語彙','Script and Vocabulary'],grammar:['会話と表現','Conversation and Expression'],listening:['聴解','Listening Comprehension'],reading:['読解','Reading Comprehension'],kanji:['漢字','Kanji']};
-const EMOJIS=['🔥','😹','😋','🤪','😲','🤓','😠','😂','😎','👏','💀','❤️'];
+const EMOJIS=['★','◆','●','✦','✓','!','+','×','◇','▲','■','♥'];
 let session,room,player,bank=[],questions=[],idx=0,answers=[],startedAt=0,correct=0,channel,timerHandle,progressHandle,finished=false,answerLocked=false,lastReactionIds=new Set(),reactionCooldownUntil=0,maxReached=1;
 const warAudioPlayCounts={};
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
