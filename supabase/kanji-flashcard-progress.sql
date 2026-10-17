@@ -19,3 +19,7 @@ create policy "Kanji progress update for app" on public.kanji_flashcard_progress
 -- Izinkan perangkat menghapus progres miliknya saat fitur Reset progres kanji digunakan.
 drop policy if exists "Kanji progress delete for app" on public.kanji_flashcard_progress;
 create policy "Kanji progress delete for app" on public.kanji_flashcard_progress for delete to anon, authenticated using (true);
+
+-- Izinkan pengguna anonim menghapus progres perangkat sendiri untuk fitur reset/batal status.
+drop policy if exists "Kanji progress delete for app" on public.kanji_flashcard_progress;
+create policy "Kanji progress delete for app" on public.kanji_flashcard_progress for delete to anon, authenticated using (true);
