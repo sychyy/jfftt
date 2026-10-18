@@ -1,5 +1,9 @@
-# Bank soal JFT — Minna no Nihongo pelajaran 1–50
+# Bank soal berdasarkan kategori
 
-Bank soal ini berisi soal latihan baru yang disusun berdasarkan cakupan umum tata bahasa, kosakata, dan situasi komunikasi Minna no Nihongo Shokyuu I–II, dengan konteks praktis JFT-Basic A1–A2. Soal tidak disalin verbatim dari buku.
+Tambahkan soal ke file JSON sesuai field `section`:
+- `vocab.json` — `vocab`
+- `grammar.json` — `grammar`
+- `listening.json` — `listening` (pertahankan `audioText` jika digunakan)
+- `reading.json` — `reading` (pertahankan `visual.title`, `visual.body`, dan `visual.rows` jika ada)
 
-Kategori: vocab.json, grammar.json, listening.json, reading.json. Tiap file berupa array JSON; `answer` adalah indeks opsi mulai dari 0. `lesson` dan `period` menunjukkan pemetaan pelajaran.
+Setiap file harus berupa array JSON. Tiap soal wajib memiliki `id` unik di seluruh kategori, `section`, `text`, `options` (string), `answer` berupa indeks mulai dari 0, dan `explanation`. Soal dengan `visual.type` `passage` atau `message` harus menyimpan cerita lengkap pada `visual.body`.

@@ -10489,9 +10489,9 @@ if (window.speechSynthesis) {
 }
 
 if (q.audioText) {
-    aBtn.classList.remove('hidden');
-    tBtn.classList.remove('hidden');
     fb.textContent = q.audioText;
+    if (listeningAudioEnabled) { aBtn.classList.remove('hidden'); }
+    else { fb.classList.remove('hidden'); }
 
     const questionId = q.id;
 

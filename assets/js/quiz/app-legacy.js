@@ -2064,7 +2064,7 @@ async function startQuiz() {
 
         function renderQuestion() {
             const q = state.questions[state.currentQuestionIndex];
-            // ON = audio tanpa transkrip; OFF = transkrip tanpa audio.
+            // Listening Experience: ON = audio tanpa transkrip; OFF = transkrip tanpa audio.
             const listeningAudioEnabled = localStorage.getItem('jft_listening_audio') !== 'off';
             const questionForDisplay = q.section === 'listening' ? { ...q, visual: null } : q;
             
@@ -2124,6 +2124,7 @@ if (q.audioText) {
     const plays = Number(audioPlayCounts[playKey] || 0);
     if (audioEnabled) aBtn.classList.remove('hidden');
     else { fb.classList.remove('hidden'); fb.innerHTML = `<strong>Transkrip listening (mode teks)</strong><div class="mt-2">${renderJapaneseText(q.audioText)}</div>`; }
+    // Transkrip dikendalikan oleh toggle; jangan tampilkan tombol transkrip manual.
     if (audioEnabled) {
         aBtn.disabled = plays >= 2;
         aBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;

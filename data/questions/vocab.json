@@ -1,4002 +1,2508 @@
 [
   {
-    "id": 20000,
     "section": "vocab",
-    "text": "「先生」の 読み方は どれですか。",
+    "text": "「甘い」の 読み方は どれですか。",
     "options": [
-      "せんせい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "かさ",
+      "かい",
+      "かぜ",
+      "あまい"
     ],
-    "answer": 0,
-    "explanation": "「先生」は「せんせい」と 読みます（arti: guru）。",
-    "period": "minna-lesson-01",
-    "lesson": 1,
-    "word": "先生"
+    "answer": 3,
+    "explanation": "「甘い」の 読み方は「あまい」です。",
+    "period": "sep-nov",
+    "id": 253
   },
   {
-    "id": 20001,
     "section": "vocab",
-    "text": "「がくせい」の 意味は どれですか。",
+    "text": "「出口」の 読み方は どれですか。",
     "options": [
-      "pelajar",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "なつ",
+      "あめ",
+      "はれ",
+      "でぐち"
     ],
-    "answer": 0,
-    "explanation": "「がくせい」 berarti pelajar。",
-    "period": "minna-lesson-01",
-    "lesson": 1,
-    "word": "学生"
+    "answer": 3,
+    "explanation": "「出口」の 読み方は「でぐち」です。",
+    "period": "sep-nov",
+    "id": 194
   },
   {
-    "id": 20002,
     "section": "vocab",
-    "text": "「pegawai perusahaan」に あたる 日本語は どれですか。",
+    "text": "「掃除」の 読み方は どれですか。",
     "options": [
-      "会社員",
-      "学校",
-      "時間",
-      "天気"
+      "あめ",
+      "そうじ",
+      "はれ",
+      "かい"
     ],
-    "answer": 0,
-    "explanation": "「pegawai perusahaan」は 日本語で「会社員」です。",
-    "period": "minna-lesson-01",
-    "lesson": 1,
-    "word": "会社員"
+    "answer": 1,
+    "explanation": "「掃除」の 読み方は「そうじ」です。",
+    "period": "sep-nov",
+    "id": 5
   },
   {
-    "id": 20003,
     "section": "vocab",
-    "text": "「医者」の 読み方は どれですか。",
+    "text": "「野菜」の 読み方は どれですか。",
     "options": [
-      "いしゃ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "かさ",
+      "ゆき",
+      "あめ",
+      "やさい"
     ],
-    "answer": 0,
-    "explanation": "「医者」は「いしゃ」と 読みます（arti: dokter）。",
-    "period": "minna-lesson-01",
-    "lesson": 1,
-    "word": "医者"
+    "answer": 3,
+    "explanation": "「野菜」の 読み方は「やさい」です。",
+    "period": "sep-nov",
+    "id": 118
   },
   {
-    "id": 20004,
     "section": "vocab",
-    "text": "「エンジニア」の 意味は どれですか。",
+    "text": "「銀行」の 読み方は どれですか。",
     "options": [
-      "insinyur",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "みぎ",
+      "かい",
+      "ぎんこう",
+      "あめ"
     ],
-    "answer": 0,
-    "explanation": "「エンジニア」 berarti insinyur。",
-    "period": "minna-lesson-01",
-    "lesson": 1,
-    "word": "エンジニア"
+    "answer": 2,
+    "explanation": "「銀行」の 読み方は「ぎんこう」です。",
+    "period": "sep-nov",
+    "id": 981
   },
   {
-    "id": 20005,
-    "section": "vocab",
-    "text": "「本」の 読み方は どれですか。",
-    "options": [
-      "ほん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「本」は「ほん」と 読みます（arti: buku）。",
-    "period": "minna-lesson-02",
-    "lesson": 2,
-    "word": "本"
-  },
-  {
-    "id": 20006,
-    "section": "vocab",
-    "text": "「じしょ」の 意味は どれですか。",
-    "options": [
-      "kamus",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じしょ」 berarti kamus。",
-    "period": "minna-lesson-02",
-    "lesson": 2,
-    "word": "辞書"
-  },
-  {
-    "id": 20007,
-    "section": "vocab",
-    "text": "「majalah」に あたる 日本語は どれですか。",
-    "options": [
-      "雑誌",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「majalah」は 日本語で「雑誌」です。",
-    "period": "minna-lesson-02",
-    "lesson": 2,
-    "word": "雑誌"
-  },
-  {
-    "id": 20008,
     "section": "vocab",
     "text": "「新聞」の 読み方は どれですか。",
     "options": [
       "しんぶん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "はれ",
+      "みせ",
+      "ふゆ"
     ],
     "answer": 0,
-    "explanation": "「新聞」は「しんぶん」と 読みます（arti: koran）。",
-    "period": "minna-lesson-02",
-    "lesson": 2,
-    "word": "新聞"
+    "explanation": "「新聞」の 読み方は「しんぶん」です。",
+    "period": "sep-nov",
+    "id": 664
   },
   {
-    "id": 20009,
     "section": "vocab",
-    "text": "「めいし」の 意味は どれですか。",
+    "text": "「注文」の 読み方は どれですか。",
     "options": [
-      "kartu nama",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "ちゅうもん",
+      "ゆき",
+      "みせ",
+      "あき"
     ],
     "answer": 0,
-    "explanation": "「めいし」 berarti kartu nama。",
-    "period": "minna-lesson-02",
-    "lesson": 2,
-    "word": "名刺"
+    "explanation": "「注文」の 読み方は「ちゅうもん」です。",
+    "period": "sep-nov",
+    "id": 688
   },
   {
-    "id": 20010,
-    "section": "vocab",
-    "text": "「教室」の 読み方は どれですか。",
-    "options": [
-      "きょうしつ",
-      "きょうと",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「教室」は「きょうしつ」と 読みます（arti: ruang kelas）。",
-    "period": "minna-lesson-03",
-    "lesson": 3,
-    "word": "教室"
-  },
-  {
-    "id": 20011,
-    "section": "vocab",
-    "text": "「しょくどう」の 意味は どれですか。",
-    "options": [
-      "kantin",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しょくどう」 berarti kantin。",
-    "period": "minna-lesson-03",
-    "lesson": 3,
-    "word": "食堂"
-  },
-  {
-    "id": 20012,
-    "section": "vocab",
-    "text": "「kantor」に あたる 日本語は どれですか。",
-    "options": [
-      "事務所",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「kantor」は 日本語で「事務所」です。",
-    "period": "minna-lesson-03",
-    "lesson": 3,
-    "word": "事務所"
-  },
-  {
-    "id": 20013,
-    "section": "vocab",
-    "text": "「受付」の 読み方は どれですか。",
-    "options": [
-      "うけつけ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「受付」は「うけつけ」と 読みます（arti: resepsionis）。",
-    "period": "minna-lesson-03",
-    "lesson": 3,
-    "word": "受付"
-  },
-  {
-    "id": 20014,
-    "section": "vocab",
-    "text": "「かいぎしつ」の 意味は どれですか。",
-    "options": [
-      "ruang rapat",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かいぎしつ」 berarti ruang rapat。",
-    "period": "minna-lesson-03",
-    "lesson": 3,
-    "word": "会議室"
-  },
-  {
-    "id": 20015,
-    "section": "vocab",
-    "text": "「起きます」の 読み方は どれですか。",
-    "options": [
-      "おきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「起きます」は「おきます」と 読みます（arti: bangun）。",
-    "period": "minna-lesson-04",
-    "lesson": 4,
-    "word": "起きます"
-  },
-  {
-    "id": 20016,
-    "section": "vocab",
-    "text": "「ねます」の 意味は どれですか。",
-    "options": [
-      "tidur",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ねます」 berarti tidur。",
-    "period": "minna-lesson-04",
-    "lesson": 4,
-    "word": "寝ます"
-  },
-  {
-    "id": 20017,
-    "section": "vocab",
-    "text": "「bekerja」に あたる 日本語は どれですか。",
-    "options": [
-      "働きます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「bekerja」は 日本語で「働きます」です。",
-    "period": "minna-lesson-04",
-    "lesson": 4,
-    "word": "働きます"
-  },
-  {
-    "id": 20018,
-    "section": "vocab",
-    "text": "「休みます」の 読み方は どれですか。",
-    "options": [
-      "やすみます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「休みます」は「やすみます」と 読みます（arti: beristirahat/libur）。",
-    "period": "minna-lesson-04",
-    "lesson": 4,
-    "word": "休みます"
-  },
-  {
-    "id": 20019,
-    "section": "vocab",
-    "text": "「べんきょうします」の 意味は どれですか。",
-    "options": [
-      "belajar",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「べんきょうします」 berarti belajar。",
-    "period": "minna-lesson-04",
-    "lesson": 4,
-    "word": "勉強します"
-  },
-  {
-    "id": 20020,
-    "section": "vocab",
-    "text": "「行きます」の 読み方は どれですか。",
-    "options": [
-      "いきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「行きます」は「いきます」と 読みます（arti: pergi）。",
-    "period": "minna-lesson-05",
-    "lesson": 5,
-    "word": "行きます"
-  },
-  {
-    "id": 20021,
-    "section": "vocab",
-    "text": "「きます」の 意味は どれですか。",
-    "options": [
-      "datang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「きます」 berarti datang。",
-    "period": "minna-lesson-05",
-    "lesson": 5,
-    "word": "来ます"
-  },
-  {
-    "id": 20022,
-    "section": "vocab",
-    "text": "「pulang」に あたる 日本語は どれですか。",
-    "options": [
-      "帰ります",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「pulang」は 日本語で「帰ります」です。",
-    "period": "minna-lesson-05",
-    "lesson": 5,
-    "word": "帰ります"
-  },
-  {
-    "id": 20023,
-    "section": "vocab",
-    "text": "「電車」の 読み方は どれですか。",
-    "options": [
-      "でんしゃ",
-      "きょうしつ",
-      "じてんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「電車」は「でんしゃ」と 読みます（arti: kereta）。",
-    "period": "minna-lesson-05",
-    "lesson": 5,
-    "word": "電車"
-  },
-  {
-    "id": 20024,
-    "section": "vocab",
-    "text": "「じてんしゃ」の 意味は どれですか。",
-    "options": [
-      "sepeda",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じてんしゃ」 berarti sepeda。",
-    "period": "minna-lesson-05",
-    "lesson": 5,
-    "word": "自転車"
-  },
-  {
-    "id": 20025,
-    "section": "vocab",
-    "text": "「食べます」の 読み方は どれですか。",
-    "options": [
-      "たべます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「食べます」は「たべます」と 読みます（arti: makan）。",
-    "period": "minna-lesson-06",
-    "lesson": 6,
-    "word": "食べます"
-  },
-  {
-    "id": 20026,
-    "section": "vocab",
-    "text": "「のみます」の 意味は どれですか。",
-    "options": [
-      "minum",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「のみます」 berarti minum。",
-    "period": "minna-lesson-06",
-    "lesson": 6,
-    "word": "飲みます"
-  },
-  {
-    "id": 20027,
-    "section": "vocab",
-    "text": "「mengisap/merokok」に あたる 日本語は どれですか。",
-    "options": [
-      "吸います",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「mengisap/merokok」は 日本語で「吸います」です。",
-    "period": "minna-lesson-06",
-    "lesson": 6,
-    "word": "吸います"
-  },
-  {
-    "id": 20028,
-    "section": "vocab",
-    "text": "「見ます」の 読み方は どれですか。",
-    "options": [
-      "みます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「見ます」は「みます」と 読みます（arti: melihat）。",
-    "period": "minna-lesson-06",
-    "lesson": 6,
-    "word": "見ます"
-  },
-  {
-    "id": 20029,
-    "section": "vocab",
-    "text": "「ききます」の 意味は どれですか。",
-    "options": [
-      "mendengar/bertanya",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ききます」 berarti mendengar/bertanya。",
-    "period": "minna-lesson-06",
-    "lesson": 6,
-    "word": "聞きます"
-  },
-  {
-    "id": 20030,
-    "section": "vocab",
-    "text": "「切ります」の 読み方は どれですか。",
-    "options": [
-      "きります",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「切ります」は「きります」と 読みます（arti: memotong）。",
-    "period": "minna-lesson-07",
-    "lesson": 7,
-    "word": "切ります"
-  },
-  {
-    "id": 20031,
-    "section": "vocab",
-    "text": "「おくります」の 意味は どれですか。",
-    "options": [
-      "mengirim",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「おくります」 berarti mengirim。",
-    "period": "minna-lesson-07",
-    "lesson": 7,
-    "word": "送ります"
-  },
-  {
-    "id": 20032,
-    "section": "vocab",
-    "text": "「memberi」に あたる 日本語は どれですか。",
-    "options": [
-      "あげます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「memberi」は 日本語で「あげます」です。",
-    "period": "minna-lesson-07",
-    "lesson": 7,
-    "word": "あげます"
-  },
-  {
-    "id": 20033,
-    "section": "vocab",
-    "text": "「もらいます」の 読み方は どれですか。",
-    "options": [
-      "もらいます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「もらいます」は「もらいます」と 読みます（arti: menerima）。",
-    "period": "minna-lesson-07",
-    "lesson": 7,
-    "word": "もらいます"
-  },
-  {
-    "id": 20034,
-    "section": "vocab",
-    "text": "「かします」の 意味は どれですか。",
-    "options": [
-      "meminjamkan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かします」 berarti meminjamkan。",
-    "period": "minna-lesson-07",
-    "lesson": 7,
-    "word": "貸します"
-  },
-  {
-    "id": 20035,
-    "section": "vocab",
-    "text": "「きれい」の 読み方は どれですか。",
-    "options": [
-      "きれい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「きれい」は「きれい」と 読みます（arti: indah/bersih）。",
-    "period": "minna-lesson-08",
-    "lesson": 8,
-    "word": "きれい"
-  },
-  {
-    "id": 20036,
-    "section": "vocab",
-    "text": "「しずか」の 意味は どれですか。",
-    "options": [
-      "tenang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しずか」 berarti tenang。",
-    "period": "minna-lesson-08",
-    "lesson": 8,
-    "word": "静か"
-  },
-  {
-    "id": 20037,
-    "section": "vocab",
-    "text": "「ramai」に あたる 日本語は どれですか。",
-    "options": [
-      "にぎやか",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「ramai」は 日本語で「にぎやか」です。",
-    "period": "minna-lesson-08",
-    "lesson": 8,
-    "word": "にぎやか"
-  },
-  {
-    "id": 20038,
-    "section": "vocab",
-    "text": "「有名」の 読み方は どれですか。",
-    "options": [
-      "ゆうめい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「有名」は「ゆうめい」と 読みます（arti: terkenal）。",
-    "period": "minna-lesson-08",
-    "lesson": 8,
-    "word": "有名"
-  },
-  {
-    "id": 20039,
-    "section": "vocab",
-    "text": "「しんせつ」の 意味は どれですか。",
-    "options": [
-      "baik hati",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しんせつ」 berarti baik hati。",
-    "period": "minna-lesson-08",
-    "lesson": 8,
-    "word": "親切"
-  },
-  {
-    "id": 20040,
-    "section": "vocab",
-    "text": "「わかります」の 読み方は どれですか。",
-    "options": [
-      "わかります",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「わかります」は「わかります」と 読みます（arti: mengerti）。",
-    "period": "minna-lesson-09",
-    "lesson": 9,
-    "word": "わかります"
-  },
-  {
-    "id": 20041,
-    "section": "vocab",
-    "text": "「あります」の 意味は どれですか。",
-    "options": [
-      "ada (benda)",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「あります」 berarti ada (benda)。",
-    "period": "minna-lesson-09",
-    "lesson": 9,
-    "word": "あります"
-  },
-  {
-    "id": 20042,
-    "section": "vocab",
-    "text": "「suka」に あたる 日本語は どれですか。",
-    "options": [
-      "好き",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「suka」は 日本語で「好き」です。",
-    "period": "minna-lesson-09",
-    "lesson": 9,
-    "word": "好き"
-  },
-  {
-    "id": 20043,
-    "section": "vocab",
-    "text": "「嫌い」の 読み方は どれですか。",
-    "options": [
-      "きらい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「嫌い」は「きらい」と 読みます（arti: tidak suka）。",
-    "period": "minna-lesson-09",
-    "lesson": 9,
-    "word": "嫌い"
-  },
-  {
-    "id": 20044,
-    "section": "vocab",
-    "text": "「じょうず」の 意味は どれですか。",
-    "options": [
-      "mahir",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じょうず」 berarti mahir。",
-    "period": "minna-lesson-09",
-    "lesson": 9,
-    "word": "上手"
-  },
-  {
-    "id": 20045,
-    "section": "vocab",
-    "text": "「銀行」の 読み方は どれですか。",
-    "options": [
-      "ぎんこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「銀行」は「ぎんこう」と 読みます（arti: bank）。",
-    "period": "minna-lesson-10",
-    "lesson": 10,
-    "word": "銀行"
-  },
-  {
-    "id": 20046,
-    "section": "vocab",
-    "text": "「ゆうびんきょく」の 意味は どれですか。",
-    "options": [
-      "kantor pos",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ゆうびんきょく」 berarti kantor pos。",
-    "period": "minna-lesson-10",
-    "lesson": 10,
-    "word": "郵便局"
-  },
-  {
-    "id": 20047,
-    "section": "vocab",
-    "text": "「rumah sakit」に あたる 日本語は どれですか。",
-    "options": [
-      "病院",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「rumah sakit」は 日本語で「病院」です。",
-    "period": "minna-lesson-10",
-    "lesson": 10,
-    "word": "病院"
-  },
-  {
-    "id": 20048,
-    "section": "vocab",
-    "text": "「公園」の 読み方は どれですか。",
-    "options": [
-      "こうえん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「公園」は「こうえん」と 読みます（arti: taman）。",
-    "period": "minna-lesson-10",
-    "lesson": 10,
-    "word": "公園"
-  },
-  {
-    "id": 20049,
-    "section": "vocab",
-    "text": "「えき」の 意味は どれですか。",
-    "options": [
-      "stasiun",
-      "sekolah",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「えき」 berarti stasiun。",
-    "period": "minna-lesson-10",
-    "lesson": 10,
-    "word": "駅"
-  },
-  {
-    "id": 20050,
-    "section": "vocab",
-    "text": "「一人」の 読み方は どれですか。",
-    "options": [
-      "ひとり",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「一人」は「ひとり」と 読みます（arti: satu orang）。",
-    "period": "minna-lesson-11",
-    "lesson": 11,
-    "word": "一人"
-  },
-  {
-    "id": 20051,
-    "section": "vocab",
-    "text": "「ふたり」の 意味は どれですか。",
-    "options": [
-      "dua orang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ふたり」 berarti dua orang。",
-    "period": "minna-lesson-11",
-    "lesson": 11,
-    "word": "二人"
-  },
-  {
-    "id": 20052,
-    "section": "vocab",
-    "text": "「berapa orang」に あたる 日本語は どれですか。",
-    "options": [
-      "何人",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「berapa orang」は 日本語で「何人」です。",
-    "period": "minna-lesson-11",
-    "lesson": 11,
-    "word": "何人"
-  },
-  {
-    "id": 20053,
-    "section": "vocab",
-    "text": "「全部」の 読み方は どれですか。",
-    "options": [
-      "ぜんぶ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「全部」は「ぜんぶ」と 読みます（arti: semua）。",
-    "period": "minna-lesson-11",
-    "lesson": 11,
-    "word": "全部"
-  },
-  {
-    "id": 20054,
-    "section": "vocab",
-    "text": "「はんぶん」の 意味は どれですか。",
-    "options": [
-      "setengah",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「はんぶん」 berarti setengah。",
-    "period": "minna-lesson-11",
-    "lesson": 11,
-    "word": "半分"
-  },
-  {
-    "id": 20055,
-    "section": "vocab",
-    "text": "「大きい」の 読み方は どれですか。",
-    "options": [
-      "おおきい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「大きい」は「おおきい」と 読みます（arti: besar）。",
-    "period": "minna-lesson-12",
-    "lesson": 12,
-    "word": "大きい"
-  },
-  {
-    "id": 20056,
-    "section": "vocab",
-    "text": "「ちいさい」の 意味は どれですか。",
-    "options": [
-      "kecil",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ちいさい」 berarti kecil。",
-    "period": "minna-lesson-12",
-    "lesson": 12,
-    "word": "小さい"
-  },
-  {
-    "id": 20057,
-    "section": "vocab",
-    "text": "「baru」に あたる 日本語は どれですか。",
-    "options": [
-      "新しい",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「baru」は 日本語で「新しい」です。",
-    "period": "minna-lesson-12",
-    "lesson": 12,
-    "word": "新しい"
-  },
-  {
-    "id": 20058,
-    "section": "vocab",
-    "text": "「古い」の 読み方は どれですか。",
-    "options": [
-      "ふるい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「古い」は「ふるい」と 読みます（arti: lama）。",
-    "period": "minna-lesson-12",
-    "lesson": 12,
-    "word": "古い"
-  },
-  {
-    "id": 20059,
-    "section": "vocab",
-    "text": "「たかい」の 意味は どれですか。",
-    "options": [
-      "mahal/tinggi",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「たかい」 berarti mahal/tinggi。",
-    "period": "minna-lesson-12",
-    "lesson": 12,
-    "word": "高い"
-  },
-  {
-    "id": 20060,
-    "section": "vocab",
-    "text": "「暑い」の 読み方は どれですか。",
-    "options": [
-      "あつい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「暑い」は「あつい」と 読みます（arti: panas (cuaca)）。",
-    "period": "minna-lesson-13",
-    "lesson": 13,
-    "word": "暑い"
-  },
-  {
-    "id": 20061,
-    "section": "vocab",
-    "text": "「さむい」の 意味は どれですか。",
-    "options": [
-      "dingin",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さむい」 berarti dingin。",
-    "period": "minna-lesson-13",
-    "lesson": 13,
-    "word": "寒い"
-  },
-  {
-    "id": 20062,
-    "section": "vocab",
-    "text": "「enak」に あたる 日本語は どれですか。",
-    "options": [
-      "おいしい",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「enak」は 日本語で「おいしい」です。",
-    "period": "minna-lesson-13",
-    "lesson": 13,
-    "word": "おいしい"
-  },
-  {
-    "id": 20063,
-    "section": "vocab",
-    "text": "「忙しい」の 読み方は どれですか。",
-    "options": [
-      "いそがしい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「忙しい」は「いそがしい」と 読みます（arti: sibuk）。",
-    "period": "minna-lesson-13",
-    "lesson": 13,
-    "word": "忙しい"
-  },
-  {
-    "id": 20064,
-    "section": "vocab",
-    "text": "「たのしい」の 意味は どれですか。",
-    "options": [
-      "menyenangkan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「たのしい」 berarti menyenangkan。",
-    "period": "minna-lesson-13",
-    "lesson": 13,
-    "word": "楽しい"
-  },
-  {
-    "id": 20065,
-    "section": "vocab",
-    "text": "「買います」の 読み方は どれですか。",
-    "options": [
-      "かいます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「買います」は「かいます」と 読みます（arti: membeli）。",
-    "period": "minna-lesson-14",
-    "lesson": 14,
-    "word": "買います"
-  },
-  {
-    "id": 20066,
-    "section": "vocab",
-    "text": "「うります」の 意味は どれですか。",
-    "options": [
-      "menjual",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「うります」 berarti menjual。",
-    "period": "minna-lesson-14",
-    "lesson": 14,
-    "word": "売ります"
-  },
-  {
-    "id": 20067,
-    "section": "vocab",
-    "text": "「membayar」に あたる 日本語は どれですか。",
-    "options": [
-      "払います",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「membayar」は 日本語で「払います」です。",
-    "period": "minna-lesson-14",
-    "lesson": 14,
-    "word": "払います"
-  },
-  {
-    "id": 20068,
-    "section": "vocab",
-    "text": "「選びます」の 読み方は どれですか。",
-    "options": [
-      "えらびます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「選びます」は「えらびます」と 読みます（arti: memilih）。",
-    "period": "minna-lesson-14",
-    "lesson": 14,
-    "word": "選びます"
-  },
-  {
-    "id": 20069,
-    "section": "vocab",
-    "text": "「さがします」の 意味は どれですか。",
-    "options": [
-      "mencari",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さがします」 berarti mencari。",
-    "period": "minna-lesson-14",
-    "lesson": 14,
-    "word": "探します"
-  },
-  {
-    "id": 20070,
-    "section": "vocab",
-    "text": "「旅行」の 読み方は どれですか。",
-    "options": [
-      "りょこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「旅行」は「りょこう」と 読みます（arti: perjalanan）。",
-    "period": "minna-lesson-15",
-    "lesson": 15,
-    "word": "旅行"
-  },
-  {
-    "id": 20071,
-    "section": "vocab",
-    "text": "「よやく」の 意味は どれですか。",
-    "options": [
-      "reservasi",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「よやく」 berarti reservasi。",
-    "period": "minna-lesson-15",
-    "lesson": 15,
-    "word": "予約"
-  },
-  {
-    "id": 20072,
-    "section": "vocab",
-    "text": "「tiket」に あたる 日本語は どれですか。",
-    "options": [
-      "切符",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「tiket」は 日本語で「切符」です。",
-    "period": "minna-lesson-15",
-    "lesson": 15,
-    "word": "切符"
-  },
-  {
-    "id": 20073,
-    "section": "vocab",
-    "text": "「空港」の 読み方は どれですか。",
-    "options": [
-      "くうこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「空港」は「くうこう」と 読みます（arti: bandara）。",
-    "period": "minna-lesson-15",
-    "lesson": 15,
-    "word": "空港"
-  },
-  {
-    "id": 20074,
-    "section": "vocab",
-    "text": "「にもつ」の 意味は どれですか。",
-    "options": [
-      "barang bawaan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「にもつ」 berarti barang bawaan。",
-    "period": "minna-lesson-15",
-    "lesson": 15,
-    "word": "荷物"
-  },
-  {
-    "id": 20075,
-    "section": "vocab",
-    "text": "「料理」の 読み方は どれですか。",
-    "options": [
-      "りょうり",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「料理」は「りょうり」と 読みます（arti: masakan）。",
-    "period": "minna-lesson-16",
-    "lesson": 16,
-    "word": "料理"
-  },
-  {
-    "id": 20076,
-    "section": "vocab",
-    "text": "「ざいりょう」の 意味は どれですか。",
-    "options": [
-      "bahan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ざいりょう」 berarti bahan。",
-    "period": "minna-lesson-16",
-    "lesson": 16,
-    "word": "材料"
-  },
-  {
-    "id": 20077,
-    "section": "vocab",
-    "text": "「sayuran」に あたる 日本語は どれですか。",
-    "options": [
-      "野菜",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「sayuran」は 日本語で「野菜」です。",
-    "period": "minna-lesson-16",
-    "lesson": 16,
-    "word": "野菜"
-  },
-  {
-    "id": 20078,
-    "section": "vocab",
-    "text": "「肉」の 読み方は どれですか。",
-    "options": [
-      "にく",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「肉」は「にく」と 読みます（arti: daging）。",
-    "period": "minna-lesson-16",
-    "lesson": 16,
-    "word": "肉"
-  },
-  {
-    "id": 20079,
-    "section": "vocab",
-    "text": "「さかな」の 意味は どれですか。",
-    "options": [
-      "ikan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さかな」 berarti ikan。",
-    "period": "minna-lesson-16",
-    "lesson": 16,
-    "word": "魚"
-  },
-  {
-    "id": 20080,
     "section": "vocab",
     "text": "「住所」の 読み方は どれですか。",
     "options": [
-      "じゅうしょ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「住所」は「じゅうしょ」と 読みます（arti: alamat）。",
-    "period": "minna-lesson-17",
-    "lesson": 17,
-    "word": "住所"
-  },
-  {
-    "id": 20081,
-    "section": "vocab",
-    "text": "「でんわばんごう」の 意味は どれですか。",
-    "options": [
-      "nomor telepon",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「でんわばんごう」 berarti nomor telepon。",
-    "period": "minna-lesson-17",
-    "lesson": 17,
-    "word": "電話番号"
-  },
-  {
-    "id": 20082,
-    "section": "vocab",
-    "text": "「nama」に あたる 日本語は どれですか。",
-    "options": [
-      "名前",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「nama」は 日本語で「名前」です。",
-    "period": "minna-lesson-17",
-    "lesson": 17,
-    "word": "名前"
-  },
-  {
-    "id": 20083,
-    "section": "vocab",
-    "text": "「書類」の 読み方は どれですか。",
-    "options": [
-      "しょるい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「書類」は「しょるい」と 読みます（arti: dokumen）。",
-    "period": "minna-lesson-17",
-    "lesson": 17,
-    "word": "書類"
-  },
-  {
-    "id": 20084,
-    "section": "vocab",
-    "text": "「もうしこみしょ」の 意味は どれですか。",
-    "options": [
-      "formulir pendaftaran",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「もうしこみしょ」 berarti formulir pendaftaran。",
-    "period": "minna-lesson-17",
-    "lesson": 17,
-    "word": "申込書"
-  },
-  {
-    "id": 20085,
-    "section": "vocab",
-    "text": "「頭」の 読み方は どれですか。",
-    "options": [
-      "あたま",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「頭」は「あたま」と 読みます（arti: kepala）。",
-    "period": "minna-lesson-18",
-    "lesson": 18,
-    "word": "頭"
-  },
-  {
-    "id": 20086,
-    "section": "vocab",
-    "text": "「のど」の 意味は どれですか。",
-    "options": [
-      "tenggorokan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「のど」 berarti tenggorokan。",
-    "period": "minna-lesson-18",
-    "lesson": 18,
-    "word": "喉"
-  },
-  {
-    "id": 20087,
-    "section": "vocab",
-    "text": "「obat」に あたる 日本語は どれですか。",
-    "options": [
-      "薬",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「obat」は 日本語で「薬」です。",
-    "period": "minna-lesson-18",
-    "lesson": 18,
-    "word": "薬"
-  },
-  {
-    "id": 20088,
-    "section": "vocab",
-    "text": "「熱」の 読み方は どれですか。",
-    "options": [
-      "ねつ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「熱」は「ねつ」と 読みます（arti: demam）。",
-    "period": "minna-lesson-18",
-    "lesson": 18,
-    "word": "熱"
-  },
-  {
-    "id": 20089,
-    "section": "vocab",
-    "text": "「びょうき」の 意味は どれですか。",
-    "options": [
-      "sakit/penyakit",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「びょうき」 berarti sakit/penyakit。",
-    "period": "minna-lesson-18",
-    "lesson": 18,
-    "word": "病気"
-  },
-  {
-    "id": 20090,
-    "section": "vocab",
-    "text": "「危ない」の 読み方は どれですか。",
-    "options": [
-      "あぶない",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「危ない」は「あぶない」と 読みます（arti: berbahaya）。",
-    "period": "minna-lesson-19",
-    "lesson": 19,
-    "word": "危ない"
-  },
-  {
-    "id": 20091,
-    "section": "vocab",
-    "text": "「あんぜん」の 意味は どれですか。",
-    "options": [
-      "aman",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「あんぜん」 berarti aman。",
-    "period": "minna-lesson-19",
-    "lesson": 19,
-    "word": "安全"
-  },
-  {
-    "id": 20092,
-    "section": "vocab",
-    "text": "「perhatian」に あたる 日本語は どれですか。",
-    "options": [
-      "注意",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「perhatian」は 日本語で「注意」です。",
-    "period": "minna-lesson-19",
-    "lesson": 19,
-    "word": "注意"
-  },
-  {
-    "id": 20093,
-    "section": "vocab",
-    "text": "「故障」の 読み方は どれですか。",
-    "options": [
-      "こしょう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「故障」は「こしょう」と 読みます（arti: kerusakan）。",
-    "period": "minna-lesson-19",
-    "lesson": 19,
-    "word": "故障"
-  },
-  {
-    "id": 20094,
-    "section": "vocab",
-    "text": "「しゅうり」の 意味は どれですか。",
-    "options": [
-      "perbaikan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しゅうり」 berarti perbaikan。",
-    "period": "minna-lesson-19",
-    "lesson": 19,
-    "word": "修理"
-  },
-  {
-    "id": 20095,
-    "section": "vocab",
-    "text": "「連絡」の 読み方は どれですか。",
-    "options": [
-      "れんらく",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「連絡」は「れんらく」と 読みます（arti: kontak/pemberitahuan）。",
-    "period": "minna-lesson-20",
-    "lesson": 20,
-    "word": "連絡"
-  },
-  {
-    "id": 20096,
-    "section": "vocab",
-    "text": "「せつめい」の 意味は どれですか。",
-    "options": [
-      "penjelasan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「せつめい」 berarti penjelasan。",
-    "period": "minna-lesson-20",
-    "lesson": 20,
-    "word": "説明"
-  },
-  {
-    "id": 20097,
-    "section": "vocab",
-    "text": "「konfirmasi」に あたる 日本語は どれですか。",
-    "options": [
-      "確認",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「konfirmasi」は 日本語で「確認」です。",
-    "period": "minna-lesson-20",
-    "lesson": 20,
-    "word": "確認"
-  },
-  {
-    "id": 20098,
-    "section": "vocab",
-    "text": "「必要」の 読み方は どれですか。",
-    "options": [
-      "ひつよう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「必要」は「ひつよう」と 読みます（arti: perlu）。",
-    "period": "minna-lesson-20",
-    "lesson": 20,
-    "word": "必要"
-  },
-  {
-    "id": 20099,
-    "section": "vocab",
-    "text": "「じゅんび」の 意味は どれですか。",
-    "options": [
-      "persiapan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じゅんび」 berarti persiapan。",
-    "period": "minna-lesson-20",
-    "lesson": 20,
-    "word": "準備"
-  },
-  {
-    "id": 20100,
-    "section": "vocab",
-    "text": "「先生」の 読み方は どれですか。",
-    "options": [
-      "せんせい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「先生」は「せんせい」と 読みます（arti: guru）。",
-    "period": "minna-lesson-21",
-    "lesson": 21,
-    "word": "先生"
-  },
-  {
-    "id": 20101,
-    "section": "vocab",
-    "text": "「がくせい」の 意味は どれですか。",
-    "options": [
-      "pelajar",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「がくせい」 berarti pelajar。",
-    "period": "minna-lesson-21",
-    "lesson": 21,
-    "word": "学生"
-  },
-  {
-    "id": 20102,
-    "section": "vocab",
-    "text": "「pegawai perusahaan」に あたる 日本語は どれですか。",
-    "options": [
-      "会社員",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「pegawai perusahaan」は 日本語で「会社員」です。",
-    "period": "minna-lesson-21",
-    "lesson": 21,
-    "word": "会社員"
-  },
-  {
-    "id": 20103,
-    "section": "vocab",
-    "text": "「医者」の 読み方は どれですか。",
-    "options": [
-      "いしゃ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「医者」は「いしゃ」と 読みます（arti: dokter）。",
-    "period": "minna-lesson-21",
-    "lesson": 21,
-    "word": "医者"
-  },
-  {
-    "id": 20104,
-    "section": "vocab",
-    "text": "「エンジニア」の 意味は どれですか。",
-    "options": [
-      "insinyur",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「エンジニア」 berarti insinyur。",
-    "period": "minna-lesson-21",
-    "lesson": 21,
-    "word": "エンジニア"
-  },
-  {
-    "id": 20105,
-    "section": "vocab",
-    "text": "「本」の 読み方は どれですか。",
-    "options": [
+      "ゆき",
+      "かい",
       "ほん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "じゅうしょ"
     ],
-    "answer": 0,
-    "explanation": "「本」は「ほん」と 読みます（arti: buku）。",
-    "period": "minna-lesson-22",
-    "lesson": 22,
-    "word": "本"
+    "answer": 3,
+    "explanation": "「住所」の 読み方は「じゅうしょ」です。",
+    "period": "sep-nov",
+    "id": 693
   },
   {
-    "id": 20106,
-    "section": "vocab",
-    "text": "「じしょ」の 意味は どれですか。",
-    "options": [
-      "kamus",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じしょ」 berarti kamus。",
-    "period": "minna-lesson-22",
-    "lesson": 22,
-    "word": "辞書"
-  },
-  {
-    "id": 20107,
-    "section": "vocab",
-    "text": "「majalah」に あたる 日本語は どれですか。",
-    "options": [
-      "雑誌",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「majalah」は 日本語で「雑誌」です。",
-    "period": "minna-lesson-22",
-    "lesson": 22,
-    "word": "雑誌"
-  },
-  {
-    "id": 20108,
-    "section": "vocab",
-    "text": "「新聞」の 読み方は どれですか。",
-    "options": [
-      "しんぶん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「新聞」は「しんぶん」と 読みます（arti: koran）。",
-    "period": "minna-lesson-22",
-    "lesson": 22,
-    "word": "新聞"
-  },
-  {
-    "id": 20109,
-    "section": "vocab",
-    "text": "「めいし」の 意味は どれですか。",
-    "options": [
-      "kartu nama",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「めいし」 berarti kartu nama。",
-    "period": "minna-lesson-22",
-    "lesson": 22,
-    "word": "名刺"
-  },
-  {
-    "id": 20110,
-    "section": "vocab",
-    "text": "「教室」の 読み方は どれですか。",
-    "options": [
-      "きょうしつ",
-      "きょうと",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「教室」は「きょうしつ」と 読みます（arti: ruang kelas）。",
-    "period": "minna-lesson-23",
-    "lesson": 23,
-    "word": "教室"
-  },
-  {
-    "id": 20111,
-    "section": "vocab",
-    "text": "「しょくどう」の 意味は どれですか。",
-    "options": [
-      "kantin",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しょくどう」 berarti kantin。",
-    "period": "minna-lesson-23",
-    "lesson": 23,
-    "word": "食堂"
-  },
-  {
-    "id": 20112,
-    "section": "vocab",
-    "text": "「kantor」に あたる 日本語は どれですか。",
-    "options": [
-      "事務所",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「kantor」は 日本語で「事務所」です。",
-    "period": "minna-lesson-23",
-    "lesson": 23,
-    "word": "事務所"
-  },
-  {
-    "id": 20113,
-    "section": "vocab",
-    "text": "「受付」の 読み方は どれですか。",
-    "options": [
-      "うけつけ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「受付」は「うけつけ」と 読みます（arti: resepsionis）。",
-    "period": "minna-lesson-23",
-    "lesson": 23,
-    "word": "受付"
-  },
-  {
-    "id": 20114,
-    "section": "vocab",
-    "text": "「かいぎしつ」の 意味は どれですか。",
-    "options": [
-      "ruang rapat",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かいぎしつ」 berarti ruang rapat。",
-    "period": "minna-lesson-23",
-    "lesson": 23,
-    "word": "会議室"
-  },
-  {
-    "id": 20115,
-    "section": "vocab",
-    "text": "「起きます」の 読み方は どれですか。",
-    "options": [
-      "おきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「起きます」は「おきます」と 読みます（arti: bangun）。",
-    "period": "minna-lesson-24",
-    "lesson": 24,
-    "word": "起きます"
-  },
-  {
-    "id": 20116,
-    "section": "vocab",
-    "text": "「ねます」の 意味は どれですか。",
-    "options": [
-      "tidur",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ねます」 berarti tidur。",
-    "period": "minna-lesson-24",
-    "lesson": 24,
-    "word": "寝ます"
-  },
-  {
-    "id": 20117,
-    "section": "vocab",
-    "text": "「bekerja」に あたる 日本語は どれですか。",
-    "options": [
-      "働きます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「bekerja」は 日本語で「働きます」です。",
-    "period": "minna-lesson-24",
-    "lesson": 24,
-    "word": "働きます"
-  },
-  {
-    "id": 20118,
-    "section": "vocab",
-    "text": "「休みます」の 読み方は どれですか。",
-    "options": [
-      "やすみます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「休みます」は「やすみます」と 読みます（arti: beristirahat/libur）。",
-    "period": "minna-lesson-24",
-    "lesson": 24,
-    "word": "休みます"
-  },
-  {
-    "id": 20119,
-    "section": "vocab",
-    "text": "「べんきょうします」の 意味は どれですか。",
-    "options": [
-      "belajar",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「べんきょうします」 berarti belajar。",
-    "period": "minna-lesson-24",
-    "lesson": 24,
-    "word": "勉強します"
-  },
-  {
-    "id": 20120,
-    "section": "vocab",
-    "text": "「行きます」の 読み方は どれですか。",
-    "options": [
-      "いきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「行きます」は「いきます」と 読みます（arti: pergi）。",
-    "period": "minna-lesson-25",
-    "lesson": 25,
-    "word": "行きます"
-  },
-  {
-    "id": 20121,
-    "section": "vocab",
-    "text": "「きます」の 意味は どれですか。",
-    "options": [
-      "datang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「きます」 berarti datang。",
-    "period": "minna-lesson-25",
-    "lesson": 25,
-    "word": "来ます"
-  },
-  {
-    "id": 20122,
-    "section": "vocab",
-    "text": "「pulang」に あたる 日本語は どれですか。",
-    "options": [
-      "帰ります",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「pulang」は 日本語で「帰ります」です。",
-    "period": "minna-lesson-25",
-    "lesson": 25,
-    "word": "帰ります"
-  },
-  {
-    "id": 20123,
-    "section": "vocab",
-    "text": "「電車」の 読み方は どれですか。",
-    "options": [
-      "でんしゃ",
-      "きょうしつ",
-      "じてんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「電車」は「でんしゃ」と 読みます（arti: kereta）。",
-    "period": "minna-lesson-25",
-    "lesson": 25,
-    "word": "電車"
-  },
-  {
-    "id": 20124,
-    "section": "vocab",
-    "text": "「じてんしゃ」の 意味は どれですか。",
-    "options": [
-      "sepeda",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じてんしゃ」 berarti sepeda。",
-    "period": "minna-lesson-25",
-    "lesson": 25,
-    "word": "自転車"
-  },
-  {
-    "id": 20125,
-    "section": "vocab",
-    "text": "「食べます」の 読み方は どれですか。",
-    "options": [
-      "たべます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「食べます」は「たべます」と 読みます（arti: makan）。",
-    "period": "minna-lesson-26",
-    "lesson": 26,
-    "word": "食べます"
-  },
-  {
-    "id": 20126,
-    "section": "vocab",
-    "text": "「のみます」の 意味は どれですか。",
-    "options": [
-      "minum",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「のみます」 berarti minum。",
-    "period": "minna-lesson-26",
-    "lesson": 26,
-    "word": "飲みます"
-  },
-  {
-    "id": 20127,
-    "section": "vocab",
-    "text": "「mengisap/merokok」に あたる 日本語は どれですか。",
-    "options": [
-      "吸います",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「mengisap/merokok」は 日本語で「吸います」です。",
-    "period": "minna-lesson-26",
-    "lesson": 26,
-    "word": "吸います"
-  },
-  {
-    "id": 20128,
-    "section": "vocab",
-    "text": "「見ます」の 読み方は どれですか。",
-    "options": [
-      "みます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「見ます」は「みます」と 読みます（arti: melihat）。",
-    "period": "minna-lesson-26",
-    "lesson": 26,
-    "word": "見ます"
-  },
-  {
-    "id": 20129,
-    "section": "vocab",
-    "text": "「ききます」の 意味は どれですか。",
-    "options": [
-      "mendengar/bertanya",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ききます」 berarti mendengar/bertanya。",
-    "period": "minna-lesson-26",
-    "lesson": 26,
-    "word": "聞きます"
-  },
-  {
-    "id": 20130,
-    "section": "vocab",
-    "text": "「切ります」の 読み方は どれですか。",
-    "options": [
-      "きります",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「切ります」は「きります」と 読みます（arti: memotong）。",
-    "period": "minna-lesson-27",
-    "lesson": 27,
-    "word": "切ります"
-  },
-  {
-    "id": 20131,
-    "section": "vocab",
-    "text": "「おくります」の 意味は どれですか。",
-    "options": [
-      "mengirim",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「おくります」 berarti mengirim。",
-    "period": "minna-lesson-27",
-    "lesson": 27,
-    "word": "送ります"
-  },
-  {
-    "id": 20132,
-    "section": "vocab",
-    "text": "「memberi」に あたる 日本語は どれですか。",
-    "options": [
-      "あげます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「memberi」は 日本語で「あげます」です。",
-    "period": "minna-lesson-27",
-    "lesson": 27,
-    "word": "あげます"
-  },
-  {
-    "id": 20133,
-    "section": "vocab",
-    "text": "「もらいます」の 読み方は どれですか。",
-    "options": [
-      "もらいます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「もらいます」は「もらいます」と 読みます（arti: menerima）。",
-    "period": "minna-lesson-27",
-    "lesson": 27,
-    "word": "もらいます"
-  },
-  {
-    "id": 20134,
-    "section": "vocab",
-    "text": "「かします」の 意味は どれですか。",
-    "options": [
-      "meminjamkan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かします」 berarti meminjamkan。",
-    "period": "minna-lesson-27",
-    "lesson": 27,
-    "word": "貸します"
-  },
-  {
-    "id": 20135,
-    "section": "vocab",
-    "text": "「きれい」の 読み方は どれですか。",
-    "options": [
-      "きれい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「きれい」は「きれい」と 読みます（arti: indah/bersih）。",
-    "period": "minna-lesson-28",
-    "lesson": 28,
-    "word": "きれい"
-  },
-  {
-    "id": 20136,
-    "section": "vocab",
-    "text": "「しずか」の 意味は どれですか。",
-    "options": [
-      "tenang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しずか」 berarti tenang。",
-    "period": "minna-lesson-28",
-    "lesson": 28,
-    "word": "静か"
-  },
-  {
-    "id": 20137,
-    "section": "vocab",
-    "text": "「ramai」に あたる 日本語は どれですか。",
-    "options": [
-      "にぎやか",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「ramai」は 日本語で「にぎやか」です。",
-    "period": "minna-lesson-28",
-    "lesson": 28,
-    "word": "にぎやか"
-  },
-  {
-    "id": 20138,
-    "section": "vocab",
-    "text": "「有名」の 読み方は どれですか。",
-    "options": [
-      "ゆうめい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「有名」は「ゆうめい」と 読みます（arti: terkenal）。",
-    "period": "minna-lesson-28",
-    "lesson": 28,
-    "word": "有名"
-  },
-  {
-    "id": 20139,
-    "section": "vocab",
-    "text": "「しんせつ」の 意味は どれですか。",
-    "options": [
-      "baik hati",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しんせつ」 berarti baik hati。",
-    "period": "minna-lesson-28",
-    "lesson": 28,
-    "word": "親切"
-  },
-  {
-    "id": 20140,
-    "section": "vocab",
-    "text": "「わかります」の 読み方は どれですか。",
-    "options": [
-      "わかります",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「わかります」は「わかります」と 読みます（arti: mengerti）。",
-    "period": "minna-lesson-29",
-    "lesson": 29,
-    "word": "わかります"
-  },
-  {
-    "id": 20141,
-    "section": "vocab",
-    "text": "「あります」の 意味は どれですか。",
-    "options": [
-      "ada (benda)",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「あります」 berarti ada (benda)。",
-    "period": "minna-lesson-29",
-    "lesson": 29,
-    "word": "あります"
-  },
-  {
-    "id": 20142,
-    "section": "vocab",
-    "text": "「suka」に あたる 日本語は どれですか。",
-    "options": [
-      "好き",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「suka」は 日本語で「好き」です。",
-    "period": "minna-lesson-29",
-    "lesson": 29,
-    "word": "好き"
-  },
-  {
-    "id": 20143,
-    "section": "vocab",
-    "text": "「嫌い」の 読み方は どれですか。",
-    "options": [
-      "きらい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「嫌い」は「きらい」と 読みます（arti: tidak suka）。",
-    "period": "minna-lesson-29",
-    "lesson": 29,
-    "word": "嫌い"
-  },
-  {
-    "id": 20144,
-    "section": "vocab",
-    "text": "「じょうず」の 意味は どれですか。",
-    "options": [
-      "mahir",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じょうず」 berarti mahir。",
-    "period": "minna-lesson-29",
-    "lesson": 29,
-    "word": "上手"
-  },
-  {
-    "id": 20145,
-    "section": "vocab",
-    "text": "「銀行」の 読み方は どれですか。",
-    "options": [
-      "ぎんこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「銀行」は「ぎんこう」と 読みます（arti: bank）。",
-    "period": "minna-lesson-30",
-    "lesson": 30,
-    "word": "銀行"
-  },
-  {
-    "id": 20146,
-    "section": "vocab",
-    "text": "「ゆうびんきょく」の 意味は どれですか。",
-    "options": [
-      "kantor pos",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ゆうびんきょく」 berarti kantor pos。",
-    "period": "minna-lesson-30",
-    "lesson": 30,
-    "word": "郵便局"
-  },
-  {
-    "id": 20147,
-    "section": "vocab",
-    "text": "「rumah sakit」に あたる 日本語は どれですか。",
-    "options": [
-      "病院",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「rumah sakit」は 日本語で「病院」です。",
-    "period": "minna-lesson-30",
-    "lesson": 30,
-    "word": "病院"
-  },
-  {
-    "id": 20148,
-    "section": "vocab",
-    "text": "「公園」の 読み方は どれですか。",
-    "options": [
-      "こうえん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「公園」は「こうえん」と 読みます（arti: taman）。",
-    "period": "minna-lesson-30",
-    "lesson": 30,
-    "word": "公園"
-  },
-  {
-    "id": 20149,
-    "section": "vocab",
-    "text": "「えき」の 意味は どれですか。",
-    "options": [
-      "stasiun",
-      "sekolah",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「えき」 berarti stasiun。",
-    "period": "minna-lesson-30",
-    "lesson": 30,
-    "word": "駅"
-  },
-  {
-    "id": 20150,
-    "section": "vocab",
-    "text": "「一人」の 読み方は どれですか。",
-    "options": [
-      "ひとり",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「一人」は「ひとり」と 読みます（arti: satu orang）。",
-    "period": "minna-lesson-31",
-    "lesson": 31,
-    "word": "一人"
-  },
-  {
-    "id": 20151,
-    "section": "vocab",
-    "text": "「ふたり」の 意味は どれですか。",
-    "options": [
-      "dua orang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ふたり」 berarti dua orang。",
-    "period": "minna-lesson-31",
-    "lesson": 31,
-    "word": "二人"
-  },
-  {
-    "id": 20152,
-    "section": "vocab",
-    "text": "「berapa orang」に あたる 日本語は どれですか。",
-    "options": [
-      "何人",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「berapa orang」は 日本語で「何人」です。",
-    "period": "minna-lesson-31",
-    "lesson": 31,
-    "word": "何人"
-  },
-  {
-    "id": 20153,
-    "section": "vocab",
-    "text": "「全部」の 読み方は どれですか。",
-    "options": [
-      "ぜんぶ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「全部」は「ぜんぶ」と 読みます（arti: semua）。",
-    "period": "minna-lesson-31",
-    "lesson": 31,
-    "word": "全部"
-  },
-  {
-    "id": 20154,
-    "section": "vocab",
-    "text": "「はんぶん」の 意味は どれですか。",
-    "options": [
-      "setengah",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「はんぶん」 berarti setengah。",
-    "period": "minna-lesson-31",
-    "lesson": 31,
-    "word": "半分"
-  },
-  {
-    "id": 20155,
-    "section": "vocab",
-    "text": "「大きい」の 読み方は どれですか。",
-    "options": [
-      "おおきい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「大きい」は「おおきい」と 読みます（arti: besar）。",
-    "period": "minna-lesson-32",
-    "lesson": 32,
-    "word": "大きい"
-  },
-  {
-    "id": 20156,
-    "section": "vocab",
-    "text": "「ちいさい」の 意味は どれですか。",
-    "options": [
-      "kecil",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ちいさい」 berarti kecil。",
-    "period": "minna-lesson-32",
-    "lesson": 32,
-    "word": "小さい"
-  },
-  {
-    "id": 20157,
-    "section": "vocab",
-    "text": "「baru」に あたる 日本語は どれですか。",
-    "options": [
-      "新しい",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「baru」は 日本語で「新しい」です。",
-    "period": "minna-lesson-32",
-    "lesson": 32,
-    "word": "新しい"
-  },
-  {
-    "id": 20158,
-    "section": "vocab",
-    "text": "「古い」の 読み方は どれですか。",
-    "options": [
-      "ふるい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「古い」は「ふるい」と 読みます（arti: lama）。",
-    "period": "minna-lesson-32",
-    "lesson": 32,
-    "word": "古い"
-  },
-  {
-    "id": 20159,
-    "section": "vocab",
-    "text": "「たかい」の 意味は どれですか。",
-    "options": [
-      "mahal/tinggi",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「たかい」 berarti mahal/tinggi。",
-    "period": "minna-lesson-32",
-    "lesson": 32,
-    "word": "高い"
-  },
-  {
-    "id": 20160,
-    "section": "vocab",
-    "text": "「暑い」の 読み方は どれですか。",
-    "options": [
-      "あつい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「暑い」は「あつい」と 読みます（arti: panas (cuaca)）。",
-    "period": "minna-lesson-33",
-    "lesson": 33,
-    "word": "暑い"
-  },
-  {
-    "id": 20161,
-    "section": "vocab",
-    "text": "「さむい」の 意味は どれですか。",
-    "options": [
-      "dingin",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さむい」 berarti dingin。",
-    "period": "minna-lesson-33",
-    "lesson": 33,
-    "word": "寒い"
-  },
-  {
-    "id": 20162,
-    "section": "vocab",
-    "text": "「enak」に あたる 日本語は どれですか。",
-    "options": [
-      "おいしい",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「enak」は 日本語で「おいしい」です。",
-    "period": "minna-lesson-33",
-    "lesson": 33,
-    "word": "おいしい"
-  },
-  {
-    "id": 20163,
-    "section": "vocab",
-    "text": "「忙しい」の 読み方は どれですか。",
-    "options": [
-      "いそがしい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「忙しい」は「いそがしい」と 読みます（arti: sibuk）。",
-    "period": "minna-lesson-33",
-    "lesson": 33,
-    "word": "忙しい"
-  },
-  {
-    "id": 20164,
-    "section": "vocab",
-    "text": "「たのしい」の 意味は どれですか。",
-    "options": [
-      "menyenangkan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「たのしい」 berarti menyenangkan。",
-    "period": "minna-lesson-33",
-    "lesson": 33,
-    "word": "楽しい"
-  },
-  {
-    "id": 20165,
-    "section": "vocab",
-    "text": "「買います」の 読み方は どれですか。",
-    "options": [
-      "かいます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「買います」は「かいます」と 読みます（arti: membeli）。",
-    "period": "minna-lesson-34",
-    "lesson": 34,
-    "word": "買います"
-  },
-  {
-    "id": 20166,
-    "section": "vocab",
-    "text": "「うります」の 意味は どれですか。",
-    "options": [
-      "menjual",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「うります」 berarti menjual。",
-    "period": "minna-lesson-34",
-    "lesson": 34,
-    "word": "売ります"
-  },
-  {
-    "id": 20167,
-    "section": "vocab",
-    "text": "「membayar」に あたる 日本語は どれですか。",
-    "options": [
-      "払います",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「membayar」は 日本語で「払います」です。",
-    "period": "minna-lesson-34",
-    "lesson": 34,
-    "word": "払います"
-  },
-  {
-    "id": 20168,
-    "section": "vocab",
-    "text": "「選びます」の 読み方は どれですか。",
-    "options": [
-      "えらびます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「選びます」は「えらびます」と 読みます（arti: memilih）。",
-    "period": "minna-lesson-34",
-    "lesson": 34,
-    "word": "選びます"
-  },
-  {
-    "id": 20169,
-    "section": "vocab",
-    "text": "「さがします」の 意味は どれですか。",
-    "options": [
-      "mencari",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さがします」 berarti mencari。",
-    "period": "minna-lesson-34",
-    "lesson": 34,
-    "word": "探します"
-  },
-  {
-    "id": 20170,
     "section": "vocab",
     "text": "「旅行」の 読み方は どれですか。",
     "options": [
-      "りょこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "なつ",
+      "かい",
+      "みぎ",
+      "りょこう"
     ],
-    "answer": 0,
-    "explanation": "「旅行」は「りょこう」と 読みます（arti: perjalanan）。",
-    "period": "minna-lesson-35",
-    "lesson": 35,
-    "word": "旅行"
+    "answer": 3,
+    "explanation": "「旅行」の 読み方は「りょこう」です。",
+    "period": "sep-nov",
+    "id": 899
   },
   {
-    "id": 20171,
-    "section": "vocab",
-    "text": "「よやく」の 意味は どれですか。",
-    "options": [
-      "reservasi",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「よやく」 berarti reservasi。",
-    "period": "minna-lesson-35",
-    "lesson": 35,
-    "word": "予約"
-  },
-  {
-    "id": 20172,
-    "section": "vocab",
-    "text": "「tiket」に あたる 日本語は どれですか。",
-    "options": [
-      "切符",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「tiket」は 日本語で「切符」です。",
-    "period": "minna-lesson-35",
-    "lesson": 35,
-    "word": "切符"
-  },
-  {
-    "id": 20173,
-    "section": "vocab",
-    "text": "「空港」の 読み方は どれですか。",
-    "options": [
-      "くうこう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「空港」は「くうこう」と 読みます（arti: bandara）。",
-    "period": "minna-lesson-35",
-    "lesson": 35,
-    "word": "空港"
-  },
-  {
-    "id": 20174,
-    "section": "vocab",
-    "text": "「にもつ」の 意味は どれですか。",
-    "options": [
-      "barang bawaan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「にもつ」 berarti barang bawaan。",
-    "period": "minna-lesson-35",
-    "lesson": 35,
-    "word": "荷物"
-  },
-  {
-    "id": 20175,
-    "section": "vocab",
-    "text": "「料理」の 読み方は どれですか。",
-    "options": [
-      "りょうり",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「料理」は「りょうり」と 読みます（arti: masakan）。",
-    "period": "minna-lesson-36",
-    "lesson": 36,
-    "word": "料理"
-  },
-  {
-    "id": 20176,
-    "section": "vocab",
-    "text": "「ざいりょう」の 意味は どれですか。",
-    "options": [
-      "bahan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ざいりょう」 berarti bahan。",
-    "period": "minna-lesson-36",
-    "lesson": 36,
-    "word": "材料"
-  },
-  {
-    "id": 20177,
-    "section": "vocab",
-    "text": "「sayuran」に あたる 日本語は どれですか。",
-    "options": [
-      "野菜",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「sayuran」は 日本語で「野菜」です。",
-    "period": "minna-lesson-36",
-    "lesson": 36,
-    "word": "野菜"
-  },
-  {
-    "id": 20178,
-    "section": "vocab",
-    "text": "「肉」の 読み方は どれですか。",
-    "options": [
-      "にく",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「肉」は「にく」と 読みます（arti: daging）。",
-    "period": "minna-lesson-36",
-    "lesson": 36,
-    "word": "肉"
-  },
-  {
-    "id": 20179,
-    "section": "vocab",
-    "text": "「さかな」の 意味は どれですか。",
-    "options": [
-      "ikan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「さかな」 berarti ikan。",
-    "period": "minna-lesson-36",
-    "lesson": 36,
-    "word": "魚"
-  },
-  {
-    "id": 20180,
-    "section": "vocab",
-    "text": "「住所」の 読み方は どれですか。",
-    "options": [
-      "じゅうしょ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「住所」は「じゅうしょ」と 読みます（arti: alamat）。",
-    "period": "minna-lesson-37",
-    "lesson": 37,
-    "word": "住所"
-  },
-  {
-    "id": 20181,
-    "section": "vocab",
-    "text": "「でんわばんごう」の 意味は どれですか。",
-    "options": [
-      "nomor telepon",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「でんわばんごう」 berarti nomor telepon。",
-    "period": "minna-lesson-37",
-    "lesson": 37,
-    "word": "電話番号"
-  },
-  {
-    "id": 20182,
-    "section": "vocab",
-    "text": "「nama」に あたる 日本語は どれですか。",
-    "options": [
-      "名前",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「nama」は 日本語で「名前」です。",
-    "period": "minna-lesson-37",
-    "lesson": 37,
-    "word": "名前"
-  },
-  {
-    "id": 20183,
-    "section": "vocab",
-    "text": "「書類」の 読み方は どれですか。",
-    "options": [
-      "しょるい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「書類」は「しょるい」と 読みます（arti: dokumen）。",
-    "period": "minna-lesson-37",
-    "lesson": 37,
-    "word": "書類"
-  },
-  {
-    "id": 20184,
-    "section": "vocab",
-    "text": "「もうしこみしょ」の 意味は どれですか。",
-    "options": [
-      "formulir pendaftaran",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「もうしこみしょ」 berarti formulir pendaftaran。",
-    "period": "minna-lesson-37",
-    "lesson": 37,
-    "word": "申込書"
-  },
-  {
-    "id": 20185,
-    "section": "vocab",
-    "text": "「頭」の 読み方は どれですか。",
-    "options": [
-      "あたま",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「頭」は「あたま」と 読みます（arti: kepala）。",
-    "period": "minna-lesson-38",
-    "lesson": 38,
-    "word": "頭"
-  },
-  {
-    "id": 20186,
-    "section": "vocab",
-    "text": "「のど」の 意味は どれですか。",
-    "options": [
-      "tenggorokan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「のど」 berarti tenggorokan。",
-    "period": "minna-lesson-38",
-    "lesson": 38,
-    "word": "喉"
-  },
-  {
-    "id": 20187,
-    "section": "vocab",
-    "text": "「obat」に あたる 日本語は どれですか。",
-    "options": [
-      "薬",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「obat」は 日本語で「薬」です。",
-    "period": "minna-lesson-38",
-    "lesson": 38,
-    "word": "薬"
-  },
-  {
-    "id": 20188,
-    "section": "vocab",
-    "text": "「熱」の 読み方は どれですか。",
-    "options": [
-      "ねつ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「熱」は「ねつ」と 読みます（arti: demam）。",
-    "period": "minna-lesson-38",
-    "lesson": 38,
-    "word": "熱"
-  },
-  {
-    "id": 20189,
-    "section": "vocab",
-    "text": "「びょうき」の 意味は どれですか。",
-    "options": [
-      "sakit/penyakit",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「びょうき」 berarti sakit/penyakit。",
-    "period": "minna-lesson-38",
-    "lesson": 38,
-    "word": "病気"
-  },
-  {
-    "id": 20190,
-    "section": "vocab",
-    "text": "「危ない」の 読み方は どれですか。",
-    "options": [
-      "あぶない",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「危ない」は「あぶない」と 読みます（arti: berbahaya）。",
-    "period": "minna-lesson-39",
-    "lesson": 39,
-    "word": "危ない"
-  },
-  {
-    "id": 20191,
-    "section": "vocab",
-    "text": "「あんぜん」の 意味は どれですか。",
-    "options": [
-      "aman",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「あんぜん」 berarti aman。",
-    "period": "minna-lesson-39",
-    "lesson": 39,
-    "word": "安全"
-  },
-  {
-    "id": 20192,
-    "section": "vocab",
-    "text": "「perhatian」に あたる 日本語は どれですか。",
-    "options": [
-      "注意",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「perhatian」は 日本語で「注意」です。",
-    "period": "minna-lesson-39",
-    "lesson": 39,
-    "word": "注意"
-  },
-  {
-    "id": 20193,
-    "section": "vocab",
-    "text": "「故障」の 読み方は どれですか。",
-    "options": [
-      "こしょう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「故障」は「こしょう」と 読みます（arti: kerusakan）。",
-    "period": "minna-lesson-39",
-    "lesson": 39,
-    "word": "故障"
-  },
-  {
-    "id": 20194,
-    "section": "vocab",
-    "text": "「しゅうり」の 意味は どれですか。",
-    "options": [
-      "perbaikan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しゅうり」 berarti perbaikan。",
-    "period": "minna-lesson-39",
-    "lesson": 39,
-    "word": "修理"
-  },
-  {
-    "id": 20195,
     "section": "vocab",
     "text": "「連絡」の 読み方は どれですか。",
     "options": [
-      "れんらく",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "ゆき",
+      "かい",
+      "かさ",
+      "れんらく"
     ],
-    "answer": 0,
-    "explanation": "「連絡」は「れんらく」と 読みます（arti: kontak/pemberitahuan）。",
-    "period": "minna-lesson-40",
-    "lesson": 40,
-    "word": "連絡"
+    "answer": 3,
+    "explanation": "「連絡」の 読み方は「れんらく」です。",
+    "period": "sep-nov",
+    "id": 723
   },
   {
-    "id": 20196,
     "section": "vocab",
-    "text": "「せつめい」の 意味は どれですか。",
+    "text": "「風邪」の 読み方は どれですか。",
     "options": [
-      "penjelasan",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "なつ",
+      "あき",
+      "かぜ",
+      "あめ"
     ],
-    "answer": 0,
-    "explanation": "「せつめい」 berarti penjelasan。",
-    "period": "minna-lesson-40",
-    "lesson": 40,
-    "word": "説明"
+    "answer": 2,
+    "explanation": "「風邪」の 読み方は「かぜ」です。",
+    "period": "sep-nov",
+    "id": 979
   },
   {
-    "id": 20197,
     "section": "vocab",
-    "text": "「konfirmasi」に あたる 日本語は どれですか。",
+    "text": "「傘」の 読み方は どれですか。",
     "options": [
-      "確認",
-      "学校",
-      "時間",
-      "天気"
+      "なつ",
+      "かさ",
+      "みぎ",
+      "ふゆ"
     ],
-    "answer": 0,
-    "explanation": "「konfirmasi」は 日本語で「確認」です。",
-    "period": "minna-lesson-40",
-    "lesson": 40,
-    "word": "確認"
+    "answer": 1,
+    "explanation": "「傘」の 読み方は「かさ」です。",
+    "period": "sep-nov",
+    "id": 143
   },
   {
-    "id": 20198,
     "section": "vocab",
-    "text": "「必要」の 読み方は どれですか。",
+    "text": "「近い」の 読み方は どれですか。",
     "options": [
-      "ひつよう",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "かい",
+      "あめ",
+      "ちかい",
+      "えき"
     ],
-    "answer": 0,
-    "explanation": "「必要」は「ひつよう」と 読みます（arti: perlu）。",
-    "period": "minna-lesson-40",
-    "lesson": 40,
-    "word": "必要"
+    "answer": 2,
+    "explanation": "「近い」の 読み方は「ちかい」です。",
+    "period": "sep-nov",
+    "id": 394
   },
   {
-    "id": 20199,
     "section": "vocab",
-    "text": "「じゅんび」の 意味は どれですか。",
+    "text": "「地図」の 読み方は どれですか。",
     "options": [
-      "persiapan",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "かぜ",
+      "かさ",
+      "かい",
+      "ちず"
     ],
-    "answer": 0,
-    "explanation": "「じゅんび」 berarti persiapan。",
-    "period": "minna-lesson-40",
-    "lesson": 40,
-    "word": "準備"
+    "answer": 3,
+    "explanation": "「地図」の 読み方は「ちず」です。",
+    "period": "sep-nov",
+    "id": 744
   },
   {
-    "id": 20200,
     "section": "vocab",
-    "text": "「先生」の 読み方は どれですか。",
+    "text": "「便利」の 読み方は どれですか。",
     "options": [
-      "せんせい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "べんり",
+      "ふゆ",
+      "みせ",
+      "ほん"
     ],
     "answer": 0,
-    "explanation": "「先生」は「せんせい」と 読みます（arti: guru）。",
-    "period": "minna-lesson-41",
-    "lesson": 41,
-    "word": "先生"
+    "explanation": "「便利」の 読み方は「べんり」です。",
+    "period": "sep-nov",
+    "id": 410
   },
   {
-    "id": 20201,
     "section": "vocab",
-    "text": "「がくせい」の 意味は どれですか。",
+    "text": "「図書館」の 読み方は どれですか。",
     "options": [
-      "pelajar",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "あめ",
+      "かい",
+      "かぜ",
+      "としょかん"
     ],
-    "answer": 0,
-    "explanation": "「がくせい」 berarti pelajar。",
-    "period": "minna-lesson-41",
-    "lesson": 41,
-    "word": "学生"
+    "answer": 3,
+    "explanation": "「図書館」の 読み方は「としょかん」です。",
+    "period": "sep-nov",
+    "id": 695
   },
   {
-    "id": 20202,
     "section": "vocab",
-    "text": "「pegawai perusahaan」に あたる 日本語は どれですか。",
+    "text": "「現金」の 読み方は どれですか。",
     "options": [
-      "会社員",
-      "学校",
-      "時間",
-      "天気"
+      "えき",
+      "かい",
+      "げんきん",
+      "ちず"
     ],
-    "answer": 0,
-    "explanation": "「pegawai perusahaan」は 日本語で「会社員」です。",
-    "period": "minna-lesson-41",
-    "lesson": 41,
-    "word": "会社員"
+    "answer": 2,
+    "explanation": "「現金」の 読み方は「げんきん」です。",
+    "period": "sep-nov",
+    "id": 637
   },
   {
-    "id": 20203,
     "section": "vocab",
-    "text": "「医者」の 読み方は どれですか。",
+    "text": "「料理」の 読み方は どれですか。",
     "options": [
-      "いしゃ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "ゆき",
+      "かい",
+      "りょうり",
+      "はる"
     ],
-    "answer": 0,
-    "explanation": "「医者」は「いしゃ」と 読みます（arti: dokter）。",
-    "period": "minna-lesson-41",
-    "lesson": 41,
-    "word": "医者"
+    "answer": 2,
+    "explanation": "「料理」の 読み方は「りょうり」です。",
+    "period": "sep-nov",
+    "id": 333
   },
   {
-    "id": 20204,
-    "section": "vocab",
-    "text": "「エンジニア」の 意味は どれですか。",
-    "options": [
-      "insinyur",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「エンジニア」 berarti insinyur。",
-    "period": "minna-lesson-41",
-    "lesson": 41,
-    "word": "エンジニア"
-  },
-  {
-    "id": 20205,
-    "section": "vocab",
-    "text": "「本」の 読み方は どれですか。",
-    "options": [
-      "ほん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「本」は「ほん」と 読みます（arti: buku）。",
-    "period": "minna-lesson-42",
-    "lesson": 42,
-    "word": "本"
-  },
-  {
-    "id": 20206,
-    "section": "vocab",
-    "text": "「じしょ」の 意味は どれですか。",
-    "options": [
-      "kamus",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じしょ」 berarti kamus。",
-    "period": "minna-lesson-42",
-    "lesson": 42,
-    "word": "辞書"
-  },
-  {
-    "id": 20207,
-    "section": "vocab",
-    "text": "「majalah」に あたる 日本語は どれですか。",
-    "options": [
-      "雑誌",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「majalah」は 日本語で「雑誌」です。",
-    "period": "minna-lesson-42",
-    "lesson": 42,
-    "word": "雑誌"
-  },
-  {
-    "id": 20208,
-    "section": "vocab",
-    "text": "「新聞」の 読み方は どれですか。",
-    "options": [
-      "しんぶん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「新聞」は「しんぶん」と 読みます（arti: koran）。",
-    "period": "minna-lesson-42",
-    "lesson": 42,
-    "word": "新聞"
-  },
-  {
-    "id": 20209,
-    "section": "vocab",
-    "text": "「めいし」の 意味は どれですか。",
-    "options": [
-      "kartu nama",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「めいし」 berarti kartu nama。",
-    "period": "minna-lesson-42",
-    "lesson": 42,
-    "word": "名刺"
-  },
-  {
-    "id": 20210,
-    "section": "vocab",
-    "text": "「教室」の 読み方は どれですか。",
-    "options": [
-      "きょうしつ",
-      "きょうと",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「教室」は「きょうしつ」と 読みます（arti: ruang kelas）。",
-    "period": "minna-lesson-43",
-    "lesson": 43,
-    "word": "教室"
-  },
-  {
-    "id": 20211,
-    "section": "vocab",
-    "text": "「しょくどう」の 意味は どれですか。",
-    "options": [
-      "kantin",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しょくどう」 berarti kantin。",
-    "period": "minna-lesson-43",
-    "lesson": 43,
-    "word": "食堂"
-  },
-  {
-    "id": 20212,
-    "section": "vocab",
-    "text": "「kantor」に あたる 日本語は どれですか。",
-    "options": [
-      "事務所",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「kantor」は 日本語で「事務所」です。",
-    "period": "minna-lesson-43",
-    "lesson": 43,
-    "word": "事務所"
-  },
-  {
-    "id": 20213,
-    "section": "vocab",
-    "text": "「受付」の 読み方は どれですか。",
-    "options": [
-      "うけつけ",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「受付」は「うけつけ」と 読みます（arti: resepsionis）。",
-    "period": "minna-lesson-43",
-    "lesson": 43,
-    "word": "受付"
-  },
-  {
-    "id": 20214,
-    "section": "vocab",
-    "text": "「かいぎしつ」の 意味は どれですか。",
-    "options": [
-      "ruang rapat",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かいぎしつ」 berarti ruang rapat。",
-    "period": "minna-lesson-43",
-    "lesson": 43,
-    "word": "会議室"
-  },
-  {
-    "id": 20215,
-    "section": "vocab",
-    "text": "「起きます」の 読み方は どれですか。",
-    "options": [
-      "おきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「起きます」は「おきます」と 読みます（arti: bangun）。",
-    "period": "minna-lesson-44",
-    "lesson": 44,
-    "word": "起きます"
-  },
-  {
-    "id": 20216,
-    "section": "vocab",
-    "text": "「ねます」の 意味は どれですか。",
-    "options": [
-      "tidur",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ねます」 berarti tidur。",
-    "period": "minna-lesson-44",
-    "lesson": 44,
-    "word": "寝ます"
-  },
-  {
-    "id": 20217,
-    "section": "vocab",
-    "text": "「bekerja」に あたる 日本語は どれですか。",
-    "options": [
-      "働きます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「bekerja」は 日本語で「働きます」です。",
-    "period": "minna-lesson-44",
-    "lesson": 44,
-    "word": "働きます"
-  },
-  {
-    "id": 20218,
-    "section": "vocab",
-    "text": "「休みます」の 読み方は どれですか。",
-    "options": [
-      "やすみます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「休みます」は「やすみます」と 読みます（arti: beristirahat/libur）。",
-    "period": "minna-lesson-44",
-    "lesson": 44,
-    "word": "休みます"
-  },
-  {
-    "id": 20219,
-    "section": "vocab",
-    "text": "「べんきょうします」の 意味は どれですか。",
-    "options": [
-      "belajar",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「べんきょうします」 berarti belajar。",
-    "period": "minna-lesson-44",
-    "lesson": 44,
-    "word": "勉強します"
-  },
-  {
-    "id": 20220,
-    "section": "vocab",
-    "text": "「行きます」の 読み方は どれですか。",
-    "options": [
-      "いきます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「行きます」は「いきます」と 読みます（arti: pergi）。",
-    "period": "minna-lesson-45",
-    "lesson": 45,
-    "word": "行きます"
-  },
-  {
-    "id": 20221,
-    "section": "vocab",
-    "text": "「きます」の 意味は どれですか。",
-    "options": [
-      "datang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「きます」 berarti datang。",
-    "period": "minna-lesson-45",
-    "lesson": 45,
-    "word": "来ます"
-  },
-  {
-    "id": 20222,
-    "section": "vocab",
-    "text": "「pulang」に あたる 日本語は どれですか。",
-    "options": [
-      "帰ります",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「pulang」は 日本語で「帰ります」です。",
-    "period": "minna-lesson-45",
-    "lesson": 45,
-    "word": "帰ります"
-  },
-  {
-    "id": 20223,
-    "section": "vocab",
-    "text": "「電車」の 読み方は どれですか。",
-    "options": [
-      "でんしゃ",
-      "きょうしつ",
-      "じてんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「電車」は「でんしゃ」と 読みます（arti: kereta）。",
-    "period": "minna-lesson-45",
-    "lesson": 45,
-    "word": "電車"
-  },
-  {
-    "id": 20224,
-    "section": "vocab",
-    "text": "「じてんしゃ」の 意味は どれですか。",
-    "options": [
-      "sepeda",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「じてんしゃ」 berarti sepeda。",
-    "period": "minna-lesson-45",
-    "lesson": 45,
-    "word": "自転車"
-  },
-  {
-    "id": 20225,
-    "section": "vocab",
-    "text": "「食べます」の 読み方は どれですか。",
-    "options": [
-      "たべます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「食べます」は「たべます」と 読みます（arti: makan）。",
-    "period": "minna-lesson-46",
-    "lesson": 46,
-    "word": "食べます"
-  },
-  {
-    "id": 20226,
-    "section": "vocab",
-    "text": "「のみます」の 意味は どれですか。",
-    "options": [
-      "minum",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「のみます」 berarti minum。",
-    "period": "minna-lesson-46",
-    "lesson": 46,
-    "word": "飲みます"
-  },
-  {
-    "id": 20227,
-    "section": "vocab",
-    "text": "「mengisap/merokok」に あたる 日本語は どれですか。",
-    "options": [
-      "吸います",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「mengisap/merokok」は 日本語で「吸います」です。",
-    "period": "minna-lesson-46",
-    "lesson": 46,
-    "word": "吸います"
-  },
-  {
-    "id": 20228,
-    "section": "vocab",
-    "text": "「見ます」の 読み方は どれですか。",
-    "options": [
-      "みます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「見ます」は「みます」と 読みます（arti: melihat）。",
-    "period": "minna-lesson-46",
-    "lesson": 46,
-    "word": "見ます"
-  },
-  {
-    "id": 20229,
-    "section": "vocab",
-    "text": "「ききます」の 意味は どれですか。",
-    "options": [
-      "mendengar/bertanya",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「ききます」 berarti mendengar/bertanya。",
-    "period": "minna-lesson-46",
-    "lesson": 46,
-    "word": "聞きます"
-  },
-  {
-    "id": 20230,
-    "section": "vocab",
-    "text": "「切ります」の 読み方は どれですか。",
-    "options": [
-      "きります",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「切ります」は「きります」と 読みます（arti: memotong）。",
-    "period": "minna-lesson-47",
-    "lesson": 47,
-    "word": "切ります"
-  },
-  {
-    "id": 20231,
-    "section": "vocab",
-    "text": "「おくります」の 意味は どれですか。",
-    "options": [
-      "mengirim",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「おくります」 berarti mengirim。",
-    "period": "minna-lesson-47",
-    "lesson": 47,
-    "word": "送ります"
-  },
-  {
-    "id": 20232,
-    "section": "vocab",
-    "text": "「memberi」に あたる 日本語は どれですか。",
-    "options": [
-      "あげます",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「memberi」は 日本語で「あげます」です。",
-    "period": "minna-lesson-47",
-    "lesson": 47,
-    "word": "あげます"
-  },
-  {
-    "id": 20233,
-    "section": "vocab",
-    "text": "「もらいます」の 読み方は どれですか。",
-    "options": [
-      "もらいます",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「もらいます」は「もらいます」と 読みます（arti: menerima）。",
-    "period": "minna-lesson-47",
-    "lesson": 47,
-    "word": "もらいます"
-  },
-  {
-    "id": 20234,
-    "section": "vocab",
-    "text": "「かします」の 意味は どれですか。",
-    "options": [
-      "meminjamkan",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「かします」 berarti meminjamkan。",
-    "period": "minna-lesson-47",
-    "lesson": 47,
-    "word": "貸します"
-  },
-  {
-    "id": 20235,
-    "section": "vocab",
-    "text": "「きれい」の 読み方は どれですか。",
-    "options": [
-      "きれい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
-    ],
-    "answer": 0,
-    "explanation": "「きれい」は「きれい」と 読みます（arti: indah/bersih）。",
-    "period": "minna-lesson-48",
-    "lesson": 48,
-    "word": "きれい"
-  },
-  {
-    "id": 20236,
-    "section": "vocab",
-    "text": "「しずか」の 意味は どれですか。",
-    "options": [
-      "tenang",
-      "stasiun",
-      "dokumen",
-      "makan"
-    ],
-    "answer": 0,
-    "explanation": "「しずか」 berarti tenang。",
-    "period": "minna-lesson-48",
-    "lesson": 48,
-    "word": "静か"
-  },
-  {
-    "id": 20237,
-    "section": "vocab",
-    "text": "「ramai」に あたる 日本語は どれですか。",
-    "options": [
-      "にぎやか",
-      "学校",
-      "時間",
-      "天気"
-    ],
-    "answer": 0,
-    "explanation": "「ramai」は 日本語で「にぎやか」です。",
-    "period": "minna-lesson-48",
-    "lesson": 48,
-    "word": "にぎやか"
-  },
-  {
-    "id": 20238,
     "section": "vocab",
     "text": "「有名」の 読み方は どれですか。",
     "options": [
+      "なつ",
+      "かい",
       "ゆうめい",
-      "きょうしつ",
-      "でんしゃ",
+      "あき"
+    ],
+    "answer": 2,
+    "explanation": "「有名」の 読み方は「ゆうめい」です。",
+    "period": "sep-nov",
+    "id": 389
+  },
+  {
+    "section": "vocab",
+    "text": "「重い」の 読み方は どれですか。",
+    "options": [
+      "ほん",
+      "あめ",
+      "かい",
+      "おもい"
+    ],
+    "answer": 3,
+    "explanation": "「重い」の 読み方は「おもい」です。",
+    "period": "sep-nov",
+    "id": 602
+  },
+  {
+    "section": "vocab",
+    "text": "「趣味」の 読み方は どれですか。",
+    "options": [
+      "かい",
+      "しゅみ",
+      "ふゆ",
+      "かぜ"
+    ],
+    "answer": 1,
+    "explanation": "「趣味」の 読み方は「しゅみ」です。",
+    "period": "sep-nov",
+    "id": 334
+  },
+  {
+    "section": "vocab",
+    "text": "「財布」の 読み方は どれですか。",
+    "options": [
+      "かさ",
+      "かい",
+      "あめ",
+      "さいふ"
+    ],
+    "answer": 3,
+    "explanation": "「財布」の 読み方は「さいふ」です。",
+    "period": "sep-nov",
+    "id": 313
+  },
+  {
+    "section": "vocab",
+    "text": "「運動」の 読み方は どれですか。",
+    "options": [
+      "あめ",
+      "うんどう",
+      "みせ",
+      "あき"
+    ],
+    "answer": 1,
+    "explanation": "「運動」の 読み方は「うんどう」です。",
+    "period": "sep-nov",
+    "id": 740
+  },
+  {
+    "section": "vocab",
+    "text": "「出発」の 読み方は どれですか。",
+    "options": [
+      "しゅっぱつ",
+      "みぎ",
+      "はれ",
+      "ふゆ"
+    ],
+    "answer": 0,
+    "explanation": "「出発」の 読み方は「しゅっぱつ」です。",
+    "period": "sep-nov",
+    "id": 391
+  },
+  {
+    "section": "vocab",
+    "text": "「非常口」の 読み方は どれですか。",
+    "options": [
+      "えき",
+      "かい",
+      "ちず",
+      "ひじょうぐち"
+    ],
+    "answer": 3,
+    "explanation": "「非常口」の 読み方は「ひじょうぐち」です。",
+    "period": "sep-nov",
+    "id": 517
+  },
+  {
+    "section": "vocab",
+    "text": "「荷物」の 読み方は どれですか。",
+    "options": [
+      "にもつ",
+      "はる",
+      "みせ",
+      "えき"
+    ],
+    "answer": 0,
+    "explanation": "「荷物」の 読み方は「にもつ」です。",
+    "period": "sep-nov",
+    "id": 56
+  },
+  {
+    "section": "vocab",
+    "text": "「試験」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "しけん",
+      "はれ",
+      "かぜ"
+    ],
+    "answer": 1,
+    "explanation": "「試験」の 読み方は「しけん」です。",
+    "period": "sep-nov",
+    "id": 113
+  },
+  {
+    "section": "vocab",
+    "text": "「魚」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "かい",
+      "さかな",
+      "なつ"
+    ],
+    "answer": 2,
+    "explanation": "「魚」の 読み方は「さかな」です。",
+    "period": "sep-nov",
+    "id": 623
+  },
+  {
+    "section": "vocab",
+    "text": "「借りる」の 読み方は どれですか。",
+    "options": [
+      "かりる",
+      "はる",
+      "はれ",
+      "ほん"
+    ],
+    "answer": 0,
+    "explanation": "「借りる」の 読み方は「かりる」です。",
+    "period": "sep-nov",
+    "id": 371
+  },
+  {
+    "section": "vocab",
+    "text": "「会社」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "かいしゃ",
+      "ふゆ",
+      "ちず"
+    ],
+    "answer": 1,
+    "explanation": "「会社」の 読み方は「かいしゃ」です。",
+    "period": "sep-nov",
+    "id": 728
+  },
+  {
+    "section": "vocab",
+    "text": "「説明」の 読み方は どれですか。",
+    "options": [
+      "なつ",
+      "かい",
+      "せつめい",
+      "はる"
+    ],
+    "answer": 2,
+    "explanation": "「説明」の 読み方は「せつめい」です。",
+    "period": "sep-nov",
+    "id": 959
+  },
+  {
+    "section": "vocab",
+    "text": "「修理」の 読み方は どれですか。",
+    "options": [
+      "はる",
+      "あめ",
+      "はれ",
+      "しゅうり"
+    ],
+    "answer": 3,
+    "explanation": "「修理」の 読み方は「しゅうり」です。",
+    "period": "sep-nov",
+    "id": 376
+  },
+  {
+    "section": "vocab",
+    "text": "「洗濯」の 読み方は どれですか。",
+    "options": [
+      "かい",
+      "みぎ",
+      "せんたく",
+      "ちず"
+    ],
+    "answer": 2,
+    "explanation": "「洗濯」の 読み方は「せんたく」です。",
+    "period": "sep-nov",
+    "id": 559
+  },
+  {
+    "section": "vocab",
+    "text": "「決める」の 読み方は どれですか。",
+    "options": [
+      "えき",
+      "ゆき",
+      "きめる",
+      "かさ"
+    ],
+    "answer": 2,
+    "explanation": "「決める」の 読み方は「きめる」です。",
+    "period": "sep-nov",
+    "id": 232
+  },
+  {
+    "section": "vocab",
+    "text": "「交差点」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "あめ",
+      "かい",
+      "こうさてん"
+    ],
+    "answer": 3,
+    "explanation": "「交差点」の 読み方は「こうさてん」です。",
+    "period": "sep-nov",
+    "id": 938
+  },
+  {
+    "section": "vocab",
+    "text": "「合格」の 読み方は どれですか。",
+    "options": [
+      "かい",
+      "みぎ",
+      "ちず",
+      "ごうかく"
+    ],
+    "answer": 3,
+    "explanation": "「合格」の 読み方は「ごうかく」です。",
+    "period": "sep-nov",
+    "id": 49
+  },
+  {
+    "section": "vocab",
+    "text": "「病院」の 読み方は どれですか。",
+    "options": [
+      "かい",
+      "みぎ",
+      "はれ",
       "びょういん"
     ],
-    "answer": 0,
-    "explanation": "「有名」は「ゆうめい」と 読みます（arti: terkenal）。",
-    "period": "minna-lesson-48",
-    "lesson": 48,
-    "word": "有名"
+    "answer": 3,
+    "explanation": "「病院」の 読み方は「びょういん」です。",
+    "period": "sep-nov",
+    "id": 649
   },
   {
-    "id": 20239,
     "section": "vocab",
-    "text": "「しんせつ」の 意味は どれですか。",
+    "text": "「切符」の 読み方は どれですか。",
     "options": [
-      "baik hati",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "かい",
+      "みぎ",
+      "きっぷ",
+      "はる"
+    ],
+    "answer": 2,
+    "explanation": "「切符」の 読み方は「きっぷ」です。",
+    "period": "sep-nov",
+    "id": 439
+  },
+  {
+    "section": "vocab",
+    "text": "「返す」の 読み方は どれですか。",
+    "options": [
+      "あき",
+      "かえす",
+      "はれ",
+      "かさ"
+    ],
+    "answer": 1,
+    "explanation": "「返す」の 読み方は「かえす」です。",
+    "period": "sep-nov",
+    "id": 297
+  },
+  {
+    "section": "vocab",
+    "text": "「静か」の 読み方は どれですか。",
+    "options": [
+      "しずか",
+      "あき",
+      "みせ",
+      "ほん"
     ],
     "answer": 0,
-    "explanation": "「しんせつ」 berarti baik hati。",
-    "period": "minna-lesson-48",
-    "lesson": 48,
-    "word": "親切"
+    "explanation": "「静か」の 読み方は「しずか」です。",
+    "period": "sep-nov",
+    "id": 592
   },
   {
-    "id": 20240,
     "section": "vocab",
-    "text": "「わかります」の 読み方は どれですか。",
+    "text": "「晴れ」の 読み方は どれですか。",
     "options": [
-      "わかります",
-      "きょうしつ",
+      "かぜ",
+      "はれ",
+      "ちず",
+      "ほん"
+    ],
+    "answer": 1,
+    "explanation": "「晴れ」の 読み方は「はれ」です。",
+    "period": "sep-nov",
+    "id": 944
+  },
+  {
+    "section": "vocab",
+    "text": "「到着」の 読み方は どれですか。",
+    "options": [
+      "なつ",
+      "あめ",
+      "ゆき",
+      "とうちゃく"
+    ],
+    "answer": 3,
+    "explanation": "「到着」の 読み方は「とうちゃく」です。",
+    "period": "sep-nov",
+    "id": 224
+  },
+  {
+    "section": "vocab",
+    "text": "「働く」の 読み方は どれですか。",
+    "options": [
+      "えき",
+      "ゆき",
+      "ちず",
+      "はたらく"
+    ],
+    "answer": 3,
+    "explanation": "「働く」の 読み方は「はたらく」です。",
+    "period": "sep-nov",
+    "id": 712
+  },
+  {
+    "section": "vocab",
+    "text": "「難しい」の 読み方は どれですか。",
+    "options": [
+      "むずかしい",
+      "あめ",
+      "はれ",
+      "あき"
+    ],
+    "answer": 0,
+    "explanation": "「難しい」の 読み方は「むずかしい」です。",
+    "period": "sep-nov",
+    "id": 855
+  },
+  {
+    "section": "vocab",
+    "text": "「簡単」の 読み方は どれですか。",
+    "options": [
+      "なつ",
+      "かんたん",
+      "みせ",
+      "はれ"
+    ],
+    "answer": 1,
+    "explanation": "「簡単」の 読み方は「かんたん」です。",
+    "period": "sep-nov",
+    "id": 314
+  },
+  {
+    "section": "vocab",
+    "text": "「健康」の 読み方は どれですか。",
+    "options": [
+      "けんこう",
+      "かい",
+      "はれ",
+      "ゆき"
+    ],
+    "answer": 0,
+    "explanation": "「健康」の 読み方は「けんこう」です。",
+    "period": "sep-nov",
+    "id": 149
+  },
+  {
+    "section": "vocab",
+    "text": "「無料」の 読み方は どれですか。",
+    "options": [
+      "むりょう",
+      "ふゆ",
+      "みせ",
+      "あめ"
+    ],
+    "answer": 0,
+    "explanation": "「無料」の 読み方は「むりょう」です。",
+    "period": "sep-nov",
+    "id": 500
+  },
+  {
+    "section": "vocab",
+    "text": "「果物」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "かい",
+      "くだもの",
+      "あき"
+    ],
+    "answer": 2,
+    "explanation": "「果物」の 読み方は「くだもの」です。",
+    "period": "sep-nov",
+    "id": 833
+  },
+  {
+    "section": "vocab",
+    "text": "「入口」の 読み方は どれですか。",
+    "options": [
+      "えき",
+      "いりぐち",
+      "はれ",
+      "ほん"
+    ],
+    "answer": 1,
+    "explanation": "「入口」の 読み方は「いりぐち」です。",
+    "period": "sep-nov",
+    "id": 397
+  },
+  {
+    "section": "vocab",
+    "text": "「親切」の 読み方は どれですか。",
+    "options": [
+      "しんせつ",
+      "みせ",
+      "はれ",
+      "ふゆ"
+    ],
+    "answer": 0,
+    "explanation": "「親切」の 読み方は「しんせつ」です。",
+    "period": "sep-nov",
+    "id": 183
+  },
+  {
+    "section": "vocab",
+    "text": "「辛い」の 読み方は どれですか。",
+    "options": [
+      "かぜ",
+      "ゆき",
+      "からい",
+      "みぎ"
+    ],
+    "answer": 2,
+    "explanation": "「辛い」の 読み方は「からい」です。",
+    "period": "sep-nov",
+    "id": 510
+  },
+  {
+    "section": "vocab",
+    "text": "「急ぐ」の 読み方は どれですか。",
+    "options": [
+      "あき",
+      "かい",
+      "かさ",
+      "いそぐ"
+    ],
+    "answer": 3,
+    "explanation": "「急ぐ」の 読み方は「いそぐ」です。",
+    "period": "sep-nov",
+    "id": 957
+  },
+  {
+    "section": "vocab",
+    "text": "「頭」の 読み方は どれですか。",
+    "options": [
+      "ちず",
+      "ゆき",
+      "あたま",
+      "かい"
+    ],
+    "answer": 2,
+    "explanation": "「頭」の 読み方は「あたま」です。",
+    "period": "sep-nov",
+    "id": 746
+  },
+  {
+    "section": "vocab",
+    "text": "「商品」の 読み方は どれですか。",
+    "options": [
+      "しょうひん",
+      "あめ",
+      "はれ",
+      "はる"
+    ],
+    "answer": 0,
+    "explanation": "「商品」の 読み方は「しょうひん」です。",
+    "period": "sep-nov",
+    "id": 435
+  },
+  {
+    "section": "vocab",
+    "text": "「安全」の 読み方は どれですか。",
+    "options": [
+      "あんぜん",
+      "ほん",
+      "はれ",
+      "ちず"
+    ],
+    "answer": 0,
+    "explanation": "「安全」の 読み方は「あんぜん」です。",
+    "period": "sep-nov",
+    "id": 897
+  },
+  {
+    "section": "vocab",
+    "text": "「信号」の 読み方は どれですか。",
+    "options": [
+      "ほん",
+      "みぎ",
+      "はる",
+      "しんごう"
+    ],
+    "answer": 3,
+    "explanation": "「信号」の 読み方は「しんごう」です。",
+    "period": "sep-nov",
+    "id": 527
+  },
+  {
+    "section": "vocab",
+    "text": "「階段」の 読み方は どれですか。",
+    "options": [
+      "かぜ",
+      "かいだん",
+      "みせ",
+      "ふゆ"
+    ],
+    "answer": 1,
+    "explanation": "「階段」の 読み方は「かいだん」です。",
+    "period": "sep-nov",
+    "id": 300
+  },
+  {
+    "section": "vocab",
+    "text": "「薬」の 読み方は どれですか。",
+    "options": [
+      "くすり",
+      "かぜ",
+      "えき",
+      "ほん"
+    ],
+    "answer": 0,
+    "explanation": "「薬」の 読み方は「くすり」です。",
+    "period": "sep-nov",
+    "id": 85
+  },
+  {
+    "section": "vocab",
+    "text": "「予約」の 読み方は どれですか。",
+    "options": [
+      "ふゆ",
+      "よやく",
+      "はれ",
+      "かぜ"
+    ],
+    "answer": 1,
+    "explanation": "「予約」の 読み方は「よやく」です。",
+    "period": "sep-nov",
+    "id": 295
+  },
+  {
+    "section": "vocab",
+    "text": "「駅」の 読み方は どれですか。",
+    "options": [
+      "なつ",
+      "みぎ",
+      "あき",
+      "えき"
+    ],
+    "answer": 3,
+    "explanation": "「駅」の 読み方は「えき」です。",
+    "period": "sep-nov",
+    "id": 387
+  },
+  {
+    "section": "vocab",
+    "text": "「直す」の 読み方は どれですか。",
+    "options": [
+      "あめ",
+      "かい",
+      "なおす",
+      "みせ"
+    ],
+    "answer": 2,
+    "explanation": "「直す」の 読み方は「なおす」です。",
+    "period": "sep-nov",
+    "id": 575
+  },
+  {
+    "section": "vocab",
+    "text": "「店員」の 読み方は どれですか。",
+    "options": [
+      "てんいん",
+      "かい",
+      "ふゆ",
+      "ゆき"
+    ],
+    "answer": 0,
+    "explanation": "「店員」の 読み方は「てんいん」です。",
+    "period": "sep-nov",
+    "id": 554
+  },
+  {
+    "section": "vocab",
+    "text": "「写真」の 読み方は どれですか。",
+    "options": [
+      "しゃしん",
+      "なつ",
+      "はれ",
+      "かぜ"
+    ],
+    "answer": 0,
+    "explanation": "「写真」の 読み方は「しゃしん」です。",
+    "period": "sep-nov",
+    "id": 399
+  },
+  {
+    "id": 1001,
+    "section": "vocab",
+    "text": "「毎朝、家を出る前に天気予報を確認します。」この人はいつ天気予報を確認しますか。",
+    "options": [
+      "家を出る前の朝",
+      "昼ご飯を食べた後",
+      "仕事が終わった夜",
+      "休みの日だけ"
+    ],
+    "answer": 0,
+    "explanation": "「毎朝」は毎日の朝という意味です。文では、家を出る前に天気予報を確認すると言っています。",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1002,
+    "section": "vocab",
+    "text": "「昼休みは12時から1時までです。」この会社で休めるのはいつですか。",
+    "options": [
+      "午前11時から12時まで",
+      "正午から午後1時まで",
+      "午後1時から2時まで",
+      "午後6時から7時まで"
+    ],
+    "answer": 1,
+    "explanation": "昼休みは12時から1時までです。「正午」は12時のことです。",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1003,
+    "section": "vocab",
+    "text": "「夜遅く帰ったので、晩ご飯を作らずにパンを食べました。」どうしてパンを食べましたか。",
+    "options": [
+      "帰るのが遅かったから",
+      "昼にたくさん食べたから",
+      "パンが売り切れそうだったから",
+      "晩ご飯を作る時間があったから"
+    ],
+    "answer": 0,
+    "explanation": "文では、帰るのが遅かったため、晩ご飯を作らずにパンを食べたと説明しています。",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1004,
+    "section": "vocab",
+    "text": "「仕事」の 読み方は どれですか。",
+    "options": [
+      "みぎ",
+      "ゆき",
       "でんしゃ",
-      "びょういん"
+      "しごと"
     ],
-    "answer": 0,
-    "explanation": "「わかります」は「わかります」と 読みます（arti: mengerti）。",
-    "period": "minna-lesson-49",
-    "lesson": 49,
-    "word": "わかります"
+    "answer": 3,
+    "explanation": "仕事 dibaca しごと, artinya pekerjaan.",
+    "period": "sep-nov"
   },
   {
-    "id": 20241,
+    "id": 1005,
     "section": "vocab",
-    "text": "「あります」の 意味は どれですか。",
+    "text": "「休み」の 読み方は どれですか。",
     "options": [
-      "ada (benda)",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "かいしゃ",
+      "えき",
+      "よる",
+      "やすみ"
     ],
-    "answer": 0,
-    "explanation": "「あります」 berarti ada (benda)。",
-    "period": "minna-lesson-49",
-    "lesson": 49,
-    "word": "あります"
+    "answer": 3,
+    "explanation": "休み dibaca やすみ, artinya libur / istirahat.",
+    "period": "sep-nov"
   },
   {
-    "id": 20242,
+    "id": 1006,
     "section": "vocab",
-    "text": "「suka」に あたる 日本語は どれですか。",
+    "text": "「郵便局」の 読み方は どれですか。",
     "options": [
-      "好き",
-      "学校",
-      "時間",
-      "天気"
+      "でぐち",
+      "やすみ",
+      "ゆうびんきょく",
+      "こうえん"
     ],
-    "answer": 0,
-    "explanation": "「suka」は 日本語で「好き」です。",
-    "period": "minna-lesson-49",
-    "lesson": 49,
-    "word": "好き"
+    "answer": 2,
+    "explanation": "郵便局 dibaca ゆうびんきょく, artinya kantor pos.",
+    "period": "sep-nov"
   },
   {
-    "id": 20243,
+    "id": 1007,
     "section": "vocab",
-    "text": "「嫌い」の 読み方は どれですか。",
+    "text": "「学校」の 読み方は どれですか。",
     "options": [
-      "きらい",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "しょくじ",
+      "かぜ",
+      "じてんしゃ",
+      "がっこう"
     ],
-    "answer": 0,
-    "explanation": "「嫌い」は「きらい」と 読みます（arti: tidak suka）。",
-    "period": "minna-lesson-49",
-    "lesson": 49,
-    "word": "嫌い"
+    "answer": 3,
+    "explanation": "学校 dibaca がっこう, artinya sekolah.",
+    "period": "sep-nov"
   },
   {
-    "id": 20244,
+    "id": 1008,
     "section": "vocab",
-    "text": "「じょうず」の 意味は どれですか。",
+    "text": "「先生」の 読み方は どれですか。",
     "options": [
-      "mahir",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "なまえ",
+      "かぜ",
+      "せんせい",
+      "かいもの"
     ],
-    "answer": 0,
-    "explanation": "「じょうず」 berarti mahir。",
-    "period": "minna-lesson-49",
-    "lesson": 49,
-    "word": "上手"
+    "answer": 2,
+    "explanation": "先生 dibaca せんせい, artinya guru.",
+    "period": "sep-nov"
   },
   {
-    "id": 20245,
+    "id": 1009,
     "section": "vocab",
-    "text": "「銀行」の 読み方は どれですか。",
+    "text": "「学生」の 読み方は どれですか。",
     "options": [
+      "あき",
+      "ふゆ",
+      "がくせい",
+      "しごと"
+    ],
+    "answer": 2,
+    "explanation": "学生 dibaca がくせい, artinya siswa / mahasiswa.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1010,
+    "section": "vocab",
+    "text": "「家族」の 読み方は どれですか。",
+    "options": [
+      "ゆき",
+      "いりぐち",
       "ぎんこう",
-      "きょうしつ",
+      "かぞく"
+    ],
+    "answer": 3,
+    "explanation": "家族 dibaca かぞく, artinya keluarga.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1011,
+    "section": "vocab",
+    "text": "「友達」の 読み方は どれですか。",
+    "options": [
+      "じてんしゃ",
+      "えき",
+      "ともだち",
+      "がくせい"
+    ],
+    "answer": 2,
+    "explanation": "友達 dibaca ともだち, artinya teman.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1012,
+    "section": "vocab",
+    "text": "「名前」の 読み方は どれですか。",
+    "options": [
+      "くるま",
+      "かいしゃ",
+      "ゆうびんきょく",
+      "なまえ"
+    ],
+    "answer": 3,
+    "explanation": "名前 dibaca なまえ, artinya nama.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1013,
+    "section": "vocab",
+    "text": "「電話」の 読み方は どれですか。",
+    "options": [
+      "でんわ",
+      "こうえん",
+      "せんせい",
+      "あめ"
+    ],
+    "answer": 0,
+    "explanation": "電話 dibaca でんわ, artinya telepon.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1014,
+    "section": "vocab",
+    "text": "「電車」の 読み方は どれですか。",
+    "options": [
+      "ひる",
+      "じゅうしょ",
       "でんしゃ",
+      "こうえん"
+    ],
+    "answer": 2,
+    "explanation": "電車 dibaca でんしゃ, artinya kereta listrik.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1015,
+    "section": "vocab",
+    "text": "「自転車」の 読み方は どれですか。",
+    "options": [
+      "じてんしゃ",
+      "かぜ",
+      "えき",
+      "ちかい"
+    ],
+    "answer": 0,
+    "explanation": "自転車 dibaca じてんしゃ, artinya sepeda.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1016,
+    "section": "vocab",
+    "text": "「車」の 読み方は どれですか。",
+    "options": [
+      "しごと",
+      "なまえ",
+      "くるま",
       "びょういん"
     ],
-    "answer": 0,
-    "explanation": "「銀行」は「ぎんこう」と 読みます（arti: bank）。",
-    "period": "minna-lesson-50",
-    "lesson": 50,
-    "word": "銀行"
+    "answer": 2,
+    "explanation": "車 dibaca くるま, artinya mobil.",
+    "period": "sep-nov"
   },
   {
-    "id": 20246,
+    "id": 1017,
     "section": "vocab",
-    "text": "「ゆうびんきょく」の 意味は どれですか。",
+    "text": "「天気」の 読み方は どれですか。",
     "options": [
-      "kantor pos",
-      "stasiun",
-      "dokumen",
-      "makan"
+      "みぎ",
+      "てんき",
+      "あき",
+      "しょくじ"
+    ],
+    "answer": 1,
+    "explanation": "天気 dibaca てんき, artinya cuaca.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1018,
+    "section": "vocab",
+    "text": "「雨」の 読み方は どれですか。",
+    "options": [
+      "あめ",
+      "かいしゃ",
+      "えき",
+      "かぜ"
     ],
     "answer": 0,
-    "explanation": "「ゆうびんきょく」 berarti kantor pos。",
-    "period": "minna-lesson-50",
-    "lesson": 50,
-    "word": "郵便局"
+    "explanation": "雨 dibaca あめ, artinya hujan.",
+    "period": "sep-nov"
   },
   {
-    "id": 20247,
+    "id": 1019,
     "section": "vocab",
-    "text": "「rumah sakit」に あたる 日本語は どれですか。",
+    "text": "「雪」の 読み方は どれですか。",
     "options": [
-      "病院",
-      "学校",
-      "時間",
-      "天気"
+      "ゆき",
+      "こうえん",
+      "せんせい",
+      "かいもの"
     ],
     "answer": 0,
-    "explanation": "「rumah sakit」は 日本語で「病院」です。",
-    "period": "minna-lesson-50",
-    "lesson": 50,
-    "word": "病院"
+    "explanation": "雪 dibaca ゆき, artinya salju.",
+    "period": "sep-nov"
   },
   {
-    "id": 20248,
+    "id": 1020,
+    "section": "vocab",
+    "text": "「風」の 読み方は どれですか。",
+    "options": [
+      "ちかい",
+      "ふゆ",
+      "かぜ",
+      "なまえ"
+    ],
+    "answer": 2,
+    "explanation": "風 dibaca かぜ, artinya angin.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1021,
+    "section": "vocab",
+    "text": "「春」の 読み方は どれですか。",
+    "options": [
+      "はる",
+      "かぞく",
+      "あさ",
+      "しごと"
+    ],
+    "answer": 0,
+    "explanation": "春 dibaca はる, artinya musim semi.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1022,
+    "section": "vocab",
+    "text": "「夏」の 読み方は どれですか。",
+    "options": [
+      "なつ",
+      "あき",
+      "でんわ",
+      "りょうり"
+    ],
+    "answer": 0,
+    "explanation": "夏 dibaca なつ, artinya musim panas.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1023,
+    "section": "vocab",
+    "text": "「秋」の 読み方は どれですか。",
+    "options": [
+      "あき",
+      "はる",
+      "ぎんこう",
+      "かぜ"
+    ],
+    "answer": 0,
+    "explanation": "秋 dibaca あき, artinya musim gugur.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1024,
+    "section": "vocab",
+    "text": "「冬」の 読み方は どれですか。",
+    "options": [
+      "ゆうびんきょく",
+      "ゆき",
+      "ふゆ",
+      "しごと"
+    ],
+    "answer": 2,
+    "explanation": "冬 dibaca ふゆ, artinya musim dingin.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1025,
+    "section": "vocab",
+    "text": "「食事」の 読み方は どれですか。",
+    "options": [
+      "じてんしゃ",
+      "しょくじ",
+      "せんせい",
+      "くるま"
+    ],
+    "answer": 1,
+    "explanation": "食事 dibaca しょくじ, artinya makan / santapan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1026,
+    "section": "vocab",
+    "text": "「買い物」の 読み方は どれですか。",
+    "options": [
+      "みぎ",
+      "あめ",
+      "かいもの",
+      "じてんしゃ"
+    ],
+    "answer": 2,
+    "explanation": "買い物 dibaca かいもの, artinya belanja.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1027,
+    "section": "vocab",
+    "text": "「店」の 読み方は どれですか。",
+    "options": [
+      "かぞく",
+      "はる",
+      "みせ",
+      "でんしゃ"
+    ],
+    "answer": 2,
+    "explanation": "店 dibaca みせ, artinya toko.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1028,
+    "section": "vocab",
+    "text": "「市場」の 読み方は どれですか。",
+    "options": [
+      "みせ",
+      "くるま",
+      "いちば",
+      "ふゆ"
+    ],
+    "answer": 2,
+    "explanation": "市場 dibaca いちば, artinya pasar.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1029,
     "section": "vocab",
     "text": "「公園」の 読み方は どれですか。",
     "options": [
       "こうえん",
-      "きょうしつ",
-      "でんしゃ",
-      "びょういん"
+      "みせ",
+      "なまえ",
+      "かいしゃ"
     ],
     "answer": 0,
-    "explanation": "「公園」は「こうえん」と 読みます（arti: taman）。",
-    "period": "minna-lesson-50",
-    "lesson": 50,
-    "word": "公園"
+    "explanation": "公園 dibaca こうえん, artinya taman.",
+    "period": "sep-nov"
   },
   {
-    "id": 20249,
+    "id": 1030,
     "section": "vocab",
-    "text": "「えき」の 意味は どれですか。",
+    "text": "「右」の 読み方は どれですか。",
     "options": [
-      "stasiun",
-      "sekolah",
-      "dokumen",
-      "makan"
+      "でんわ",
+      "がくせい",
+      "しょくじ",
+      "みぎ"
+    ],
+    "answer": 3,
+    "explanation": "右 dibaca みぎ, artinya kanan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1031,
+    "section": "vocab",
+    "text": "「左」の 読み方は どれですか。",
+    "options": [
+      "ひだり",
+      "みせ",
+      "はる",
+      "がくせい"
     ],
     "answer": 0,
-    "explanation": "「えき」 berarti stasiun。",
-    "period": "minna-lesson-50",
-    "lesson": 50,
-    "word": "駅"
+    "explanation": "左 dibaca ひだり, artinya kiri.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1032,
+    "section": "vocab",
+    "text": "「朝」の いみは どれですか。",
+    "options": [
+      "なかの いい ひと",
+      "あさの じかん",
+      "せんろを はしる のりもの",
+      "ものを うる ところ"
+    ],
+    "answer": 1,
+    "explanation": "「朝」= あさ; pagi.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1033,
+    "section": "vocab",
+    "text": "「昼」の いみは どれですか。",
+    "options": [
+      "ひるの じかん",
+      "みどりや ひろばが ある ところ",
+      "ものを うる ところ",
+      "ごはんを たべる こと"
+    ],
+    "answer": 0,
+    "explanation": "「昼」= ひる; siang.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1034,
+    "section": "vocab",
+    "text": "「夜」の いみは どれですか。",
+    "options": [
+      "みせで ものを かう こと",
+      "とおくの ひとと はなす きかい",
+      "みどりや ひろばが ある ところ",
+      "よるの じかん"
+    ],
+    "answer": 3,
+    "explanation": "「夜」= よる; malam.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1035,
+    "section": "vocab",
+    "text": "「会社」の いみは どれですか。",
+    "options": [
+      "すずしくなって はが いろづく きせつ",
+      "たべものを つくる こと",
+      "しごとを する ところ",
+      "そとへ でる ところ"
+    ],
+    "answer": 2,
+    "explanation": "「会社」= かいしゃ; perusahaan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1036,
+    "section": "vocab",
+    "text": "「仕事」の いみは どれですか。",
+    "options": [
+      "ものを うる ところ",
+      "さむくて ゆきが ふる きせつ",
+      "お金を もらって する こと",
+      "みちを はしる のりもの"
+    ],
+    "answer": 2,
+    "explanation": "「仕事」= しごと; pekerjaan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1037,
+    "section": "vocab",
+    "text": "「休み」の いみは どれですか。",
+    "options": [
+      "みどりや ひろばが ある ところ",
+      "しごとや がっこうが ない ひ",
+      "がっこうで べんきょうする ひと",
+      "あつい きせつ"
+    ],
+    "answer": 1,
+    "explanation": "「休み」= やすみ; libur / istirahat.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1038,
+    "section": "vocab",
+    "text": "「駅」の いみは どれですか。",
+    "options": [
+      "ひだりがわの ほうこう",
+      "でんしゃに のる ところ",
+      "きょりが みじかい",
+      "びょうきの ときに いく ところ"
+    ],
+    "answer": 1,
+    "explanation": "「駅」= えき; stasiun.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1039,
+    "section": "vocab",
+    "text": "「病院」の いみは どれですか。",
+    "options": [
+      "すずしくなって はが いろづく きせつ",
+      "お金を あずけたり ひきだしたり する ところ",
+      "びょうきの ときに いく ところ",
+      "ふゆに そらから ふる しろい もの"
+    ],
+    "answer": 2,
+    "explanation": "「病院」= びょういん; rumah sakit.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1040,
+    "section": "vocab",
+    "text": "「銀行」の いみは どれですか。",
+    "options": [
+      "お金を あずけたり ひきだしたり する ところ",
+      "なかへ はいる ところ",
+      "がっこうで おしえる ひと",
+      "きょりが みじかい"
+    ],
+    "answer": 0,
+    "explanation": "「銀行」= ぎんこう; bank.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1041,
+    "section": "vocab",
+    "text": "「郵便局」の いみは どれですか。",
+    "options": [
+      "すずしくなって はが いろづく きせつ",
+      "てがみや にもつを おくる ところ",
+      "あさの じかん",
+      "びょうきの ときに いく ところ"
+    ],
+    "answer": 1,
+    "explanation": "「郵便局」= ゆうびんきょく; kantor pos.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1042,
+    "section": "vocab",
+    "text": "「学校」の いみは どれですか。",
+    "options": [
+      "びょうきの ときに いく ところ",
+      "べんきょうする ところ",
+      "なかの いい ひと",
+      "あたたかく なって はなが さく きせつ"
+    ],
+    "answer": 1,
+    "explanation": "「学校」= がっこう; sekolah.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1043,
+    "section": "vocab",
+    "text": "「先生」の いみは どれですか。",
+    "options": [
+      "そらから みずが おちる こと",
+      "あつい きせつ",
+      "がっこうで おしえる ひと",
+      "しごとを する ところ"
+    ],
+    "answer": 2,
+    "explanation": "「先生」= せんせい; guru.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1044,
+    "section": "vocab",
+    "text": "「学生」の いみは どれですか。",
+    "options": [
+      "あたたかく なって はなが さく きせつ",
+      "じぶんで こぐ のりもの",
+      "びょうきの ときに いく ところ",
+      "がっこうで べんきょうする ひと"
+    ],
+    "answer": 3,
+    "explanation": "「学生」= がくせい; siswa / mahasiswa.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1045,
+    "section": "vocab",
+    "text": "「家族」の いみは どれですか。",
+    "options": [
+      "あつい きせつ",
+      "いっしょに くらす ひとたち",
+      "なかへ はいる ところ",
+      "なかの いい ひと"
+    ],
+    "answer": 1,
+    "explanation": "「家族」= かぞく; keluarga.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1046,
+    "section": "vocab",
+    "text": "「友達」の いみは どれですか。",
+    "options": [
+      "ごはんを たべる こと",
+      "ひだりがわの ほうこう",
+      "ひるの じかん",
+      "なかの いい ひと"
+    ],
+    "answer": 3,
+    "explanation": "「友達」= ともだち; teman.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1047,
+    "section": "vocab",
+    "text": "「名前」の いみは どれですか。",
+    "options": [
+      "がっこうで おしえる ひと",
+      "あつい きせつ",
+      "じぶんで こぐ のりもの",
+      "ひとの よびかた"
+    ],
+    "answer": 3,
+    "explanation": "「名前」= なまえ; nama.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1048,
+    "section": "vocab",
+    "text": "「電話」の いみは どれですか。",
+    "options": [
+      "とおくの ひとと はなす きかい",
+      "すずしくなって はが いろづく きせつ",
+      "しごとを する ところ",
+      "あさの じかん"
+    ],
+    "answer": 0,
+    "explanation": "「電話」= でんわ; telepon.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1049,
+    "section": "vocab",
+    "text": "「電車」の いみは どれですか。",
+    "options": [
+      "きょりが みじかい",
+      "せんろを はしる のりもの",
+      "がっこうで おしえる ひと",
+      "でんしゃに のる ところ"
+    ],
+    "answer": 1,
+    "explanation": "「電車」= でんしゃ; kereta listrik.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1050,
+    "section": "vocab",
+    "text": "「自転車」の いみは どれですか。",
+    "options": [
+      "みぎがわの ほうこう",
+      "あめや はれなどの そらの ようす",
+      "きょりが みじかい",
+      "じぶんで こぐ のりもの"
+    ],
+    "answer": 3,
+    "explanation": "「自転車」= じてんしゃ; sepeda.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1051,
+    "section": "vocab",
+    "text": "「車」の いみは どれですか。",
+    "options": [
+      "そらの くうきの ながれ",
+      "よるの じかん",
+      "あつい きせつ",
+      "みちを はしる のりもの"
+    ],
+    "answer": 3,
+    "explanation": "「車」= くるま; mobil.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1052,
+    "section": "vocab",
+    "text": "「天気」の いみは どれですか。",
+    "options": [
+      "すずしくなって はが いろづく きせつ",
+      "あめや はれなどの そらの ようす",
+      "ひるの じかん",
+      "さむくて ゆきが ふる きせつ"
+    ],
+    "answer": 1,
+    "explanation": "「天気」= てんき; cuaca.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1053,
+    "section": "vocab",
+    "text": "「雨」の いみは どれですか。",
+    "options": [
+      "がっこうで おしえる ひと",
+      "そらから みずが おちる こと",
+      "みどりや ひろばが ある ところ",
+      "すずしくなって はが いろづく きせつ"
+    ],
+    "answer": 1,
+    "explanation": "「雨」= あめ; hujan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1054,
+    "section": "vocab",
+    "text": "「雪」の いみは どれですか。",
+    "options": [
+      "せんろを はしる のりもの",
+      "なかの いい ひと",
+      "てがみや にもつを おくる ところ",
+      "ふゆに そらから ふる しろい もの"
+    ],
+    "answer": 3,
+    "explanation": "「雪」= ゆき; salju.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1055,
+    "section": "vocab",
+    "text": "「風」の いみは どれですか。",
+    "options": [
+      "いろいろな ものを うる ところ",
+      "そらの くうきの ながれ",
+      "ふゆに そらから ふる しろい もの",
+      "しごとや がっこうが ない ひ"
+    ],
+    "answer": 1,
+    "explanation": "「風」= かぜ; angin.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1056,
+    "section": "vocab",
+    "text": "「春」の いみは どれですか。",
+    "options": [
+      "あさの じかん",
+      "あたたかく なって はなが さく きせつ",
+      "しごとや がっこうが ない ひ",
+      "たべものを つくる こと"
+    ],
+    "answer": 1,
+    "explanation": "「春」= はる; musim semi.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1057,
+    "section": "vocab",
+    "text": "「夏」の いみは どれですか。",
+    "options": [
+      "がっこうで べんきょうする ひと",
+      "でんしゃに のる ところ",
+      "とおくの ひとと はなす きかい",
+      "あつい きせつ"
+    ],
+    "answer": 3,
+    "explanation": "「夏」= なつ; musim panas.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1058,
+    "section": "vocab",
+    "text": "「秋」の いみは どれですか。",
+    "options": [
+      "すずしくなって はが いろづく きせつ",
+      "すんでいる ところの じょうほう",
+      "とおくの ひとと はなす きかい",
+      "みどりや ひろばが ある ところ"
+    ],
+    "answer": 0,
+    "explanation": "「秋」= あき; musim gugur.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1059,
+    "section": "vocab",
+    "text": "「冬」の いみは どれですか。",
+    "options": [
+      "ひだりがわの ほうこう",
+      "とおくの ひとと はなす きかい",
+      "よるの じかん",
+      "さむくて ゆきが ふる きせつ"
+    ],
+    "answer": 3,
+    "explanation": "「冬」= ふゆ; musim dingin.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1060,
+    "section": "vocab",
+    "text": "「料理」の いみは どれですか。",
+    "options": [
+      "なかの いい ひと",
+      "いろいろな ものを うる ところ",
+      "きょりが みじかい",
+      "たべものを つくる こと"
+    ],
+    "answer": 3,
+    "explanation": "「料理」= りょうり; masakan / memasak.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1061,
+    "section": "vocab",
+    "text": "「食事」の いみは どれですか。",
+    "options": [
+      "がっこうで おしえる ひと",
+      "いっしょに くらす ひとたち",
+      "ごはんを たべる こと",
+      "きょりが みじかい"
+    ],
+    "answer": 2,
+    "explanation": "「食事」= しょくじ; makan / santapan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1062,
+    "section": "vocab",
+    "text": "「買い物」の いみは どれですか。",
+    "options": [
+      "びょうきの ときに いく ところ",
+      "あつい きせつ",
+      "みせで ものを かう こと",
+      "ふゆに そらから ふる しろい もの"
+    ],
+    "answer": 2,
+    "explanation": "「買い物」= かいもの; belanja.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1063,
+    "section": "vocab",
+    "text": "「店」の いみは どれですか。",
+    "options": [
+      "いっしょに くらす ひとたち",
+      "ものを うる ところ",
+      "なかへ はいる ところ",
+      "しごとや がっこうが ない ひ"
+    ],
+    "answer": 1,
+    "explanation": "「店」= みせ; toko.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1064,
+    "section": "vocab",
+    "text": "「市場」の いみは どれですか。",
+    "options": [
+      "あつい きせつ",
+      "いろいろな ものを うる ところ",
+      "しごとを する ところ",
+      "あたたかく なって はなが さく きせつ"
+    ],
+    "answer": 1,
+    "explanation": "「市場」= いちば; pasar.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1065,
+    "section": "vocab",
+    "text": "「公園」の いみは どれですか。",
+    "options": [
+      "ひとの よびかた",
+      "みどりや ひろばが ある ところ",
+      "じぶんで こぐ のりもの",
+      "きょりが みじかい"
+    ],
+    "answer": 1,
+    "explanation": "「公園」= こうえん; taman.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1066,
+    "section": "vocab",
+    "text": "「住所」の いみは どれですか。",
+    "options": [
+      "いっしょに くらす ひとたち",
+      "すんでいる ところの じょうほう",
+      "いろいろな ものを うる ところ",
+      "じぶんで こぐ のりもの"
+    ],
+    "answer": 1,
+    "explanation": "「住所」= じゅうしょ; alamat.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1067,
+    "section": "vocab",
+    "text": "「入口」の いみは どれですか。",
+    "options": [
+      "びょうきの ときに いく ところ",
+      "あさの じかん",
+      "ひるの じかん",
+      "なかへ はいる ところ"
+    ],
+    "answer": 3,
+    "explanation": "「入口」= いりぐち; pintu masuk.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1068,
+    "section": "vocab",
+    "text": "「出口」の いみは どれですか。",
+    "options": [
+      "せんろを はしる のりもの",
+      "いっしょに くらす ひとたち",
+      "そとへ でる ところ",
+      "きょりが みじかい"
+    ],
+    "answer": 2,
+    "explanation": "「出口」= でぐち; pintu keluar.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1069,
+    "section": "vocab",
+    "text": "「右」の いみは どれですか。",
+    "options": [
+      "がっこうで おしえる ひと",
+      "みちを はしる のりもの",
+      "ひとの よびかた",
+      "みぎがわの ほうこう"
+    ],
+    "answer": 3,
+    "explanation": "「右」= みぎ; kanan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1070,
+    "section": "vocab",
+    "text": "「左」の いみは どれですか。",
+    "options": [
+      "そとへ でる ところ",
+      "あたたかく なって はなが さく きせつ",
+      "ものを うる ところ",
+      "ひだりがわの ほうこう"
+    ],
+    "answer": 3,
+    "explanation": "「左」= ひだり; kiri.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1071,
+    "section": "vocab",
+    "text": "「近い」の いみは どれですか。",
+    "options": [
+      "あつい きせつ",
+      "ひとの よびかた",
+      "きょりが みじかい",
+      "すずしくなって はが いろづく きせつ"
+    ],
+    "answer": 2,
+    "explanation": "「近い」= ちかい; dekat.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1072,
+    "section": "vocab",
+    "text": "まいばん 10じに （　　　）ます。",
+    "options": [
+      "あそび",
+      "はたらき",
+      "おき",
+      "ね"
+    ],
+    "answer": 3,
+    "explanation": "Setiap malam jam 10, tidur → ねます.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1073,
+    "section": "vocab",
+    "text": "あさ、パンと たまごを （　　　）。",
+    "options": [
+      "ききます",
+      "あいます",
+      "たべます",
+      "のみます"
+    ],
+    "answer": 2,
+    "explanation": "Roti dan telur dimakan → たべます.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1074,
+    "section": "vocab",
+    "text": "のどが かわきました。みずを （　　　）。",
+    "options": [
+      "かいます",
+      "みます",
+      "のみます",
+      "もちます"
+    ],
+    "answer": 2,
+    "explanation": "Saat haus, minum air → のみます.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1075,
+    "section": "vocab",
+    "text": "あした しけんが ありますから、きょう （　　　）します。",
+    "options": [
+      "べんきょう",
+      "せんたく",
+      "りょうり",
+      "さんぽ"
+    ],
+    "answer": 0,
+    "explanation": "Karena besok ada ujian, hari ini belajar.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1076,
+    "section": "vocab",
+    "text": "くつを はく まえに、（　　　）を はきます。",
+    "options": [
+      "ぼうし",
+      "くつした",
+      "めがね",
+      "うでどけい"
+    ],
+    "answer": 1,
+    "explanation": "Sebelum sepatu, memakai kaus kaki → くつした.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1077,
+    "section": "vocab",
+    "text": "さむいですから、（　　　）を きます。",
+    "options": [
+      "コート",
+      "みずぎ",
+      "サンダル",
+      "Tシャツ"
+    ],
+    "answer": 0,
+    "explanation": "Saat dingin, memakai mantel.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1078,
+    "section": "vocab",
+    "text": "えきまで （　　　）で 15ぷん かかります。",
+    "options": [
+      "れいぞうこ",
+      "バス",
+      "テレビ",
+      "つくえ"
+    ],
+    "answer": 1,
+    "explanation": "Kendaraan yang dapat digunakan menuju stasiun → bus.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1079,
+    "section": "vocab",
+    "text": "この はこは とても （　　　）です。ひとりでは もてません。",
+    "options": [
+      "おもい",
+      "かるい",
+      "あたらしい",
+      "せまい"
+    ],
+    "answer": 0,
+    "explanation": "Kotak berat dan tidak bisa diangkat sendiri → おもい.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1080,
+    "section": "vocab",
+    "text": "この へやは ひろくて （　　　）です。",
+    "options": [
+      "おそい",
+      "からい",
+      "あかるい",
+      "おもい"
+    ],
+    "answer": 2,
+    "explanation": "Ruangan luas dan terang → あかるい.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1081,
+    "section": "vocab",
+    "text": "でんきを （　　　）から、へやを でました。",
+    "options": [
+      "けして",
+      "しめて",
+      "あけて",
+      "つけて"
+    ],
+    "answer": 0,
+    "explanation": "Sebelum keluar kamar, mematikan listrik.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1082,
+    "section": "vocab",
+    "text": "まどを （　　　）と、すずしい かぜが はいりました。",
+    "options": [
+      "つくる",
+      "ならぶ",
+      "しめる",
+      "あける"
+    ],
+    "answer": 3,
+    "explanation": "Membuka jendela membuat angin sejuk masuk.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1083,
+    "section": "vocab",
+    "text": "あしたの りょこうの ために、ホテルを （　　　）しました。",
+    "options": [
+      "しゅっぱつ",
+      "そうじ",
+      "よやく",
+      "しつもん"
+    ],
+    "answer": 2,
+    "explanation": "Untuk perjalanan besok, melakukan reservasi hotel.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1084,
+    "section": "vocab",
+    "text": "スーパーで やさいを （　　　）ました。",
+    "options": [
+      "うり",
+      "おり",
+      "のり",
+      "かい"
+    ],
+    "answer": 3,
+    "explanation": "Sayur dibeli di supermarket → かいました.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1085,
+    "section": "vocab",
+    "text": "この みちは くるまが おおくて （　　　）です。",
+    "options": [
+      "しずか",
+      "やすい",
+      "あぶない",
+      "ひま"
+    ],
+    "answer": 2,
+    "explanation": "Jalan dengan banyak mobil berbahaya → あぶない.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1086,
+    "section": "vocab",
+    "text": "しごとの あとで せんぱいに （　　　）を しました。",
+    "options": [
+      "べんきょう",
+      "さんぽ",
+      "せつめい",
+      "あいさつ"
+    ],
+    "answer": 3,
+    "explanation": "Setelah bekerja memberi salam → あいさつ.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1087,
+    "section": "vocab",
+    "text": "かさが ありません。あめが ふるので、コンビニで （　　　）を かいます。",
+    "options": [
+      "でんしゃ",
+      "きっぷ",
+      "かさ",
+      "ざっし"
+    ],
+    "answer": 2,
+    "explanation": "Karena hujan, membeli payung.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1088,
+    "section": "vocab",
+    "text": "でんしゃに のる まえに、（　　　）を かいました。",
+    "options": [
+      "でんわ",
+      "きっぷ",
+      "べんとう",
+      "せんたく"
+    ],
+    "answer": 1,
+    "explanation": "Sebelum naik kereta, membeli tiket.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1089,
+    "section": "vocab",
+    "text": "シャツが よごれたので、（　　　）しました。",
+    "options": [
+      "せんたく",
+      "うんてん",
+      "りょこう",
+      "そうだん"
+    ],
+    "answer": 0,
+    "explanation": "Baju kotor, jadi dicuci → せんたく.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1090,
+    "section": "vocab",
+    "text": "あたまが いたいので、くすりを （　　　）。",
+    "options": [
+      "のみます",
+      "かえります",
+      "ききます",
+      "つくります"
+    ],
+    "answer": 0,
+    "explanation": "Sakit kepala, minum obat.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1091,
+    "section": "vocab",
+    "text": "しごとへ いく まえに、（　　　）を あつめます。",
+    "options": [
+      "うみ",
+      "ひつような もの",
+      "てんき",
+      "おと"
+    ],
+    "answer": 1,
+    "explanation": "Sebelum bekerja mengumpulkan barang yang diperlukan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1092,
+    "section": "vocab",
+    "text": "「入口」と はんたいの いみの ことばは （　　　）です。",
+    "options": [
+      "外",
+      "出口",
+      "右",
+      "上"
+    ],
+    "answer": 1,
+    "explanation": "Lawan kata/pasangan 入口 adalah 出口.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1093,
+    "section": "vocab",
+    "text": "「右」と はんたいの ほうこうは （　　　）です。",
+    "options": [
+      "左",
+      "前",
+      "北",
+      "中"
+    ],
+    "answer": 0,
+    "explanation": "Lawan arah 右 adalah 左.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1094,
+    "section": "vocab",
+    "text": "「近い」の はんたいは （　　　）です。",
+    "options": [
+      "遠い",
+      "新しい",
+      "高い",
+      "早い"
+    ],
+    "answer": 0,
+    "explanation": "Lawan kata 近い adalah 遠い.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1095,
+    "section": "vocab",
+    "text": "この かばんは 5000えんではなく、3000えんです。とても （　　　）です。",
+    "options": [
+      "おそい",
+      "おもい",
+      "たかい",
+      "やすい"
+    ],
+    "answer": 3,
+    "explanation": "3000 yen dalam konteks ini disebut murah → やすい.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1096,
+    "section": "vocab",
+    "text": "あさ 7じに でますから、6じに （　　　）。",
+    "options": [
+      "あそびます",
+      "かえります",
+      "ねます",
+      "おきます"
+    ],
+    "answer": 3,
+    "explanation": "Keluar jam 7, jadi bangun jam 6.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1097,
+    "section": "vocab",
+    "text": "しごとの まえに、タイムカードを （　　　）ます。",
+    "options": [
+      "よみます",
+      "おします",
+      "きります",
+      "あらいます"
+    ],
+    "answer": 1,
+    "explanation": "Di tempat kerja, sebelum bekerja menekan/mencatat kartu waktu → おします.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1098,
+    "section": "vocab",
+    "text": "この きかいは おもいので、（　　　）で はこんでください。",
+    "options": [
+      "ふたり",
+      "ひとつ",
+      "ひとり",
+      "いちまい"
+    ],
+    "answer": 0,
+    "explanation": "Karena mesin berat, bawalah berdua → ふたり.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1099,
+    "section": "vocab",
+    "text": "あぶない ところでは ヘルメットを （　　　）ください。",
+    "options": [
+      "けして",
+      "ぬいで",
+      "あけて",
+      "かぶって"
+    ],
+    "answer": 3,
+    "explanation": "Di tempat berbahaya, pakailah helm → かぶってください.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1100,
+    "section": "vocab",
+    "text": "「止まって」の いみは （　　　）です。",
+    "options": [
+      "待つこと",
+      "歩くこと",
+      "動かないこと",
+      "開けること"
+    ],
+    "answer": 2,
+    "explanation": "止まる means berhenti; 「止まって」 adalah perintah bentuk て.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1101,
+    "section": "vocab",
+    "text": "「始める」の はんたいの いみは （　　　）です。",
+    "options": [
+      "着る",
+      "出る",
+      "開ける",
+      "終わる"
+    ],
+    "answer": 3,
+    "explanation": "始める berlawanan dengan 終わる.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1102,
+    "section": "vocab",
+    "text": "「安全」の いみは （　　　）です。",
+    "options": [
+      "人が多いこと",
+      "あぶなくないこと",
+      "高いこと",
+      "せまいこと"
+    ],
+    "answer": 1,
+    "explanation": "安全 berarti kondisi yang tidak berbahaya.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1103,
+    "section": "vocab",
+    "text": "この へやは ひとが おおくて （　　　）です。",
+    "options": [
+      "からい",
+      "ながい",
+      "にぎやか",
+      "ひくい"
+    ],
+    "answer": 2,
+    "explanation": "Banyak orang sehingga ramai → にぎやか.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1104,
+    "section": "vocab",
+    "text": "きょうは ひまですから、うちで （　　　）を よみます。",
+    "options": [
+      "でんしゃ",
+      "かさ",
+      "くるま",
+      "ほん"
+    ],
+    "answer": 3,
+    "explanation": "Saat senggang membaca buku.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1105,
+    "section": "vocab",
+    "text": "あさごはんの あとで はを （　　　）ます。",
+    "options": [
+      "かえり",
+      "あび",
+      "おき",
+      "みがき"
+    ],
+    "answer": 3,
+    "explanation": "Setelah sarapan menyikat gigi.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1106,
+    "section": "vocab",
+    "text": "シャワーを （　　　）から、しごとへ いきます。",
+    "options": [
+      "おして",
+      "あびて",
+      "かって",
+      "きいて"
+    ],
+    "answer": 1,
+    "explanation": "Mandi/shower dahulu sebelum bekerja.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1107,
+    "section": "vocab",
+    "text": "「予約」の いみは （　　　）です。",
+    "options": [
+      "cuaca",
+      "gaji",
+      "reservasi",
+      "alamat"
+    ],
+    "answer": 2,
+    "explanation": "予約 berarti reservasi.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1108,
+    "section": "vocab",
+    "text": "「必要」の いみは （　　　）です。",
+    "options": [
+      "perlu",
+      "cepat",
+      "dingin",
+      "jauh"
+    ],
+    "answer": 0,
+    "explanation": "必要 berarti perlu.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1109,
+    "section": "vocab",
+    "text": "「確認」の いみは （　　　）です。",
+    "options": [
+      "berjalan",
+      "menyimpan",
+      "memasak",
+      "memeriksa / memastikan"
+    ],
+    "answer": 3,
+    "explanation": "確認 berarti memeriksa atau memastikan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1110,
+    "section": "vocab",
+    "text": "「注意」の いみは （　　　）です。",
+    "options": [
+      "perhatian / waspada",
+      "liburan",
+      "pintu masuk",
+      "pesanan"
+    ],
+    "answer": 0,
+    "explanation": "注意 berarti perhatian atau kewaspadaan.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1111,
+    "section": "vocab",
+    "text": "しごとが おわったら、どうぐを （　　　）ところに もどします。",
+    "options": [
+      "しずかな",
+      "もとの",
+      "あぶない",
+      "おそい"
+    ],
+    "answer": 1,
+    "explanation": "Alat dikembalikan ke tempat semula → もとのところ.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1112,
+    "section": "vocab",
+    "text": "あした 早いですから、きょうは （　　　）ねます。",
+    "options": [
+      "はやく",
+      "おおきく",
+      "たかく",
+      "あかるく"
+    ],
+    "answer": 0,
+    "explanation": "Karena besok harus pagi, tidur lebih awal.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1113,
+    "section": "vocab",
+    "text": "かいしゃの （　　　）に じぶんの なまえを かきます。",
+    "options": [
+      "料理",
+      "天気",
+      "映画",
+      "書類"
+    ],
+    "answer": 3,
+    "explanation": "Menulis nama di dokumen → 書類.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1114,
+    "section": "vocab",
+    "text": "ここでは くつを （　　　）ください。",
+    "options": [
+      "ぬいで",
+      "かぶって",
+      "はいて",
+      "きて"
+    ],
+    "answer": 0,
+    "explanation": "Di sini harap melepas sepatu → ぬいでください.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1115,
+    "section": "vocab",
+    "text": "「忘れます」の はんたいは （　　　）です。",
+    "options": [
+      "借ります",
+      "休みます",
+      "覚えます",
+      "閉めます"
+    ],
+    "answer": 2,
+    "explanation": "忘れる berlawanan dengan 覚える.",
+    "period": "sep-nov"
+  },
+  {
+    "id": 1116,
+    "section": "vocab",
+    "text": "「借ります」と いって、あとで かえします。これは ものを （　　　）という ことです。",
+    "options": [
+      "作る",
+      "売る",
+      "買う",
+      "かりる"
+    ],
+    "answer": 3,
+    "explanation": "借りる berarti meminjam.",
+    "period": "sep-nov"
   }
 ]

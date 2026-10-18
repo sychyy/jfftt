@@ -85,8 +85,7 @@ function renderQuestion(){
   if(window.speechSynthesis)window.speechSynthesis.cancel();
   if(q.audioText){
     fb.textContent=q.audioText;
-    if(listeningAudioEnabled){a.classList.remove('hidden');}
-    else{fb.classList.remove('hidden');}
+    if(listeningAudioEnabled){a.classList.remove('hidden');}else{fb.classList.remove('hidden');}
     const playKey=String(q.id??idx),plays=Number(warAudioPlayCounts[playKey]||0);a.disabled=!listeningAudioEnabled||plays>=2;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;
     a.onclick=async()=>{const count=Number(warAudioPlayCounts[playKey]||0);if(!listeningAudioEnabled||count>=2)return;warAudioPlayCounts[playKey]=count+1;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${count+1}/2)`;a.disabled=count+1>=2;try{if(window.JFTSpeakDialogue)await window.JFTSpeakDialogue(q.audioText,{rate:.85});else{const u=new SpeechSynthesisUtterance(q.audioText);u.lang='ja-JP';u.rate=.85;speechSynthesis.speak(u)}}catch(err){console.warn('War listening TTS gagal; popup dinonaktifkan:',err)}};
   }
