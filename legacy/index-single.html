@@ -10445,6 +10445,8 @@ async function startQuiz() {
 
         function renderQuestion() {
             const q = state.questions[state.currentQuestionIndex];
+            const listeningAudioEnabled = localStorage.getItem('jft_listening_audio') !== 'off';
+            const questionForDisplay = q.section === 'listening' ? { ...q, visual: null } : q;
             
             document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} / ${state.questions.length}`;
             document.getElementById('quiz-progress-bar').style.width = `${((state.currentQuestionIndex) / state.questions.length) * 100}%`;

@@ -2064,6 +2064,9 @@ async function startQuiz() {
 
         function renderQuestion() {
             const q = state.questions[state.currentQuestionIndex];
+            // ON = audio tanpa transkrip; OFF = transkrip tanpa audio.
+            const listeningAudioEnabled = localStorage.getItem('jft_listening_audio') !== 'off';
+            const questionForDisplay = q.section === 'listening' ? { ...q, visual: null } : q;
             
             document.getElementById('quiz-progress-text').textContent = `Soal ${state.currentQuestionIndex + 1} / ${state.questions.length}`;
             document.getElementById('quiz-progress-bar').style.width = `${((state.currentQuestionIndex) / state.questions.length) * 100}%`;
@@ -2081,7 +2084,7 @@ async function startQuiz() {
                 }
             }
             const questionEl = document.getElementById('quiz-question');
-            questionEl.innerHTML = window.JFTQuestionBank?.renderQuestionMarkup ? window.JFTQuestionBank.renderQuestionMarkup(q) : ((q.label ? `<div class="jft-question-label">${renderJapaneseText(q.label)}</div>` : '') + (q.visual ? renderQuestionVisual(q.visual) : vocabKanjiVisual) + `<div class="jft-question-text">${renderJapaneseText(q.text)}</div>`);
+            questionEl.innerHTML = window.JFTQuestionBank?.renderQuestionMarkup ? window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay) : ((questionForDisplay.label ? `<div class="jft-question-label">${renderJapaneseText(questionForDisplay.label)}</div>` : '') + (questionForDisplay.visual ? renderQuestionVisual(questionForDisplay.visual) : vocabKanjiVisual) + `<div class="jft-question-text">${renderJapaneseText(questionForDisplay.text)}</div>`);
             questionEl.classList.remove('jft-question-enter'); void questionEl.offsetWidth; questionEl.classList.add('jft-question-enter');
             
             const btnNext = document.getElementById('btn-next-question');
@@ -2116,12 +2119,11 @@ if (window.speechSynthesis) {
 }
 
 if (q.audioText) {
-    const audioEnabled = localStorage.getItem('jft_listening_audio') !== 'off';
+    const audioEnabled = listeningAudioEnabled;
     const playKey = String(q.id ?? `${state.currentQuestionIndex}`);
     const plays = Number(audioPlayCounts[playKey] || 0);
     if (audioEnabled) aBtn.classList.remove('hidden');
     else { fb.classList.remove('hidden'); fb.innerHTML = `<strong>Transkrip listening (mode teks)</strong><div class="mt-2">${renderJapaneseText(q.audioText)}</div>`; }
-    tBtn.classList.remove('hidden');
     if (audioEnabled) {
         aBtn.disabled = plays >= 2;
         aBtn.innerHTML = `<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;

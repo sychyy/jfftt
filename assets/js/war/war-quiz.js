@@ -76,15 +76,19 @@ function renderQuestion(){
   const instruction=document.getElementById('quiz-instruction');
   if(instruction)instruction.textContent=q.type==='kanji'?(q.answer_mode==='romaji'?'Pilih bacaan romaji yang paling tepat untuk kosakata berikut.':'Pilih arti bahasa Indonesia yang paling tepat untuk kanji berikut.'):'つぎの ぶんの （　　　）に なにを いれますか。';
   const questionEl=document.getElementById('quiz-question');
-  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div class="text-base font-bold text-slate-600 mt-3">${q.answer_mode==='romaji'?esc(q.meaning||''):`${esc(q.kana||'')} · ${esc(q.romaji||'')}`}</div><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(q):`<div class="jft-question-text">${esc(q.text||'')}</div>`);
+  const listeningAudioEnabled=localStorage.getItem('jft_listening_audio')!=='off';
+  const questionForDisplay=q.section==='listening'?{...q,visual:null}:q;
+  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div class="text-base font-bold text-slate-600 mt-3">${q.answer_mode==='romaji'?esc(q.meaning||''):`${esc(q.kana||'')} · ${esc(q.romaji||'')}`}</div><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay):`<div class="jft-question-text">${esc(q.text||'')}</div>`);
   questionEl.classList.remove('jft-question-enter');void questionEl.offsetWidth;questionEl.classList.add('jft-question-enter');
   const a=document.getElementById('btn-play-audio'),t=document.getElementById('btn-show-transcript'),fb=document.getElementById('audio-transcript-fallback');
   a.classList.add('hidden');t.classList.add('hidden');fb.classList.add('hidden');
   if(window.speechSynthesis)window.speechSynthesis.cancel();
   if(q.audioText){
-    a.classList.remove('hidden');t.classList.remove('hidden');fb.textContent=q.audioText;t.onclick=()=>{fb.classList.remove('hidden');t.classList.add('hidden')};
-    const playKey=String(q.id??idx),plays=Number(warAudioPlayCounts[playKey]||0);a.disabled=plays>=2;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;
-    a.onclick=async()=>{const count=Number(warAudioPlayCounts[playKey]||0);if(count>=2)return;warAudioPlayCounts[playKey]=count+1;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${count+1}/2)`;a.disabled=count+1>=2;try{if(window.JFTSpeakDialogue)await window.JFTSpeakDialogue(q.audioText,{rate:.85});else{const u=new SpeechSynthesisUtterance(q.audioText);u.lang='ja-JP';u.rate=.85;speechSynthesis.speak(u)}}catch(err){console.warn('War listening TTS gagal; popup dinonaktifkan:',err)}};
+    fb.textContent=q.audioText;
+    if(listeningAudioEnabled){a.classList.remove('hidden');}
+    else{fb.classList.remove('hidden');}
+    const playKey=String(q.id??idx),plays=Number(warAudioPlayCounts[playKey]||0);a.disabled=!listeningAudioEnabled||plays>=2;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${plays}/2)`;
+    a.onclick=async()=>{const count=Number(warAudioPlayCounts[playKey]||0);if(!listeningAudioEnabled||count>=2)return;warAudioPlayCounts[playKey]=count+1;a.innerHTML=`<i class="fa-solid fa-volume-high"></i> Putar Audio (${count+1}/2)`;a.disabled=count+1>=2;try{if(window.JFTSpeakDialogue)await window.JFTSpeakDialogue(q.audioText,{rate:.85});else{const u=new SpeechSynthesisUtterance(q.audioText);u.lang='ja-JP';u.rate=.85;speechSynthesis.speak(u)}}catch(err){console.warn('War listening TTS gagal; popup dinonaktifkan:',err)}};
   }
   const opts=document.getElementById('quiz-options');opts.innerHTML='';opts.classList.remove('jft-question-enter');void opts.offsetWidth;opts.classList.add('jft-question-enter');
   const sourceOptions=Array.isArray(q.options)?q.options:[];

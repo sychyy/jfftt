@@ -64,7 +64,7 @@ Jalankan `supabase/question-history.sql` sekali di Supabase SQL Editor. Alternat
 
 ## Pembaruan fitur (15 Oktober 2026)
 - Pemilihan soal menyaring duplikasi berdasarkan isi soal, opsi, audio, dan materi visual; ID tetap tidak berulang dalam satu sesi. Bank berisi 1.000 item: 179 Vocabulary, 145 Grammar, 338 Listening, dan 338 Reading. Jumlah per kategori memang tidak sama; pemilih soal berusaha membagi kategori secara seimbang pada setiap sesi.
-- Home memiliki toggle Listening ON (TTS) / OFF (transkrip teks).
+- Home memiliki toggle Listening ON (audio/TTS tanpa transkrip) / OFF (transkrip teks tanpa tombol audio); mode tersimpan di perangkat dan diterapkan saat latihan dimulai.
 - Audio saat mengerjakan dibatasi dua kali putar per soal; layar review hasil memiliki pemutaran ulang terpisah. Dialog A/B dipisah menjadi giliran suara dan mencoba memilih voice Jepang berbeda berdasarkan nama/label gender yang tersedia di perangkat/browser.
 - Halaman hasil mengelompokkan jawaban salah per Vocabulary, Listening, Grammar, dan Reading. Kesalahan listening menampilkan transkrip dan tombol untuk memutar ulang audionya.
 - Dukungan furigana tersedia untuk teks yang ditulis dengan format `{漢字|かんじ}`; rendering ruby akan menampilkan bacaan di atas kanji. Kanji pada soal kosakata juga mendapat tampilan visual yang lebih menonjol.
