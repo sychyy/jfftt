@@ -1,2032 +1,4002 @@
 [
   {
+    "id": 10000,
     "section": "grammar",
-    "text": "日本語を 話す（　）ができます。",
+    "text": "わたしは 学生（　）。",
     "options": [
-      "ため",
-      "もの",
-      "こと",
-      "ところ"
+      "です",
+      "でした",
+      "では",
+      "ます"
     ],
-    "answer": 2,
-    "explanation": "文の意味と文法に合う答えは「こと」です。",
-    "period": "sep-nov",
-    "id": 258
+    "answer": 0,
+    "explanation": "Pelajaran 1: kalimat nominal sopan. 正解は「です」です。",
+    "period": "minna-lesson-01",
+    "lesson": 1,
+    "topic": "です／じゃありません"
   },
   {
+    "id": 10001,
     "section": "grammar",
-    "text": "ここは 静か（　）きれいな町です。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nわたしは 学生（　）。",
     "options": [
-      "が",
-      "を",
+      "です",
+      "でした",
+      "では",
+      "ます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 1: kalimat nominal sopan. 正解は「です」です。",
+    "period": "minna-lesson-01",
+    "lesson": 1,
+    "topic": "です／じゃありません"
+  },
+  {
+    "id": 10002,
+    "section": "grammar",
+    "text": "文法：です／じゃありません\nわたしは 学生（　）。",
+    "options": [
+      "です",
+      "でした",
+      "では",
+      "ます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 1: kalimat nominal sopan. 正解は「です」です。",
+    "period": "minna-lesson-01",
+    "lesson": 1,
+    "topic": "です／じゃありません"
+  },
+  {
+    "id": 10003,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nわたしは 学生（　）。",
+    "options": [
+      "です",
+      "でした",
+      "では",
+      "ます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 1: kalimat nominal sopan. 正解は「です」です。",
+    "period": "minna-lesson-01",
+    "lesson": 1,
+    "topic": "です／じゃありません"
+  },
+  {
+    "id": 10004,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nわたしは 学生（　）。",
+    "options": [
+      "です",
+      "でした",
+      "では",
+      "ます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 1: kalimat nominal sopan. 正解は「です」です。",
+    "period": "minna-lesson-01",
+    "lesson": 1,
+    "topic": "です／じゃありません"
+  },
+  {
+    "id": 10005,
+    "section": "grammar",
+    "text": "（　）は わたしの かばんです。",
+    "options": [
+      "どこ",
+      "これ",
+      "だれ",
+      "なん"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 2: kata tunjuk benda. 正解は「これ」です。",
+    "period": "minna-lesson-02",
+    "lesson": 2,
+    "topic": "これ／それ／あれ"
+  },
+  {
+    "id": 10006,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n（　）は わたしの かばんです。",
+    "options": [
+      "どこ",
+      "これ",
+      "だれ",
+      "なん"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 2: kata tunjuk benda. 正解は「これ」です。",
+    "period": "minna-lesson-02",
+    "lesson": 2,
+    "topic": "これ／それ／あれ"
+  },
+  {
+    "id": 10007,
+    "section": "grammar",
+    "text": "文法：これ／それ／あれ\n（　）は わたしの かばんです。",
+    "options": [
+      "どこ",
+      "これ",
+      "だれ",
+      "なん"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 2: kata tunjuk benda. 正解は「これ」です。",
+    "period": "minna-lesson-02",
+    "lesson": 2,
+    "topic": "これ／それ／あれ"
+  },
+  {
+    "id": 10008,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n（　）は わたしの かばんです。",
+    "options": [
+      "どこ",
+      "これ",
+      "だれ",
+      "なん"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 2: kata tunjuk benda. 正解は「これ」です。",
+    "period": "minna-lesson-02",
+    "lesson": 2,
+    "topic": "これ／それ／あれ"
+  },
+  {
+    "id": 10009,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n（　）は わたしの かばんです。",
+    "options": [
+      "どこ",
+      "これ",
+      "だれ",
+      "なん"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 2: kata tunjuk benda. 正解は「これ」です。",
+    "period": "minna-lesson-02",
+    "lesson": 2,
+    "topic": "これ／それ／あれ"
+  },
+  {
+    "id": 10010,
+    "section": "grammar",
+    "text": "トイレは（　）ですか。",
+    "options": [
+      "どなた",
+      "いくら",
+      "どこ",
+      "なんさい"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 3: menunjukkan tempat. 正解は「どこ」です。",
+    "period": "minna-lesson-03",
+    "lesson": 3,
+    "topic": "ここ／そこ／あそこ"
+  },
+  {
+    "id": 10011,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nトイレは（　）ですか。",
+    "options": [
+      "どなた",
+      "いくら",
+      "どこ",
+      "なんさい"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 3: menunjukkan tempat. 正解は「どこ」です。",
+    "period": "minna-lesson-03",
+    "lesson": 3,
+    "topic": "ここ／そこ／あそこ"
+  },
+  {
+    "id": 10012,
+    "section": "grammar",
+    "text": "文法：ここ／そこ／あそこ\nトイレは（　）ですか。",
+    "options": [
+      "どなた",
+      "いくら",
+      "どこ",
+      "なんさい"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 3: menunjukkan tempat. 正解は「どこ」です。",
+    "period": "minna-lesson-03",
+    "lesson": 3,
+    "topic": "ここ／そこ／あそこ"
+  },
+  {
+    "id": 10013,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nトイレは（　）ですか。",
+    "options": [
+      "どなた",
+      "いくら",
+      "どこ",
+      "なんさい"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 3: menunjukkan tempat. 正解は「どこ」です。",
+    "period": "minna-lesson-03",
+    "lesson": 3,
+    "topic": "ここ／そこ／あそこ"
+  },
+  {
+    "id": 10014,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nトイレは（　）ですか。",
+    "options": [
+      "どなた",
+      "いくら",
+      "どこ",
+      "なんさい"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 3: menunjukkan tempat. 正解は「どこ」です。",
+    "period": "minna-lesson-03",
+    "lesson": 3,
+    "topic": "ここ／そこ／あそこ"
+  },
+  {
+    "id": 10015,
+    "section": "grammar",
+    "text": "会議は ９時（　）始まります。",
+    "options": [
       "に",
-      "で"
-    ],
-    "answer": 3,
-    "explanation": "文の意味と文法に合う答えは「で」です。",
-    "period": "sep-nov",
-    "id": 156
-  },
-  {
-    "section": "grammar",
-    "text": "ここで 写真を 撮って（　）ですか。",
-    "options": [
-      "もいい",
-      "はいけない",
-      "おく",
-      "しまう"
-    ],
-    "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「もいい」です。",
-    "period": "sep-nov",
-    "id": 413
-  },
-  {
-    "section": "grammar",
-    "text": "この店は あの店（　）安いです。",
-    "options": [
-      "より",
-      "しか",
-      "ほど",
-      "まで"
-    ],
-    "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「より」です。",
-    "period": "sep-nov",
-    "id": 321
-  },
-  {
-    "section": "grammar",
-    "text": "雨が 降っています（　）、出かけません。",
-    "options": [
-      "しか",
-      "でも",
-      "まで",
-      "から"
-    ],
-    "answer": 3,
-    "explanation": "文の意味と文法に合う答えは「から」です。",
-    "period": "sep-nov",
-    "id": 292
-  },
-  {
-    "section": "grammar",
-    "text": "もう 昼ご飯を（　）か。",
-    "options": [
-      "食べません",
-      "食べました",
-      "食べたい",
-      "食べますか"
-    ],
-    "answer": 1,
-    "explanation": "文の意味と文法に合う答えは「食べました」です。",
-    "period": "sep-nov",
-    "id": 676
-  },
-  {
-    "section": "grammar",
-    "text": "日曜日は どこへも（　）。",
-    "options": [
-      "行きました",
-      "行きます",
-      "行きません",
-      "行きたい"
-    ],
-    "answer": 2,
-    "explanation": "文の意味と文法に合う答えは「行きません」です。",
-    "period": "sep-nov",
-    "id": 915
-  },
-  {
-    "section": "grammar",
-    "text": "時間が（　）ので、タクシーに乗ります。",
-    "options": [
-      "ありませんでした",
-      "ない",
-      "なく",
-      "なくて"
-    ],
-    "answer": 1,
-    "explanation": "文の意味と文法に合う答えは「ない」です。",
-    "period": "sep-nov",
-    "id": 877
-  },
-  {
-    "section": "grammar",
-    "text": "雨（　）降ったら、家にいます。",
-    "options": [
-      "へ",
-      "が",
       "を",
-      "で"
-    ],
-    "answer": 1,
-    "explanation": "文の意味と文法に合う答えは「が」です。",
-    "period": "sep-nov",
-    "id": 996
-  },
-  {
-    "section": "grammar",
-    "text": "窓を 開けても（　）ですか。",
-    "options": [
-      "いけない",
-      "ほしい",
-      "だめな",
-      "いい"
-    ],
-    "answer": 3,
-    "explanation": "文の意味と文法に合う答えは「いい」です。",
-    "period": "sep-nov",
-    "id": 116
-  },
-  {
-    "section": "grammar",
-    "text": "駅（　）友達に 会いました。",
-    "options": [
       "で",
-      "を",
-      "に",
       "へ"
     ],
     "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「で」です。",
-    "period": "sep-nov",
-    "id": 432
+    "explanation": "Pelajaran 4: waktu dengan に. 正解は「に」です。",
+    "period": "minna-lesson-04",
+    "lesson": 4,
+    "topic": "～時／～分"
   },
   {
+    "id": 10016,
     "section": "grammar",
-    "text": "薬を 飲まなければ（　）。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n会議は ９時（　）始まります。",
     "options": [
-      "なりません",
-      "あります",
-      "できます",
-      "います"
-    ],
-    "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「なりません」です。",
-    "period": "sep-nov",
-    "id": 918
-  },
-  {
-    "section": "grammar",
-    "text": "ご飯を 食べて（　）勉強します。",
-    "options": [
-      "から",
-      "しか",
-      "でも",
-      "まで"
-    ],
-    "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「から」です。",
-    "period": "sep-nov",
-    "id": 761
-  },
-  {
-    "section": "grammar",
-    "text": "日曜日（　）月曜日まで 休みです。",
-    "options": [
-      "から",
-      "で",
-      "を",
-      "に"
-    ],
-    "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「から」です。",
-    "period": "sep-nov",
-    "id": 788
-  },
-  {
-    "section": "grammar",
-    "text": "これは わたし（　）かばんです。",
-    "options": [
-      "で",
-      "を",
-      "の",
-      "に"
-    ],
-    "answer": 2,
-    "explanation": "文の意味と文法に合う答えは「の」です。",
-    "period": "sep-nov",
-    "id": 147
-  },
-  {
-    "section": "grammar",
-    "text": "毎朝、わたしは 6時（　）起きます。",
-    "options": [
-      "で",
       "に",
       "を",
+      "で",
       "へ"
     ],
-    "answer": 1,
-    "explanation": "文の意味と文法に合う答えは「に」です。",
-    "period": "sep-nov",
-    "id": 222
+    "answer": 0,
+    "explanation": "Pelajaran 4: waktu dengan に. 正解は「に」です。",
+    "period": "minna-lesson-04",
+    "lesson": 4,
+    "topic": "～時／～分"
   },
   {
+    "id": 10017,
     "section": "grammar",
-    "text": "日本へ 行った（　）があります。",
-    "options": [
-      "ところ",
-      "こと",
-      "ため",
-      "もの"
-    ],
-    "answer": 1,
-    "explanation": "文の意味と文法に合う答えは「こと」です。",
-    "period": "sep-nov",
-    "id": 501
-  },
-  {
-    "section": "grammar",
-    "text": "日本語を もっと（　）なりたいです。",
-    "options": [
-      "上手で",
-      "上手な",
-      "上手を",
-      "上手に"
-    ],
-    "answer": 3,
-    "explanation": "文の意味と文法に合う答えは「上手に」です。",
-    "period": "sep-nov",
-    "id": 86
-  },
-  {
-    "section": "grammar",
-    "text": "毎日 練習すれば、上手に（　）ます。",
-    "options": [
-      "し",
-      "い",
-      "あり",
-      "なり"
-    ],
-    "answer": 3,
-    "explanation": "文の意味と文法に合う答えは「なり」です。",
-    "period": "sep-nov",
-    "id": 223
-  },
-  {
-    "section": "grammar",
-    "text": "友達（　）プレゼントを あげました。",
+    "text": "文法：～時／～分\n会議は ９時（　）始まります。",
     "options": [
       "に",
+      "を",
       "で",
-      "が",
-      "を"
+      "へ"
     ],
     "answer": 0,
-    "explanation": "文の意味と文法に合う答えは「に」です。",
-    "period": "sep-nov",
-    "id": 726
+    "explanation": "Pelajaran 4: waktu dengan に. 正解は「に」です。",
+    "period": "minna-lesson-04",
+    "lesson": 4,
+    "topic": "～時／～分"
   },
   {
-    "id": 1117,
+    "id": 10018,
     "section": "grammar",
-    "text": "まいにち 7じ（　　　）おきます。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n会議は ９時（　）始まります。",
     "options": [
-      "で",
+      "に",
       "を",
+      "で",
+      "へ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 4: waktu dengan に. 正解は「に」です。",
+    "period": "minna-lesson-04",
+    "lesson": 4,
+    "topic": "～時／～分"
+  },
+  {
+    "id": 10019,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n会議は ９時（　）始まります。",
+    "options": [
+      "に",
+      "を",
+      "で",
+      "へ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 4: waktu dengan に. 正解は「に」です。",
+    "period": "minna-lesson-04",
+    "lesson": 4,
+    "topic": "～時／～分"
+  },
+  {
+    "id": 10020,
+    "section": "grammar",
+    "text": "毎朝 バス（　）会社へ 行きます。",
+    "options": [
+      "を",
+      "で",
       "に",
       "が"
     ],
-    "answer": 2,
-    "explanation": "Jam tertentu memakai partikel に.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 5: alat transportasi dengan で. 正解は「で」です。",
+    "period": "minna-lesson-05",
+    "lesson": 5,
+    "topic": "へ／に 行きます"
   },
   {
-    "id": 1118,
+    "id": 10021,
     "section": "grammar",
-    "text": "きのう えき（　　　）ともだちに あいました。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n毎朝 バス（　）会社へ 行きます。",
     "options": [
       "を",
-      "に",
-      "で",
-      "へ"
-    ],
-    "answer": 2,
-    "explanation": "Tempat terjadinya aktivitas memakai で.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1119,
-    "section": "grammar",
-    "text": "ともだち（　　　）プレゼントを あげました。",
-    "options": [
       "で",
       "に",
-      "を",
       "が"
     ],
     "answer": 1,
-    "explanation": "Penerima pemberian memakai に.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 5: alat transportasi dengan で. 正解は「で」です。",
+    "period": "minna-lesson-05",
+    "lesson": 5,
+    "topic": "へ／に 行きます"
   },
   {
-    "id": 1120,
+    "id": 10022,
     "section": "grammar",
-    "text": "わたしは まいあさ コーヒー（　　　）のみます。",
+    "text": "文法：へ／に 行きます\n毎朝 バス（　）会社へ 行きます。",
     "options": [
-      "で",
       "を",
-      "が",
-      "に"
+      "で",
+      "に",
+      "が"
     ],
     "answer": 1,
-    "explanation": "Objek langsung memakai を.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 5: alat transportasi dengan で. 正解は「で」です。",
+    "period": "minna-lesson-05",
+    "lesson": 5,
+    "topic": "へ／に 行きます"
   },
   {
-    "id": 1121,
+    "id": 10023,
     "section": "grammar",
-    "text": "だれ（　　　）この かばんを つくりましたか。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n毎朝 バス（　）会社へ 行きます。",
     "options": [
-      "が",
-      "に",
       "を",
-      "で"
+      "で",
+      "に",
+      "が"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 5: alat transportasi dengan で. 正解は「で」です。",
+    "period": "minna-lesson-05",
+    "lesson": 5,
+    "topic": "へ／に 行きます"
+  },
+  {
+    "id": 10024,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n毎朝 バス（　）会社へ 行きます。",
+    "options": [
+      "を",
+      "で",
+      "に",
+      "が"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 5: alat transportasi dengan で. 正解は「で」です。",
+    "period": "minna-lesson-05",
+    "lesson": 5,
+    "topic": "へ／に 行きます"
+  },
+  {
+    "id": 10025,
+    "section": "grammar",
+    "text": "いっしょに 昼ごはんを（　）。",
+    "options": [
+      "食べませんか",
+      "食べましたか",
+      "食べるでした",
+      "食べてです"
     ],
     "answer": 0,
-    "explanation": "Penanda pelaku pada pola ini adalah が.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 6: ajakan sopan. 正解は「食べませんか」です。",
+    "period": "minna-lesson-06",
+    "lesson": 6,
+    "topic": "～ませんか"
   },
   {
-    "id": 1122,
+    "id": 10026,
     "section": "grammar",
-    "text": "らいげつ にほん（　　　）いきたいです。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nいっしょに 昼ごはんを（　）。",
     "options": [
-      "が",
-      "で",
+      "食べませんか",
+      "食べましたか",
+      "食べるでした",
+      "食べてです"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 6: ajakan sopan. 正解は「食べませんか」です。",
+    "period": "minna-lesson-06",
+    "lesson": 6,
+    "topic": "～ませんか"
+  },
+  {
+    "id": 10027,
+    "section": "grammar",
+    "text": "文法：～ませんか\nいっしょに 昼ごはんを（　）。",
+    "options": [
+      "食べませんか",
+      "食べましたか",
+      "食べるでした",
+      "食べてです"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 6: ajakan sopan. 正解は「食べませんか」です。",
+    "period": "minna-lesson-06",
+    "lesson": 6,
+    "topic": "～ませんか"
+  },
+  {
+    "id": 10028,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nいっしょに 昼ごはんを（　）。",
+    "options": [
+      "食べませんか",
+      "食べましたか",
+      "食べるでした",
+      "食べてです"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 6: ajakan sopan. 正解は「食べませんか」です。",
+    "period": "minna-lesson-06",
+    "lesson": 6,
+    "topic": "～ませんか"
+  },
+  {
+    "id": 10029,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nいっしょに 昼ごはんを（　）。",
+    "options": [
+      "食べませんか",
+      "食べましたか",
+      "食べるでした",
+      "食べてです"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 6: ajakan sopan. 正解は「食べませんか」です。",
+    "period": "minna-lesson-06",
+    "lesson": 6,
+    "topic": "～ませんか"
+  },
+  {
+    "id": 10030,
+    "section": "grammar",
+    "text": "はさみ（　）紙を 切ります。",
+    "options": [
+      "に",
       "へ",
+      "で",
       "を"
     ],
     "answer": 2,
-    "explanation": "Arah tujuan memakai へ.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 7: alat yang digunakan. 正解は「で」です。",
+    "period": "minna-lesson-07",
+    "lesson": 7,
+    "topic": "～で／～に"
   },
   {
-    "id": 1123,
+    "id": 10031,
     "section": "grammar",
-    "text": "こうえん（　　　）さんぽしませんか。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nはさみ（　）紙を 切ります。",
     "options": [
       "に",
-      "が",
-      "を",
-      "で"
-    ],
-    "answer": 3,
-    "explanation": "Aktivitas berjalan-jalan dilakukan di taman → で.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1124,
-    "section": "grammar",
-    "text": "この しごとは 9じ（　　　）5じまでです。",
-    "options": [
-      "を",
-      "に",
-      "から",
-      "で"
-    ],
-    "answer": 2,
-    "explanation": "Rentang waktu awal memakai から.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1125,
-    "section": "grammar",
-    "text": "しごとの あと（　　　）スーパーへ よります。",
-    "options": [
+      "へ",
       "で",
-      "が",
-      "に",
       "を"
     ],
-    "answer": 0,
-    "explanation": "Setelah suatu waktu/kejadian: あとのあとに.",
-    "period": "sep-nov"
+    "answer": 2,
+    "explanation": "Pelajaran 7: alat yang digunakan. 正解は「で」です。",
+    "period": "minna-lesson-07",
+    "lesson": 7,
+    "topic": "～で／～に"
   },
   {
-    "id": 1126,
+    "id": 10032,
     "section": "grammar",
-    "text": "にちようび（　　　）はたらきません。",
+    "text": "文法：～で／～に\nはさみ（　）紙を 切ります。",
     "options": [
       "に",
+      "へ",
       "で",
+      "を"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 7: alat yang digunakan. 正解は「で」です。",
+    "period": "minna-lesson-07",
+    "lesson": 7,
+    "topic": "～で／～に"
+  },
+  {
+    "id": 10033,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nはさみ（　）紙を 切ります。",
+    "options": [
+      "に",
+      "へ",
+      "で",
+      "を"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 7: alat yang digunakan. 正解は「で」です。",
+    "period": "minna-lesson-07",
+    "lesson": 7,
+    "topic": "～で／～に"
+  },
+  {
+    "id": 10034,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nはさみ（　）紙を 切ります。",
+    "options": [
+      "に",
+      "へ",
+      "で",
+      "を"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 7: alat yang digunakan. 正解は「で」です。",
+    "period": "minna-lesson-07",
+    "lesson": 7,
+    "topic": "～で／～に"
+  },
+  {
+    "id": 10035,
+    "section": "grammar",
+    "text": "この 料理は あまり（　）。",
+    "options": [
+      "おいしいです",
+      "おいしくないです",
+      "おいしいでした",
+      "おいしいじゃない"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 8: bentuk negatif kata sifat-i. 正解は「おいしくないです」です。",
+    "period": "minna-lesson-08",
+    "lesson": 8,
+    "topic": "い形容詞"
+  },
+  {
+    "id": 10036,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nこの 料理は あまり（　）。",
+    "options": [
+      "おいしいです",
+      "おいしくないです",
+      "おいしいでした",
+      "おいしいじゃない"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 8: bentuk negatif kata sifat-i. 正解は「おいしくないです」です。",
+    "period": "minna-lesson-08",
+    "lesson": 8,
+    "topic": "い形容詞"
+  },
+  {
+    "id": 10037,
+    "section": "grammar",
+    "text": "文法：い形容詞\nこの 料理は あまり（　）。",
+    "options": [
+      "おいしいです",
+      "おいしくないです",
+      "おいしいでした",
+      "おいしいじゃない"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 8: bentuk negatif kata sifat-i. 正解は「おいしくないです」です。",
+    "period": "minna-lesson-08",
+    "lesson": 8,
+    "topic": "い形容詞"
+  },
+  {
+    "id": 10038,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nこの 料理は あまり（　）。",
+    "options": [
+      "おいしいです",
+      "おいしくないです",
+      "おいしいでした",
+      "おいしいじゃない"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 8: bentuk negatif kata sifat-i. 正解は「おいしくないです」です。",
+    "period": "minna-lesson-08",
+    "lesson": 8,
+    "topic": "い形容詞"
+  },
+  {
+    "id": 10039,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nこの 料理は あまり（　）。",
+    "options": [
+      "おいしいです",
+      "おいしくないです",
+      "おいしいでした",
+      "おいしいじゃない"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 8: bentuk negatif kata sifat-i. 正解は「おいしくないです」です。",
+    "period": "minna-lesson-08",
+    "lesson": 8,
+    "topic": "い形容詞"
+  },
+  {
+    "id": 10040,
+    "section": "grammar",
+    "text": "わたしは 日本語（　）好きです。",
+    "options": [
       "を",
-      "は"
-    ],
-    "answer": 3,
-    "explanation": "Topik/kontras hari Minggu: は.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1127,
-    "section": "grammar",
-    "text": "ここで しごとの しゃしんを （　　　）も いいですか。",
-    "options": [
-      "とる",
-      "とり",
-      "とって",
-      "とった"
-    ],
-    "answer": 2,
-    "explanation": "Pola meminta izin: ～てもいいですか.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1128,
-    "section": "grammar",
-    "text": "この きゅうけいしつで たばこを （　　　）は いけません。",
-    "options": [
-      "すって",
-      "すい",
-      "すった",
-      "すう"
-    ],
-    "answer": 0,
-    "explanation": "Larangan: ～てはいけません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1129,
-    "section": "grammar",
-    "text": "あした はやく （　　　）なければ なりません。",
-    "options": [
-      "おきて",
-      "おきた",
-      "おき",
-      "おきる"
-    ],
-    "answer": 2,
-    "explanation": "Kewajiban: bentuk masu-stem + なければなりません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1130,
-    "section": "grammar",
-    "text": "にほんへ （　　　）ことが あります。",
-    "options": [
-      "いって",
-      "いった",
-      "いく",
-      "いか"
+      "が",
+      "で",
+      "へ"
     ],
     "answer": 1,
-    "explanation": "Pengalaman: ～たことがあります.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 9: 好きです memakai が. 正解は「が」です。",
+    "period": "minna-lesson-09",
+    "lesson": 9,
+    "topic": "好き／上手"
   },
   {
-    "id": 1131,
+    "id": 10041,
     "section": "grammar",
-    "text": "いま でんわを （　　　）います。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nわたしは 日本語（　）好きです。",
     "options": [
-      "かけ",
-      "かける",
-      "かけた",
-      "かけて"
-    ],
-    "answer": 3,
-    "explanation": "Sedang melakukan: ～ています.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1132,
-    "section": "grammar",
-    "text": "まどを （　　　）から、でかけました。",
-    "options": [
-      "しめた",
-      "しめて",
-      "しめる",
-      "しめない"
+      "を",
+      "が",
+      "で",
+      "へ"
     ],
     "answer": 1,
-    "explanation": "Urutan tindakan: ～てから.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 9: 好きです memakai が. 正解は「が」です。",
+    "period": "minna-lesson-09",
+    "lesson": 9,
+    "topic": "好き／上手"
   },
   {
-    "id": 1133,
+    "id": 10042,
     "section": "grammar",
-    "text": "ごはんを （　　　）まえに、てを あらいます。",
+    "text": "文法：好き／上手\nわたしは 日本語（　）好きです。",
     "options": [
-      "たべて",
-      "たべる",
-      "たべない",
-      "たべた"
+      "を",
+      "が",
+      "で",
+      "へ"
     ],
     "answer": 1,
-    "explanation": "Sebelum melakukan: dictionary form + 前に.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 9: 好きです memakai が. 正解は「が」です。",
+    "period": "minna-lesson-09",
+    "lesson": 9,
+    "topic": "好き／上手"
   },
   {
-    "id": 1134,
+    "id": 10043,
     "section": "grammar",
-    "text": "しごとが （　　　）あとで、うちへ かえります。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nわたしは 日本語（　）好きです。",
     "options": [
-      "おわって",
-      "おわる",
-      "おわらない",
-      "おわった"
-    ],
-    "answer": 3,
-    "explanation": "Setelah selesai: ～たあとで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1135,
-    "section": "grammar",
-    "text": "おんがくを （　　　）ながら、べんきょうします。",
-    "options": [
-      "きき",
-      "きく",
-      "きいて",
-      "きいた"
-    ],
-    "answer": 0,
-    "explanation": "Sambil: stem + ながら.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1136,
-    "section": "grammar",
-    "text": "あめが （　　　）ので、でかけません。",
-    "options": [
-      "ふって",
-      "ふらない",
-      "ふった",
-      "ふる"
-    ],
-    "answer": 3,
-    "explanation": "Alasan lembut/umum: ～ので.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1137,
-    "section": "grammar",
-    "text": "この りょうりは （　　　）ですから、たべてください。",
-    "options": [
-      "おいしさ",
-      "おいしい",
-      "おいしく",
-      "おいしかった"
+      "を",
+      "が",
+      "で",
+      "へ"
     ],
     "answer": 1,
-    "explanation": "Kata sifat-i sebelum です tetap bentuk dasar: おいしいです.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 9: 好きです memakai が. 正解は「が」です。",
+    "period": "minna-lesson-09",
+    "lesson": 9,
+    "topic": "好き／上手"
   },
   {
-    "id": 1138,
+    "id": 10044,
     "section": "grammar",
-    "text": "きのうの えいがは （　　　）です。",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nわたしは 日本語（　）好きです。",
     "options": [
-      "おもしろかったな",
-      "おもしろく",
-      "おもしろかった",
-      "おもしろい"
-    ],
-    "answer": 2,
-    "explanation": "Lampau untuk kata sifat-i: ～かったです.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1139,
-    "section": "grammar",
-    "text": "この まちは （　　　）で、べんりです。",
-    "options": [
-      "しずかに",
-      "しずかだ",
-      "しずかな",
-      "しずか"
-    ],
-    "answer": 3,
-    "explanation": "Kata sifat-na + で untuk menghubungkan sifat: しずかで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1140,
-    "section": "grammar",
-    "text": "ここは （　　　）な へやです。",
-    "options": [
-      "きれいだ",
-      "きれいな",
-      "きれい",
-      "きれいに"
+      "を",
+      "が",
+      "で",
+      "へ"
     ],
     "answer": 1,
-    "explanation": "Kata sifat-na sebelum kata benda memakai な.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 9: 好きです memakai が. 正解は「が」です。",
+    "period": "minna-lesson-09",
+    "lesson": 9,
+    "topic": "好き／上手"
   },
   {
-    "id": 1141,
+    "id": 10045,
     "section": "grammar",
-    "text": "この くるまは あまり （　　　）ありません。",
-    "options": [
-      "おおき",
-      "おおきな",
-      "おおきく",
-      "おおきい"
-    ],
-    "answer": 2,
-    "explanation": "Negatif kata sifat-i: ～くありません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1142,
-    "section": "grammar",
-    "text": "きょうは きのう（　　　）あついです。",
-    "options": [
-      "まで",
-      "より",
-      "しか",
-      "だけ"
-    ],
-    "answer": 1,
-    "explanation": "Perbandingan memakai より.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1143,
-    "section": "grammar",
-    "text": "A: どちらが すきですか。B: りんご（　　　）すきです。",
-    "options": [
-      "しか",
-      "のほうが",
-      "よりも",
-      "だけで"
-    ],
-    "answer": 1,
-    "explanation": "Untuk memilih yang lebih disukai: ～のほうが.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1144,
-    "section": "grammar",
-    "text": "この かばんは あの かばん（　　　）やすいです。",
-    "options": [
-      "より",
-      "まで",
-      "しか",
-      "ほど"
-    ],
-    "answer": 0,
-    "explanation": "Perbandingan dengan より.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1145,
-    "section": "grammar",
-    "text": "きょうは そんなに （　　　）。",
-    "options": [
-      "さむくて",
-      "さむいです",
-      "さむかった",
-      "さむくないです"
-    ],
-    "answer": 3,
-    "explanation": "Tidak begitu dingin: そんなに + negatif.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1146,
-    "section": "grammar",
-    "text": "この もんだいは かんたん（　　　）、すぐ できます。",
-    "options": [
-      "な",
-      "なり",
-      "だし",
-      "で"
-    ],
-    "answer": 2,
-    "explanation": "Noun/na-adjective + だし untuk memberi alasan/daftar alasan.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1147,
-    "section": "grammar",
-    "text": "あしたは しごとが あります（　　　）、はやく ねます。",
-    "options": [
-      "まで",
-      "でも",
-      "のに",
-      "から"
-    ],
-    "answer": 3,
-    "explanation": "Alasan biasa: から.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1148,
-    "section": "grammar",
-    "text": "ちょっと さむい（　　　）、まどを しめましょう。",
-    "options": [
-      "ので",
-      "ほど",
-      "しか",
-      "でも"
-    ],
-    "answer": 0,
-    "explanation": "Alasan: ので.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1149,
-    "section": "grammar",
-    "text": "べんきょうし（　　　）テレビを みました。",
-    "options": [
-      "なくても",
-      "ないと",
-      "ないで",
-      "なくて"
-    ],
-    "answer": 2,
-    "explanation": "Melakukan A tanpa melakukan B: ～ないで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1150,
-    "section": "grammar",
-    "text": "ここから あるい（　　　）10ぷん です。",
-    "options": [
-      "て",
-      "くて",
-      "いて",
-      "んで"
-    ],
-    "answer": 0,
-    "explanation": "あるく → あるいて; tetapi dalam pola あるいて10ぷん = 10 menit berjalan.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1151,
-    "section": "grammar",
-    "text": "この かばんは おおき（　　　）すぎます。",
-    "options": [
-      "すぎ",
-      "く",
-      "くて",
-      "い"
-    ],
-    "answer": 1,
-    "explanation": "Kata sifat-i + すぎる → おおきすぎます.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1152,
-    "section": "grammar",
-    "text": "この えいがは おもしろ（　　　）すぎました。",
-    "options": [
-      "な",
-      "さ",
-      "い",
-      "く"
-    ],
-    "answer": 2,
-    "explanation": "Kata sifat-i + すぎる → おもしろすぎました.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1153,
-    "section": "grammar",
-    "text": "この ペンは かき（　　　）です。",
-    "options": [
-      "やすい",
-      "やすくて",
-      "やすく",
-      "やすかった"
-    ],
-    "answer": 0,
-    "explanation": "～やすい = mudah dilakukan.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1154,
-    "section": "grammar",
-    "text": "この かんじは おぼえ（　　　）です。",
-    "options": [
-      "にくく",
-      "にくかった",
-      "にくい",
-      "にくさ"
-    ],
-    "answer": 2,
-    "explanation": "～にくい = sulit dilakukan.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1155,
-    "section": "grammar",
-    "text": "らいしゅう りょこうする （　　　）です。",
-    "options": [
-      "つもり",
-      "もの",
-      "ほう",
-      "こと"
-    ],
-    "answer": 0,
-    "explanation": "Rencana/niat: ～つもりです.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1156,
-    "section": "grammar",
-    "text": "らいげつから あたらしい しごとを （　　　）よていです。",
-    "options": [
-      "はじめた",
-      "はじめて",
-      "はじめない",
-      "はじめる"
-    ],
-    "answer": 3,
-    "explanation": "Rencana terjadwal: dictionary form + 予定です.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1157,
-    "section": "grammar",
-    "text": "わからない ときは、せんせいに （　　　）ください。",
-    "options": [
-      "きいて",
-      "きかない",
-      "きいた",
-      "きく"
-    ],
-    "answer": 0,
-    "explanation": "Permintaan: ～てください.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1158,
-    "section": "grammar",
-    "text": "先生が くるまで、ちょっと まって （　　　）。",
+    "text": "机の 上に 本が（　）。",
     "options": [
       "います",
-      "ください",
-      "でした",
-      "ません"
+      "あります",
+      "です",
+      "します"
     ],
     "answer": 1,
-    "explanation": "Permintaan sopan: 待ってください.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 10: keberadaan benda. 正解は「あります」です。",
+    "period": "minna-lesson-10",
+    "lesson": 10,
+    "topic": "います／あります"
   },
   {
-    "id": 1159,
+    "id": 10046,
     "section": "grammar",
-    "text": "あした いっしょに えいがを （　　　）か。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n机の 上に 本が（　）。",
     "options": [
-      "みた",
-      "みない",
-      "みよう",
-      "みません"
-    ],
-    "answer": 3,
-    "explanation": "Ajakan sopan: ～ませんか.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1160,
-    "section": "grammar",
-    "text": "きょう いっしょに ひるごはんを （　　　）。",
-    "options": [
-      "たべましたか",
-      "たべましょう",
-      "たべています",
-      "たべません"
+      "います",
+      "あります",
+      "です",
+      "します"
     ],
     "answer": 1,
-    "explanation": "Ajakan: ～ましょう.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 10: keberadaan benda. 正解は「あります」です。",
+    "period": "minna-lesson-10",
+    "lesson": 10,
+    "topic": "います／あります"
   },
   {
-    "id": 1161,
+    "id": 10047,
     "section": "grammar",
-    "text": "あした ひま（　　　）、こうえんへ いきませんか。",
+    "text": "文法：います／あります\n机の 上に 本が（　）。",
     "options": [
-      "なら",
-      "から",
-      "のに",
-      "ので"
+      "います",
+      "あります",
+      "です",
+      "します"
     ],
-    "answer": 0,
-    "explanation": "Kondisional noun/na-adjective: ～なら.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 10: keberadaan benda. 正解は「あります」です。",
+    "period": "minna-lesson-10",
+    "lesson": 10,
+    "topic": "います／あります"
   },
   {
-    "id": 1162,
+    "id": 10048,
     "section": "grammar",
-    "text": "もし じかんが （　　　）、てつだってください。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n机の 上に 本が（　）。",
     "options": [
-      "あったら",
-      "あって",
-      "ある",
-      "あり"
+      "います",
+      "あります",
+      "です",
+      "します"
     ],
-    "answer": 0,
-    "explanation": "Kondisional ～たら.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 10: keberadaan benda. 正解は「あります」です。",
+    "period": "minna-lesson-10",
+    "lesson": 10,
+    "topic": "います／あります"
   },
   {
-    "id": 1163,
+    "id": 10049,
     "section": "grammar",
-    "text": "あした あめが （　　　）たら、うちに います。",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n机の 上に 本が（　）。",
     "options": [
-      "ふる",
-      "ふって",
-      "ふっ",
-      "ふら"
+      "います",
+      "あります",
+      "です",
+      "します"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 10: keberadaan benda. 正解は「あります」です。",
+    "period": "minna-lesson-10",
+    "lesson": 10,
+    "topic": "います／あります"
+  },
+  {
+    "id": 10050,
+    "section": "grammar",
+    "text": "駅の 近く（　）銀行が あります。",
+    "options": [
+      "を",
+      "で",
+      "に",
+      "へ"
     ],
     "answer": 2,
-    "explanation": "～たら dibentuk dari た-form: ふったら.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 10: lokasi keberadaan. 正解は「に」です。",
+    "period": "minna-lesson-11",
+    "lesson": 11,
+    "topic": "～に～があります"
   },
   {
-    "id": 1164,
+    "id": 10051,
     "section": "grammar",
-    "text": "しごとが おわっ（　　　）、でんわしてください。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n駅の 近く（　）銀行が あります。",
     "options": [
-      "ても",
-      "たら",
-      "てら",
-      "たり"
-    ],
-    "answer": 1,
-    "explanation": "Setelah/ketika selesai: ～たら.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1165,
-    "section": "grammar",
-    "text": "この くすりを のめ（　　　）なりません。",
-    "options": [
-      "ば",
-      "たら",
-      "ても",
-      "で"
-    ],
-    "answer": 0,
-    "explanation": "Kewajiban alternatif: ～なければ; di sini のまなければなりません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1166,
-    "section": "grammar",
-    "text": "ここに くる （　　　）、でんわしてください。",
-    "options": [
-      "しか",
-      "ながら",
-      "あとで",
-      "まえに"
-    ],
-    "answer": 3,
-    "explanation": "Sebelum datang: ～まえに.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1167,
-    "section": "grammar",
-    "text": "あした 5じに おきるので、きょうは 10じ（　　　）に ねます。",
-    "options": [
-      "だけ",
-      "しか",
-      "より",
-      "まで"
-    ],
-    "answer": 3,
-    "explanation": "Batas waktu tidur: 10じまでに.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1168,
-    "section": "grammar",
-    "text": "この 仕事は 一人（　　　）できます。",
-    "options": [
-      "まで",
-      "でも",
-      "しか",
-      "ほど"
-    ],
-    "answer": 1,
-    "explanation": "でも dapat berarti bahkan/dengan kondisi itu, sesuai konteks kemampuan.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1169,
-    "section": "grammar",
-    "text": "この りょうりは たべ（　　　）です。",
-    "options": [
-      "たことがあります",
-      "ないでください",
-      "てはいけません",
-      "たことがありません"
-    ],
-    "answer": 0,
-    "explanation": "Pengalaman pernah makan: たことがあります.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1170,
-    "section": "grammar",
-    "text": "日本語が まだ じょうず（　　　）ありません。",
-    "options": [
-      "に",
-      "な",
-      "で",
-      "では"
-    ],
-    "answer": 3,
-    "explanation": "Noun/na-adjective negatif: ではありません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1171,
-    "section": "grammar",
-    "text": "あの 人は 会社員（　　　）思います。",
-    "options": [
-      "だと",
-      "に",
-      "で",
-      "な"
-    ],
-    "answer": 0,
-    "explanation": "Pendapat tentang noun: ～だと思います.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1172,
-    "section": "grammar",
-    "text": "明日は さむい（　　　）思います。",
-    "options": [
-      "で",
-      "に",
       "を",
-      "と"
+      "で",
+      "に",
+      "へ"
     ],
-    "answer": 3,
-    "explanation": "Pernyataan yang dipikirkan: と思います.",
-    "period": "sep-nov"
+    "answer": 2,
+    "explanation": "Pelajaran 10: lokasi keberadaan. 正解は「に」です。",
+    "period": "minna-lesson-11",
+    "lesson": 11,
+    "topic": "～に～があります"
   },
   {
-    "id": 1173,
+    "id": 10052,
     "section": "grammar",
-    "text": "田中さんは もう 会社へ 行っ（　　　）でしょう。",
+    "text": "文法：～に～があります\n駅の 近く（　）銀行が あります。",
     "options": [
-      "ない",
-      "た",
-      "たり",
-      "て"
+      "を",
+      "で",
+      "に",
+      "へ"
     ],
-    "answer": 1,
-    "explanation": "Perkiraan: ～たでしょう.",
-    "period": "sep-nov"
+    "answer": 2,
+    "explanation": "Pelajaran 10: lokasi keberadaan. 正解は「に」です。",
+    "period": "minna-lesson-11",
+    "lesson": 11,
+    "topic": "～に～があります"
   },
   {
-    "id": 1174,
+    "id": 10053,
     "section": "grammar",
-    "text": "雨が ふる（　　　）しれません。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n駅の 近く（　）銀行が あります。",
     "options": [
-      "なら",
-      "ので",
-      "かも",
+      "を",
+      "で",
+      "に",
+      "へ"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 10: lokasi keberadaan. 正解は「に」です。",
+    "period": "minna-lesson-11",
+    "lesson": 11,
+    "topic": "～に～があります"
+  },
+  {
+    "id": 10054,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n駅の 近く（　）銀行が あります。",
+    "options": [
+      "を",
+      "で",
+      "に",
+      "へ"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 10: lokasi keberadaan. 正解は「に」です。",
+    "period": "minna-lesson-11",
+    "lesson": 11,
+    "topic": "～に～があります"
+  },
+  {
+    "id": 10055,
+    "section": "grammar",
+    "text": "りんごを ３（　）買いました。",
+    "options": [
+      "人",
+      "枚",
+      "個",
+      "台"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 11: penghitung benda. 正解は「個」です。",
+    "period": "minna-lesson-12",
+    "lesson": 12,
+    "topic": "助数詞"
+  },
+  {
+    "id": 10056,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nりんごを ３（　）買いました。",
+    "options": [
+      "人",
+      "枚",
+      "個",
+      "台"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 11: penghitung benda. 正解は「個」です。",
+    "period": "minna-lesson-12",
+    "lesson": 12,
+    "topic": "助数詞"
+  },
+  {
+    "id": 10057,
+    "section": "grammar",
+    "text": "文法：助数詞\nりんごを ３（　）買いました。",
+    "options": [
+      "人",
+      "枚",
+      "個",
+      "台"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 11: penghitung benda. 正解は「個」です。",
+    "period": "minna-lesson-12",
+    "lesson": 12,
+    "topic": "助数詞"
+  },
+  {
+    "id": 10058,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nりんごを ３（　）買いました。",
+    "options": [
+      "人",
+      "枚",
+      "個",
+      "台"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 11: penghitung benda. 正解は「個」です。",
+    "period": "minna-lesson-12",
+    "lesson": 12,
+    "topic": "助数詞"
+  },
+  {
+    "id": 10059,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nりんごを ３（　）買いました。",
+    "options": [
+      "人",
+      "枚",
+      "個",
+      "台"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 11: penghitung benda. 正解は「個」です。",
+    "period": "minna-lesson-12",
+    "lesson": 12,
+    "topic": "助数詞"
+  },
+  {
+    "id": 10060,
+    "section": "grammar",
+    "text": "電車は バス（　）速いです。",
+    "options": [
+      "より",
+      "ほど",
+      "まで",
       "しか"
     ],
-    "answer": 2,
-    "explanation": "Kemungkinan: ～かもしれません.",
-    "period": "sep-nov"
+    "answer": 0,
+    "explanation": "Pelajaran 12: perbandingan. 正解は「より」です。",
+    "period": "minna-lesson-13",
+    "lesson": 13,
+    "topic": "比較"
   },
   {
-    "id": 1175,
+    "id": 10061,
     "section": "grammar",
-    "text": "この へやは 使っ（　　　）いけません。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n電車は バス（　）速いです。",
     "options": [
-      "たことが",
-      "ても",
-      "たら",
-      "ては"
+      "より",
+      "ほど",
+      "まで",
+      "しか"
     ],
-    "answer": 3,
-    "explanation": "Larangan: ～てはいけません.",
-    "period": "sep-nov"
+    "answer": 0,
+    "explanation": "Pelajaran 12: perbandingan. 正解は「より」です。",
+    "period": "minna-lesson-13",
+    "lesson": 13,
+    "topic": "比較"
   },
   {
-    "id": 1176,
+    "id": 10062,
     "section": "grammar",
-    "text": "この じしょを 使っ（　　　）いいですか。",
+    "text": "文法：比較\n電車は バス（　）速いです。",
+    "options": [
+      "より",
+      "ほど",
+      "まで",
+      "しか"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 12: perbandingan. 正解は「より」です。",
+    "period": "minna-lesson-13",
+    "lesson": 13,
+    "topic": "比較"
+  },
+  {
+    "id": 10063,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n電車は バス（　）速いです。",
+    "options": [
+      "より",
+      "ほど",
+      "まで",
+      "しか"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 12: perbandingan. 正解は「より」です。",
+    "period": "minna-lesson-13",
+    "lesson": 13,
+    "topic": "比較"
+  },
+  {
+    "id": 10064,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n電車は バス（　）速いです。",
+    "options": [
+      "より",
+      "ほど",
+      "まで",
+      "しか"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 12: perbandingan. 正解は「より」です。",
+    "period": "minna-lesson-13",
+    "lesson": 13,
+    "topic": "比較"
+  },
+  {
+    "id": 10065,
+    "section": "grammar",
+    "text": "新しい 自転車が（　）です。",
+    "options": [
+      "ほしい",
+      "ほしがる",
+      "ほしく",
+      "ほしいに"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 13: menyatakan keinginan. 正解は「ほしい」です。",
+    "period": "minna-lesson-14",
+    "lesson": 14,
+    "topic": "ほしい／たい"
+  },
+  {
+    "id": 10066,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n新しい 自転車が（　）です。",
+    "options": [
+      "ほしい",
+      "ほしがる",
+      "ほしく",
+      "ほしいに"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 13: menyatakan keinginan. 正解は「ほしい」です。",
+    "period": "minna-lesson-14",
+    "lesson": 14,
+    "topic": "ほしい／たい"
+  },
+  {
+    "id": 10067,
+    "section": "grammar",
+    "text": "文法：ほしい／たい\n新しい 自転車が（　）です。",
+    "options": [
+      "ほしい",
+      "ほしがる",
+      "ほしく",
+      "ほしいに"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 13: menyatakan keinginan. 正解は「ほしい」です。",
+    "period": "minna-lesson-14",
+    "lesson": 14,
+    "topic": "ほしい／たい"
+  },
+  {
+    "id": 10068,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n新しい 自転車が（　）です。",
+    "options": [
+      "ほしい",
+      "ほしがる",
+      "ほしく",
+      "ほしいに"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 13: menyatakan keinginan. 正解は「ほしい」です。",
+    "period": "minna-lesson-14",
+    "lesson": 14,
+    "topic": "ほしい／たい"
+  },
+  {
+    "id": 10069,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n新しい 自転車が（　）です。",
+    "options": [
+      "ほしい",
+      "ほしがる",
+      "ほしく",
+      "ほしいに"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 13: menyatakan keinginan. 正解は「ほしい」です。",
+    "period": "minna-lesson-14",
+    "lesson": 14,
+    "topic": "ほしい／たい"
+  },
+  {
+    "id": 10070,
+    "section": "grammar",
+    "text": "ここに 名前を（　）ください。",
+    "options": [
+      "書いて",
+      "書きて",
+      "書いても",
+      "書くて"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 14: permintaan ～てください. 正解は「書いて」です。",
+    "period": "minna-lesson-15",
+    "lesson": 15,
+    "topic": "て形"
+  },
+  {
+    "id": 10071,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nここに 名前を（　）ください。",
+    "options": [
+      "書いて",
+      "書きて",
+      "書いても",
+      "書くて"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 14: permintaan ～てください. 正解は「書いて」です。",
+    "period": "minna-lesson-15",
+    "lesson": 15,
+    "topic": "て形"
+  },
+  {
+    "id": 10072,
+    "section": "grammar",
+    "text": "文法：て形\nここに 名前を（　）ください。",
+    "options": [
+      "書いて",
+      "書きて",
+      "書いても",
+      "書くて"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 14: permintaan ～てください. 正解は「書いて」です。",
+    "period": "minna-lesson-15",
+    "lesson": 15,
+    "topic": "て形"
+  },
+  {
+    "id": 10073,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nここに 名前を（　）ください。",
+    "options": [
+      "書いて",
+      "書きて",
+      "書いても",
+      "書くて"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 14: permintaan ～てください. 正解は「書いて」です。",
+    "period": "minna-lesson-15",
+    "lesson": 15,
+    "topic": "て形"
+  },
+  {
+    "id": 10074,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nここに 名前を（　）ください。",
+    "options": [
+      "書いて",
+      "書きて",
+      "書いても",
+      "書くて"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 14: permintaan ～てください. 正解は「書いて」です。",
+    "period": "minna-lesson-15",
+    "lesson": 15,
+    "topic": "て形"
+  },
+  {
+    "id": 10075,
+    "section": "grammar",
+    "text": "ここで 写真を 撮っ（　）いいですか。",
     "options": [
       "ては",
       "ても",
-      "ながら",
-      "たら"
-    ],
-    "answer": 1,
-    "explanation": "Izin: ～てもいいですか.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1177,
-    "section": "grammar",
-    "text": "あさごはんを 食べ（　　　）学校へ 行きました。",
-    "options": [
-      "ないなら",
-      "ないと",
-      "なくて",
-      "ないで"
-    ],
-    "answer": 3,
-    "explanation": "Pergi sekolah tanpa sarapan: 食べないで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1178,
-    "section": "grammar",
-    "text": "音楽を 聞き（　　　）料理を します。",
-    "options": [
-      "たり",
-      "ながら",
-      "ても",
-      "すぎて"
-    ],
-    "answer": 1,
-    "explanation": "Sambil mendengarkan musik: ～ながら.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1179,
-    "section": "grammar",
-    "text": "この くつは 大き（　　　）、歩きにくいです。",
-    "options": [
-      "すぎて",
-      "すぎた",
-      "すぎない",
-      "すぎる"
-    ],
-    "answer": 0,
-    "explanation": "Terlalu besar sehingga sulit berjalan: ～すぎて.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1180,
-    "section": "grammar",
-    "text": "日本で 働く（　　　）、日本語を もっと 勉強します。",
-    "options": [
-      "しか",
-      "ながら",
-      "ために",
-      "ほど"
-    ],
-    "answer": 2,
-    "explanation": "Tujuan: ～ために.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1181,
-    "section": "grammar",
-    "text": "家族に 会う（　　　）、おみやげを 買いました。",
-    "options": [
-      "でも",
-      "ながら",
-      "ために",
-      "しか"
-    ],
-    "answer": 2,
-    "explanation": "Tujuan: ～ために.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1182,
-    "section": "grammar",
-    "text": "わすれない（　　　）、メモします。",
-    "options": [
-      "ために",
-      "ので",
-      "ように",
-      "しか"
-    ],
-    "answer": 2,
-    "explanation": "Agar tidak lupa: ～ように.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1183,
-    "section": "grammar",
-    "text": "早く 起きられる（　　　）、毎晩 早く ねます。",
-    "options": [
-      "ように",
-      "しか",
-      "ので",
-      "なら"
-    ],
-    "answer": 0,
-    "explanation": "Agar bisa bangun cepat: ～ように.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1184,
-    "section": "grammar",
-    "text": "先生が いう（　　　）に、文を 読んでください。",
-    "options": [
-      "しか",
-      "ため",
-      "よう",
-      "こと"
-    ],
-    "answer": 2,
-    "explanation": "Sesuai yang dikatakan guru: ～ように.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1185,
-    "section": "grammar",
-    "text": "この 仕事は おぼえ（　　　）と 思います。",
-    "options": [
-      "やすさ",
-      "やすく",
-      "やすかった",
-      "やすい"
-    ],
-    "answer": 3,
-    "explanation": "Mudah diingat: ～やすい.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1186,
-    "section": "grammar",
-    "text": "この ことばは 使い（　　　）です。",
-    "options": [
-      "にくかった",
-      "にくさ",
-      "にくい",
-      "にくく"
-    ],
-    "answer": 2,
-    "explanation": "Sulit dipakai: ～にくい.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1187,
-    "section": "grammar",
-    "text": "駅に 行く（　　　）、この 道を まっすぐ 行ってください。",
-    "options": [
-      "たりは",
-      "のでを",
-      "ときは",
-      "しかは"
-    ],
-    "answer": 2,
-    "explanation": "Saat pergi ke stasiun: 行くときは.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1188,
-    "section": "grammar",
-    "text": "会社へ 行く（　　　）に、かばんを じゅんびします。",
-    "options": [
-      "まえ",
-      "あと",
-      "ながら",
-      "しか"
-    ],
-    "answer": 0,
-    "explanation": "Sebelum ke kantor: 行くまえに.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1189,
-    "section": "grammar",
-    "text": "会社に 着い（　　　）から、メールを 見ました。",
-    "options": [
-      "て",
-      "たり",
-      "た",
-      "ても"
-    ],
-    "answer": 0,
-    "explanation": "Setelah tiba di kantor: 着いてから.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1190,
-    "section": "grammar",
-    "text": "昼ごはんを 食べ（　　　）あとで、少し 休みます。",
-    "options": [
-      "て",
-      "ない",
-      "る",
-      "た"
-    ],
-    "answer": 3,
-    "explanation": "Setelah makan siang: 食べたあとで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1191,
-    "section": "grammar",
-    "text": "日本に 行っ（　　　）ら、京都へ 行きたいです。",
-    "options": [
-      "ない",
-      "て",
-      "た",
+      "たら",
       "たり"
     ],
-    "answer": 2,
-    "explanation": "Kalau pergi ke Jepang: 行ったら.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 15: meminta izin. 正解は「ても」です。",
+    "period": "minna-lesson-16",
+    "lesson": 16,
+    "topic": "てもいいです"
   },
   {
-    "id": 1192,
+    "id": 10076,
     "section": "grammar",
-    "text": "時間が なかっ（　　　）、手伝えません。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nここで 写真を 撮っ（　）いいですか。",
     "options": [
-      "たり",
-      "て",
+      "ては",
       "ても",
-      "たら"
-    ],
-    "answer": 3,
-    "explanation": "Jika tidak punya waktu: なかったら.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1193,
-    "section": "grammar",
-    "text": "雨（　　　）ひどかったら、タクシーで 行きます。",
-    "options": [
-      "で",
-      "に",
-      "が",
-      "を"
-    ],
-    "answer": 2,
-    "explanation": "Subjek kondisi: 雨がひどかったら.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1194,
-    "section": "grammar",
-    "text": "仕事が いそがし（　　　）も、約束を わすれません。",
-    "options": [
-      "くて",
-      "さ",
-      "かった",
-      "くない"
-    ],
-    "answer": 0,
-    "explanation": "Bahkan kalau sibuk: 忙しくても.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1195,
-    "section": "grammar",
-    "text": "高く（　　　）いいものなら、買いたいです。",
-    "options": [
-      "ながら",
       "たら",
+      "たり"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 15: meminta izin. 正解は「ても」です。",
+    "period": "minna-lesson-16",
+    "lesson": 16,
+    "topic": "てもいいです"
+  },
+  {
+    "id": 10077,
+    "section": "grammar",
+    "text": "文法：てもいいです\nここで 写真を 撮っ（　）いいですか。",
+    "options": [
+      "ては",
       "ても",
-      "ては"
-    ],
-    "answer": 2,
-    "explanation": "Walaupun mahal: 高くても.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1196,
-    "section": "grammar",
-    "text": "休みの日（　　　）うちで 本を 読みます。",
-    "options": [
-      "で",
-      "を",
-      "に",
-      "は"
-    ],
-    "answer": 3,
-    "explanation": "Topik hari libur: 休みの日は.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1197,
-    "section": "grammar",
-    "text": "この 町（　　　）住んで 3年です。",
-    "options": [
-      "に",
-      "で",
-      "を",
-      "へ"
-    ],
-    "answer": 0,
-    "explanation": "Tempat tinggal: 町に住む.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1198,
-    "section": "grammar",
-    "text": "日本語（　　　）話せるように なりたいです。",
-    "options": [
-      "で",
-      "が",
-      "を",
-      "に"
-    ],
-    "answer": 1,
-    "explanation": "Kemampuan: 日本語が話せる.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1199,
-    "section": "grammar",
-    "text": "先生（　　　）質問しました。",
-    "options": [
-      "で",
-      "に",
-      "を",
-      "が"
-    ],
-    "answer": 1,
-    "explanation": "Bertanya kepada guru: 先生に質問する.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1200,
-    "section": "grammar",
-    "text": "友達（　　　）メールを 送りました。",
-    "options": [
-      "で",
-      "に",
-      "を",
-      "が"
-    ],
-    "answer": 1,
-    "explanation": "Penerima: 友達にメールを送る.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1201,
-    "section": "grammar",
-    "text": "家族（　　　）いっしょに 晩ごはんを 食べました。",
-    "options": [
-      "が",
-      "と",
-      "を",
-      "に"
-    ],
-    "answer": 1,
-    "explanation": "Bersama keluarga: ～といっしょに.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1202,
-    "section": "grammar",
-    "text": "電車（　　　）バスの ほうが 安いです。",
-    "options": [
-      "しか",
-      "から",
-      "まで",
-      "より"
-    ],
-    "answer": 3,
-    "explanation": "Perbandingan: 電車よりバスのほうが.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1203,
-    "section": "grammar",
-    "text": "この かばんは 前の もの（　　　）少し 軽いです。",
-    "options": [
-      "ほど",
-      "より",
-      "まで",
-      "しか"
-    ],
-    "answer": 1,
-    "explanation": "Lebih ringan daripada yang sebelumnya.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1204,
-    "section": "grammar",
-    "text": "毎日 30分（　　　）走っています。",
-    "options": [
-      "ぐらい",
-      "まで",
-      "だけで",
-      "しか"
-    ],
-    "answer": 0,
-    "explanation": "Perkiraan durasi: ～ぐらい.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1205,
-    "section": "grammar",
-    "text": "教室に 学生が 20人（　　　）います。",
-    "options": [
-      "ほどで",
-      "しか",
-      "ぐらい",
-      "だけ"
-    ],
-    "answer": 2,
-    "explanation": "Perkiraan jumlah: ～ぐらいいます.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1206,
-    "section": "grammar",
-    "text": "今日は 水（　　　）飲みませんでした。",
-    "options": [
-      "まで",
-      "より",
-      "しか",
-      "だけ"
-    ],
-    "answer": 2,
-    "explanation": "しか + negatif = hanya.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1207,
-    "section": "grammar",
-    "text": "日曜日（　　　）働きます。土曜日は 休みです。",
-    "options": [
-      "まで",
-      "しか",
-      "より",
-      "だけ"
-    ],
-    "answer": 3,
-    "explanation": "Hanya hari Minggu bekerja: だけ.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1208,
-    "section": "grammar",
-    "text": "もう 10時（　　　）なりました。",
-    "options": [
-      "で",
-      "が",
-      "に",
-      "を"
-    ],
-    "answer": 2,
-    "explanation": "Waktu berubah menjadi 10:00: 10時になりました.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1209,
-    "section": "grammar",
-    "text": "春に（　　　）と、あたたかく なります。",
-    "options": [
-      "なる",
-      "なり",
-      "なって",
-      "なった"
-    ],
-    "answer": 0,
-    "explanation": "Ketika menjadi musim semi: 春になると.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1210,
-    "section": "grammar",
-    "text": "ボタンを 押す（　　　）、機械が 動きます。",
-    "options": [
-      "ても",
-      "なら",
-      "と",
-      "ので"
-    ],
-    "answer": 2,
-    "explanation": "Kondisi otomatis: ～と.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1211,
-    "section": "grammar",
-    "text": "わからない（　　　）、もう一度 説明してください。",
-    "options": [
-      "しか",
-      "たり",
-      "ので",
-      "なら"
-    ],
-    "answer": 2,
-    "explanation": "Karena tidak paham, minta penjelasan lagi: ので.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1212,
-    "section": "grammar",
-    "text": "忙しい（　　　）、今日は 行きません。",
-    "options": [
-      "ので",
-      "しか",
-      "まで",
-      "ながら"
-    ],
-    "answer": 0,
-    "explanation": "Alasan: 忙しいので.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1213,
-    "section": "grammar",
-    "text": "仕事の あとで、買い物（　　　）してから 帰ります。",
-    "options": [
-      "へ",
-      "に",
-      "を",
-      "が"
-    ],
-    "answer": 2,
-    "explanation": "Objek: 買い物をする.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1214,
-    "section": "grammar",
-    "text": "毎朝 シャワーを 浴び（　　　）、仕事へ 行きます。",
-    "options": [
       "たら",
-      "ながら",
-      "ないで",
-      "てから"
+      "たり"
     ],
-    "answer": 3,
-    "explanation": "Setelah mandi: ～てから.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 15: meminta izin. 正解は「ても」です。",
+    "period": "minna-lesson-16",
+    "lesson": 16,
+    "topic": "てもいいです"
   },
   {
-    "id": 1215,
+    "id": 10078,
     "section": "grammar",
-    "text": "ここで 写真を 撮っ（　　　）も いいです。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nここで 写真を 撮っ（　）いいですか。",
     "options": [
-      "たり",
-      "たら",
+      "ては",
       "ても",
-      "ては"
+      "たら",
+      "たり"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 15: meminta izin. 正解は「ても」です。",
+    "period": "minna-lesson-16",
+    "lesson": 16,
+    "topic": "てもいいです"
+  },
+  {
+    "id": 10079,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nここで 写真を 撮っ（　）いいですか。",
+    "options": [
+      "ては",
+      "ても",
+      "たら",
+      "たり"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 15: meminta izin. 正解は「ても」です。",
+    "period": "minna-lesson-16",
+    "lesson": 16,
+    "topic": "てもいいです"
+  },
+  {
+    "id": 10080,
+    "section": "grammar",
+    "text": "宿題を（　）、テレビを 見ます。",
+    "options": [
+      "してから",
+      "したから",
+      "するから",
+      "しながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 16: urutan kegiatan. 正解は「してから」です。",
+    "period": "minna-lesson-17",
+    "lesson": 17,
+    "topic": "てから"
+  },
+  {
+    "id": 10081,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n宿題を（　）、テレビを 見ます。",
+    "options": [
+      "してから",
+      "したから",
+      "するから",
+      "しながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 16: urutan kegiatan. 正解は「してから」です。",
+    "period": "minna-lesson-17",
+    "lesson": 17,
+    "topic": "てから"
+  },
+  {
+    "id": 10082,
+    "section": "grammar",
+    "text": "文法：てから\n宿題を（　）、テレビを 見ます。",
+    "options": [
+      "してから",
+      "したから",
+      "するから",
+      "しながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 16: urutan kegiatan. 正解は「してから」です。",
+    "period": "minna-lesson-17",
+    "lesson": 17,
+    "topic": "てから"
+  },
+  {
+    "id": 10083,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n宿題を（　）、テレビを 見ます。",
+    "options": [
+      "してから",
+      "したから",
+      "するから",
+      "しながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 16: urutan kegiatan. 正解は「してから」です。",
+    "period": "minna-lesson-17",
+    "lesson": 17,
+    "topic": "てから"
+  },
+  {
+    "id": 10084,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n宿題を（　）、テレビを 見ます。",
+    "options": [
+      "してから",
+      "したから",
+      "するから",
+      "しながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 16: urutan kegiatan. 正解は「してから」です。",
+    "period": "minna-lesson-17",
+    "lesson": 17,
+    "topic": "てから"
+  },
+  {
+    "id": 10085,
+    "section": "grammar",
+    "text": "ここで たばこを（　）ください。",
+    "options": [
+      "吸わないで",
+      "吸って",
+      "吸うないで",
+      "吸いないで"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 17: larangan sopan. 正解は「吸わないで」です。",
+    "period": "minna-lesson-18",
+    "lesson": 18,
+    "topic": "ないでください"
+  },
+  {
+    "id": 10086,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nここで たばこを（　）ください。",
+    "options": [
+      "吸わないで",
+      "吸って",
+      "吸うないで",
+      "吸いないで"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 17: larangan sopan. 正解は「吸わないで」です。",
+    "period": "minna-lesson-18",
+    "lesson": 18,
+    "topic": "ないでください"
+  },
+  {
+    "id": 10087,
+    "section": "grammar",
+    "text": "文法：ないでください\nここで たばこを（　）ください。",
+    "options": [
+      "吸わないで",
+      "吸って",
+      "吸うないで",
+      "吸いないで"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 17: larangan sopan. 正解は「吸わないで」です。",
+    "period": "minna-lesson-18",
+    "lesson": 18,
+    "topic": "ないでください"
+  },
+  {
+    "id": 10088,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nここで たばこを（　）ください。",
+    "options": [
+      "吸わないで",
+      "吸って",
+      "吸うないで",
+      "吸いないで"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 17: larangan sopan. 正解は「吸わないで」です。",
+    "period": "minna-lesson-18",
+    "lesson": 18,
+    "topic": "ないでください"
+  },
+  {
+    "id": 10089,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nここで たばこを（　）ください。",
+    "options": [
+      "吸わないで",
+      "吸って",
+      "吸うないで",
+      "吸いないで"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 17: larangan sopan. 正解は「吸わないで」です。",
+    "period": "minna-lesson-18",
+    "lesson": 18,
+    "topic": "ないでください"
+  },
+  {
+    "id": 10090,
+    "section": "grammar",
+    "text": "わたしは ひらがなを（　）ことができます。",
+    "options": [
+      "読む",
+      "読んで",
+      "読み",
+      "読んだ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 18: kemampuan dengan bentuk kamus. 正解は「読む」です。",
+    "period": "minna-lesson-19",
+    "lesson": 19,
+    "topic": "ことができます"
+  },
+  {
+    "id": 10091,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nわたしは ひらがなを（　）ことができます。",
+    "options": [
+      "読む",
+      "読んで",
+      "読み",
+      "読んだ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 18: kemampuan dengan bentuk kamus. 正解は「読む」です。",
+    "period": "minna-lesson-19",
+    "lesson": 19,
+    "topic": "ことができます"
+  },
+  {
+    "id": 10092,
+    "section": "grammar",
+    "text": "文法：ことができます\nわたしは ひらがなを（　）ことができます。",
+    "options": [
+      "読む",
+      "読んで",
+      "読み",
+      "読んだ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 18: kemampuan dengan bentuk kamus. 正解は「読む」です。",
+    "period": "minna-lesson-19",
+    "lesson": 19,
+    "topic": "ことができます"
+  },
+  {
+    "id": 10093,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nわたしは ひらがなを（　）ことができます。",
+    "options": [
+      "読む",
+      "読んで",
+      "読み",
+      "読んだ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 18: kemampuan dengan bentuk kamus. 正解は「読む」です。",
+    "period": "minna-lesson-19",
+    "lesson": 19,
+    "topic": "ことができます"
+  },
+  {
+    "id": 10094,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nわたしは ひらがなを（　）ことができます。",
+    "options": [
+      "読む",
+      "読んで",
+      "読み",
+      "読んだ"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 18: kemampuan dengan bentuk kamus. 正解は「読む」です。",
+    "period": "minna-lesson-19",
+    "lesson": 19,
+    "topic": "ことができます"
+  },
+  {
+    "id": 10095,
+    "section": "grammar",
+    "text": "休みの日は 掃除し（　）、洗濯し（　）します。",
+    "options": [
+      "たり／たり",
+      "て／て",
+      "た／た",
+      "ながら／ながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 19: contoh kegiatan. 正解は「たり／たり」です。",
+    "period": "minna-lesson-20",
+    "lesson": 20,
+    "topic": "たり～たりします"
+  },
+  {
+    "id": 10096,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n休みの日は 掃除し（　）、洗濯し（　）します。",
+    "options": [
+      "たり／たり",
+      "て／て",
+      "た／た",
+      "ながら／ながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 19: contoh kegiatan. 正解は「たり／たり」です。",
+    "period": "minna-lesson-20",
+    "lesson": 20,
+    "topic": "たり～たりします"
+  },
+  {
+    "id": 10097,
+    "section": "grammar",
+    "text": "文法：たり～たりします\n休みの日は 掃除し（　）、洗濯し（　）します。",
+    "options": [
+      "たり／たり",
+      "て／て",
+      "た／た",
+      "ながら／ながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 19: contoh kegiatan. 正解は「たり／たり」です。",
+    "period": "minna-lesson-20",
+    "lesson": 20,
+    "topic": "たり～たりします"
+  },
+  {
+    "id": 10098,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n休みの日は 掃除し（　）、洗濯し（　）します。",
+    "options": [
+      "たり／たり",
+      "て／て",
+      "た／た",
+      "ながら／ながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 19: contoh kegiatan. 正解は「たり／たり」です。",
+    "period": "minna-lesson-20",
+    "lesson": 20,
+    "topic": "たり～たりします"
+  },
+  {
+    "id": 10099,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n休みの日は 掃除し（　）、洗濯し（　）します。",
+    "options": [
+      "たり／たり",
+      "て／て",
+      "た／た",
+      "ながら／ながら"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 19: contoh kegiatan. 正解は「たり／たり」です。",
+    "period": "minna-lesson-20",
+    "lesson": 20,
+    "topic": "たり～たりします"
+  },
+  {
+    "id": 10100,
+    "section": "grammar",
+    "text": "富士山に（　）ことがあります。",
+    "options": [
+      "登る",
+      "登って",
+      "登った",
+      "登り"
     ],
     "answer": 2,
-    "explanation": "Boleh: ～てもいい.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 19: pengalaman. 正解は「登った」です。",
+    "period": "minna-lesson-21",
+    "lesson": 21,
+    "topic": "たことがあります"
   },
   {
-    "id": 1216,
+    "id": 10101,
     "section": "grammar",
-    "text": "この いすに 座っ（　　　）は いけません。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n富士山に（　）ことがあります。",
     "options": [
-      "て",
-      "ながら",
-      "たり",
+      "登る",
+      "登って",
+      "登った",
+      "登り"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 19: pengalaman. 正解は「登った」です。",
+    "period": "minna-lesson-21",
+    "lesson": 21,
+    "topic": "たことがあります"
+  },
+  {
+    "id": 10102,
+    "section": "grammar",
+    "text": "文法：たことがあります\n富士山に（　）ことがあります。",
+    "options": [
+      "登る",
+      "登って",
+      "登った",
+      "登り"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 19: pengalaman. 正解は「登った」です。",
+    "period": "minna-lesson-21",
+    "lesson": 21,
+    "topic": "たことがあります"
+  },
+  {
+    "id": 10103,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n富士山に（　）ことがあります。",
+    "options": [
+      "登る",
+      "登って",
+      "登った",
+      "登り"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 19: pengalaman. 正解は「登った」です。",
+    "period": "minna-lesson-21",
+    "lesson": 21,
+    "topic": "たことがあります"
+  },
+  {
+    "id": 10104,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n富士山に（　）ことがあります。",
+    "options": [
+      "登る",
+      "登って",
+      "登った",
+      "登り"
+    ],
+    "answer": 2,
+    "explanation": "Pelajaran 19: pengalaman. 正解は「登った」です。",
+    "period": "minna-lesson-21",
+    "lesson": 21,
+    "topic": "たことがあります"
+  },
+  {
+    "id": 10105,
+    "section": "grammar",
+    "text": "明日は 雨が（　）と思います。",
+    "options": [
+      "降る",
+      "降って",
+      "降ります",
+      "降り"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 21: pendapat/perkiraan. 正解は「降る」です。",
+    "period": "minna-lesson-22",
+    "lesson": 22,
+    "topic": "と思います"
+  },
+  {
+    "id": 10106,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n明日は 雨が（　）と思います。",
+    "options": [
+      "降る",
+      "降って",
+      "降ります",
+      "降り"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 21: pendapat/perkiraan. 正解は「降る」です。",
+    "period": "minna-lesson-22",
+    "lesson": 22,
+    "topic": "と思います"
+  },
+  {
+    "id": 10107,
+    "section": "grammar",
+    "text": "文法：と思います\n明日は 雨が（　）と思います。",
+    "options": [
+      "降る",
+      "降って",
+      "降ります",
+      "降り"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 21: pendapat/perkiraan. 正解は「降る」です。",
+    "period": "minna-lesson-22",
+    "lesson": 22,
+    "topic": "と思います"
+  },
+  {
+    "id": 10108,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n明日は 雨が（　）と思います。",
+    "options": [
+      "降る",
+      "降って",
+      "降ります",
+      "降り"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 21: pendapat/perkiraan. 正解は「降る」です。",
+    "period": "minna-lesson-22",
+    "lesson": 22,
+    "topic": "と思います"
+  },
+  {
+    "id": 10109,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n明日は 雨が（　）と思います。",
+    "options": [
+      "降る",
+      "降って",
+      "降ります",
+      "降り"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 21: pendapat/perkiraan. 正解は「降る」です。",
+    "period": "minna-lesson-22",
+    "lesson": 22,
+    "topic": "と思います"
+  },
+  {
+    "id": 10110,
+    "section": "grammar",
+    "text": "田中さんは 明日 来る（　）。",
+    "options": [
+      "と思います",
+      "と言いました",
+      "ことです",
+      "になります"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 21: kutipan ucapan. 正解は「と言いました」です。",
+    "period": "minna-lesson-23",
+    "lesson": 23,
+    "topic": "と言いました"
+  },
+  {
+    "id": 10111,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n田中さんは 明日 来る（　）。",
+    "options": [
+      "と思います",
+      "と言いました",
+      "ことです",
+      "になります"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 21: kutipan ucapan. 正解は「と言いました」です。",
+    "period": "minna-lesson-23",
+    "lesson": 23,
+    "topic": "と言いました"
+  },
+  {
+    "id": 10112,
+    "section": "grammar",
+    "text": "文法：と言いました\n田中さんは 明日 来る（　）。",
+    "options": [
+      "と思います",
+      "と言いました",
+      "ことです",
+      "になります"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 21: kutipan ucapan. 正解は「と言いました」です。",
+    "period": "minna-lesson-23",
+    "lesson": 23,
+    "topic": "と言いました"
+  },
+  {
+    "id": 10113,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n田中さんは 明日 来る（　）。",
+    "options": [
+      "と思います",
+      "と言いました",
+      "ことです",
+      "になります"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 21: kutipan ucapan. 正解は「と言いました」です。",
+    "period": "minna-lesson-23",
+    "lesson": 23,
+    "topic": "と言いました"
+  },
+  {
+    "id": 10114,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n田中さんは 明日 来る（　）。",
+    "options": [
+      "と思います",
+      "と言いました",
+      "ことです",
+      "になります"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 21: kutipan ucapan. 正解は「と言いました」です。",
+    "period": "minna-lesson-23",
+    "lesson": 23,
+    "topic": "と言いました"
+  },
+  {
+    "id": 10115,
+    "section": "grammar",
+    "text": "どうして 遅れた（　）か。",
+    "options": [
+      "です",
+      "んです",
+      "ます",
+      "でした"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 26: meminta/menjelaskan alasan. 正解は「んです」です。",
+    "period": "minna-lesson-24",
+    "lesson": 24,
+    "topic": "～んです"
+  },
+  {
+    "id": 10116,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nどうして 遅れた（　）か。",
+    "options": [
+      "です",
+      "んです",
+      "ます",
+      "でした"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 26: meminta/menjelaskan alasan. 正解は「んです」です。",
+    "period": "minna-lesson-24",
+    "lesson": 24,
+    "topic": "～んです"
+  },
+  {
+    "id": 10117,
+    "section": "grammar",
+    "text": "文法：～んです\nどうして 遅れた（　）か。",
+    "options": [
+      "です",
+      "んです",
+      "ます",
+      "でした"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 26: meminta/menjelaskan alasan. 正解は「んです」です。",
+    "period": "minna-lesson-24",
+    "lesson": 24,
+    "topic": "～んです"
+  },
+  {
+    "id": 10118,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nどうして 遅れた（　）か。",
+    "options": [
+      "です",
+      "んです",
+      "ます",
+      "でした"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 26: meminta/menjelaskan alasan. 正解は「んです」です。",
+    "period": "minna-lesson-24",
+    "lesson": 24,
+    "topic": "～んです"
+  },
+  {
+    "id": 10119,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nどうして 遅れた（　）か。",
+    "options": [
+      "です",
+      "んです",
+      "ます",
+      "でした"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 26: meminta/menjelaskan alasan. 正解は「んです」です。",
+    "period": "minna-lesson-24",
+    "lesson": 24,
+    "topic": "～んです"
+  },
+  {
+    "id": 10120,
+    "section": "grammar",
+    "text": "時間が（　）、電話してください。",
+    "options": [
+      "あれば",
+      "あったら",
+      "あると",
+      "あって"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 25: kondisi ～たら. 正解は「あったら」です。",
+    "period": "minna-lesson-25",
+    "lesson": 25,
+    "topic": "～たら"
+  },
+  {
+    "id": 10121,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n時間が（　）、電話してください。",
+    "options": [
+      "あれば",
+      "あったら",
+      "あると",
+      "あって"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 25: kondisi ～たら. 正解は「あったら」です。",
+    "period": "minna-lesson-25",
+    "lesson": 25,
+    "topic": "～たら"
+  },
+  {
+    "id": 10122,
+    "section": "grammar",
+    "text": "文法：～たら\n時間が（　）、電話してください。",
+    "options": [
+      "あれば",
+      "あったら",
+      "あると",
+      "あって"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 25: kondisi ～たら. 正解は「あったら」です。",
+    "period": "minna-lesson-25",
+    "lesson": 25,
+    "topic": "～たら"
+  },
+  {
+    "id": 10123,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n時間が（　）、電話してください。",
+    "options": [
+      "あれば",
+      "あったら",
+      "あると",
+      "あって"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 25: kondisi ～たら. 正解は「あったら」です。",
+    "period": "minna-lesson-25",
+    "lesson": 25,
+    "topic": "～たら"
+  },
+  {
+    "id": 10124,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n時間が（　）、電話してください。",
+    "options": [
+      "あれば",
+      "あったら",
+      "あると",
+      "あって"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 25: kondisi ～たら. 正解は「あったら」です。",
+    "period": "minna-lesson-25",
+    "lesson": 25,
+    "topic": "～たら"
+  },
+  {
+    "id": 10125,
+    "section": "grammar",
+    "text": "わたしは 漢字が 少し（　）。",
+    "options": [
+      "読めます",
+      "読みます",
+      "読ませます",
+      "読まれます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 27: bentuk potensial. 正解は「読めます」です。",
+    "period": "minna-lesson-26",
+    "lesson": 26,
+    "topic": "可能形"
+  },
+  {
+    "id": 10126,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nわたしは 漢字が 少し（　）。",
+    "options": [
+      "読めます",
+      "読みます",
+      "読ませます",
+      "読まれます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 27: bentuk potensial. 正解は「読めます」です。",
+    "period": "minna-lesson-26",
+    "lesson": 26,
+    "topic": "可能形"
+  },
+  {
+    "id": 10127,
+    "section": "grammar",
+    "text": "文法：可能形\nわたしは 漢字が 少し（　）。",
+    "options": [
+      "読めます",
+      "読みます",
+      "読ませます",
+      "読まれます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 27: bentuk potensial. 正解は「読めます」です。",
+    "period": "minna-lesson-26",
+    "lesson": 26,
+    "topic": "可能形"
+  },
+  {
+    "id": 10128,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nわたしは 漢字が 少し（　）。",
+    "options": [
+      "読めます",
+      "読みます",
+      "読ませます",
+      "読まれます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 27: bentuk potensial. 正解は「読めます」です。",
+    "period": "minna-lesson-26",
+    "lesson": 26,
+    "topic": "可能形"
+  },
+  {
+    "id": 10129,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nわたしは 漢字が 少し（　）。",
+    "options": [
+      "読めます",
+      "読みます",
+      "読ませます",
+      "読まれます"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 27: bentuk potensial. 正解は「読めます」です。",
+    "period": "minna-lesson-26",
+    "lesson": 26,
+    "topic": "可能形"
+  },
+  {
+    "id": 10130,
+    "section": "grammar",
+    "text": "音楽を（　）勉強します。",
+    "options": [
+      "聞くながら",
+      "聞きながら",
+      "聞いてながら",
+      "聞いたながら"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 28: dua kegiatan bersamaan. 正解は「聞きながら」です。",
+    "period": "minna-lesson-27",
+    "lesson": 27,
+    "topic": "ながら"
+  },
+  {
+    "id": 10131,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n音楽を（　）勉強します。",
+    "options": [
+      "聞くながら",
+      "聞きながら",
+      "聞いてながら",
+      "聞いたながら"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 28: dua kegiatan bersamaan. 正解は「聞きながら」です。",
+    "period": "minna-lesson-27",
+    "lesson": 27,
+    "topic": "ながら"
+  },
+  {
+    "id": 10132,
+    "section": "grammar",
+    "text": "文法：ながら\n音楽を（　）勉強します。",
+    "options": [
+      "聞くながら",
+      "聞きながら",
+      "聞いてながら",
+      "聞いたながら"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 28: dua kegiatan bersamaan. 正解は「聞きながら」です。",
+    "period": "minna-lesson-27",
+    "lesson": 27,
+    "topic": "ながら"
+  },
+  {
+    "id": 10133,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n音楽を（　）勉強します。",
+    "options": [
+      "聞くながら",
+      "聞きながら",
+      "聞いてながら",
+      "聞いたながら"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 28: dua kegiatan bersamaan. 正解は「聞きながら」です。",
+    "period": "minna-lesson-27",
+    "lesson": 27,
+    "topic": "ながら"
+  },
+  {
+    "id": 10134,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n音楽を（　）勉強します。",
+    "options": [
+      "聞くながら",
+      "聞きながら",
+      "聞いてながら",
+      "聞いたながら"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 28: dua kegiatan bersamaan. 正解は「聞きながら」です。",
+    "period": "minna-lesson-27",
+    "lesson": 27,
+    "topic": "ながら"
+  },
+  {
+    "id": 10135,
+    "section": "grammar",
+    "text": "窓が（　）います。",
+    "options": [
+      "開けて",
+      "開いて",
+      "開くて",
+      "開いてを"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 29: keadaan akibat kata kerja intransitif. 正解は「開いて」です。",
+    "period": "minna-lesson-28",
+    "lesson": 28,
+    "topic": "自動詞／他動詞"
+  },
+  {
+    "id": 10136,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n窓が（　）います。",
+    "options": [
+      "開けて",
+      "開いて",
+      "開くて",
+      "開いてを"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 29: keadaan akibat kata kerja intransitif. 正解は「開いて」です。",
+    "period": "minna-lesson-28",
+    "lesson": 28,
+    "topic": "自動詞／他動詞"
+  },
+  {
+    "id": 10137,
+    "section": "grammar",
+    "text": "文法：自動詞／他動詞\n窓が（　）います。",
+    "options": [
+      "開けて",
+      "開いて",
+      "開くて",
+      "開いてを"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 29: keadaan akibat kata kerja intransitif. 正解は「開いて」です。",
+    "period": "minna-lesson-28",
+    "lesson": 28,
+    "topic": "自動詞／他動詞"
+  },
+  {
+    "id": 10138,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n窓が（　）います。",
+    "options": [
+      "開けて",
+      "開いて",
+      "開くて",
+      "開いてを"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 29: keadaan akibat kata kerja intransitif. 正解は「開いて」です。",
+    "period": "minna-lesson-28",
+    "lesson": 28,
+    "topic": "自動詞／他動詞"
+  },
+  {
+    "id": 10139,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n窓が（　）います。",
+    "options": [
+      "開けて",
+      "開いて",
+      "開くて",
+      "開いてを"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 29: keadaan akibat kata kerja intransitif. 正解は「開いて」です。",
+    "period": "minna-lesson-28",
+    "lesson": 28,
+    "topic": "自動詞／他動詞"
+  },
+  {
+    "id": 10140,
+    "section": "grammar",
+    "text": "財布を（　）しまいました。",
+    "options": [
+      "なくして",
+      "なくす",
+      "なくした",
+      "なくし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 29: kejadian selesai/tidak diinginkan. 正解は「なくして」です。",
+    "period": "minna-lesson-29",
+    "lesson": 29,
+    "topic": "～てしまいました"
+  },
+  {
+    "id": 10141,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n財布を（　）しまいました。",
+    "options": [
+      "なくして",
+      "なくす",
+      "なくした",
+      "なくし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 29: kejadian selesai/tidak diinginkan. 正解は「なくして」です。",
+    "period": "minna-lesson-29",
+    "lesson": 29,
+    "topic": "～てしまいました"
+  },
+  {
+    "id": 10142,
+    "section": "grammar",
+    "text": "文法：～てしまいました\n財布を（　）しまいました。",
+    "options": [
+      "なくして",
+      "なくす",
+      "なくした",
+      "なくし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 29: kejadian selesai/tidak diinginkan. 正解は「なくして」です。",
+    "period": "minna-lesson-29",
+    "lesson": 29,
+    "topic": "～てしまいました"
+  },
+  {
+    "id": 10143,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n財布を（　）しまいました。",
+    "options": [
+      "なくして",
+      "なくす",
+      "なくした",
+      "なくし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 29: kejadian selesai/tidak diinginkan. 正解は「なくして」です。",
+    "period": "minna-lesson-29",
+    "lesson": 29,
+    "topic": "～てしまいました"
+  },
+  {
+    "id": 10144,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n財布を（　）しまいました。",
+    "options": [
+      "なくして",
+      "なくす",
+      "なくした",
+      "なくし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 29: kejadian selesai/tidak diinginkan. 正解は「なくして」です。",
+    "period": "minna-lesson-29",
+    "lesson": 29,
+    "topic": "～てしまいました"
+  },
+  {
+    "id": 10145,
+    "section": "grammar",
+    "text": "壁に 地図が（　）あります。",
+    "options": [
+      "貼って",
+      "貼りて",
+      "貼られて",
+      "貼る"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: hasil tindakan yang disiapkan. 正解は「貼って」です。",
+    "period": "minna-lesson-30",
+    "lesson": 30,
+    "topic": "～てあります"
+  },
+  {
+    "id": 10146,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n壁に 地図が（　）あります。",
+    "options": [
+      "貼って",
+      "貼りて",
+      "貼られて",
+      "貼る"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: hasil tindakan yang disiapkan. 正解は「貼って」です。",
+    "period": "minna-lesson-30",
+    "lesson": 30,
+    "topic": "～てあります"
+  },
+  {
+    "id": 10147,
+    "section": "grammar",
+    "text": "文法：～てあります\n壁に 地図が（　）あります。",
+    "options": [
+      "貼って",
+      "貼りて",
+      "貼られて",
+      "貼る"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: hasil tindakan yang disiapkan. 正解は「貼って」です。",
+    "period": "minna-lesson-30",
+    "lesson": 30,
+    "topic": "～てあります"
+  },
+  {
+    "id": 10148,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n壁に 地図が（　）あります。",
+    "options": [
+      "貼って",
+      "貼りて",
+      "貼られて",
+      "貼る"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: hasil tindakan yang disiapkan. 正解は「貼って」です。",
+    "period": "minna-lesson-30",
+    "lesson": 30,
+    "topic": "～てあります"
+  },
+  {
+    "id": 10149,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n壁に 地図が（　）あります。",
+    "options": [
+      "貼って",
+      "貼りて",
+      "貼られて",
+      "貼る"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: hasil tindakan yang disiapkan. 正解は「貼って」です。",
+    "period": "minna-lesson-30",
+    "lesson": 30,
+    "topic": "～てあります"
+  },
+  {
+    "id": 10150,
+    "section": "grammar",
+    "text": "会議の 前に 資料を（　）おきます。",
+    "options": [
+      "コピーして",
+      "コピーする",
+      "コピーした",
+      "コピーし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: persiapan. 正解は「コピーして」です。",
+    "period": "minna-lesson-31",
+    "lesson": 31,
+    "topic": "～ておきます"
+  },
+  {
+    "id": 10151,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n会議の 前に 資料を（　）おきます。",
+    "options": [
+      "コピーして",
+      "コピーする",
+      "コピーした",
+      "コピーし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: persiapan. 正解は「コピーして」です。",
+    "period": "minna-lesson-31",
+    "lesson": 31,
+    "topic": "～ておきます"
+  },
+  {
+    "id": 10152,
+    "section": "grammar",
+    "text": "文法：～ておきます\n会議の 前に 資料を（　）おきます。",
+    "options": [
+      "コピーして",
+      "コピーする",
+      "コピーした",
+      "コピーし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: persiapan. 正解は「コピーして」です。",
+    "period": "minna-lesson-31",
+    "lesson": 31,
+    "topic": "～ておきます"
+  },
+  {
+    "id": 10153,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n会議の 前に 資料を（　）おきます。",
+    "options": [
+      "コピーして",
+      "コピーする",
+      "コピーした",
+      "コピーし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: persiapan. 正解は「コピーして」です。",
+    "period": "minna-lesson-31",
+    "lesson": 31,
+    "topic": "～ておきます"
+  },
+  {
+    "id": 10154,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n会議の 前に 資料を（　）おきます。",
+    "options": [
+      "コピーして",
+      "コピーする",
+      "コピーした",
+      "コピーし"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 30: persiapan. 正解は「コピーして」です。",
+    "period": "minna-lesson-31",
+    "lesson": 31,
+    "topic": "～ておきます"
+  },
+  {
+    "id": 10155,
+    "section": "grammar",
+    "text": "少し 休も（　）。",
+    "options": [
+      "です",
+      "う",
+      "ます",
       "た"
     ],
-    "answer": 0,
-    "explanation": "Dilarang duduk: 座ってはいけません.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 31: bentuk volisional. 正解は「う」です。",
+    "period": "minna-lesson-32",
+    "lesson": 32,
+    "topic": "意向形"
   },
   {
-    "id": 1217,
+    "id": 10156,
     "section": "grammar",
-    "text": "明日までに この 仕事を 終わらせ（　　　）なりません。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n少し 休も（　）。",
     "options": [
-      "なくて",
-      "ないで",
-      "なければ",
-      "ないと"
-    ],
-    "answer": 2,
-    "explanation": "Harus menyelesaikan: 終わらせなければなりません.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1218,
-    "section": "grammar",
-    "text": "忘れない（　　　）、スマホに メモしました。",
-    "options": [
-      "しか",
-      "ように",
-      "ので",
-      "ために"
+      "です",
+      "う",
+      "ます",
+      "た"
     ],
     "answer": 1,
-    "explanation": "Agar tidak lupa: ように.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 31: bentuk volisional. 正解は「う」です。",
+    "period": "minna-lesson-32",
+    "lesson": 32,
+    "topic": "意向形"
   },
   {
-    "id": 1219,
+    "id": 10157,
     "section": "grammar",
-    "text": "旅行の ために、お金を （　　　）います。",
+    "text": "文法：意向形\n少し 休も（　）。",
     "options": [
-      "ためない",
-      "ためる",
-      "ためた",
-      "ためて"
+      "です",
+      "う",
+      "ます",
+      "た"
     ],
-    "answer": 3,
-    "explanation": "Sedang menabung: ためています.",
-    "period": "sep-nov"
+    "answer": 1,
+    "explanation": "Pelajaran 31: bentuk volisional. 正解は「う」です。",
+    "period": "minna-lesson-32",
+    "lesson": 32,
+    "topic": "意向形"
   },
   {
-    "id": 1220,
+    "id": 10158,
     "section": "grammar",
-    "text": "日本へ 行く（　　　）、お金を ためています。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n少し 休も（　）。",
     "options": [
-      "ために",
+      "です",
+      "う",
+      "ます",
+      "た"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 31: bentuk volisional. 正解は「う」です。",
+    "period": "minna-lesson-32",
+    "lesson": 32,
+    "topic": "意向形"
+  },
+  {
+    "id": 10159,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n少し 休も（　）。",
+    "options": [
+      "です",
+      "う",
+      "ます",
+      "た"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 31: bentuk volisional. 正解は「う」です。",
+    "period": "minna-lesson-32",
+    "lesson": 32,
+    "topic": "意向形"
+  },
+  {
+    "id": 10160,
+    "section": "grammar",
+    "text": "来年 日本へ（　）つもりです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 31: rencana. 正解は「行く」です。",
+    "period": "minna-lesson-33",
+    "lesson": 33,
+    "topic": "つもりです"
+  },
+  {
+    "id": 10161,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n来年 日本へ（　）つもりです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 31: rencana. 正解は「行く」です。",
+    "period": "minna-lesson-33",
+    "lesson": 33,
+    "topic": "つもりです"
+  },
+  {
+    "id": 10162,
+    "section": "grammar",
+    "text": "文法：つもりです\n来年 日本へ（　）つもりです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 31: rencana. 正解は「行く」です。",
+    "period": "minna-lesson-33",
+    "lesson": 33,
+    "topic": "つもりです"
+  },
+  {
+    "id": 10163,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n来年 日本へ（　）つもりです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 31: rencana. 正解は「行く」です。",
+    "period": "minna-lesson-33",
+    "lesson": 33,
+    "topic": "つもりです"
+  },
+  {
+    "id": 10164,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n来年 日本へ（　）つもりです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 31: rencana. 正解は「行く」です。",
+    "period": "minna-lesson-33",
+    "lesson": 33,
+    "topic": "つもりです"
+  },
+  {
+    "id": 10165,
+    "section": "grammar",
+    "text": "飛行機は １０時に（　）予定です。",
+    "options": [
+      "出発する",
+      "出発して",
+      "出発した",
+      "出発し"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: jadwal. 正解は「出発する」です。",
+    "period": "minna-lesson-34",
+    "lesson": 34,
+    "topic": "予定です"
+  },
+  {
+    "id": 10166,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n飛行機は １０時に（　）予定です。",
+    "options": [
+      "出発する",
+      "出発して",
+      "出発した",
+      "出発し"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: jadwal. 正解は「出発する」です。",
+    "period": "minna-lesson-34",
+    "lesson": 34,
+    "topic": "予定です"
+  },
+  {
+    "id": 10167,
+    "section": "grammar",
+    "text": "文法：予定です\n飛行機は １０時に（　）予定です。",
+    "options": [
+      "出発する",
+      "出発して",
+      "出発した",
+      "出発し"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: jadwal. 正解は「出発する」です。",
+    "period": "minna-lesson-34",
+    "lesson": 34,
+    "topic": "予定です"
+  },
+  {
+    "id": 10168,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n飛行機は １０時に（　）予定です。",
+    "options": [
+      "出発する",
+      "出発して",
+      "出発した",
+      "出発し"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: jadwal. 正解は「出発する」です。",
+    "period": "minna-lesson-34",
+    "lesson": 34,
+    "topic": "予定です"
+  },
+  {
+    "id": 10169,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n飛行機は １０時に（　）予定です。",
+    "options": [
+      "出発する",
+      "出発して",
+      "出発した",
+      "出発し"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: jadwal. 正解は「出発する」です。",
+    "period": "minna-lesson-34",
+    "lesson": 34,
+    "topic": "予定です"
+  },
+  {
+    "id": 10170,
+    "section": "grammar",
+    "text": "熱が ありますから、病院へ（　）ほうがいいです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: saran. 正解は「行く」です。",
+    "period": "minna-lesson-35",
+    "lesson": 35,
+    "topic": "ほうがいい"
+  },
+  {
+    "id": 10171,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n熱が ありますから、病院へ（　）ほうがいいです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: saran. 正解は「行く」です。",
+    "period": "minna-lesson-35",
+    "lesson": 35,
+    "topic": "ほうがいい"
+  },
+  {
+    "id": 10172,
+    "section": "grammar",
+    "text": "文法：ほうがいい\n熱が ありますから、病院へ（　）ほうがいいです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: saran. 正解は「行く」です。",
+    "period": "minna-lesson-35",
+    "lesson": 35,
+    "topic": "ほうがいい"
+  },
+  {
+    "id": 10173,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n熱が ありますから、病院へ（　）ほうがいいです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: saran. 正解は「行く」です。",
+    "period": "minna-lesson-35",
+    "lesson": 35,
+    "topic": "ほうがいい"
+  },
+  {
+    "id": 10174,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n熱が ありますから、病院へ（　）ほうがいいです。",
+    "options": [
+      "行く",
+      "行って",
+      "行き",
+      "行った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 32: saran. 正解は「行く」です。",
+    "period": "minna-lesson-35",
+    "lesson": 35,
+    "topic": "ほうがいい"
+  },
+  {
+    "id": 10175,
+    "section": "grammar",
+    "text": "週末は 暖かい（　）。",
+    "options": [
+      "ですか",
+      "でしょう",
+      "でした",
+      "ます"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 32: perkiraan. 正解は「でしょう」です。",
+    "period": "minna-lesson-36",
+    "lesson": 36,
+    "topic": "～でしょう"
+  },
+  {
+    "id": 10176,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n週末は 暖かい（　）。",
+    "options": [
+      "ですか",
+      "でしょう",
+      "でした",
+      "ます"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 32: perkiraan. 正解は「でしょう」です。",
+    "period": "minna-lesson-36",
+    "lesson": 36,
+    "topic": "～でしょう"
+  },
+  {
+    "id": 10177,
+    "section": "grammar",
+    "text": "文法：～でしょう\n週末は 暖かい（　）。",
+    "options": [
+      "ですか",
+      "でしょう",
+      "でした",
+      "ます"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 32: perkiraan. 正解は「でしょう」です。",
+    "period": "minna-lesson-36",
+    "lesson": 36,
+    "topic": "～でしょう"
+  },
+  {
+    "id": 10178,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n週末は 暖かい（　）。",
+    "options": [
+      "ですか",
+      "でしょう",
+      "でした",
+      "ます"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 32: perkiraan. 正解は「でしょう」です。",
+    "period": "minna-lesson-36",
+    "lesson": 36,
+    "topic": "～でしょう"
+  },
+  {
+    "id": 10179,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n週末は 暖かい（　）。",
+    "options": [
+      "ですか",
+      "でしょう",
+      "でした",
+      "ます"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 32: perkiraan. 正解は「でしょう」です。",
+    "period": "minna-lesson-36",
+    "lesson": 36,
+    "topic": "～でしょう"
+  },
+  {
+    "id": 10180,
+    "section": "grammar",
+    "text": "危ないですから、ここに 入る（　）。",
+    "options": [
+      "な",
+      "ない",
+      "ません",
+      "こと"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: larangan bentuk biasa. 正解は「な」です。",
+    "period": "minna-lesson-37",
+    "lesson": 37,
+    "topic": "命令／禁止"
+  },
+  {
+    "id": 10181,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n危ないですから、ここに 入る（　）。",
+    "options": [
+      "な",
+      "ない",
+      "ません",
+      "こと"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: larangan bentuk biasa. 正解は「な」です。",
+    "period": "minna-lesson-37",
+    "lesson": 37,
+    "topic": "命令／禁止"
+  },
+  {
+    "id": 10182,
+    "section": "grammar",
+    "text": "文法：命令／禁止\n危ないですから、ここに 入る（　）。",
+    "options": [
+      "な",
+      "ない",
+      "ません",
+      "こと"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: larangan bentuk biasa. 正解は「な」です。",
+    "period": "minna-lesson-37",
+    "lesson": 37,
+    "topic": "命令／禁止"
+  },
+  {
+    "id": 10183,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n危ないですから、ここに 入る（　）。",
+    "options": [
+      "な",
+      "ない",
+      "ません",
+      "こと"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: larangan bentuk biasa. 正解は「な」です。",
+    "period": "minna-lesson-37",
+    "lesson": 37,
+    "topic": "命令／禁止"
+  },
+  {
+    "id": 10184,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n危ないですから、ここに 入る（　）。",
+    "options": [
+      "な",
+      "ない",
+      "ません",
+      "こと"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: larangan bentuk biasa. 正解は「な」です。",
+    "period": "minna-lesson-37",
+    "lesson": 37,
+    "topic": "命令／禁止"
+  },
+  {
+    "id": 10185,
+    "section": "grammar",
+    "text": "入口に「押す」（　）。",
+    "options": [
+      "と書いてあります",
+      "を書きます",
+      "と読みますか",
+      "があります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: tulisan/petunjuk. 正解は「と書いてあります」です。",
+    "period": "minna-lesson-38",
+    "lesson": 38,
+    "topic": "～と書いてあります"
+  },
+  {
+    "id": 10186,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n入口に「押す」（　）。",
+    "options": [
+      "と書いてあります",
+      "を書きます",
+      "と読みますか",
+      "があります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: tulisan/petunjuk. 正解は「と書いてあります」です。",
+    "period": "minna-lesson-38",
+    "lesson": 38,
+    "topic": "～と書いてあります"
+  },
+  {
+    "id": 10187,
+    "section": "grammar",
+    "text": "文法：～と書いてあります\n入口に「押す」（　）。",
+    "options": [
+      "と書いてあります",
+      "を書きます",
+      "と読みますか",
+      "があります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: tulisan/petunjuk. 正解は「と書いてあります」です。",
+    "period": "minna-lesson-38",
+    "lesson": 38,
+    "topic": "～と書いてあります"
+  },
+  {
+    "id": 10188,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n入口に「押す」（　）。",
+    "options": [
+      "と書いてあります",
+      "を書きます",
+      "と読みますか",
+      "があります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: tulisan/petunjuk. 正解は「と書いてあります」です。",
+    "period": "minna-lesson-38",
+    "lesson": 38,
+    "topic": "～と書いてあります"
+  },
+  {
+    "id": 10189,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n入口に「押す」（　）。",
+    "options": [
+      "と書いてあります",
+      "を書きます",
+      "と読みますか",
+      "があります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 33: tulisan/petunjuk. 正解は「と書いてあります」です。",
+    "period": "minna-lesson-38",
+    "lesson": 38,
+    "topic": "～と書いてあります"
+  },
+  {
+    "id": 10190,
+    "section": "grammar",
+    "text": "地震の（　）、エレベーターを 使わないでください。",
+    "options": [
+      "とき",
+      "場合",
       "ながら",
-      "しか",
-      "ように"
-    ],
-    "answer": 0,
-    "explanation": "Untuk tujuan ke Jepang: ために.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1221,
-    "section": "grammar",
-    "text": "この 料理は 作り（　　　）そうです。",
-    "options": [
-      "た",
-      "すぎ",
-      "にく",
-      "やす"
-    ],
-    "answer": 3,
-    "explanation": "Terlihat mudah dibuat: 作りやすそう.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1222,
-    "section": "grammar",
-    "text": "その かばんは 重（　　　）そうです。",
-    "options": [
-      "くて",
-      "すぎ",
-      "そう",
-      "い"
-    ],
-    "answer": 2,
-    "explanation": "Terlihat berat: 重そう.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1223,
-    "section": "grammar",
-    "text": "雨が 降り（　　　）です。かさを もっていきましょう。",
-    "options": [
-      "やす",
-      "すぎ",
-      "にくい",
-      "そう"
-    ],
-    "answer": 3,
-    "explanation": "Sepertinya akan hujan: 降りそう.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1224,
-    "section": "grammar",
-    "text": "この 仕事は たいへん（　　　）が、がんばります。",
-    "options": [
-      "ですが",
-      "だし",
-      "しか",
-      "ので"
-    ],
-    "answer": 0,
-    "explanation": "Kontras sopan: たいへんですが.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1225,
-    "section": "grammar",
-    "text": "この 町は しずか（　　　）きれいです。",
-    "options": [
-      "ですが",
-      "で",
-      "だし",
-      "な"
-    ],
-    "answer": 2,
-    "explanation": "Alasan/daftar: しずかだし.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1226,
-    "section": "grammar",
-    "text": "私は 音楽（　　　）聞くのが すきです。",
-    "options": [
-      "が",
-      "で",
-      "に",
-      "を"
-    ],
-    "answer": 3,
-    "explanation": "Objek pendengaran: 音楽を聞く.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1227,
-    "section": "grammar",
-    "text": "日本の 文化（　　　）興味が あります。",
-    "options": [
-      "が",
-      "に",
-      "を",
-      "で"
+      "まで"
     ],
     "answer": 1,
-    "explanation": "Pola 興味があります memakai に.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 34: kondisi/situasi. 正解は「場合」です。",
+    "period": "minna-lesson-39",
+    "lesson": 39,
+    "topic": "～場合"
   },
   {
-    "id": 1228,
+    "id": 10191,
     "section": "grammar",
-    "text": "仕事（　　　）気を つけてください。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n地震の（　）、エレベーターを 使わないでください。",
     "options": [
-      "が",
-      "に",
-      "で",
-      "を"
+      "とき",
+      "場合",
+      "ながら",
+      "まで"
     ],
     "answer": 1,
-    "explanation": "Pola 気をつける: ～に気をつける.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 34: kondisi/situasi. 正解は「場合」です。",
+    "period": "minna-lesson-39",
+    "lesson": 39,
+    "topic": "～場合"
   },
   {
-    "id": 1229,
+    "id": 10192,
     "section": "grammar",
-    "text": "体（　　　）気をつけて、よく 休んでください。",
+    "text": "文法：～場合\n地震の（　）、エレベーターを 使わないでください。",
     "options": [
-      "に",
-      "が",
-      "で",
-      "を"
+      "とき",
+      "場合",
+      "ながら",
+      "まで"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: kondisi/situasi. 正解は「場合」です。",
+    "period": "minna-lesson-39",
+    "lesson": 39,
+    "topic": "～場合"
+  },
+  {
+    "id": 10193,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n地震の（　）、エレベーターを 使わないでください。",
+    "options": [
+      "とき",
+      "場合",
+      "ながら",
+      "まで"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: kondisi/situasi. 正解は「場合」です。",
+    "period": "minna-lesson-39",
+    "lesson": 39,
+    "topic": "～場合"
+  },
+  {
+    "id": 10194,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n地震の（　）、エレベーターを 使わないでください。",
+    "options": [
+      "とき",
+      "場合",
+      "ながら",
+      "まで"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: kondisi/situasi. 正解は「場合」です。",
+    "period": "minna-lesson-39",
+    "lesson": 39,
+    "topic": "～場合"
+  },
+  {
+    "id": 10195,
+    "section": "grammar",
+    "text": "説明書に 書いてある（　）組み立ててください。",
+    "options": [
+      "ように",
+      "とおりに",
+      "ために",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: mengikuti instruksi. 正解は「とおりに」です。",
+    "period": "minna-lesson-40",
+    "lesson": 40,
+    "topic": "～とおりに"
+  },
+  {
+    "id": 10196,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n説明書に 書いてある（　）組み立ててください。",
+    "options": [
+      "ように",
+      "とおりに",
+      "ために",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: mengikuti instruksi. 正解は「とおりに」です。",
+    "period": "minna-lesson-40",
+    "lesson": 40,
+    "topic": "～とおりに"
+  },
+  {
+    "id": 10197,
+    "section": "grammar",
+    "text": "文法：～とおりに\n説明書に 書いてある（　）組み立ててください。",
+    "options": [
+      "ように",
+      "とおりに",
+      "ために",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: mengikuti instruksi. 正解は「とおりに」です。",
+    "period": "minna-lesson-40",
+    "lesson": 40,
+    "topic": "～とおりに"
+  },
+  {
+    "id": 10198,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n説明書に 書いてある（　）組み立ててください。",
+    "options": [
+      "ように",
+      "とおりに",
+      "ために",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: mengikuti instruksi. 正解は「とおりに」です。",
+    "period": "minna-lesson-40",
+    "lesson": 40,
+    "topic": "～とおりに"
+  },
+  {
+    "id": 10199,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n説明書に 書いてある（　）組み立ててください。",
+    "options": [
+      "ように",
+      "とおりに",
+      "ために",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 34: mengikuti instruksi. 正解は「とおりに」です。",
+    "period": "minna-lesson-40",
+    "lesson": 40,
+    "topic": "～とおりに"
+  },
+  {
+    "id": 10200,
+    "section": "grammar",
+    "text": "時間が（　）、手伝います。",
+    "options": [
+      "あれば",
+      "あるならばです",
+      "あって",
+      "あった"
     ],
     "answer": 0,
-    "explanation": "Menjaga kesehatan: 体に気をつける.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 35: bentuk kondisional ～ば. 正解は「あれば」です。",
+    "period": "minna-lesson-41",
+    "lesson": 41,
+    "topic": "条件形"
   },
   {
-    "id": 1230,
+    "id": 10201,
     "section": "grammar",
-    "text": "会議は 10時（　　　）始まります。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n時間が（　）、手伝います。",
     "options": [
-      "より",
-      "しか",
-      "まで",
-      "から"
-    ],
-    "answer": 3,
-    "explanation": "Rapat dimulai dari jam 10: から.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1231,
-    "section": "grammar",
-    "text": "店は 8時（　　　）あいています。",
-    "options": [
-      "から",
-      "しか",
-      "まで",
-      "より"
-    ],
-    "answer": 2,
-    "explanation": "Toko buka sampai jam 8: まで.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1232,
-    "section": "grammar",
-    "text": "駅（　　　）近くに コンビニが あります。",
-    "options": [
-      "で",
-      "が",
-      "の",
-      "を"
-    ],
-    "answer": 2,
-    "explanation": "Dekat stasiun: 駅の近く.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1233,
-    "section": "grammar",
-    "text": "毎朝 コーヒーを 飲ん（　　　）から、仕事を 始めます。",
-    "options": [
-      "で",
-      "たり",
-      "だ",
-      "でも"
+      "あれば",
+      "あるならばです",
+      "あって",
+      "あった"
     ],
     "answer": 0,
-    "explanation": "Urutan: 飲んでから仕事を始めます.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 35: bentuk kondisional ～ば. 正解は「あれば」です。",
+    "period": "minna-lesson-41",
+    "lesson": 41,
+    "topic": "条件形"
   },
   {
-    "id": 1234,
+    "id": 10202,
     "section": "grammar",
-    "text": "この 荷物は 大き（　　　）、一人では もちません。",
+    "text": "文法：条件形\n時間が（　）、手伝います。",
     "options": [
-      "すぎて",
-      "すぎる",
-      "すぎた",
-      "すぎない"
+      "あれば",
+      "あるならばです",
+      "あって",
+      "あった"
     ],
     "answer": 0,
-    "explanation": "Terlalu besar sehingga tidak dibawa sendiri: 大きすぎて.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 35: bentuk kondisional ～ば. 正解は「あれば」です。",
+    "period": "minna-lesson-41",
+    "lesson": 41,
+    "topic": "条件形"
   },
   {
-    "id": 1235,
+    "id": 10203,
     "section": "grammar",
-    "text": "明日は 早いから、もう テレビを 見（　　　）寝ます。",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n時間が（　）、手伝います。",
     "options": [
-      "ないで",
-      "なくて",
-      "ないと",
-      "なくても"
+      "あれば",
+      "あるならばです",
+      "あって",
+      "あった"
     ],
     "answer": 0,
-    "explanation": "Tidur tanpa menonton TV: 見ないで寝ます.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 35: bentuk kondisional ～ば. 正解は「あれば」です。",
+    "period": "minna-lesson-41",
+    "lesson": 41,
+    "topic": "条件形"
   },
   {
-    "id": 1236,
+    "id": 10204,
     "section": "grammar",
-    "text": "先生に しつもんした（　　　）、よく わかりました。",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n時間が（　）、手伝います。",
     "options": [
-      "のに",
-      "なら",
-      "だけ",
-      "ので"
-    ],
-    "answer": 3,
-    "explanation": "Hasil yang terjadi karena bertanya: ～ので.",
-    "period": "sep-nov"
-  },
-  {
-    "id": 1237,
-    "section": "grammar",
-    "text": "この ボタンを 押す（　　　）、ドアが 開きます。",
-    "options": [
-      "と",
-      "なら",
-      "ても",
-      "ので"
+      "あれば",
+      "あるならばです",
+      "あって",
+      "あった"
     ],
     "answer": 0,
-    "explanation": "Hasil otomatis: 押すとドアが開きます.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 35: bentuk kondisional ～ば. 正解は「あれば」です。",
+    "period": "minna-lesson-41",
+    "lesson": 41,
+    "topic": "条件形"
   },
   {
-    "id": 1238,
+    "id": 10205,
     "section": "grammar",
-    "text": "日本へ 行った（　　　）がありますか。",
+    "text": "忘れない（　）、メモします。",
     "options": [
-      "こと",
       "ため",
-      "よう",
-      "もの"
+      "ように",
+      "ことに",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 36: tujuan/agar. 正解は「ように」です。",
+    "period": "minna-lesson-42",
+    "lesson": 42,
+    "topic": "～ように"
+  },
+  {
+    "id": 10206,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n忘れない（　）、メモします。",
+    "options": [
+      "ため",
+      "ように",
+      "ことに",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 36: tujuan/agar. 正解は「ように」です。",
+    "period": "minna-lesson-42",
+    "lesson": 42,
+    "topic": "～ように"
+  },
+  {
+    "id": 10207,
+    "section": "grammar",
+    "text": "文法：～ように\n忘れない（　）、メモします。",
+    "options": [
+      "ため",
+      "ように",
+      "ことに",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 36: tujuan/agar. 正解は「ように」です。",
+    "period": "minna-lesson-42",
+    "lesson": 42,
+    "topic": "～ように"
+  },
+  {
+    "id": 10208,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n忘れない（　）、メモします。",
+    "options": [
+      "ため",
+      "ように",
+      "ことに",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 36: tujuan/agar. 正解は「ように」です。",
+    "period": "minna-lesson-42",
+    "lesson": 42,
+    "topic": "～ように"
+  },
+  {
+    "id": 10209,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n忘れない（　）、メモします。",
+    "options": [
+      "ため",
+      "ように",
+      "ことに",
+      "そうに"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 36: tujuan/agar. 正解は「ように」です。",
+    "period": "minna-lesson-42",
+    "lesson": 42,
+    "topic": "～ように"
+  },
+  {
+    "id": 10210,
+    "section": "grammar",
+    "text": "わたしは 先生に（　）。",
+    "options": [
+      "ほめました",
+      "ほめられました",
+      "ほめさせました",
+      "ほめていました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 37: bentuk pasif. 正解は「ほめられました」です。",
+    "period": "minna-lesson-43",
+    "lesson": 43,
+    "topic": "受身形"
+  },
+  {
+    "id": 10211,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nわたしは 先生に（　）。",
+    "options": [
+      "ほめました",
+      "ほめられました",
+      "ほめさせました",
+      "ほめていました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 37: bentuk pasif. 正解は「ほめられました」です。",
+    "period": "minna-lesson-43",
+    "lesson": 43,
+    "topic": "受身形"
+  },
+  {
+    "id": 10212,
+    "section": "grammar",
+    "text": "文法：受身形\nわたしは 先生に（　）。",
+    "options": [
+      "ほめました",
+      "ほめられました",
+      "ほめさせました",
+      "ほめていました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 37: bentuk pasif. 正解は「ほめられました」です。",
+    "period": "minna-lesson-43",
+    "lesson": 43,
+    "topic": "受身形"
+  },
+  {
+    "id": 10213,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nわたしは 先生に（　）。",
+    "options": [
+      "ほめました",
+      "ほめられました",
+      "ほめさせました",
+      "ほめていました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 37: bentuk pasif. 正解は「ほめられました」です。",
+    "period": "minna-lesson-43",
+    "lesson": 43,
+    "topic": "受身形"
+  },
+  {
+    "id": 10214,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nわたしは 先生に（　）。",
+    "options": [
+      "ほめました",
+      "ほめられました",
+      "ほめさせました",
+      "ほめていました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 37: bentuk pasif. 正解は「ほめられました」です。",
+    "period": "minna-lesson-43",
+    "lesson": 43,
+    "topic": "受身形"
+  },
+  {
+    "id": 10215,
+    "section": "grammar",
+    "text": "この はさみは 紙を（　）のに 使います。",
+    "options": [
+      "切る",
+      "切って",
+      "切り",
+      "切った"
     ],
     "answer": 0,
-    "explanation": "Pengalaman: ～たことがありますか.",
-    "period": "sep-nov"
+    "explanation": "Pelajaran 38: kegunaan alat. 正解は「切る」です。",
+    "period": "minna-lesson-44",
+    "lesson": 44,
+    "topic": "～のに"
   },
   {
-    "id": 1239,
+    "id": 10216,
     "section": "grammar",
-    "text": "来週は 仕事が 忙しい（　　　）しれません。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nこの はさみは 紙を（　）のに 使います。",
     "options": [
+      "切る",
+      "切って",
+      "切り",
+      "切った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 38: kegunaan alat. 正解は「切る」です。",
+    "period": "minna-lesson-44",
+    "lesson": 44,
+    "topic": "～のに"
+  },
+  {
+    "id": 10217,
+    "section": "grammar",
+    "text": "文法：～のに\nこの はさみは 紙を（　）のに 使います。",
+    "options": [
+      "切る",
+      "切って",
+      "切り",
+      "切った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 38: kegunaan alat. 正解は「切る」です。",
+    "period": "minna-lesson-44",
+    "lesson": 44,
+    "topic": "～のに"
+  },
+  {
+    "id": 10218,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nこの はさみは 紙を（　）のに 使います。",
+    "options": [
+      "切る",
+      "切って",
+      "切り",
+      "切った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 38: kegunaan alat. 正解は「切る」です。",
+    "period": "minna-lesson-44",
+    "lesson": 44,
+    "topic": "～のに"
+  },
+  {
+    "id": 10219,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nこの はさみは 紙を（　）のに 使います。",
+    "options": [
+      "切る",
+      "切って",
+      "切り",
+      "切った"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 38: kegunaan alat. 正解は「切る」です。",
+    "period": "minna-lesson-44",
+    "lesson": 44,
+    "topic": "～のに"
+  },
+  {
+    "id": 10220,
+    "section": "grammar",
+    "text": "もう一度 説明し（　）。",
+    "options": [
+      "ていただけませんか",
+      "てもいいです",
+      "てしまいます",
+      "たことがあります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 41: permintaan hormat. 正解は「ていただけませんか」です。",
+    "period": "minna-lesson-45",
+    "lesson": 45,
+    "topic": "～ていただけませんか"
+  },
+  {
+    "id": 10221,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\nもう一度 説明し（　）。",
+    "options": [
+      "ていただけませんか",
+      "てもいいです",
+      "てしまいます",
+      "たことがあります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 41: permintaan hormat. 正解は「ていただけませんか」です。",
+    "period": "minna-lesson-45",
+    "lesson": 45,
+    "topic": "～ていただけませんか"
+  },
+  {
+    "id": 10222,
+    "section": "grammar",
+    "text": "文法：～ていただけませんか\nもう一度 説明し（　）。",
+    "options": [
+      "ていただけませんか",
+      "てもいいです",
+      "てしまいます",
+      "たことがあります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 41: permintaan hormat. 正解は「ていただけませんか」です。",
+    "period": "minna-lesson-45",
+    "lesson": 45,
+    "topic": "～ていただけませんか"
+  },
+  {
+    "id": 10223,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\nもう一度 説明し（　）。",
+    "options": [
+      "ていただけませんか",
+      "てもいいです",
+      "てしまいます",
+      "たことがあります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 41: permintaan hormat. 正解は「ていただけませんか」です。",
+    "period": "minna-lesson-45",
+    "lesson": 45,
+    "topic": "～ていただけませんか"
+  },
+  {
+    "id": 10224,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\nもう一度 説明し（　）。",
+    "options": [
+      "ていただけませんか",
+      "てもいいです",
+      "てしまいます",
+      "たことがあります"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 41: permintaan hormat. 正解は「ていただけませんか」です。",
+    "period": "minna-lesson-45",
+    "lesson": 45,
+    "topic": "～ていただけませんか"
+  },
+  {
+    "id": 10225,
+    "section": "grammar",
+    "text": "空が 暗いですね。雨が（　）です。",
+    "options": [
+      "降るそう",
+      "降りそう",
+      "降ってそう",
+      "降ったそう"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 43: tampaknya akan terjadi. 正解は「降りそう」です。",
+    "period": "minna-lesson-46",
+    "lesson": 46,
+    "topic": "～そうです"
+  },
+  {
+    "id": 10226,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n空が 暗いですね。雨が（　）です。",
+    "options": [
+      "降るそう",
+      "降りそう",
+      "降ってそう",
+      "降ったそう"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 43: tampaknya akan terjadi. 正解は「降りそう」です。",
+    "period": "minna-lesson-46",
+    "lesson": 46,
+    "topic": "～そうです"
+  },
+  {
+    "id": 10227,
+    "section": "grammar",
+    "text": "文法：～そうです\n空が 暗いですね。雨が（　）です。",
+    "options": [
+      "降るそう",
+      "降りそう",
+      "降ってそう",
+      "降ったそう"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 43: tampaknya akan terjadi. 正解は「降りそう」です。",
+    "period": "minna-lesson-46",
+    "lesson": 46,
+    "topic": "～そうです"
+  },
+  {
+    "id": 10228,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n空が 暗いですね。雨が（　）です。",
+    "options": [
+      "降るそう",
+      "降りそう",
+      "降ってそう",
+      "降ったそう"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 43: tampaknya akan terjadi. 正解は「降りそう」です。",
+    "period": "minna-lesson-46",
+    "lesson": 46,
+    "topic": "～そうです"
+  },
+  {
+    "id": 10229,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n空が 暗いですね。雨が（　）です。",
+    "options": [
+      "降るそう",
+      "降りそう",
+      "降ってそう",
+      "降ったそう"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 43: tampaknya akan terjadi. 正解は「降りそう」です。",
+    "period": "minna-lesson-46",
+    "lesson": 46,
+    "topic": "～そうです"
+  },
+  {
+    "id": 10230,
+    "section": "grammar",
+    "text": "母は 子どもに 野菜を（　）。",
+    "options": [
+      "食べさせました",
+      "食べられました",
+      "食べました",
+      "食べていました"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 使役: menyuruh/membiarkan. 正解は「食べさせました」です。",
+    "period": "minna-lesson-47",
+    "lesson": 47,
+    "topic": "使役形"
+  },
+  {
+    "id": 10231,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n母は 子どもに 野菜を（　）。",
+    "options": [
+      "食べさせました",
+      "食べられました",
+      "食べました",
+      "食べていました"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 使役: menyuruh/membiarkan. 正解は「食べさせました」です。",
+    "period": "minna-lesson-47",
+    "lesson": 47,
+    "topic": "使役形"
+  },
+  {
+    "id": 10232,
+    "section": "grammar",
+    "text": "文法：使役形\n母は 子どもに 野菜を（　）。",
+    "options": [
+      "食べさせました",
+      "食べられました",
+      "食べました",
+      "食べていました"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 使役: menyuruh/membiarkan. 正解は「食べさせました」です。",
+    "period": "minna-lesson-47",
+    "lesson": 47,
+    "topic": "使役形"
+  },
+  {
+    "id": 10233,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n母は 子どもに 野菜を（　）。",
+    "options": [
+      "食べさせました",
+      "食べられました",
+      "食べました",
+      "食べていました"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 使役: menyuruh/membiarkan. 正解は「食べさせました」です。",
+    "period": "minna-lesson-47",
+    "lesson": 47,
+    "topic": "使役形"
+  },
+  {
+    "id": 10234,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n母は 子どもに 野菜を（　）。",
+    "options": [
+      "食べさせました",
+      "食べられました",
+      "食べました",
+      "食べていました"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 使役: menyuruh/membiarkan. 正解は「食べさせました」です。",
+    "period": "minna-lesson-47",
+    "lesson": 47,
+    "topic": "使役形"
+  },
+  {
+    "id": 10235,
+    "section": "grammar",
+    "text": "弟は ゲームをして（　）います。",
+    "options": [
+      "ばかり",
       "しか",
-      "でも",
-      "ので",
-      "かも"
+      "まで",
+      "ほど"
     ],
-    "answer": 3,
-    "explanation": "Kemungkinan: ～かもしれません.",
-    "period": "sep-nov"
+    "answer": 0,
+    "explanation": "Pelajaran 〜ばかり: terlalu sering/hanya. 正解は「ばかり」です。",
+    "period": "minna-lesson-48",
+    "lesson": 48,
+    "topic": "～ばかり"
   },
   {
-    "id": 1240,
+    "id": 10236,
     "section": "grammar",
-    "text": "仕事が 終わっ（　　　）ら、みんなで ごはんを 食べましょう。",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n弟は ゲームをして（　）います。",
     "options": [
-      "たり",
-      "ても",
-      "た",
-      "て"
+      "ばかり",
+      "しか",
+      "まで",
+      "ほど"
     ],
-    "answer": 2,
-    "explanation": "Kondisional: 終わったら.",
-    "period": "sep-nov"
+    "answer": 0,
+    "explanation": "Pelajaran 〜ばかり: terlalu sering/hanya. 正解は「ばかり」です。",
+    "period": "minna-lesson-48",
+    "lesson": 48,
+    "topic": "～ばかり"
   },
   {
-    "id": 1241,
+    "id": 10237,
     "section": "grammar",
-    "text": "この 部屋は きれい（　　　）、とても 住みやすいです。",
+    "text": "文法：～ばかり\n弟は ゲームをして（　）います。",
     "options": [
-      "で",
-      "に",
-      "だし",
-      "な"
+      "ばかり",
+      "しか",
+      "まで",
+      "ほど"
     ],
-    "answer": 2,
-    "explanation": "Daftar alasan/sifat: きれいだし.",
-    "period": "sep-nov"
+    "answer": 0,
+    "explanation": "Pelajaran 〜ばかり: terlalu sering/hanya. 正解は「ばかり」です。",
+    "period": "minna-lesson-48",
+    "lesson": 48,
+    "topic": "～ばかり"
+  },
+  {
+    "id": 10238,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n弟は ゲームをして（　）います。",
+    "options": [
+      "ばかり",
+      "しか",
+      "まで",
+      "ほど"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜ばかり: terlalu sering/hanya. 正解は「ばかり」です。",
+    "period": "minna-lesson-48",
+    "lesson": 48,
+    "topic": "～ばかり"
+  },
+  {
+    "id": 10239,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n弟は ゲームをして（　）います。",
+    "options": [
+      "ばかり",
+      "しか",
+      "まで",
+      "ほど"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜ばかり: terlalu sering/hanya. 正解は「ばかり」です。",
+    "period": "minna-lesson-48",
+    "lesson": 48,
+    "topic": "～ばかり"
+  },
+  {
+    "id": 10240,
+    "section": "grammar",
+    "text": "荷物は 今日（　）です。",
+    "options": [
+      "届くはず",
+      "届いてはず",
+      "届きはず",
+      "届いたのはず"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜はず: dugaan berdasar alasan. 正解は「届くはず」です。",
+    "period": "minna-lesson-49",
+    "lesson": 49,
+    "topic": "～はずです"
+  },
+  {
+    "id": 10241,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n荷物は 今日（　）です。",
+    "options": [
+      "届くはず",
+      "届いてはず",
+      "届きはず",
+      "届いたのはず"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜はず: dugaan berdasar alasan. 正解は「届くはず」です。",
+    "period": "minna-lesson-49",
+    "lesson": 49,
+    "topic": "～はずです"
+  },
+  {
+    "id": 10242,
+    "section": "grammar",
+    "text": "文法：～はずです\n荷物は 今日（　）です。",
+    "options": [
+      "届くはず",
+      "届いてはず",
+      "届きはず",
+      "届いたのはず"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜はず: dugaan berdasar alasan. 正解は「届くはず」です。",
+    "period": "minna-lesson-49",
+    "lesson": 49,
+    "topic": "～はずです"
+  },
+  {
+    "id": 10243,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n荷物は 今日（　）です。",
+    "options": [
+      "届くはず",
+      "届いてはず",
+      "届きはず",
+      "届いたのはず"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜はず: dugaan berdasar alasan. 正解は「届くはず」です。",
+    "period": "minna-lesson-49",
+    "lesson": 49,
+    "topic": "～はずです"
+  },
+  {
+    "id": 10244,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n荷物は 今日（　）です。",
+    "options": [
+      "届くはず",
+      "届いてはず",
+      "届きはず",
+      "届いたのはず"
+    ],
+    "answer": 0,
+    "explanation": "Pelajaran 〜はず: dugaan berdasar alasan. 正解は「届くはず」です。",
+    "period": "minna-lesson-49",
+    "lesson": 49,
+    "topic": "～はずです"
+  },
+  {
+    "id": 10245,
+    "section": "grammar",
+    "text": "社長は もう（　）か。",
+    "options": [
+      "帰りました",
+      "お帰りになりました",
+      "帰らせました",
+      "帰ってあげました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 敬語: bentuk hormat. 正解は「お帰りになりました」です。",
+    "period": "minna-lesson-50",
+    "lesson": 50,
+    "topic": "敬語"
+  },
+  {
+    "id": 10246,
+    "section": "grammar",
+    "text": "（　）に 入る いちばん いい ものを 選んでください。\n社長は もう（　）か。",
+    "options": [
+      "帰りました",
+      "お帰りになりました",
+      "帰らせました",
+      "帰ってあげました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 敬語: bentuk hormat. 正解は「お帰りになりました」です。",
+    "period": "minna-lesson-50",
+    "lesson": 50,
+    "topic": "敬語"
+  },
+  {
+    "id": 10247,
+    "section": "grammar",
+    "text": "文法：敬語\n社長は もう（　）か。",
+    "options": [
+      "帰りました",
+      "お帰りになりました",
+      "帰らせました",
+      "帰ってあげました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 敬語: bentuk hormat. 正解は「お帰りになりました」です。",
+    "period": "minna-lesson-50",
+    "lesson": 50,
+    "topic": "敬語"
+  },
+  {
+    "id": 10248,
+    "section": "grammar",
+    "text": "正しい 文に なるように、（　）を 選んでください。\n社長は もう（　）か。",
+    "options": [
+      "帰りました",
+      "お帰りになりました",
+      "帰らせました",
+      "帰ってあげました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 敬語: bentuk hormat. 正解は「お帰りになりました」です。",
+    "period": "minna-lesson-50",
+    "lesson": 50,
+    "topic": "敬語"
+  },
+  {
+    "id": 10249,
+    "section": "grammar",
+    "text": "次の 文の（　）に 入る ものは どれですか。\n社長は もう（　）か。",
+    "options": [
+      "帰りました",
+      "お帰りになりました",
+      "帰らせました",
+      "帰ってあげました"
+    ],
+    "answer": 1,
+    "explanation": "Pelajaran 敬語: bentuk hormat. 正解は「お帰りになりました」です。",
+    "period": "minna-lesson-50",
+    "lesson": 50,
+    "topic": "敬語"
   }
 ]
