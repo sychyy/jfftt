@@ -121,3 +121,10 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - Progres disinkronkan berdasarkan ID perangkat; jika database tidak tersedia, browser memakai cadangan lokal.
 - `flashcards.html` memiliki daftar semua kosakata, pencarian, kategori, status hafalan, jumlah lupa, dan tombol menghafal/latihan ulang.
 - Pada kuis Kanji, mode romaji menampilkan arti sebagai petunjuk; mode arti menampilkan hiragana. Hasil menampilkan jawaban yang dipilih dan koreksi.
+
+## Revisi bank soal — Minna no Nihongo I・II (18 Oktober 2026)
+- Bank soal latihan diganti dengan 200 soal latihan orisinal yang mengikuti urutan dan cakupan materi Minna no Nihongo I (Pelajaran 1–25) dan II (Pelajaran 26–50): 50 Vocabulary, 50 Grammar, 50 Listening, dan 50 Reading.
+- Soal, opsi jawaban, transkrip listening, bacaan, dan penjelasan jawaban menggunakan bahasa Jepang. Terjemahan bahasa Indonesia tidak disertakan dalam bank soal.
+- Soal dibuat sebagai latihan baru berdasarkan pola tata bahasa dan kosakata yang dipelajari, bukan salinan halaman latihan buku.
+- Fitur aplikasi lama, termasuk struktur bank data, mode Listening ON/OFF, pemilihan soal, hasil, riwayat, mode War, Kanji, dan konfigurasi Supabase tetap dipertahankan.
+- Versi riwayat bank soal diperbarui agar riwayat soal dari bank lama tidak menandai soal baru sebagai sudah pernah dikerjakan.

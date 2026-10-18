@@ -1744,7 +1744,7 @@ function getNextSectionIndex(index) {
         // ==========================================
         // JFT QUESTION HISTORY — BANK V3 / 1000 SOAL
         // ==========================================
-        const QUESTION_BANK_VERSION = 'jft-question-bank-v4-time12h-no-repeat-2026-10-17';
+        const QUESTION_BANK_VERSION = 'minna-no-nihongo-i-ii-japanese-only-2026-10-18';
         const QUESTION_HISTORY_LOCAL_PREFIX = 'jft_question_history_v2_';
 
         function getQuestionHistoryStorageKey() {
