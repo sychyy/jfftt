@@ -374,7 +374,7 @@
     "options": [
       "でんしゃ",
       "きょうしつ",
-      "でんしゃ",
+      "じてんしゃ",
       "びょういん"
     ],
     "answer": 0,
@@ -789,7 +789,7 @@
     "text": "「えき」の 意味は どれですか。",
     "options": [
       "stasiun",
-      "stasiun",
+      "sekolah",
       "dokumen",
       "makan"
     ],
@@ -1974,7 +1974,7 @@
     "options": [
       "でんしゃ",
       "きょうしつ",
-      "でんしゃ",
+      "じてんしゃ",
       "びょういん"
     ],
     "answer": 0,
@@ -2389,7 +2389,7 @@
     "text": "「えき」の 意味は どれですか。",
     "options": [
       "stasiun",
-      "stasiun",
+      "sekolah",
       "dokumen",
       "makan"
     ],
@@ -3574,7 +3574,7 @@
     "options": [
       "でんしゃ",
       "きょうしつ",
-      "でんしゃ",
+      "じてんしゃ",
       "びょういん"
     ],
     "answer": 0,
@@ -3989,7 +3989,7 @@
     "text": "「えき」の 意味は どれですか。",
     "options": [
       "stasiun",
-      "stasiun",
+      "sekolah",
       "dokumen",
       "makan"
     ],
