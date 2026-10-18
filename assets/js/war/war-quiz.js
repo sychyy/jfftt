@@ -143,7 +143,14 @@ Lanjut ke ${nextName}?`,()=>{idx=nextIdx;renderQuestion();window.scrollTo(0,0);p
 }
 document.getElementById('btn-prev-question').onclick=goPrevious;document.getElementById('btn-next-question').onclick=goNext;
 async function pushProgress(){if(!player||finished)return;const elapsed=Math.floor((Date.now()-startedAt)/1000);const q=questions[idx];const answeredCount=answers.filter(v=>v!==null).length;await sb.from('jft_war_players').update({current_question:Math.max(maxReached,1),current_section:q?.section||null,elapsed_seconds:elapsed,correct,score:scoreOf(correct,answeredCount),status:'running',last_seen_at:new Date().toISOString()}).eq('id',player.id)}
-function renderPlayers(){const grid=document.getElementById('playersGrid');if(!grid)return;sb.from('jft_war_players').select('id,player_name,current_question,current_section,elapsed_seconds,status,created_at').eq('room_id',room.id).order('created_at').then(({data})=>{const ps=(data||[]).sort((a,b)=>Number(b.current_question||0)-Number(a.current_question||0)||String(a.created_at||'').localeCompare(String(b.created_at||'')));grid.innerHTML=ps.map((p,i)=>{const q=Math.min(Number(p.current_question||0),room.question_count);return `<div class="monitor-row ${p.id===player.id?'me':''} rounded-xl border border-slate-200 p-3 bg-white"><div class="flex justify-between gap-2"><b class="text-sm truncate">#${i+1} ${esc(p.player_name)} ${p.id===player.id?'<span class="text-[9px] text-slate-400">(KAMU)</span>':''}</b><b class="text-xs">${p.status==='finished'?'Selesai':'Mengerjakan'}</b></div><div class="flex justify-between text-[10px] text-slate-500 mt-1"><span>Soal ${q}/${room.question_count}</span><span>${fmt(p.elapsed_seconds||0)}</span></div><div class="text-[10px] text-slate-400 mt-1">${sectionName(p.current_section)}</div><div class="mini-progress mt-2"><div style="width:${room.question_count?q/room.question_count*100:0}%"></div></div></div>`}).join('')})}
+function renderPlayers(){
+ const grid=document.getElementById('playersGrid');if(!grid)return;
+ sb.from('jft_war_players').select('id,player_name,current_question,current_section,elapsed_seconds,status,created_at,score,correct').eq('room_id',room.id).then(({data,error})=>{
+  if(error){console.warn('Leaderboard War gagal dimuat:',error);return}
+  const ps=(data||[]).filter(p=>!['kicked','left'].includes(p.status)).sort((a,b)=>Number(b.score||0)-Number(a.score||0)||Number(b.current_question||0)-Number(a.current_question||0)||Number(a.elapsed_seconds||0)-Number(b.elapsed_seconds||0));
+  grid.innerHTML=ps.map((p,i)=>{const q=Math.min(Number(p.current_question||0),room.question_count),sc=Number(p.score||0);return `<div class="monitor-row ${p.id===player.id?'me':''} rounded-xl border border-slate-200 p-3 bg-white"><div class="flex justify-between gap-2"><b class="text-sm truncate">#${i+1} ${esc(p.player_name)} ${p.id===player.id?'<span class="text-[9px] text-slate-400">(KAMU)</span>':''}</b><b class="text-xs">${p.status==='finished'?'Selesai':'Mengerjakan'}</b></div><div class="flex items-center justify-between mt-1"><span class="text-[10px] text-slate-500">Soal ${q}/${room.question_count} • ${fmt(p.elapsed_seconds||0)}</span><b class="text-sm">${sc} poin <span class="text-[10px] text-slate-400">(${rank(sc)})</span></b></div><div class="text-[10px] text-slate-400 mt-1">${sectionName(p.current_section)} • ${Number(p.correct||0)} benar</div><div class="mini-progress mt-2"><div style="width:${room.question_count?q/room.question_count*100:0}%"></div></div></div>`}).join('')||'<div class="text-xs text-slate-400">Belum ada pemain.</div>'
+ })
+}
 async function completeWar(){
   if(finished)return;
   finished=true;clearInterval(timerHandle);clearInterval(progressHandle);
@@ -160,11 +167,10 @@ async function completeWar(){
     }
   }catch(e){console.warn('Gagal mengembalikan room ke waiting:',e)}
   sessionStorage.setItem('jft_war_result',JSON.stringify({roomId:room.id,playerId:player.id,score,correct,total:questions.length,elapsed,rank:warRank,warPoints:score,totalPoints:total}));
-  if(room.quiz_mode==='kanji'){
-    const allRows=[];questions.forEach((q,i)=>{allRows.push({kanji:q.kanji,kana:q.kana,romaji:q.romaji||'',meaning:q.meaning,chapter:q.chapter,mode:q.answer_mode,selected:answers[i]===null?'Tidak dijawab':q.options[answers[i]],answer:q.options[q.answer],isCorrect:answers[i]===q.answer})});
-    const mistakes=allRows.filter(x=>!x.isCorrect);
-    sessionStorage.setItem('jft_war_kanji_review',JSON.stringify({allRows,mistakes,mode:room.kanji_answer_mode||'meaning',total:questions.length,wrong:mistakes.length}));
-  }else sessionStorage.removeItem('jft_war_kanji_review');
+  const allRows=questions.map((q,i)=>({question:q.type==='kanji'?q.kanji:(q.text||q.question||q.prompt||''),kanji:q.kanji||'',kana:q.kana||'',romaji:q.romaji||'',meaning:q.meaning||'',chapter:q.chapter||'',section:q.section||'',options:Array.isArray(q.options)?q.options:[],selected:answers[i]===null?'Tidak dijawab':(q.options?.[answers[i]]??'Tidak dijawab'),answer:q.options?.[q.answer]??'',isCorrect:answers[i]===q.answer,mode:q.answer_mode||''}));
+  sessionStorage.setItem('jft_war_review',JSON.stringify({allRows,total:questions.length,mode:room.quiz_mode||'jft'}));
+  if(room.quiz_mode==='kanji')sessionStorage.setItem('jft_war_kanji_review',JSON.stringify({allRows,mistakes:allRows.filter(x=>!x.isCorrect),mode:room.kanji_answer_mode||'meaning',total:questions.length,wrong:allRows.filter(x=>!x.isCorrect).length}));
+  else sessionStorage.removeItem('jft_war_kanji_review');
   location.href='war-result.html';
 }
 function showReaction(x){if(!x.id||lastReactionIds.has(x.id)||x.playerId===player.id)return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction-pop reaction-out bg-white border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0_#181818] px-3 py-2 text-2xl font-bold';d.textContent=`${x.emoji} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>{d.remove();lastReactionIds.delete(x.id)},2000)}
