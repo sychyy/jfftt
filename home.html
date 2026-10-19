@@ -80,8 +80,21 @@
 </input></label>
 </div>
 </div>
+<div class="text-left mb-6">
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">2. Pilih Kategori Soal</h3>
+<label for="quiz-category-select" class="block text-xs font-semibold text-slate-600 mb-2">Kamu bisa latihan campuran atau fokus ke satu kategori.</label>
+<select id="quiz-category-select" class="w-full rounded-xl border border-slate-200 bg-white px-4 py-3 text-slate-700 font-semibold focus:outline-none focus:border-brand-500 transition">
+  <option value="all">Semua kategori — campuran seimbang</option>
+  <option value="vocab">Vocabulary / 文字と語彙</option>
+  <option value="grammar">Grammar / 文法</option>
+  <option value="hyogen">Hyōgen / 表現 — Ekspresi (50 soal)</option>
+  <option value="listening">Listening / 聴解</option>
+  <option value="reading">Reading / 読解</option>
+</select>
+<p class="text-xs text-slate-500 mt-2">Hyōgen berisi ungkapan dan respons percakapan berdasarkan situasi, berbeda dari soal arti kosakata.</p>
+</div>
 <div class="text-left mb-8">
-<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">2. Jumlah Soal</h3>
+<h3 class="text-sm font-bold text-slate-700 uppercase tracking-wider mb-3">3. Jumlah Soal</h3>
 <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
 <label class="relative flex cursor-pointer rounded-lg border border-slate-200 bg-white p-3 shadow-sm hover:bg-slate-50 transition text-center justify-center">
 <input checked="" class="peer sr-only" name="q_count" type="radio" value="10">
@@ -410,8 +423,8 @@
         </button>
 </div>
 </div>
-<script src="assets/js/core/question-bank.js?v=20261017-2"></script>
-<script src="assets/js/quiz/app-legacy.js?v=20261017-2"></script>
+<script src="assets/js/core/question-bank.js?v=20261019-hyogen1"></script>
+<script src="assets/js/quiz/app-legacy.js?v=20261019-hyogen1"></script>
 <script src="assets/js/audio/voicevox-config.js"></script>
 <script src="assets/js/core/resume-router.js"></script>
 <script src="assets/js/chat/chat-media.js"></script>

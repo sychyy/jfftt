@@ -1,7 +1,8 @@
 
         const SECTIONS = [
             { id: 'vocab', nameJP: '文字と語彙', nameEN: 'Script and Vocabulary' },
-            { id: 'grammar', nameJP: '会話と表現', nameEN: 'Conversation and Expression' },
+            { id: 'grammar', nameJP: '文法', nameEN: 'Grammar' },
+            { id: 'hyogen', nameJP: '表現', nameEN: 'Expressions / Hyōgen' },
             { id: 'listening', nameJP: '聴解', nameEN: 'Listening Comprehension' },
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
@@ -1744,7 +1745,7 @@ function getNextSectionIndex(index) {
         // ==========================================
         // JFT QUESTION HISTORY — BANK V3 / 1000 SOAL
         // ==========================================
-        const QUESTION_BANK_VERSION = 'minna-no-nihongo-i-ii-japanese-only-2026-10-18';
+        const QUESTION_BANK_VERSION = 'minna-no-nihongo-i-ii-hyogen-added-2026-10-19-v1';
         const QUESTION_HISTORY_LOCAL_PREFIX = 'jft_question_history_v2_';
 
         function getQuestionHistoryStorageKey() {
@@ -1906,46 +1907,50 @@ function getNextSectionIndex(index) {
             return [q.section, q.text, ...(q.options || []), q.audioText || '', q.visual?.title || '', q.visual?.body || '', JSON.stringify(q.visual?.rows || [])].map(norm).join('|');
         }
         function uniqueQuestionBank() {
+            // Gunakan filter konten bersama agar soal dengan stem umum yang sama
+            // tetapi pilihan berbeda (misalnya listening dengan dialog berbeda) tidak dibuang.
+            // JFTQuestionBank sudah mencegah ID ganda dan identitas soal duplikat berdasarkan
+            // kategori, teks pertanyaan, serta pilihan yang dinormalisasi.
+            if (window.JFTQuestionBank?.uniqueBank) return window.JFTQuestionBank.uniqueBank(QUESTION_BANK);
             const seenIds = new Set();
             const seenQuestions = new Set();
             const norm = value => String(value ?? '').normalize('NFKC').toLowerCase().replace(/[\s　、。,.!?！？「」『』（）()【】［］\-‐‑–—]/g, '');
             return QUESTION_BANK.filter(q => {
                 const id = String(q?.id ?? '');
-                const key = `${String(q?.section || '').trim().toLowerCase()}|${norm(q?.text || '')}`;
+                const options = Array.isArray(q?.options) ? q.options.map(norm).sort() : [];
+                const key = `${String(q?.section || '').trim().toLowerCase()}|${norm(q?.text || '')}|${options.join('|')}`;
                 if (!id || !norm(q?.text || '') || seenIds.has(id) || seenQuestions.has(key)) return false;
                 seenIds.add(id); seenQuestions.add(key); return true;
             });
         }
-        function selectQuizQuestions(totalQuestions, history) {
-            const bank = uniqueQuestionBank();
+        function selectQuizQuestions(totalQuestions, history, selectedSection = 'all') {
+            const allBank = uniqueQuestionBank();
+            const sectionFilter = ['vocab', 'grammar', 'hyogen', 'listening', 'reading'].includes(selectedSection) ? selectedSection : 'all';
+            const bank = sectionFilter === 'all' ? allBank : allBank.filter(q => q.section === sectionFilter);
             const total = Math.min(Math.max(1, Number(totalQuestions) || 10), bank.length);
-            const sectionOrder = ['vocab', 'grammar', 'listening', 'reading'];
+            const sectionOrder = ['vocab', 'grammar', 'hyogen', 'listening', 'reading'];
 
-            // Satu cycle = semua ID unik yang tersedia di bank harus keluar dulu sebelum cycle berikutnya dimulai.
-            // Saat seluruh bank sudah terlihat, reset count menjadi 0 lalu buat urutan acak baru.
+            // Jangan memilih ulang soal yang sudah pernah diberikan pada cycle aktif.
+            // Untuk latihan satu kategori, reset cycle kategori itu saja saat habis;
+            // riwayat kategori lain tetap dipertahankan.
             let workingHistory = normalizeQuestionHistory(history);
             let unseen = bank.filter(q => getQuestionSeenCount(q, workingHistory) === 0);
-            if (unseen.length === 0) {
-                // Mutasi object history yang sama supaya markQuestionsSeen() juga
-                // melihat cycle baru, bukan menaikkan count dari cycle lama.
+            if (unseen.length === 0 && bank.length) {
                 if (history && typeof history === 'object' && !Array.isArray(history)) {
                     history.bankVersion = QUESTION_BANK_VERSION;
-                    history.seen = {};
+                    history.seen = { ...(workingHistory.seen || {}) };
+                    bank.forEach(q => { delete history.seen[String(q.id)]; });
                     history.updatedAt = new Date().toISOString();
                     workingHistory = history;
                 } else {
-                    workingHistory = {
-                        bankVersion: QUESTION_BANK_VERSION,
-                        seen: {},
-                        updatedAt: new Date().toISOString()
-                    };
+                    workingHistory = { bankVersion: QUESTION_BANK_VERSION, seen: {}, updatedAt: new Date().toISOString() };
                 }
                 unseen = [...bank];
             }
 
-            // Satu algoritma pemilihan dipakai oleh latihan utama dan War Quiz.
-            // Riwayat tetap dipisahkan per fitur; pool unseen tetap mengikuti aturan cycle.
-            if (window.JFTQuestionBank) return window.JFTQuestionBank.selectBalanced(unseen, total);
+            // Campuran memakai picker seimbang yang sudah ada; kategori khusus memakai
+            // shuffle sederhana atas pool kategori itu. Keduanya hanya mengambil unseen.
+            if (sectionFilter === 'all' && window.JFTQuestionBank) return window.JFTQuestionBank.selectBalanced(unseen, total);
             const selected = randomSample(unseen, total);
             return sectionOrder.flatMap(sec => selected.filter(q => q.section === sec));
         }
@@ -2008,7 +2013,13 @@ async function startQuiz() {
 
             // Sinkronkan riwayat soal dari web + perangkat ini sebelum membuat set baru.
             const questionHistory = await loadQuestionHistory();
-            const selected = selectQuizQuestions(reqCount, questionHistory);
+            const categorySelector = document.getElementById('quiz-category-select');
+            const chosenCategory = categorySelector ? categorySelector.value : 'all';
+            const selected = selectQuizQuestions(reqCount, questionHistory, chosenCategory);
+            if (selected.length < reqCount) {
+                const categoryText = chosenCategory === 'all' ? 'seluruh kategori' : (SECTIONS.find(x => x.id === chosenCategory)?.nameEN || chosenCategory);
+                showToast('Jumlah soal', `Tersedia ${selected.length} soal yang belum dikerjakan di ${categoryText}; sesi dibuat tanpa mengulang soal.`, false);
+            }
 
             // Soal ditandai telah diberikan sejak latihan dimulai, sehingga refresh/keluar
             // tidak membuat set yang sama muncul lagi pada percobaan berikutnya.

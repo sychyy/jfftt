@@ -3,6 +3,7 @@
 Tambahkan soal ke file JSON sesuai field `section`:
 - `vocab.json` — `vocab`
 - `grammar.json` — `grammar`
+- `hyogen.json` — `hyogen` (ekspresi/ungkapan dan respons percakapan; bukan sinonim Vocab)
 - `listening.json` — `listening` (pertahankan `audioText` jika digunakan)
 - `reading.json` — `reading` (pertahankan `visual.title`, `visual.body`, dan `visual.rows` jika ada)
 

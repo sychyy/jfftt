@@ -84,6 +84,7 @@ Listening playback during an attempt is limited to two plays per question (inclu
 
 - `data/questions/vocab.json`: soal Vocabulary.
 - `data/questions/grammar.json`: soal Grammar.
+- `data/questions/hyogen.json`: soal ekspresi/ungkapan (表現) berdasarkan konteks percakapan Minna no Nihongo I & II.
 - `data/questions/listening.json`: soal Listening, termasuk `audioText`.
 - `data/questions/reading.json`: soal Reading dan materi `visual` seperti `title`, `body`, serta `rows`.
 - `assets/js/core/question-bank.js`: loader, validasi, pemilihan seimbang, dan renderer bersama.
@@ -136,3 +137,10 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - Catatan dan progres latihan tersimpan di `localStorage` browser/perangkat yang digunakan.
 - Pada WAR, host dapat memakai tombol **Mainkan War Lagi** setelah ronde selesai untuk mengaktifkan room yang sama kembali.
 - Pada soal Kanji WAR, hiragana atau arti disembunyikan sampai tombol **Lihat hiragana** / **Lihat arti** ditekan.
+
+## Pembaruan kategori Hyōgen / Ekspresi (19 Oktober 2026)
+- Menambahkan `data/questions/hyogen.json` dengan 50 soal orisinal berbasis situasi percakapan dan ungkapan yang relevan dengan cakupan Minna no Nihongo I & II (pelajaran 1–50).
+- Mendaftarkan Hyōgen ke loader bank soal bersama, pembagian kategori seimbang, latihan JFT biasa, label monitoring WAR, serta ringkasan kesalahan agar kategori ini benar-benar bisa muncul dan dikerjakan.
+- Label Grammar diperbaiki menjadi 文法 / Grammar; label 表現 / Hyōgen sekarang menjadi kategori terpisah, bukan sekadar label yang menempel pada Grammar.
+- Versi riwayat bank diperbarui supaya rekam soal dari bank lama tidak menandai kategori baru sebagai sudah pernah dikerjakan.
+- Pertanyaan baru berformat JSON yang sama dengan kategori lain, memakai ID 801–850 dan memiliki empat opsi berbeda serta satu indeks jawaban benar.
