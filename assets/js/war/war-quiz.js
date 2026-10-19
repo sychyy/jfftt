@@ -34,12 +34,9 @@ async function init(){
    if(!window.JFTQuestionBank)throw new Error('Modul bank soal belum dimuat.');bank=await window.JFTQuestionBank.load();
    const questionById=new Map(bank.map(q=>[String(q.id),q]));
    const resolved=requestedIds.map(id=>questionById.get(String(id))).filter(Boolean);
-   const seenIds=new Set(),seenTexts=new Set();
-   questions=resolved.filter(q=>{
-     const id=String(q.id),key=`${String(q.section||'').toLowerCase()}|${String(q.text||'').normalize('NFKC').toLowerCase().replace(/[\s　、。,.!?！？「」『』（）()【】［］\-‐‑–—]/g,'')}`;
-     if(seenIds.has(id)||seenTexts.has(key))return false;
-     seenIds.add(id);seenTexts.add(key);return true;
-   });
+   // Jangan membuang soal hanya karena teksnya mirip/identik: bank bisa memiliki
+   // soal dengan teks sama tetapi opsi/konteks berbeda. Validasi hanya ID yang hilang.
+   questions=resolved;
  }
  if(!questions.length){redirectWithToast(room.quiz_mode==='kanji'?'Bank soal Kanji untuk room ini tidak valid. Minta host memulai ulang.':'Bank soal War tidak ditemukan.');return}
  if(questions.length!==Number(room.question_count)){
@@ -47,7 +44,11 @@ async function init(){
    redirectWithToast('Daftar soal room ini tidak valid. Minta host memulai War baru.','war.html');return;
  }
  document.getElementById('roomCodeTop').textContent=room.code;document.getElementById('quiz-progress-text').textContent=`Soal 1 / ${questions.length}`;
+ const resumeKey=`jft_war_progress_${room.id}_${player.id}`;let saved=null;try{saved=JSON.parse(sessionStorage.getItem(resumeKey)||'null')}catch(_){}
  answers=new Array(questions.length).fill(null);startedAt=new Date(room.started_at).getTime();idx=0;maxReached=1;correct=0;
+ if(saved&&saved.round===String(room.started_at||room.id)&&Array.isArray(saved.answers)&&saved.answers.length===questions.length){answers=saved.answers;idx=Math.max(0,Math.min(questions.length-1,Number(saved.idx)||0));maxReached=Math.max(idx+1,Number(saved.maxReached)||1);correct=answers.reduce((sum,a,i)=>sum+(a!==null&&a===questions[i]?.answer?1:0),0)}
+ // Cegah tombol Back meninggalkan kuis; jika browser tetap direfresh, progres dipulihkan.
+ history.pushState({warQuiz:true},'',location.href);window.addEventListener('popstate',()=>{history.pushState({warQuiz:true},'',location.href);toast('War belum selesai. Selesaikan soal terlebih dahulu.');});
  subscribe();renderQuestion();renderPlayers();tick();timerHandle=setInterval(tick,500);progressHandle=setInterval(pushProgress,2500);pushProgress();
 }
 function subscribe(){channel=sb.channel('jft-war-live-'+room.id);channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_players',filter:'room_id=eq.'+room.id},payload=>{if(payload.eventType==='DELETE'&&payload.old?.id===player.id){redirectWithToast('Kamu dikeluarkan dari War.');return}renderPlayers()});channel.on('postgres_changes',{event:'*',schema:'public',table:'jft_war_rooms',filter:'id=eq.'+room.id},payload=>{if(payload.new){room=payload.new;if(room.status==='closed'){redirectWithToast('Room sudah ditutup.');}}});channel.on('broadcast',{event:'reaction'},({payload})=>showReaction(payload||{}));channel.subscribe();}
@@ -69,7 +70,7 @@ function randomize(items){return window.JFTQuestionBank ? window.JFTQuestionBank
 function renderQuestion(){
   const q=questions[idx];
   // Simpan progres tertinggi yang sudah dicapai agar monitor lawan ikut bergerak.
-  maxReached=Math.max(maxReached,idx+1);
+  maxReached=Math.max(maxReached,idx+1);saveLocalProgress();
   document.getElementById('quiz-progress-text').textContent=`Soal ${idx+1} / ${questions.length}`;
   document.getElementById('quiz-progress-bar').style.width=`${((idx+1)/questions.length)*100}%`;
   const sec=SECTIONS[q.section];
@@ -112,8 +113,9 @@ function renderQuestion(){
   });
   updateNav();
 }
+function saveLocalProgress(){if(!room||!player||finished)return;try{sessionStorage.setItem(`jft_war_progress_${room.id}_${player.id}`,JSON.stringify({round:String(room.started_at||room.id),answers,idx,maxReached,updatedAt:Date.now()}))}catch(_){}}
 function choose(choice){
-  answers[idx]=choice;
+  answers[idx]=choice;saveLocalProgress();
   correct=answers.reduce((sum,a,i)=>sum+(a!==null&&a===questions[i]?.answer?1:0),0);
   updateNav();pushProgress();
 }
@@ -129,7 +131,7 @@ function updateNav(){
 function goPrevious(){
   if(document.getElementById('btn-prev-question').disabled)return;
   if(window.speechSynthesis)window.speechSynthesis.cancel();
-  idx--;renderQuestion();window.scrollTo(0,0);pushProgress();
+  idx--;saveLocalProgress();renderQuestion();window.scrollTo(0,0);pushProgress();
 }
 function goNext(){
   if(document.getElementById('btn-next-question').disabled)return;
@@ -143,10 +145,10 @@ function goNext(){
     const nextName=SECTIONS[nextSection]?`${SECTIONS[nextSection][0]} / ${SECTIONS[nextSection][1]}`:nextSection;
     showWarConfirm(`Sesi ${currentName} sudah selesai.
 
-Lanjut ke ${nextName}?`,()=>{idx=nextIdx;renderQuestion();window.scrollTo(0,0);pushProgress()},'Lanjut');
+Lanjut ke ${nextName}?`,()=>{idx=nextIdx;saveLocalProgress();renderQuestion();window.scrollTo(0,0);pushProgress()},'Lanjut');
     return;
   }
-  idx=nextIdx;renderQuestion();window.scrollTo(0,0);pushProgress();
+  idx=nextIdx;saveLocalProgress();renderQuestion();window.scrollTo(0,0);pushProgress();
 }
 document.getElementById('btn-prev-question').onclick=goPrevious;document.getElementById('btn-next-question').onclick=goNext;
 async function pushProgress(){if(!player||finished)return;const elapsed=Math.floor((Date.now()-startedAt)/1000);const q=questions[idx];const answeredCount=answers.filter(v=>v!==null).length;await sb.from('jft_war_players').update({current_question:Math.max(maxReached,1),current_section:q?.section||null,elapsed_seconds:elapsed,status:'running',last_seen_at:new Date().toISOString()}).eq('id',player.id)}
@@ -160,7 +162,7 @@ function renderPlayers(){
 }
 async function completeWar(){
   if(finished)return;
-  finished=true;clearInterval(timerHandle);clearInterval(progressHandle);
+  finished=true;clearInterval(timerHandle);clearInterval(progressHandle);try{sessionStorage.removeItem(`jft_war_progress_${room.id}_${player.id}`)}catch(_){}
   const elapsed=Math.floor((Date.now()-startedAt)/1000),score=scoreOf(correct,questions.length),warRank=rank(score);
   const old=Number(localStorage.getItem('jft_war_total_points')||0),total=old+score;
   localStorage.setItem('jft_war_total_points',String(total));
@@ -183,4 +185,4 @@ async function completeWar(){
 function showReaction(x){if(!x.id||lastReactionIds.has(x.id)||x.playerId===player.id)return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction-pop reaction-out bg-white border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0_#181818] px-3 py-2 text-2xl font-bold';d.textContent=`${x.emoji} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>{d.remove();lastReactionIds.delete(x.id)},2000)}
 const picker=document.getElementById('emojiPicker');EMOJIS.forEach(e=>{const b=document.createElement('button');b.className='w-9 h-9 rounded-lg hover:bg-slate-100 text-xl';b.textContent=e;b.onclick=()=>sendReaction(e);picker.appendChild(b)});document.getElementById('messageButton').onclick=()=>picker.classList.toggle('hidden');
 async function sendReaction(e){if(!channel||Date.now()<reactionCooldownUntil){if(Date.now()<reactionCooldownUntil){const sec=Math.ceil((reactionCooldownUntil-Date.now())/1000);document.getElementById('messageButton').title=`Reaction cooldown ${sec} detik`;}return}reactionCooldownUntil=Date.now()+5000;picker.classList.add('hidden');await channel.send({type:'broadcast',event:'reaction',payload:{id:crypto.randomUUID(),emoji:e,name:player.player_name,playerId:player.id,ts:Date.now()}});const b=document.getElementById('messageButton');b.classList.add('opacity-50');setTimeout(()=>b.classList.remove('opacity-50'),5000)}
-window.addEventListener('beforeunload',()=>{if(!finished)pushProgress()});init().catch(error=>{console.error("Gagal memulai War Quiz:",error);redirectWithToast("Bank soal gagal dimuat. Muat ulang halaman.","war.html")});
+window.addEventListener('beforeunload',()=>{if(!finished){saveLocalProgress();pushProgress()}});init().catch(error=>{console.error("Gagal memulai War Quiz:",error);redirectWithToast("Bank soal gagal dimuat. Muat ulang halaman.","war.html")});

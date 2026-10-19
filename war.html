@@ -19,7 +19,9 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
 .card{background:#fff;border:1px solid #e5e7eb;border-radius:18px;box-shadow:0 8px 30px rgba(15,23,42,.06)}
 .war-mode-btn.selected{border-color:#181818;box-shadow:3px 3px 0 #181818}
 .war-accent{background:#181818;color:#ffe45c}
-.player-card{transition:.2s}.player-card.me{border-color:#181818;box-shadow:4px 4px 0 #181818}
+.player-card{transition:.2s;min-width:0;max-width:100%;overflow:hidden;overflow-wrap:anywhere}.player-card>div{min-width:0}.player-card.me{border-color:#181818;box-shadow:4px 4px 0 #181818}
+#playersGrid{min-width:0;width:100%;grid-template-columns:minmax(0,1fr)}
+@media(min-width:640px){#playersGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(min-width:1024px){#playersGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .progress{height:7px;background:#e9edf2;border-radius:999px;overflow:hidden}.progress>div{height:100%;background:#181818;border-radius:999px;transition:width .3s}
 </style>
 <link rel="stylesheet" href="assets/css/page-loader.css">
@@ -313,7 +315,8 @@ async function enterRoom(){
   document.getElementById('roomCode').textContent=room.code;
   const modeText=room.quiz_mode==='kanji'?`Kanji ${String(room.kanji_level||'all').toUpperCase()} • jawab ${room.kanji_answer_mode==='romaji'?'romaji':'arti Indonesia'}`:'JFT Basic';
   document.getElementById('roomInfo').textContent=`${modeText} • ${room.question_count} soal • target ${formatTime(RULES[room.question_count])} • host: ${room.host_name}`;
-  document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='waiting');
+  document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host');
+  document.getElementById('startBtn').disabled=room.status!=='waiting';document.getElementById('startBtn').textContent=room.status==='running'?'War Berjalan':room.status==='finished'?'War Selesai':'Mulai War';
   document.getElementById('replayWarBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='finished');
   renderHostQr();
   subscribeRoom();
@@ -345,7 +348,7 @@ function renderPlayers(){
   const grid=document.getElementById('playersGrid');if(!grid)return;
   const start=document.getElementById('startBtn');
   start.disabled=ps.length<2;
-  start.classList.toggle('hidden',player?.role!=='host'||room?.status!=='waiting');
+  start.classList.toggle('hidden',player?.role!=='host');start.disabled=room?.status!=='waiting'||ps.length<2;start.textContent=room?.status==='running'?'War Berjalan':room?.status==='finished'?'War Selesai':'Mulai War';
   document.getElementById('replayWarBtn')?.classList.toggle('hidden',player?.role!=='host'||room?.status!=='finished');
   grid.innerHTML=ps.map((p,i)=>{
     const me=p.id===player?.id;
@@ -366,7 +369,7 @@ function renderPlayers(){
 async function onRoomChange(){
   const status=room.status||'waiting';
   document.getElementById('topStatus').textContent=status==='running'?'WAR BERJALAN':status==='finished'?'SELESAI':'WAITING ROOM';
-  document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host'||status!=='waiting');
+  document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host');document.getElementById('startBtn').disabled=status!=='waiting'||(window.warPlayers||[]).filter(p=>!['kicked','left'].includes(p.status)).length<2;document.getElementById('startBtn').textContent=status==='running'?'War Berjalan':status==='finished'?'War Selesai':'Mulai War';
   document.getElementById('replayWarBtn')?.classList.toggle('hidden',player?.role!=='host'||status!=='finished');
   renderHostQr();
   const waitingBox=document.getElementById('waitingBox');
