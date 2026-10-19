@@ -168,8 +168,15 @@ async function completeWar(){
   localStorage.setItem('jft_war_total_points',String(total));
   const reviewRows=questions.map((q,i)=>({question:q.text||q.question||q.prompt||'',prompt:q.prompt||'',kanji:q.kanji||'',kana:q.kana||'',romaji:q.romaji||'',meaning:q.meaning||'',chapter:q.chapter||'',section:q.section||'',options:Array.isArray(q.options)?q.options:[],selected:answers[i]===null?'Tidak dijawab':(q.options?.[answers[i]]??'Tidak dijawab'),answer:q.options?.[q.answer]??'',answerIndex:q.answer,isCorrect:answers[i]===q.answer,mode:q.answer_mode||''}));
   const reviewData={allRows:reviewRows,total:questions.length,mode:room.quiz_mode||'jft'};
-  const {error:playerError}=await sb.from('jft_war_players').update({current_question:room.question_count,current_section:questions.at(-1)?.section||null,elapsed_seconds:elapsed,correct,score,status:'finished',completed_at:new Date().toISOString(),last_seen_at:new Date().toISOString(),review_data:reviewData}).eq('id',player.id);
-  if(playerError){finished=false;toast('Gagal menyimpan hasil War. Coba lagi.');return}
+  const completedAt=new Date().toISOString();
+  const baseResult={current_question:room.question_count,current_section:questions.at(-1)?.section||null,elapsed_seconds:elapsed,correct,score,status:'finished',completed_at:completedAt,last_seen_at:completedAt};
+  let {error:playerError}=await sb.from('jft_war_players').update({...baseResult,review_data:reviewData}).eq('id',player.id);
+  if(playerError && /review_data|column/i.test(playerError.message||'')){
+    console.warn('Kolom review_data belum tersedia; menyimpan hasil tanpa data koreksi.',playerError);
+    ({error:playerError}=await sb.from('jft_war_players').update(baseResult).eq('id',player.id));
+    if(!playerError)toast('Hasil tersimpan. Jalankan SQL review migration untuk koreksi bersama.');
+  }
+  if(playerError){finished=false;toast('Gagal menyimpan hasil War: '+(playerError.message||'periksa izin database'));return}
   try{
     const {data:all}=await sb.from('jft_war_players').select('id,status').eq('room_id',room.id).not('status','in','(kicked,left)');
     const active=(all||[]);
@@ -184,7 +191,7 @@ async function completeWar(){
   else sessionStorage.removeItem('jft_war_kanji_review');
   location.href='war-result.html';
 }
-function showReaction(x){if(!x.id||lastReactionIds.has(x.id)||x.playerId===player.id)return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction-pop reaction-out bg-white border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0_#181818] px-3 py-2 text-2xl font-bold';d.textContent=`${x.emoji} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>{d.remove();lastReactionIds.delete(x.id)},2000)}
-const picker=document.getElementById('emojiPicker');EMOJIS.forEach(e=>{const b=document.createElement('button');b.className='w-9 h-9 rounded-lg hover:bg-slate-100 text-xl';b.textContent=e;b.onclick=()=>sendReaction(e);picker.appendChild(b)});document.getElementById('messageButton').onclick=()=>picker.classList.toggle('hidden');
-async function sendReaction(e){if(!channel||Date.now()<reactionCooldownUntil){if(Date.now()<reactionCooldownUntil){const sec=Math.ceil((reactionCooldownUntil-Date.now())/1000);document.getElementById('messageButton').title=`Reaction cooldown ${sec} detik`;}return}reactionCooldownUntil=Date.now()+5000;picker.classList.add('hidden');await channel.send({type:'broadcast',event:'reaction',payload:{id:crypto.randomUUID(),emoji:e,name:player.player_name,playerId:player.id,ts:Date.now()}});const b=document.getElementById('messageButton');b.classList.add('opacity-50');setTimeout(()=>b.classList.remove('opacity-50'),5000)}
+function showReaction(x){if(!x.id||lastReactionIds.has(x.id)||x.playerId===player.id)return;lastReactionIds.add(x.id);const d=document.createElement('div');d.className='reaction-pop reaction-out bg-white border-2 border-slate-900 rounded-2xl shadow-[4px_4px_0_#181818] px-3 py-2 text-2xl font-bold';d.textContent=`${x.emoji||x.text||''} ${x.name||''}`;document.getElementById('reactionFeed').appendChild(d);setTimeout(()=>{d.remove();lastReactionIds.delete(x.id)},2000)}
+const picker=document.getElementById('emojiPicker'),emojiChoices=document.getElementById('emojiChoices');EMOJIS.forEach(e=>{const b=document.createElement('button');b.className='w-9 h-9 rounded-lg hover:bg-slate-100 text-xl';b.textContent=e;b.onclick=()=>sendReaction(e);emojiChoices.appendChild(b)});document.getElementById('messageButton').onclick=()=>picker.classList.toggle('hidden');document.getElementById('sendReactionText').onclick=()=>{const input=document.getElementById('reactionText');const value=input.value.trim();if(value){sendReaction(value);input.value='';}};
+async function sendReaction(e){if(!channel||Date.now()<reactionCooldownUntil){if(Date.now()<reactionCooldownUntil){const sec=Math.ceil((reactionCooldownUntil-Date.now())/1000);document.getElementById('messageButton').title=`Reaction cooldown ${sec} detik`;}return}reactionCooldownUntil=Date.now()+5000;picker.classList.add('hidden');await channel.send({type:'broadcast',event:'reaction',payload:{id:crypto.randomUUID(),...(/^[\p{Extended_Pictographic}\uFE0F\u200D]+$/u.test(e)?{emoji:e}:{text:e}),name:player.player_name,playerId:player.id,ts:Date.now()}});const b=document.getElementById('messageButton');b.classList.add('opacity-50');setTimeout(()=>b.classList.remove('opacity-50'),5000)}
 window.addEventListener('beforeunload',()=>{if(!finished){saveLocalProgress();pushProgress()}});init().catch(error=>{console.error("Gagal memulai War Quiz:",error);redirectWithToast("Bank soal gagal dimuat. Muat ulang halaman.","war.html")});

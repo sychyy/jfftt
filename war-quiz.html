@@ -53,7 +53,7 @@
 </aside></div>
 </main>
 <button id="messageButton" class="fixed bottom-5 right-5 z-50 w-12 h-12 rounded-full bg-slate-900 text-white shadow-[3px_3px_0_#181818] flex items-center justify-center" title="Kirim reaction"><i class="fa-solid fa-message"></i></button>
-<div id="emojiPicker" class="hidden fixed bottom-20 right-4 z-[60] bg-white border-2 border-slate-900 rounded-2xl p-2 shadow-[5px_5px_0_#181818] grid grid-cols-6 gap-1"></div>
+<div id="emojiPicker" class="hidden fixed bottom-20 right-4 z-[60] max-w-[min(92vw,340px)] bg-white border-2 border-slate-900 rounded-2xl p-2 shadow-[5px_5px_0_#181818]"><div id="emojiChoices" class="grid grid-cols-6 gap-1"></div><div class="flex gap-2 mt-2"><input id="reactionText" maxlength="80" class="min-w-0 flex-1 border-2 border-slate-300 rounded-lg px-2 py-2 text-sm" placeholder="Kirim teks ke lawan…"><button id="sendReactionText" class="rounded-lg bg-yellow-300 border-2 border-slate-900 px-3 font-bold text-sm">Kirim</button></div></div>
 <div id="reactionFeed" class="fixed right-4 bottom-24 z-[70] flex flex-col items-end gap-2 pointer-events-none"></div>
 <div id="warToastContainer" class="fixed top-4 left-1/2 -translate-x-1/2 z-[200] flex flex-col items-center gap-2 pointer-events-none"></div>
 <div class="fixed inset-0 z-[5000] hidden items-center justify-center bg-black/40 backdrop-blur-sm px-4" id="war-confirm-modal" style="z-index:5000 !important;">
