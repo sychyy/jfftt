@@ -6,11 +6,10 @@
   const SECTION_FILES = {
     vocab: 'data/questions/vocab.json',
     grammar: 'data/questions/grammar.json',
-    hyogen: 'data/questions/hyogen.json',
     listening: 'data/questions/listening.json',
     reading: 'data/questions/reading.json'
   };
-  const SECTION_ORDER = ['vocab', 'grammar', 'hyogen', 'listening', 'reading'];
+  const SECTION_ORDER = ['vocab', 'grammar', 'listening', 'reading'];
   let bankPromise = null;
 
   function shuffle(array) {

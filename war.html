@@ -165,7 +165,7 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
   </section>
 </div>
 
-<script src="assets/js/core/question-bank.js?v=20261019-hyogen1"></script>
+<script src="assets/js/core/question-bank.js?v=20261019-grammar-expression2"></script>
 <script>
 const SUPABASE_URL='https://lnthciiomeppirzucqwu.supabase.co';
 const SUPABASE_ANON_KEY='sb_publishable_1TYGD_KXkkxJEiFug566zQ_CjZfmUN-';
@@ -180,7 +180,7 @@ const getName=()=>((localStorage.getItem('jft_display_name')||localStorage.getIt
 const formatTime=sec=>{sec=Math.max(0,Math.floor(sec||0));return `${String(Math.floor(sec/60)).padStart(2,'0')}:${String(sec%60).padStart(2,'0')}`};
 const rank=score=>{score=Number(score||0);return score===250?'S':score>=200?'A':score>=150?'B':score>=100?'C':'D'};
 const scoreOf=(c,t)=>t?Math.round((Number(c||0)/Number(t))*250):0;
-const sectionName=sec=>({vocab:'Vocabulary',grammar:'Grammar',hyogen:'Hyōgen / Expression',listening:'Listening',reading:'Reading',kanji:'Kanji'})[sec]||sec||'-';
+const sectionName=sec=>({vocab:'Vocabulary',grammar:'Grammar & Expressions',listening:'Listening',reading:'Reading',kanji:'Kanji'})[sec]||sec||'-';
 const randomize=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
 
 function toast(msg){const d=document.createElement('div');d.className='fixed top-4 left-1/2 -translate-x-1/2 z-[100] bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold';d.textContent=msg;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
@@ -448,7 +448,7 @@ function buildWarQuestions(total){
   const selected=helper?helper.selectBalanced(unseen,totalSafe):randomize(unseen).slice(0,totalSafe);
   selected.forEach(q=>seenIds.add(String(q.id)));
   try{localStorage.setItem(historyKey,JSON.stringify({seen:[...seenIds],updatedAt:Date.now()}))}catch(_){}
-  return ['vocab','grammar','hyogen','listening','reading'].flatMap(sec=>selected.filter(q=>q.section===sec));
+  return ['vocab','grammar','listening','reading'].flatMap(sec=>selected.filter(q=>q.section===sec));
 }
 async function resetPlayersForNewWar(){
   const players=(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left');

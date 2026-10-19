@@ -1,8 +1,7 @@
 
         const SECTIONS = [
             { id: 'vocab', nameJP: '文字と語彙', nameEN: 'Script and Vocabulary' },
-            { id: 'grammar', nameJP: '文法', nameEN: 'Grammar' },
-            { id: 'hyogen', nameJP: '表現', nameEN: 'Expressions / Hyōgen' },
+            { id: 'grammar', nameJP: '文法・表現', nameEN: 'Grammar & Expressions' },
             { id: 'listening', nameJP: '聴解', nameEN: 'Listening Comprehension' },
             { id: 'reading', nameJP: '読解', nameEN: 'Reading Comprehension' }
         ];
@@ -1745,7 +1744,7 @@ function getNextSectionIndex(index) {
         // ==========================================
         // JFT QUESTION HISTORY — BANK V3 / 1000 SOAL
         // ==========================================
-        const QUESTION_BANK_VERSION = 'minna-no-nihongo-i-ii-hyogen-added-2026-10-19-v1';
+        const QUESTION_BANK_VERSION = 'minna-no-nihongo-i-ii-grammar-expression-merged-2026-10-19-v2';
         const QUESTION_HISTORY_LOCAL_PREFIX = 'jft_question_history_v2_';
 
         function getQuestionHistoryStorageKey() {
@@ -1925,10 +1924,10 @@ function getNextSectionIndex(index) {
         }
         function selectQuizQuestions(totalQuestions, history, selectedSection = 'all') {
             const allBank = uniqueQuestionBank();
-            const sectionFilter = ['vocab', 'grammar', 'hyogen', 'listening', 'reading'].includes(selectedSection) ? selectedSection : 'all';
+            const sectionFilter = ['vocab', 'grammar', 'listening', 'reading'].includes(selectedSection) ? selectedSection : 'all';
             const bank = sectionFilter === 'all' ? allBank : allBank.filter(q => q.section === sectionFilter);
             const total = Math.min(Math.max(1, Number(totalQuestions) || 10), bank.length);
-            const sectionOrder = ['vocab', 'grammar', 'hyogen', 'listening', 'reading'];
+            const sectionOrder = ['vocab', 'grammar', 'listening', 'reading'];
 
             // Jangan memilih ulang soal yang sudah pernah diberikan pada cycle aktif.
             // Untuk latihan satu kategori, reset cycle kategori itu saja saat habis;

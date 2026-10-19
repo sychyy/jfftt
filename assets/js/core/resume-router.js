@@ -381,7 +381,7 @@
         }
         const mistakes = Array.isArray(r.mistakes) ? r.mistakes : [];
         const mc = document.getElementById('mistakes-container');
-        const sectionNames = { vocab: 'Vocabulary / 語彙', listening: 'Listening / 聴解', grammar: 'Grammar / 文法', hyogen: 'Hyōgen / 表現', reading: 'Reading / 読解' };
+        const sectionNames = { vocab: 'Vocabulary / 語彙', listening: 'Listening / 聴解', grammar: 'Grammar / 文法・表現', reading: 'Reading / 読解' };
         if (mc) {
             mc.innerHTML = '';
             if (!mistakes.length) mc.innerHTML = '<p class="text-green-600 bg-green-50 p-4 rounded">Semua jawaban benar.</p>';
