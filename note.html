@@ -4,13 +4,29 @@
 <section id="practice" class="card mb-4 hidden"><div class="flex justify-between items-center"><h2 class="text-lg font-black">Renshuu</h2><span id="progress" class="text-sm font-bold"></span></div><p id="prompt" class="text-sm text-slate-500 mt-3"></p><div id="question" class="jp text-4xl font-black text-center py-6"></div><div id="choices"></div><p id="feedback" class="text-sm font-bold mt-3"></p><button id="next" class="btn primary mt-4" disabled>Soal berikutnya</button></section>
 <section class="card"><h2 class="text-lg font-black">Monitoring kekurangan</h2><p class="text-sm text-slate-500 mt-1">Item yang sering salah akan ditandai sebagai prioritas latihan. Data tersimpan di browser perangkat ini.</p><div id="weak" class="mt-3 space-y-2"></div></section></main>
 <script>
-const $=id=>document.getElementById(id),KEY='jft_personal_notes_v1';let bank=[],notes=[],session=[],idx=0,selected=null,answered=false,filteredBank=[];
+const $=id=>document.getElementById(id),KEY='jft_personal_notes_v1';let bank=[],notes=[],session=[],idx=0,selected=null,answered=false,filteredBank=[],bankSearchTimer=null;
 const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
 function loadNotes(){try{notes=JSON.parse(localStorage.getItem(KEY)||'[]');if(!Array.isArray(notes))notes=[]}catch{notes=[]}}
 function saveNotes(){localStorage.setItem(KEY,JSON.stringify(notes));renderNotes()}
 async function init(){loadNotes();try{const r=await fetch('data/kanji-bank.json');if(!r.ok)throw Error();bank=(await r.json()).filter(x=>x.kanji&&x.kana&&x.meaning);renderBankOptions()}catch{$('bankPick').innerHTML='<option value="">Database tidak tersedia — isi manual</option>'}renderNotes()}
-function renderBankOptions(){const term=norm($('bankSearch').value);filteredBank=bank.map((x,i)=>({...x,_i:i})).filter(x=>!term||norm([x.kanji,x.kana,x.meaning,x.chapter,x.romaji].join(' ')).includes(term));$('bankPick').innerHTML='<option value="">Pilih item database ('+filteredBank.length+')</option>'+filteredBank.map(x=>`<option value="${x._i}">${esc(x.kanji)} — ${esc(x.kana)} (${esc(x.meaning)}) • Bab ${x.chapter||'-'}</option>`).join('')}
-$('bankSearch').oninput=renderBankOptions;
+function renderBankOptions(){
+ // Filter the full bank, but only create a limited number of DOM options.
+ // This prevents the mobile browser from rebuilding thousands of <option> nodes.
+ const term=norm($('bankSearch').value);
+ const matches=[];
+ for(let i=0;i<bank.length;i++){
+   const x=bank[i];
+   if(!term||norm([x.kanji,x.kana,x.meaning,x.chapter,x.romaji].join(' ')).includes(term))matches.push({...x,_i:i});
+ }
+ filteredBank=matches;
+ const shown=matches.slice(0,100);
+ const head=`<option value="">Pilih item database (${matches.length} hasil${matches.length>100?', tampil 100 pertama':''})</option>`;
+ $('bankPick').innerHTML=head+shown.map(x=>`<option value="${x._i}">${esc(x.kanji)} — ${esc(x.kana)} (${esc(x.meaning)}) • Bab ${x.chapter||'-'}</option>`).join('');
+}
+$('bankSearch').oninput=()=>{
+ clearTimeout(bankSearchTimer);
+ bankSearchTimer=setTimeout(renderBankOptions,220);
+};
 $('bankPick').onchange=()=>{const q=bank[Number($('bankPick').value)];if(!q)return;$('kind').value='kanji';$('word').value=q.kanji||'';$('kana').value=q.kana||'';$('romaji').value=q.romaji||'';$('meaning').value=q.meaning||'';$('memo').value=q.chapter?`Dari database • Bab ${q.chapter}`:''};
 $('clear').onclick=()=>['word','kana','romaji','meaning','memo'].forEach(id=>$(id).value='');
 $('save').onclick=()=>{const word=$('word').value.trim(),kana=$('kana').value.trim(),meaning=$('meaning').value.trim();if(!word||!meaning){$('msg').textContent='Isi kata Jepang dan arti Indonesia terlebih dahulu.';return}const id=crypto.randomUUID?crypto.randomUUID():String(Date.now());notes.unshift({id,kind:$('kind').value,word,kana,romaji:$('romaji').value.trim(),meaning,memo:$('memo').value.trim(),correct:0,wrong:0,createdAt:Date.now()});saveNotes();$('msg').textContent='Catatan berhasil disimpan.';$('clear').click()};
