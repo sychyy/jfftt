@@ -31,7 +31,8 @@
   function questionIdentityKey(q) {
     // Pertanyaan yang sama tetap dianggap duplikat meskipun ID, urutan opsi,
     // atau metadata visualnya berbeda. Satu attempt hanya boleh memiliki satu salinan.
-    return `${String(q?.section || '').trim().toLowerCase()}|${normalize(q?.text || '')}`;
+    const options = Array.isArray(q?.options) ? q.options.map(normalize).sort() : [];
+    return `${String(q?.section || '').trim().toLowerCase()}|${normalize(q?.text || '')}|${options.join('|')}`;
   }
   function uniqueBank(bank) {
     const seenIds = new Set();

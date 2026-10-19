@@ -477,226 +477,702 @@
   },
   {
     "section": "vocab",
-    "text": "「おっしゃいます」の意味に近い表現はどれですか。",
+    "text": "「大学」の意味はどれですか。",
     "options": [
-      "言います",
-      "食べます",
-      "見ます",
-      "行きます"
+      "Barang elektronik",
+      "Universitas",
+      "Seribu",
+      "Pegawai perusahaan"
+    ],
+    "answer": 1,
+    "explanation": "「大学」は「Universitas」という意味です。",
+    "id": 151,
+    "lesson": 1
+  },
+  {
+    "section": "vocab",
+    "text": "「机」の読み方はどれですか。",
+    "options": [
+      "つくえ",
+      "たいへんですね",
+      "びじゅつかん",
+      "べんきょうします"
     ],
     "answer": 0,
-    "explanation": "「おっしゃいます」は「言います」の尊敬語です。",
-    "id": 135,
+    "explanation": "「机」は「つくえ」と読みます。",
+    "id": 152,
+    "lesson": 2
+  },
+  {
+    "section": "vocab",
+    "text": "「電話」の意味はどれですか。",
+    "options": [
+      "Tanggal 1",
+      "Telepon",
+      "Keluarga",
+      "Hari kamis"
+    ],
+    "answer": 1,
+    "explanation": "「電話」は「Telepon」という意味です。",
+    "id": 153,
+    "lesson": 3
+  },
+  {
+    "section": "vocab",
+    "text": "「寝ます」の読み方はどれですか。",
+    "options": [
+      "りょこうようひん",
+      "うりば",
+      "よみます",
+      "ねます"
+    ],
+    "answer": 3,
+    "explanation": "「寝ます」は「ねます」と読みます。",
+    "id": 154,
+    "lesson": 4
+  },
+  {
+    "section": "vocab",
+    "text": "「一日」の意味はどれですか。",
+    "options": [
+      "Tanggal 1",
+      "Bawah tanah , basement",
+      "Dia (laki-laki)",
+      "Kamar kecil, WC"
+    ],
+    "answer": 0,
+    "explanation": "「一日」は「Tanggal 1」という意味です。",
+    "id": 155,
+    "lesson": 5
+  },
+  {
+    "section": "vocab",
+    "text": "「宿題」の読み方はどれですか。",
+    "options": [
+      "ちいさい",
+      "おわります",
+      "しゅくだい",
+      "べんり（な）"
+    ],
+    "answer": 2,
+    "explanation": "「宿題」は「しゅくだい」と読みます。",
+    "id": 156,
+    "lesson": 6
+  },
+  {
+    "section": "vocab",
+    "text": "「祖父母」の意味はどれですか。",
+    "options": [
+      "Memotong / menggunting",
+      "Hari kesehatan olahraga",
+      "Kakek nenek",
+      "Anak"
+    ],
+    "answer": 2,
+    "explanation": "「祖父母」は「Kakek nenek」という意味です。",
+    "id": 157,
+    "lesson": 7
+  },
+  {
+    "section": "vocab",
+    "text": "「新設（な）」の読み方はどれですか。",
+    "options": [
+      "たべます",
+      "しんせつ（な）",
+      "さむい",
+      "あおい"
+    ],
+    "answer": 1,
+    "explanation": "「新設（な）」は「しんせつ（な）」と読みます。",
+    "id": 158,
+    "lesson": 8
+  },
+  {
+    "section": "vocab",
+    "text": "「水泳」の意味はどれですか。",
+    "options": [
+      "Renang",
+      "Musim dingin",
+      "Suami orang lain",
+      "Belajar (kepada)"
+    ],
+    "answer": 0,
+    "explanation": "「水泳」は「Renang」という意味です。",
+    "id": 159,
+    "lesson": 9
+  },
+  {
+    "section": "vocab",
+    "text": "「物」の読み方はどれですか。",
+    "options": [
+      "そと",
+      "もの",
+      "すもう",
+      "ふゆ"
+    ],
+    "answer": 1,
+    "explanation": "「物」は「もの」と読みます。",
+    "id": 160,
+    "lesson": 10
+  },
+  {
+    "section": "vocab",
+    "text": "「封筒」の意味はどれですか。",
+    "options": [
+      "Amplop",
+      "Maple",
+      "Samping / sebelah",
+      "Toko sayuran"
+    ],
+    "answer": 0,
+    "explanation": "「封筒」は「Amplop」という意味です。",
+    "id": 161,
+    "lesson": 11
+  },
+  {
+    "section": "vocab",
+    "text": "「生け花」の読み方はどれですか。",
+    "options": [
+      "いけばな",
+      "もうすこし",
+      "たちます",
+      "ぞう"
+    ],
+    "answer": 0,
+    "explanation": "「生け花」は「いけばな」と読みます。",
+    "id": 162,
+    "lesson": 12
+  },
+  {
+    "section": "vocab",
+    "text": "「疲れます」の意味はどれですか。",
+    "options": [
+      "Pengarang",
+      "Lelah",
+      "Susah, berat",
+      "Musim"
+    ],
+    "answer": 1,
+    "explanation": "「疲れます」は「Lelah」という意味です。",
+    "id": 163,
+    "lesson": 13
+  },
+  {
+    "section": "vocab",
+    "text": "「呼びます」の読み方はどれですか。",
+    "options": [
+      "ていきけん",
+      "よびます",
+      "こうばん",
+      "あまい"
+    ],
+    "answer": 1,
+    "explanation": "「呼びます」は「よびます」と読みます。",
+    "id": 164,
+    "lesson": 14
+  },
+  {
+    "section": "vocab",
+    "text": "「美容師」の意味はどれですか。",
+    "options": [
+      "Efek sesudah minum",
+      "Seni",
+      "Ahli kecantikan",
+      "Sakit (nyeri)"
+    ],
+    "answer": 2,
+    "explanation": "「美容師」は「Ahli kecantikan」という意味です。",
+    "id": 165,
+    "lesson": 15
+  },
+  {
+    "section": "vocab",
+    "text": "「乗り換えます」の読み方はどれですか。",
+    "options": [
+      "くすり",
+      "つぎに",
+      "のりかえます",
+      "あけます"
+    ],
+    "answer": 2,
+    "explanation": "「乗り換えます」は「のりかえます」と読みます。",
+    "id": 166,
+    "lesson": 16
+  },
+  {
+    "section": "vocab",
+    "text": "「持って来ます」の意味はどれですか。",
+    "options": [
+      "Membawa datang",
+      "Sopir",
+      "Kemudian, berikutnya",
+      "Wajah"
+    ],
+    "answer": 0,
+    "explanation": "「持って来ます」は「Membawa datang」という意味です。",
+    "id": 167,
+    "lesson": 17
+  },
+  {
+    "section": "vocab",
+    "text": "「転ぶ」の読み方はどれですか。",
+    "options": [
+      "あつめます",
+      "ころぶ",
+      "うわぎ",
+      "あびます（を）"
+    ],
+    "answer": 1,
+    "explanation": "「転ぶ」は「ころぶ」と読みます。",
+    "id": 168,
+    "lesson": 18
+  },
+  {
+    "section": "vocab",
+    "text": "「泊まります」の意味はどれですか。",
+    "options": [
+      "Naik , mendaki",
+      "Akhir-akhir ini",
+      "Mengangkat",
+      "Menginap"
+    ],
+    "answer": 3,
+    "explanation": "「泊まります」は「Menginap」という意味です。",
+    "id": 169,
+    "lesson": 19
+  },
+  {
+    "section": "vocab",
+    "text": "「調べます」の読み方はどれですか。",
+    "options": [
+      "さどう",
+      "おび",
+      "しらべます",
+      "まんざい。らくご"
+    ],
+    "answer": 2,
+    "explanation": "「調べます」は「しらべます」と読みます。",
+    "id": 170,
+    "lesson": 20
+  },
+  {
+    "section": "vocab",
+    "text": "「署長」の意味はどれですか。",
+    "options": [
+      "Kepala kantor polisi",
+      "Bumi",
+      "Prefektur",
+      "Tembok besar cina"
+    ],
+    "answer": 0,
+    "explanation": "「署長」は「Kepala kantor polisi」という意味です。",
+    "id": 171,
+    "lesson": 21
+  },
+  {
+    "section": "vocab",
+    "text": "「お弁当」の読み方はどれですか。",
+    "options": [
+      "おべんとう",
+      "ひさしぶりですね",
+      "はし",
+      "きみ"
+    ],
+    "answer": 0,
+    "explanation": "「お弁当」は「おべんとう」と読みます。",
+    "id": 172,
+    "lesson": 22
+  },
+  {
+    "section": "vocab",
+    "text": "「信号」の意味はどれですか。",
+    "options": [
+      "Bulan",
+      "Cukup",
+      "Lampu lalu lintas",
+      "Akhir-akhir ini"
+    ],
+    "answer": 2,
+    "explanation": "「信号」は「Lampu lalu lintas」という意味です。",
+    "id": 173,
+    "lesson": 23
+  },
+  {
+    "section": "vocab",
+    "text": "「贈答の習慣」の読み方はどれですか。",
+    "options": [
+      "まわします",
+      "ぞうとうのしゅうかん",
+      "なおします",
+      "しげんごみ"
+    ],
+    "answer": 1,
+    "explanation": "「贈答の習慣」は「ぞうとうのしゅうかん」と読みます。",
+    "id": 174,
+    "lesson": 24
+  },
+  {
+    "section": "vocab",
+    "text": "「再婚します」の意味はどれですか。",
+    "options": [
+      "Play group",
+      "Pembayaran rekening listrik,air",
+      "Menikah lagi",
+      "Hadiah kecil yang diberikan orang tua dan"
+    ],
+    "answer": 2,
+    "explanation": "「再婚します」は「Menikah lagi」という意味です。",
+    "id": 175,
+    "lesson": 25
+  },
+  {
+    "section": "vocab",
+    "text": "「別の」の読み方はどれですか。",
+    "options": [
+      "しょうせつ",
+      "たてます",
+      "しゅっさんいわい",
+      "べつの"
+    ],
+    "answer": 3,
+    "explanation": "「別の」は「べつの」と読みます。",
+    "id": 176,
+    "lesson": 26
+  },
+  {
+    "section": "vocab",
+    "text": "「サイズ直し」の意味はどれですか。",
+    "options": [
+      "Perbaikan ukuran",
+      "Masa depan, hari depan",
+      "Berikutnya, lain kali",
+      "Ada"
+    ],
+    "answer": 0,
+    "explanation": "「サイズ直し」は「Perbaikan ukuran」という意味です。",
+    "id": 177,
+    "lesson": 27
+  },
+  {
+    "section": "vocab",
+    "text": "「体育館」の読み方はどれですか。",
+    "options": [
+      "たいいくかん",
+      "われます",
+      "よごれます",
+      "すみ"
+    ],
+    "answer": 0,
+    "explanation": "「体育館」は「たいいくかん」と読みます。",
+    "id": 178,
+    "lesson": 28
+  },
+  {
+    "section": "vocab",
+    "text": "「お先にどうぞ」の意味はどれですか。",
+    "options": [
+      "Menghias,mendekor",
+      "Bertukang dihari minggu",
+      "Sobek",
+      "Silakan duluan"
+    ],
+    "answer": 3,
+    "explanation": "「お先にどうぞ」は「Silakan duluan」という意味です。",
+    "id": 179,
+    "lesson": 29
+  },
+  {
+    "section": "vocab",
+    "text": "「相談します」の読み方はどれですか。",
+    "options": [
+      "そうだんします",
+      "こまります",
+      "おさら",
+      "こわれます"
+    ],
+    "answer": 0,
+    "explanation": "「相談します」は「そうだんします」と読みます。",
+    "id": 180,
+    "lesson": 30
+  },
+  {
+    "section": "vocab",
+    "text": "「法律学」の意味はどれですか。",
+    "options": [
+      "Orang kaya",
+      "Melempar",
+      "Kantor cabang",
+      "Hukum"
+    ],
+    "answer": 3,
+    "explanation": "「法律学」は「Hukum」という意味です。",
+    "id": 181,
+    "lesson": 31
+  },
+  {
+    "section": "vocab",
+    "text": "「お金持ち」の読み方はどれですか。",
+    "options": [
+      "きいろ",
+      "なおります（が）",
+      "おかねもち",
+      "へいてん"
+    ],
+    "answer": 2,
+    "explanation": "「お金持ち」は「おかねもち」と読みます。",
+    "id": 182,
+    "lesson": 32
+  },
+  {
+    "section": "vocab",
+    "text": "「化粧室」の意味はどれですか。",
+    "options": [
+      "Berlanjut (demam)",
+      "Kamar kecil",
+      "Teknik sipil",
+      "Kesehatan"
+    ],
+    "answer": 1,
+    "explanation": "「化粧室」は「Kamar kecil」という意味です。",
+    "id": 183,
+    "lesson": 33
+  },
+  {
+    "section": "vocab",
+    "text": "「まな板」の読み方はどれですか。",
+    "options": [
+      "しろ",
+      "まないた",
+      "ほし",
+      "たいふう"
+    ],
+    "answer": 1,
+    "explanation": "「まな板」は「まないた」と読みます。",
+    "id": 184,
+    "lesson": 34
+  },
+  {
+    "section": "vocab",
+    "text": "「山登り」の意味はどれですか。",
+    "options": [
+      "Menabung",
+      "Rumput laut basah",
+      "Pendakian gunung",
+      "Kesempatan"
+    ],
+    "answer": 2,
+    "explanation": "「山登り」は「Pendakian gunung」という意味です。",
+    "id": 185,
     "lesson": 35
   },
   {
     "section": "vocab",
-    "text": "「召し上がります」の意味に近い表現はどれですか。",
+    "text": "「遠く」の読み方はどれですか。",
     "options": [
-      "寝ます",
-      "見ます",
-      "聞きます",
-      "食べます・飲みます"
+      "みなと",
+      "とおく",
+      "とち",
+      "はっけんします"
     ],
-    "answer": 3,
-    "explanation": "「召し上がります」は「食べます・飲みます」の尊敬語です。",
-    "id": 136,
+    "answer": 1,
+    "explanation": "「遠く」は「とおく」と読みます。",
+    "id": 186,
     "lesson": 36
   },
   {
     "section": "vocab",
-    "text": "「ご覧になります」の意味に近い表現はどれですか。",
+    "text": "「衝突する」の意味はどれですか。",
     "options": [
-      "見ます",
-      "話します",
-      "書きます",
-      "読みます"
+      "Mirip, menyerupai",
+      "Warna merah terang",
+      "Acara tahunan di jepang",
+      "Tabrakan"
     ],
-    "answer": 0,
-    "explanation": "「ご覧になります」は「見ます」の尊敬語です。",
-    "id": 137,
+    "answer": 3,
+    "explanation": "「衝突する」は「Tabrakan」という意味です。",
+    "id": 187,
     "lesson": 37
   },
   {
     "section": "vocab",
-    "text": "「差し上げます」の意味に近い表現はどれですか。",
+    "text": "「似ています」の読み方はどれですか。",
     "options": [
-      "もらいます",
-      "返します",
-      "あげます",
-      "借ります"
+      "にています",
+      "あいます（が）",
+      "じかんがたちます",
+      "よごします"
     ],
-    "answer": 2,
-    "explanation": "「差し上げます」は「あげます」の謙譲語です。",
-    "id": 138,
+    "answer": 0,
+    "explanation": "「似ています」は「にています」と読みます。",
+    "id": 188,
     "lesson": 38
   },
   {
     "section": "vocab",
-    "text": "「伺います」の意味に近い表現はどれですか。",
+    "text": "「台風」の意味はどれですか。",
     "options": [
-      "帰ります",
-      "行きます・聞きます",
-      "休みます",
-      "待ちます"
+      "Topan, taifun",
+      "Memberi peringatan,memperingatkan",
+      "Motif bunga",
+      "Bersenang hati, merasa lega"
     ],
-    "answer": 1,
-    "explanation": "「伺います」は「行きます・聞きます」などの謙譲語です。",
-    "id": 139,
+    "answer": 0,
+    "explanation": "「台風」は「Topan, taifun」という意味です。",
+    "id": 189,
     "lesson": 39
   },
   {
     "section": "vocab",
-    "text": "「片づけます」の意味に近い表現はどれですか。",
+    "text": "「体積／容積」の読み方はどれですか。",
     "options": [
-      "壊します",
-      "整理します",
-      "運びます",
-      "探します"
+      "きゅうに",
+      "しんせつにします",
+      "きる",
+      "たいせき／ようせき"
     ],
-    "answer": 1,
-    "explanation": "「片づけます」は物を整理してきれいにします。",
-    "id": 140,
+    "answer": 3,
+    "explanation": "「体積／容積」は「たいせき／ようせき」と読みます。",
+    "id": 190,
     "lesson": 40
   },
   {
     "section": "vocab",
-    "text": "「間に合います」の意味に近い表現はどれですか。",
+    "text": "「中身」の意味はどれですか。",
     "options": [
-      "道に迷います",
-      "忘れ物をします",
-      "時間に遅れません",
-      "休みになります"
+      "Keras, disiplin",
+      "Isi",
+      "Ditengah perjalanan",
+      "Lingkaran"
     ],
-    "answer": 2,
-    "explanation": "「間に合います」は必要な時刻に遅れないことです。",
-    "id": 141,
+    "answer": 1,
+    "explanation": "「中身」は「Isi」という意味です。",
+    "id": 191,
     "lesson": 41
   },
   {
     "section": "vocab",
-    "text": "「見つかります」の意味に近い表現はどれですか。",
+    "text": "「削る」の読み方はどれですか。",
     "options": [
-      "探していた物が見つけられます",
-      "物をなくします",
-      "物を壊します",
-      "物を借ります"
+      "みずたま",
+      "おんがくか",
+      "けずる",
+      "ぼうねんかい"
     ],
-    "answer": 0,
-    "explanation": "「見つかります」は探していた物などが発見されることです。",
-    "id": 142,
+    "answer": 2,
+    "explanation": "「削る」は「けずる」と読みます。",
+    "id": 192,
     "lesson": 42
   },
   {
     "section": "vocab",
-    "text": "「続けます」の意味に近い表現はどれですか。",
+    "text": "「変な」の意味はどれですか。",
     "options": [
-      "やめないで行います",
-      "初めて行います",
-      "忘れてしまいます",
-      "すぐに終わります"
+      "Hubungan",
+      "Tesis, skripsi",
+      "Mencocokkan",
+      "Aneh"
     ],
-    "answer": 0,
-    "explanation": "「続けます」は途中でやめずに行うことです。",
-    "id": 143,
+    "answer": 3,
+    "explanation": "「変な」は「Aneh」という意味です。",
+    "id": 193,
     "lesson": 43
   },
   {
     "section": "vocab",
-    "text": "「比べます」の意味に近い表現はどれですか。",
+    "text": "「順序」の読み方はどれですか。",
     "options": [
-      "名前を書きます",
-      "一つに決めます",
-      "違いや同じ点を調べます",
-      "順番を変えます"
+      "ぐあい",
+      "こい",
+      "じゅんじょ",
+      "いやがります"
     ],
     "answer": 2,
-    "explanation": "「比べます」は二つ以上の物の違いなどを調べることです。",
-    "id": 144,
+    "explanation": "「順序」は「じゅんじょ」と読みます。",
+    "id": 194,
     "lesson": 44
   },
   {
     "section": "vocab",
-    "text": "「申し込みます」の意味に近い表現はどれですか。",
+    "text": "「謝ります」の意味はどれですか。",
     "options": [
-      "物を修理します",
-      "道を説明します",
-      "参加や利用を希望して伝えます",
-      "予定を取り消します"
+      "Meminta maaf",
+      "Naik",
+      "Rambut panjang",
+      "Memasukkan"
     ],
-    "answer": 2,
-    "explanation": "「申し込みます」は参加・利用などを希望して伝えることです。",
-    "id": 145,
+    "answer": 0,
+    "explanation": "「謝ります」は「Meminta maaf」という意味です。",
+    "id": 195,
     "lesson": 45
   },
   {
     "section": "vocab",
-    "text": "「確かめます」の意味に近い表現はどれですか。",
+    "text": "「向かいます」の読み方はどれですか。",
     "options": [
-      "正しいかどうか調べます",
-      "長く休みます",
-      "大きな声で話します",
-      "別の場所へ移ります"
+      "けしょう（を）します",
+      "じゅんじょ",
+      "むかいます",
+      "ひょうげん"
     ],
-    "answer": 0,
-    "explanation": "「確かめます」は正しいかどうかを調べることです。",
-    "id": 146,
+    "answer": 2,
+    "explanation": "「向かいます」は「むかいます」と読みます。",
+    "id": 196,
     "lesson": 46
   },
   {
     "section": "vocab",
-    "text": "「間違えます」の意味に近い表現はどれですか。",
+    "text": "「人口」の意味はどれですか。",
     "options": [
-      "予定を決めます",
-      "よく準備します",
-      "正しくない答えをします",
-      "正しく覚えます"
+      "Ilmu pengetahuan",
+      "Berebut",
+      "Jumlah penduduk",
+      "Mobil ambulans"
     ],
     "answer": 2,
-    "explanation": "「間違えます」は正しくないことをすることです。",
-    "id": 147,
+    "explanation": "「人口」は「Jumlah penduduk」という意味です。",
+    "id": 197,
     "lesson": 47
   },
   {
     "section": "vocab",
-    "text": "「慣れます」の意味に近い表現はどれですか。",
+    "text": "「者」の読み方はどれですか。",
     "options": [
-      "急にやめます",
-      "何度も経験して上手になります",
-      "初めて見ます",
-      "忘れてしまいます"
+      "きたえる",
+      "もの",
+      "けしょう（を）します",
+      "あじがします"
     ],
     "answer": 1,
-    "explanation": "「慣れます」は経験を重ねて違和感がなくなることです。",
-    "id": 148,
+    "explanation": "「者」は「もの」と読みます。",
+    "id": 198,
     "lesson": 48
   },
   {
     "section": "vocab",
-    "text": "「伝えます」の意味に近い表現はどれですか。",
+    "text": "「作品」の意味はどれですか。",
     "options": [
-      "道を渡ります",
-      "情報や気持ちを相手に知らせます",
-      "物を修理します",
-      "食事を作ります"
+      "Mengucapkan terima kasih",
+      "Anak laki-laki tertua",
+      "Gajah",
+      "Karya"
     ],
-    "answer": 1,
-    "explanation": "「伝えます」は情報や気持ちを相手に知らせることです。",
-    "id": 149,
+    "answer": 3,
+    "explanation": "「作品」は「Karya」という意味です。",
+    "id": 199,
     "lesson": 49
   },
   {
     "section": "vocab",
-    "text": "「支度します」の意味に近い表現はどれですか。",
+    "text": "「象」の読み方はどれですか。",
     "options": [
-      "説明を聞きます",
-      "必要な準備をします",
-      "予定を忘れます",
-      "物をなくします"
+      "がまんする",
+      "ぞう",
+      "にゅうかん",
+      "しょうがい"
     ],
     "answer": 1,
-    "explanation": "「支度します」は何かをするために準備することです。",
-    "id": 150,
+    "explanation": "「象」は「ぞう」と読みます。",
+    "id": 200,
     "lesson": 50
   }
 ]

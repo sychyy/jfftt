@@ -2090,11 +2090,9 @@ async function startQuiz() {
             const btnNext = document.getElementById('btn-next-question');
             const btnPrev = document.getElementById('btn-prev-question');
 
-const currentSectionForPrev = state.questions[state.currentQuestionIndex]?.section;
-const previousSectionForPrev = state.questions[state.currentQuestionIndex - 1]?.section;
-// Tombol kembali dikunci pada awal setiap sesi. Jadi setelah pindah
-// dari Vocabulary ke Grammar, Vocabulary tidak dapat dibuka lagi.
-btnPrev.disabled = state.currentQuestionIndex === 0 || currentSectionForPrev !== previousSectionForPrev;
+// Tombol kembali hanya terkunci di awal sesi. Soal sebelumnya selalu
+// dipulihkan dari state sesi yang sama, termasuk ketika berganti kategori.
+btnPrev.disabled = state.currentQuestionIndex === 0;
 
 if (btnPrev.disabled) {
     btnPrev.classList.add('opacity-50', 'cursor-not-allowed');

@@ -698,5 +698,719 @@
     "explanation": "指示や内容と同じにする表現です。",
     "id": 50,
     "lesson": 50
+  },
+  {
+    "section": "grammar",
+    "text": "ミラーさん（　）会社員です。",
+    "options": [
+      "は",
+      "を",
+      "に",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "「AはBです」で話題を説明します。",
+    "id": 51,
+    "lesson": 1
+  },
+  {
+    "section": "grammar",
+    "text": "このかばんは だれ（　）ですか。",
+    "options": [
+      "を",
+      "の",
+      "に",
+      "で"
+    ],
+    "answer": 1,
+    "explanation": "持ち主を表すとき「だれの」を使います。",
+    "id": 52,
+    "lesson": 2
+  },
+  {
+    "section": "grammar",
+    "text": "毎晩 １１時（　）寝ます。",
+    "options": [
+      "で",
+      "へ",
+      "に",
+      "を"
+    ],
+    "answer": 2,
+    "explanation": "時刻の「に」を使います。",
+    "id": 53,
+    "lesson": 3
+  },
+  {
+    "section": "grammar",
+    "text": "会社（　）新聞を読みます。",
+    "options": [
+      "に",
+      "で",
+      "へ",
+      "を"
+    ],
+    "answer": 1,
+    "explanation": "動作をする場所には「で」を使います。",
+    "id": 54,
+    "lesson": 4
+  },
+  {
+    "section": "grammar",
+    "text": "東京（　）行きます。",
+    "options": [
+      "で",
+      "に",
+      "を",
+      "が"
+    ],
+    "answer": 1,
+    "explanation": "移動先には「へ」または「に」を使えます。",
+    "id": 55,
+    "lesson": 5
+  },
+  {
+    "section": "grammar",
+    "text": "一緒に 映画を（　）行きませんか。",
+    "options": [
+      "見に",
+      "見て",
+      "見るで",
+      "見ますに"
+    ],
+    "answer": 0,
+    "explanation": "目的を表す「Vます＋に行きます」を使います。",
+    "id": 56,
+    "lesson": 6
+  },
+  {
+    "section": "grammar",
+    "text": "田中さん（　）写真をもらいました。",
+    "options": [
+      "に",
+      "で",
+      "へ",
+      "を"
+    ],
+    "answer": 0,
+    "explanation": "「人に～をもらいます」で受け手を表します。",
+    "id": 57,
+    "lesson": 7
+  },
+  {
+    "section": "grammar",
+    "text": "この部屋は 静か（　）明るいです。",
+    "options": [
+      "な",
+      "で",
+      "に",
+      "を"
+    ],
+    "answer": 1,
+    "explanation": "形容動詞を並べるとき「～で」を使います。",
+    "id": 58,
+    "lesson": 8
+  },
+  {
+    "section": "grammar",
+    "text": "日本語が（　）わかります。",
+    "options": [
+      "とても",
+      "しか",
+      "でも",
+      "ほど"
+    ],
+    "answer": 0,
+    "explanation": "程度を表す副詞「とても」を使います。",
+    "id": 59,
+    "lesson": 9
+  },
+  {
+    "section": "grammar",
+    "text": "机の上（　）本があります。",
+    "options": [
+      "で",
+      "に",
+      "を",
+      "へ"
+    ],
+    "answer": 1,
+    "explanation": "存在する場所には「に」を使います。",
+    "id": 60,
+    "lesson": 10
+  },
+  {
+    "section": "grammar",
+    "text": "りんごを３（　）買いました。",
+    "options": [
+      "枚",
+      "台",
+      "個",
+      "人"
+    ],
+    "answer": 2,
+    "explanation": "小さな物などを数えるとき「個」を使えます。",
+    "id": 61,
+    "lesson": 11
+  },
+  {
+    "section": "grammar",
+    "text": "日曜日は うち（　）休みます。",
+    "options": [
+      "で",
+      "に",
+      "を",
+      "へ"
+    ],
+    "answer": 0,
+    "explanation": "「うちで」のように場所で行う動作には「で」。",
+    "id": 62,
+    "lesson": 12
+  },
+  {
+    "section": "grammar",
+    "text": "この部屋で名前を（　）もいいですか。",
+    "options": [
+      "撮って",
+      "撮る",
+      "撮り",
+      "撮った"
+    ],
+    "answer": 0,
+    "explanation": "許可は「Vて＋もいいですか」。",
+    "id": 63,
+    "lesson": 13
+  },
+  {
+    "section": "grammar",
+    "text": "ここでタバコを（　）はいけません。",
+    "options": [
+      "吸って",
+      "吸う",
+      "吸い",
+      "吸った"
+    ],
+    "answer": 0,
+    "explanation": "禁止は「Vて＋はいけません」。",
+    "id": 64,
+    "lesson": 14
+  },
+  {
+    "section": "grammar",
+    "text": "今、宿題を（　）います。",
+    "options": [
+      "して",
+      "する",
+      "し",
+      "した"
+    ],
+    "answer": 0,
+    "explanation": "進行中の動作は「Vて＋います」。",
+    "id": 65,
+    "lesson": 15
+  },
+  {
+    "section": "grammar",
+    "text": "わたしは会社員（　）ありません。",
+    "options": [
+      "を",
+      "で",
+      "では",
+      "に"
+    ],
+    "answer": 2,
+    "explanation": "名詞の否定は「ではありません」。",
+    "id": 66,
+    "lesson": 16
+  },
+  {
+    "section": "grammar",
+    "text": "コーヒー（　）紅茶、どちらが好きですか。",
+    "options": [
+      "と",
+      "が",
+      "や",
+      "も"
+    ],
+    "answer": 0,
+    "explanation": "二つを並べるとき「と」を使います。",
+    "id": 67,
+    "lesson": 17
+  },
+  {
+    "section": "grammar",
+    "text": "日本語（　）英語が話せます。",
+    "options": [
+      "が",
+      "を",
+      "に",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "能力の対象は「が」を使います。",
+    "id": 68,
+    "lesson": 18
+  },
+  {
+    "section": "grammar",
+    "text": "雨が降って（　）、出かけません。",
+    "options": [
+      "も",
+      "から",
+      "まで",
+      "だけ"
+    ],
+    "answer": 1,
+    "explanation": "理由を表す「から」を使います。",
+    "id": 69,
+    "lesson": 19
+  },
+  {
+    "section": "grammar",
+    "text": "駅まで歩いて（　）。",
+    "options": [
+      "行きます",
+      "います",
+      "あります",
+      "ください"
+    ],
+    "answer": 0,
+    "explanation": "「Vて行きます」で動作の連続を表します。",
+    "id": 70,
+    "lesson": 20
+  },
+  {
+    "section": "grammar",
+    "text": "宿題をして（　）寝ます。",
+    "options": [
+      "から",
+      "まで",
+      "しか",
+      "ほど"
+    ],
+    "answer": 0,
+    "explanation": "「Vてから」で順序を表します。",
+    "id": 71,
+    "lesson": 21
+  },
+  {
+    "section": "grammar",
+    "text": "日本へ行った（　）があります。",
+    "options": [
+      "こと",
+      "もの",
+      "ところ",
+      "そう"
+    ],
+    "answer": 0,
+    "explanation": "経験は「Vたことがあります」。",
+    "id": 72,
+    "lesson": 22
+  },
+  {
+    "section": "grammar",
+    "text": "明日は早く起きる（　）です。",
+    "options": [
+      "つもり",
+      "こと",
+      "ところ",
+      "ため"
+    ],
+    "answer": 0,
+    "explanation": "予定・意志は「Vるつもりです」。",
+    "id": 73,
+    "lesson": 23
+  },
+  {
+    "section": "grammar",
+    "text": "来月、京都へ行く（　）です。",
+    "options": [
+      "予定",
+      "こと",
+      "もの",
+      "ため"
+    ],
+    "answer": 0,
+    "explanation": "予定を表す名詞は「予定」です。",
+    "id": 74,
+    "lesson": 24
+  },
+  {
+    "section": "grammar",
+    "text": "雨が降った（　）、試合が中止になりました。",
+    "options": [
+      "ので",
+      "でも",
+      "しか",
+      "ながら"
+    ],
+    "answer": 0,
+    "explanation": "理由を柔らかく述べる「ので」を使います。",
+    "id": 75,
+    "lesson": 25
+  },
+  {
+    "section": "grammar",
+    "text": "パソコンを使う（　）ができます。",
+    "options": [
+      "こと",
+      "もの",
+      "ため",
+      "ところ"
+    ],
+    "answer": 0,
+    "explanation": "可能・能力は「Vることができます」。",
+    "id": 76,
+    "lesson": 26
+  },
+  {
+    "section": "grammar",
+    "text": "窓を開けて（　）ください。",
+    "options": [
+      "もらい",
+      "みて",
+      "おいて",
+      "ください"
+    ],
+    "answer": 3,
+    "explanation": "依頼は「Vてください」。",
+    "id": 77,
+    "lesson": 27
+  },
+  {
+    "section": "grammar",
+    "text": "会議の前に資料をコピーして（　）ください。",
+    "options": [
+      "おいて",
+      "みて",
+      "しまって",
+      "あって"
+    ],
+    "answer": 0,
+    "explanation": "準備として「Vておきます」を使います。",
+    "id": 78,
+    "lesson": 28
+  },
+  {
+    "section": "grammar",
+    "text": "宿題をもう（　）しまいました。",
+    "options": [
+      "して",
+      "する",
+      "し",
+      "した"
+    ],
+    "answer": 0,
+    "explanation": "完了・遺憾は「Vてしまいました」。",
+    "id": 79,
+    "lesson": 29
+  },
+  {
+    "section": "grammar",
+    "text": "電車に財布を（　）しまいました。",
+    "options": [
+      "忘れて",
+      "忘れる",
+      "忘れ",
+      "忘れた"
+    ],
+    "answer": 0,
+    "explanation": "「Vてしまいました」で残念な結果を表せます。",
+    "id": 80,
+    "lesson": 30
+  },
+  {
+    "section": "grammar",
+    "text": "この漢字は「やさしい」（　）読みます。",
+    "options": [
+      "と",
+      "を",
+      "に",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "引用する読み方は「～と読みます」。",
+    "id": 81,
+    "lesson": 31
+  },
+  {
+    "section": "grammar",
+    "text": "先生に作文を（　）れました。",
+    "options": [
+      "ほめ",
+      "ほめら",
+      "ほめて",
+      "ほめる"
+    ],
+    "answer": 1,
+    "explanation": "受身形「ほめられました」を使います。",
+    "id": 82,
+    "lesson": 32
+  },
+  {
+    "section": "grammar",
+    "text": "わたしは友達（　）駅まで送ってもらいました。",
+    "options": [
+      "に",
+      "を",
+      "が",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "「人にVてもらう」で相手の行為を受けます。",
+    "id": 83,
+    "lesson": 33
+  },
+  {
+    "section": "grammar",
+    "text": "この部屋は子ども（　）使われています。",
+    "options": [
+      "が",
+      "に",
+      "を",
+      "で"
+    ],
+    "answer": 1,
+    "explanation": "受身で動作主を表すとき「に」を使います。",
+    "id": 84,
+    "lesson": 34
+  },
+  {
+    "section": "grammar",
+    "text": "先生はもう帰った（　）です。",
+    "options": [
+      "そう",
+      "よう",
+      "ため",
+      "つもり"
+    ],
+    "answer": 0,
+    "explanation": "見聞きした情報の推量は「～そうです」。",
+    "id": 85,
+    "lesson": 35
+  },
+  {
+    "section": "grammar",
+    "text": "このケーキはおいし（　）です。",
+    "options": [
+      "そう",
+      "よう",
+      "らしい",
+      "ため"
+    ],
+    "answer": 0,
+    "explanation": "見た目からの推量は「～そうです」。",
+    "id": 86,
+    "lesson": 36
+  },
+  {
+    "section": "grammar",
+    "text": "田中さんは来る（　）思います。",
+    "options": [
+      "と",
+      "を",
+      "に",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "「～と思います」で意見・推測を表します。",
+    "id": 87,
+    "lesson": 37
+  },
+  {
+    "section": "grammar",
+    "text": "明日は雨（　）と思います。",
+    "options": [
+      "だ",
+      "な",
+      "に",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "名詞・ナ形容詞は「だと思います」。",
+    "id": 88,
+    "lesson": 38
+  },
+  {
+    "section": "grammar",
+    "text": "忘れない（　）メモしてください。",
+    "options": [
+      "ように",
+      "ために",
+      "ので",
+      "ながら"
+    ],
+    "answer": 0,
+    "explanation": "目標・注意は「～ように」を使います。",
+    "id": 89,
+    "lesson": 39
+  },
+  {
+    "section": "grammar",
+    "text": "日本語が話せる（　）なりました。",
+    "options": [
+      "ように",
+      "ために",
+      "そうに",
+      "ながら"
+    ],
+    "answer": 0,
+    "explanation": "能力の変化は「～ようになりました」。",
+    "id": 90,
+    "lesson": 40
+  },
+  {
+    "section": "grammar",
+    "text": "健康の（　）毎日歩いています。",
+    "options": [
+      "ために",
+      "ように",
+      "そうに",
+      "しか"
+    ],
+    "answer": 0,
+    "explanation": "目的は「Nのために」。",
+    "id": 91,
+    "lesson": 41
+  },
+  {
+    "section": "grammar",
+    "text": "音楽を聞き（　）勉強します。",
+    "options": [
+      "ながら",
+      "たり",
+      "ても",
+      "ので"
+    ],
+    "answer": 0,
+    "explanation": "同時動作は「Vます＋ながら」。",
+    "id": 92,
+    "lesson": 42
+  },
+  {
+    "section": "grammar",
+    "text": "日曜日は掃除したり、洗濯し（　）します。",
+    "options": [
+      "たり",
+      "ながら",
+      "ても",
+      "ので"
+    ],
+    "answer": 0,
+    "explanation": "例を並べるとき「Vたり、Vたりします」。",
+    "id": 93,
+    "lesson": 43
+  },
+  {
+    "section": "grammar",
+    "text": "この薬を飲め（　）、元気になります。",
+    "options": [
+      "ば",
+      "たら",
+      "なら",
+      "ても"
+    ],
+    "answer": 0,
+    "explanation": "条件の「～ば」を使います。",
+    "id": 94,
+    "lesson": 44
+  },
+  {
+    "section": "grammar",
+    "text": "時間があっ（　）、映画を見ませんか。",
+    "options": [
+      "たら",
+      "ば",
+      "なら",
+      "ても"
+    ],
+    "answer": 0,
+    "explanation": "「～たら」で条件を表します。",
+    "id": 95,
+    "lesson": 45
+  },
+  {
+    "section": "grammar",
+    "text": "日本へ行く（　）、京都にも行きたいです。",
+    "options": [
+      "なら",
+      "ので",
+      "しか",
+      "ほど"
+    ],
+    "answer": 0,
+    "explanation": "「～なら」で条件・話題を提示します。",
+    "id": 96,
+    "lesson": 46
+  },
+  {
+    "section": "grammar",
+    "text": "駅に着い（　）電話してください。",
+    "options": [
+      "たら",
+      "ば",
+      "なら",
+      "でも"
+    ],
+    "answer": 0,
+    "explanation": "到着後の条件は「Vたら」です。",
+    "id": 97,
+    "lesson": 47
+  },
+  {
+    "section": "grammar",
+    "text": "この仕事は一人（　）できます。",
+    "options": [
+      "で",
+      "に",
+      "を",
+      "が"
+    ],
+    "answer": 0,
+    "explanation": "手段・人数を表す「で」を使います。",
+    "id": 98,
+    "lesson": 48
+  },
+  {
+    "section": "grammar",
+    "text": "駅（　）友達を待っています。",
+    "options": [
+      "で",
+      "に",
+      "へ",
+      "を"
+    ],
+    "answer": 0,
+    "explanation": "場所で行う「待つ」には「で」を使います。",
+    "id": 99,
+    "lesson": 49
+  },
+  {
+    "section": "grammar",
+    "text": "部長（　）申し上げます。",
+    "options": [
+      "に",
+      "へ",
+      "を",
+      "で"
+    ],
+    "answer": 0,
+    "explanation": "「人に申し上げます」で相手を表します。",
+    "id": 100,
+    "lesson": 50
+  },
+  {
+    "section": "grammar",
+    "text": "わたしがご案内（　）ます。",
+    "options": [
+      "し",
+      "いたし",
+      "なり",
+      "お"
+    ],
+    "answer": 1,
+    "explanation": "謙譲語「ご案内いたします」を使います。",
+    "id": 201,
+    "lesson": 51
   }
 ]

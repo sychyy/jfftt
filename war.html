@@ -531,7 +531,7 @@ async function startWar(){
       const source=sourceRaw.filter(q=>{const key=JSON.stringify([Number(q.chapter),String(q.kanji||'').normalize('NFKC'),String(q.kana||'').normalize('NFKC'),String(q.meaning||'').normalize('NFKC').toLowerCase()]);if(seenKanjiContent.has(key))return false;seenKanjiContent.add(key);return true;});
       if(source.length<Number(room.question_count)){toast('Bank Kanji pada level ini tidak cukup untuk jumlah soal yang dipilih.');return}
       const answerMode=room.kanji_answer_mode==='romaji'?'romaji':'meaning';
-      selected=randomize(source).slice(0,Number(room.question_count)).map((q)=>{const opts=kanjiOptionsFor(q,source,answerMode);const ans=answerMode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();return {id:'kanji-'+q.chapter+'-'+source.indexOf(q),type:'kanji',section:'kanji',chapter:q.chapter,kanji:q.kanji,kana:q.kana,meaning:q.meaning,answer_mode:answerMode,options:opts,answer:opts.findIndex(x=>String(x).normalize('NFKC').toLowerCase()===ans.normalize('NFKC').toLowerCase())}});
+      selected=randomize(source).slice(0,Number(room.question_count)).map((q)=>{const opts=kanjiOptionsFor(q,source,answerMode);const ans=answerMode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();return {id:'kanji-'+q.chapter+'-'+source.indexOf(q),type:'kanji',section:'kanji',chapter:q.chapter,kanji:q.kanji,kana:q.kana,meaning:q.meaning,answer_mode:answerMode,options:opts}});
     }else{
       if(!bank.length)await loadBank();
       selected=buildWarQuestions(Number(room.question_count)||10);

@@ -28,7 +28,8 @@ async function init(){
    const canonicalEntries=new Set(baseBank.map(x=>JSON.stringify([Number(x.chapter),x.kanji,x.kana,x.meaning])));
    const seenKanji=new Set();
    questions=requestedIds.filter(q=>{if(!q||typeof q!=='object'||q.type!=='kanji'||!canonicalEntries.has(JSON.stringify([Number(q.chapter),q.kanji,q.kana,q.meaning]))||!Array.isArray(q.options)||q.options.length!==4||!Number.isInteger(Number(q.answer))||Number(q.answer)<0||Number(q.answer)>=q.options.length)return false;const key=JSON.stringify([Number(q.chapter),String(q.kanji||'').normalize('NFKC'),String(q.kana||'').normalize('NFKC'),String(q.meaning||'').normalize('NFKC').toLowerCase()]);if(seenKanji.has(key))return false;seenKanji.add(key);return true;});
-   questions=questions.map(q=>({...q,section:'kanji'}));
+   questions=questions.map(q=>{const answerText=q.answer_mode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();const answer=q.options.findIndex(x=>String(x).normalize('NFKC').toLowerCase()===answerText.normalize('NFKC').toLowerCase());return {...q,section:'kanji',answer};});
+   if(questions.some(q=>q.answer<0)){redirectWithToast('Daftar soal Kanji room tidak memiliki kunci yang valid. Minta host memulai War baru.');return}
  }else{
    if(!window.JFTQuestionBank)throw new Error('Modul bank soal belum dimuat.');bank=await window.JFTQuestionBank.load();
    const questionById=new Map(bank.map(q=>[String(q.id),q]));
@@ -118,7 +119,7 @@ function choose(choice){
 }
 function updateNav(){
   const prev=document.getElementById('btn-prev-question'),next=document.getElementById('btn-next-question');
-  const prevSame=idx>0&&questions[idx-1]?.section===questions[idx]?.section;
+  const prevSame=idx>0;
   prev.disabled=!prevSame;
   prev.className='bg-slate-200 text-slate-700 font-medium py-2.5 px-6 rounded-lg flex items-center gap-2 border-2 border-slate-700 shadow-[3px_3px_0_#1f2937] '+(prev.disabled?'opacity-50 cursor-not-allowed':'hover:bg-slate-300');
   next.disabled=answers[idx]===null;
@@ -148,13 +149,13 @@ Lanjut ke ${nextName}?`,()=>{idx=nextIdx;renderQuestion();window.scrollTo(0,0);p
   idx=nextIdx;renderQuestion();window.scrollTo(0,0);pushProgress();
 }
 document.getElementById('btn-prev-question').onclick=goPrevious;document.getElementById('btn-next-question').onclick=goNext;
-async function pushProgress(){if(!player||finished)return;const elapsed=Math.floor((Date.now()-startedAt)/1000);const q=questions[idx];const answeredCount=answers.filter(v=>v!==null).length;await sb.from('jft_war_players').update({current_question:Math.max(maxReached,1),current_section:q?.section||null,elapsed_seconds:elapsed,correct,score:scoreOf(correct,answeredCount),status:'running',last_seen_at:new Date().toISOString()}).eq('id',player.id)}
+async function pushProgress(){if(!player||finished)return;const elapsed=Math.floor((Date.now()-startedAt)/1000);const q=questions[idx];const answeredCount=answers.filter(v=>v!==null).length;await sb.from('jft_war_players').update({current_question:Math.max(maxReached,1),current_section:q?.section||null,elapsed_seconds:elapsed,status:'running',last_seen_at:new Date().toISOString()}).eq('id',player.id)}
 function renderPlayers(){
  const grid=document.getElementById('playersGrid');if(!grid)return;
- sb.from('jft_war_players').select('id,player_name,current_question,current_section,elapsed_seconds,status,created_at,score,correct').eq('room_id',room.id).then(({data,error})=>{
+ sb.from('jft_war_players').select('id,player_name,current_question,current_section,elapsed_seconds,status,created_at').eq('room_id',room.id).then(({data,error})=>{
   if(error){console.warn('Leaderboard War gagal dimuat:',error);return}
-  const ps=(data||[]).filter(p=>!['kicked','left'].includes(p.status)).sort((a,b)=>Number(b.score||0)-Number(a.score||0)||Number(b.current_question||0)-Number(a.current_question||0)||Number(a.elapsed_seconds||0)-Number(b.elapsed_seconds||0));
-  grid.innerHTML=ps.map((p,i)=>{const q=Math.min(Number(p.current_question||0),room.question_count),sc=Number(p.score||0);return `<div class="monitor-row ${p.id===player.id?'me':''} rounded-xl border border-slate-200 p-3 bg-white"><div class="flex justify-between gap-2"><b class="text-sm truncate">#${i+1} ${esc(p.player_name)} ${p.id===player.id?'<span class="text-[9px] text-slate-400">(KAMU)</span>':''}</b><b class="text-xs">${p.status==='finished'?'Selesai':'Mengerjakan'}</b></div><div class="flex items-center justify-between mt-1"><span class="text-[10px] text-slate-500">Soal ${q}/${room.question_count} • ${fmt(p.elapsed_seconds||0)}</span><b class="text-xs text-slate-500">${p.status==='finished'?'Selesai':'Berlangsung'}</b></div><div class="text-[10px] text-slate-400 mt-1">${sectionName(p.current_section)} • ${Number(p.correct||0)} benar</div><div class="mini-progress mt-2"><div style="width:${room.question_count?q/room.question_count*100:0}%"></div></div></div>`}).join('')||'<div class="text-xs text-slate-400">Belum ada pemain.</div>'
+  const ps=(data||[]).filter(p=>!['kicked','left'].includes(p.status)).sort((a,b)=>Number(b.current_question||0)-Number(a.current_question||0)||Number(a.elapsed_seconds||0)-Number(b.elapsed_seconds||0));
+  grid.innerHTML=ps.map((p,i)=>{const q=Math.min(Number(p.current_question||0),room.question_count),sc=Number(p.score||0);return `<div class="monitor-row ${p.id===player.id?'me':''} rounded-xl border border-slate-200 p-3 bg-white"><div class="flex justify-between gap-2"><b class="text-sm truncate">#${i+1} ${esc(p.player_name)} ${p.id===player.id?'<span class="text-[9px] text-slate-400">(KAMU)</span>':''}</b><b class="text-xs">${p.status==='finished'?'Selesai':'Mengerjakan'}</b></div><div class="flex items-center justify-between mt-1"><span class="text-[10px] text-slate-500">Soal ${q}/${room.question_count} • ${fmt(p.elapsed_seconds||0)}</span><b class="text-xs text-slate-500">${p.status==='finished'?'Selesai':'Berlangsung'}</b></div><div class="text-[10px] text-slate-400 mt-1">${sectionName(p.current_section)}</div><div class="mini-progress mt-2"><div style="width:${room.question_count?q/room.question_count*100:0}%"></div></div></div>`}).join('')||'<div class="text-xs text-slate-400">Belum ada pemain.</div>'
  })
 }
 async function completeWar(){
