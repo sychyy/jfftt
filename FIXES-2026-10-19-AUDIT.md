@@ -12,3 +12,10 @@
 - Listening: 102
 - Reading: 67
 - Total: 404
+
+## 2026-10-19 — War question/review corrections
+- Removed the generic fill-in instruction from non-grammar questions; the instruction now appears only when a grammar item actually contains a blank, or when a question defines its own instruction.
+- Fixed grammar question ID 77: `窓を開けて（　）ください。` now uses `おいて` as the correct option, avoiding the malformed `くださいください` answer.
+- Review cards now preserve the complete question and show all options, highlighting the correct option, plus the player's answer and the answer key.
+- Added `supabase/jft-war-review-migration.sql` to add `review_data` for cross-player answer review. Apply this SQL in Supabase before deploying; team reviews stay hidden until every active player is finished.
+- Validation: JSON parse, option uniqueness and answer-index checks pass for all 4 question banks (404 questions total); `node --check` passes for the modified War quiz and result scripts.

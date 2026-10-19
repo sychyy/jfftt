@@ -77,7 +77,7 @@ function renderQuestion(){
   const levelText=room.quiz_mode==='kanji'?`Kanji ${String(room.kanji_level||'all').toUpperCase()}`:'';
   document.getElementById('quiz-section-badge').textContent=q.type==='kanji'?`${sec[0]} / ${levelText}`:(sec?`${sec[0]} / ${sec[1]}`:q.section);
   const instruction=document.getElementById('quiz-instruction');
-  if(instruction)instruction.textContent=q.type==='kanji'?(q.answer_mode==='romaji'?'Pilih bacaan romaji yang paling tepat untuk kosakata berikut.':'Pilih arti bahasa Indonesia yang paling tepat untuk kanji berikut.'):'つぎの ぶんの （　　　）に なにを いれますか。';
+  if(instruction)instruction.textContent=q.type==='kanji'?(q.answer_mode==='romaji'?'Pilih bacaan romaji yang paling tepat untuk kosakata berikut.':'Pilih arti bahasa Indonesia yang paling tepat untuk kanji berikut.'):(q.instruction||((q.section==='grammar'&&/（\s*　*）|\(\s*\)/.test(q.text||''))?'つぎの ぶんの （　　　）に なにを いれますか。':''));
   const questionEl=document.getElementById('quiz-question');
   const listeningAudioEnabled=localStorage.getItem('jft_listening_audio')!=='off';
   const questionForDisplay=q.section==='listening'?{...q,visual:null}:q;
@@ -166,7 +166,9 @@ async function completeWar(){
   const elapsed=Math.floor((Date.now()-startedAt)/1000),score=scoreOf(correct,questions.length),warRank=rank(score);
   const old=Number(localStorage.getItem('jft_war_total_points')||0),total=old+score;
   localStorage.setItem('jft_war_total_points',String(total));
-  const {error:playerError}=await sb.from('jft_war_players').update({current_question:room.question_count,current_section:questions.at(-1)?.section||null,elapsed_seconds:elapsed,correct,score,status:'finished',completed_at:new Date().toISOString(),last_seen_at:new Date().toISOString()}).eq('id',player.id);
+  const reviewRows=questions.map((q,i)=>({question:q.text||q.question||q.prompt||'',prompt:q.prompt||'',kanji:q.kanji||'',kana:q.kana||'',romaji:q.romaji||'',meaning:q.meaning||'',chapter:q.chapter||'',section:q.section||'',options:Array.isArray(q.options)?q.options:[],selected:answers[i]===null?'Tidak dijawab':(q.options?.[answers[i]]??'Tidak dijawab'),answer:q.options?.[q.answer]??'',answerIndex:q.answer,isCorrect:answers[i]===q.answer,mode:q.answer_mode||''}));
+  const reviewData={allRows:reviewRows,total:questions.length,mode:room.quiz_mode||'jft'};
+  const {error:playerError}=await sb.from('jft_war_players').update({current_question:room.question_count,current_section:questions.at(-1)?.section||null,elapsed_seconds:elapsed,correct,score,status:'finished',completed_at:new Date().toISOString(),last_seen_at:new Date().toISOString(),review_data:reviewData}).eq('id',player.id);
   if(playerError){finished=false;toast('Gagal menyimpan hasil War. Coba lagi.');return}
   try{
     const {data:all}=await sb.from('jft_war_players').select('id,status').eq('room_id',room.id).not('status','in','(kicked,left)');
@@ -176,7 +178,7 @@ async function completeWar(){
     }
   }catch(e){console.warn('Gagal mengembalikan room ke waiting:',e)}
   sessionStorage.setItem('jft_war_result',JSON.stringify({roomId:room.id,playerId:player.id,score,correct,total:questions.length,elapsed,rank:warRank,warPoints:score,totalPoints:total}));
-  const allRows=questions.map((q,i)=>({question:q.type==='kanji'?q.kanji:(q.text||q.question||q.prompt||''),kanji:q.kanji||'',kana:q.kana||'',romaji:q.romaji||'',meaning:q.meaning||'',chapter:q.chapter||'',section:q.section||'',options:Array.isArray(q.options)?q.options:[],selected:answers[i]===null?'Tidak dijawab':(q.options?.[answers[i]]??'Tidak dijawab'),answer:q.options?.[q.answer]??'',isCorrect:answers[i]===q.answer,mode:q.answer_mode||''}));
+  const allRows=questions.map((q,i)=>({question:q.text||q.question||q.prompt||'',prompt:q.prompt||'',kanji:q.kanji||'',kana:q.kana||'',romaji:q.romaji||'',meaning:q.meaning||'',chapter:q.chapter||'',section:q.section||'',options:Array.isArray(q.options)?q.options:[],selected:answers[i]===null?'Tidak dijawab':(q.options?.[answers[i]]??'Tidak dijawab'),answer:q.options?.[q.answer]??'',answerIndex:q.answer,isCorrect:answers[i]===q.answer,mode:q.answer_mode||''}));
   sessionStorage.setItem('jft_war_review',JSON.stringify({allRows,total:questions.length,mode:room.quiz_mode||'jft'}));
   if(room.quiz_mode==='kanji')sessionStorage.setItem('jft_war_kanji_review',JSON.stringify({allRows,mistakes:allRows.filter(x=>!x.isCorrect),mode:room.kanji_answer_mode||'meaning',total:questions.length,wrong:allRows.filter(x=>!x.isCorrect).length}));
   else sessionStorage.removeItem('jft_war_kanji_review');
