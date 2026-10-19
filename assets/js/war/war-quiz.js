@@ -79,7 +79,12 @@ function renderQuestion(){
   const questionEl=document.getElementById('quiz-question');
   const listeningAudioEnabled=localStorage.getItem('jft_listening_audio')!=='off';
   const questionForDisplay=q.section==='listening'?{...q,visual:null}:q;
-  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div class="text-base font-bold text-slate-600 mt-3">${q.answer_mode==='romaji'?esc(q.meaning||''):`${esc(q.kana||'')} · ${esc(q.romaji||'')}`}</div><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay):`<div class="jft-question-text">${esc(q.text||'')}</div>`);
+  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div id="kanjiHint" class="text-base font-bold text-slate-600 mt-3 hidden"></div><button type="button" id="kanjiHintToggle" class="mt-3 px-4 py-2 rounded-xl border-2 border-slate-900 bg-yellow-200 text-sm font-black shadow-[2px_2px_0_#181818]">${q.answer_mode==='romaji'?'Lihat arti':'Lihat hiragana'}</button><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay):`<div class="jft-question-text">${esc(q.text||'')}</div>`); 
+  if(q.type==='kanji'){
+    const hint=document.getElementById('kanjiHint'),toggle=document.getElementById('kanjiHintToggle');
+    const hintText=q.answer_mode==='romaji'?String(q.meaning||''):`${String(q.kana||'')} · ${String(q.romaji||'')}`;
+    toggle.onclick=()=>{const visible=hint.classList.toggle('hidden')===false;hint.textContent=visible?hintText:'';toggle.textContent=visible?'Sembunyikan':(q.answer_mode==='romaji'?'Lihat arti':'Lihat hiragana');};
+  }
   questionEl.classList.remove('jft-question-enter');void questionEl.offsetWidth;questionEl.classList.add('jft-question-enter');
   const a=document.getElementById('btn-play-audio'),t=document.getElementById('btn-show-transcript'),fb=document.getElementById('audio-transcript-fallback');
   a.classList.add('hidden');t.classList.add('hidden');fb.classList.add('hidden');

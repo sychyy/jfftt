@@ -128,3 +128,11 @@ Catatan: daftar PDF merupakan kosakata Bab 1–50, bukan daftar resmi JLPT yang 
 - Soal dibuat sebagai latihan baru berdasarkan pola tata bahasa dan kosakata yang dipelajari, bukan salinan halaman latihan buku.
 - Fitur aplikasi lama, termasuk struktur bank data, mode Listening ON/OFF, pemilihan soal, hasil, riwayat, mode War, Kanji, dan konfigurasi Supabase tetap dipertahankan.
 - Versi riwayat bank soal diperbarui agar riwayat soal dari bank lama tidak menandai soal baru sebagai sudah pernah dikerjakan.
+
+## Update fitur Note & Renshuu
+- Buka `note.html` dari menu utama untuk menyimpan kanji/kotoba pribadi.
+- Catatan bisa diambil dari `data/kanji-bank.json` atau diisi manual jika tidak ada di database.
+- Renshuu membuat latihan pilihan ganda dari catatan yang tersimpan dan mencatat jawaban benar/salah sebagai indikator item yang perlu diulang.
+- Catatan dan progres latihan tersimpan di `localStorage` browser/perangkat yang digunakan.
+- Pada WAR, host dapat memakai tombol **Mainkan War Lagi** setelah ronde selesai untuk mengaktifkan room yang sama kembali.
+- Pada soal Kanji WAR, hiragana atau arti disembunyikan sampai tombol **Lihat hiragana** / **Lihat arti** ditekan.

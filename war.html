@@ -128,6 +128,7 @@ body{font-family:Inter,sans-serif;background:#f7f8fa;color:#18202a}
         </div>
         <div class="flex gap-2 items-start">
           <button id="startBtn" onclick="startWar()" class="hidden px-5 py-3 rounded-xl bg-slate-900 text-white font-black">Mulai War</button>
+          <button id="replayWarBtn" onclick="prepareWarAgain()" class="hidden px-5 py-3 rounded-xl bg-emerald-600 text-white font-black">Mainkan War Lagi</button>
           <button onclick="leaveRoom()" class="px-4 py-3 rounded-xl border border-red-200 text-red-600 font-black text-sm">Keluar</button>
         </div>
       </div>
@@ -313,6 +314,7 @@ async function enterRoom(){
   const modeText=room.quiz_mode==='kanji'?`Kanji ${String(room.kanji_level||'all').toUpperCase()} • jawab ${room.kanji_answer_mode==='romaji'?'romaji':'arti Indonesia'}`:'JFT Basic';
   document.getElementById('roomInfo').textContent=`${modeText} • ${room.question_count} soal • target ${formatTime(RULES[room.question_count])} • host: ${room.host_name}`;
   document.getElementById('startBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='waiting');
+  document.getElementById('replayWarBtn').classList.toggle('hidden',player.role!=='host'||room.status!=='finished');
   renderHostQr();
   subscribeRoom();
   await refreshPlayers();
@@ -344,6 +346,7 @@ function renderPlayers(){
   const start=document.getElementById('startBtn');
   start.disabled=ps.length<2;
   start.classList.toggle('hidden',player?.role!=='host'||room?.status!=='waiting');
+  document.getElementById('replayWarBtn')?.classList.toggle('hidden',player?.role!=='host'||room?.status!=='finished');
   grid.innerHTML=ps.map((p,i)=>{
     const me=p.id===player?.id;
     const status=p.status==='finished'?'Selesai':p.status==='kicked'?'Kicked':room?.status==='running'?'Mengerjakan':'Menunggu';
@@ -364,6 +367,7 @@ async function onRoomChange(){
   const status=room.status||'waiting';
   document.getElementById('topStatus').textContent=status==='running'?'WAR BERJALAN':status==='finished'?'SELESAI':'WAITING ROOM';
   document.getElementById('startBtn').classList.toggle('hidden',player?.role!=='host'||status!=='waiting');
+  document.getElementById('replayWarBtn')?.classList.toggle('hidden',player?.role!=='host'||status!=='finished');
   renderHostQr();
   const waitingBox=document.getElementById('waitingBox');
   const title=document.getElementById('waitingTitle');
@@ -416,11 +420,13 @@ async function onRoomChange(){
     }
     return;
   }
+  if(status==='finished'){
+    waitingBox.classList.remove('hidden');title.textContent='War selesai';
+    text.textContent=player?.role==='host'?'Tekan “Mainkan War Lagi” untuk memulai ronde baru di room yang sama.':'Menunggu host memulai ronde berikutnya.';
+    document.getElementById('monitorHint').textContent='RONDE SELESAI';return;
+  }
   if(status==='closed'){
     waitingBox.classList.remove('hidden');title.textContent='Room sudah ditutup';text.textContent='Room ini sudah tidak tersedia.';document.getElementById('monitorHint').textContent='ROOM CLOSED';toast('Room sudah ditutup.');setTimeout(()=>{sessionStorage.removeItem('jft_war_session');sessionStorage.removeItem('jft_war_quiz_redirect');location.reload()},1200);return;
-  }
-  if(status==='finished'){
-    waitingBox.classList.remove('hidden');title.textContent='War selesai';text.textContent='Semua pemain sudah selesai. Hasil tetap dapat dilihat dari halaman War Result.';document.getElementById('monitorHint').textContent='FINAL • semua pemain selesai';
   }
 }
 
@@ -498,6 +504,19 @@ function kanjiOptionsFor(q,list,mode){
  return randomize(opts);
 }
 async function loadKanjiBank(){if(kanjiBank.length)return kanjiBank;const r=await fetch('data/kanji-bank.json');if(!r.ok)throw new Error('Bank kanji gagal dimuat.');kanjiBank=(await r.json()).filter(q=>q.kanji&&q.kana&&q.meaning);return kanjiBank}
+
+async function prepareWarAgain(){
+  if(player?.role!=='host'||room?.status!=='finished')return;
+  const btn=document.getElementById('replayWarBtn');if(btn){btn.disabled=true;btn.textContent='Menyiapkan...'}
+  try{
+    const {error}=await sb.from('jft_war_rooms').update({status:'waiting',question_ids:[]}).eq('id',room.id).eq('status','finished');
+    if(error)throw error;
+    room.status='waiting';room.question_ids=[];
+    sessionStorage.removeItem('jft_war_quiz_redirect');sessionStorage.removeItem('jft_war_quiz_round');
+    await refreshRoom();toast('Room siap. Pemain bisa mengerjakan War lagi.');
+  }catch(e){toast('Gagal menyiapkan ronde baru: '+(e?.message||'coba lagi'))}
+  finally{if(btn){btn.disabled=false;btn.textContent='Mainkan War Lagi'}}
+}
 
 async function startWar(){
   if(startingWar||player?.role!=='host'||room?.status!=='waiting'||(window.warPlayers||[]).filter(p=>p.status!=='kicked'&&p.status!=='left').length<2)return;
