@@ -1,1178 +1,1602 @@
 [
   {
     "section": "vocab",
-    "text": "「会社」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 1. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "かいじゃ",
-      "がいしゃ",
-      "かいさ",
-      "かいしゃ"
-    ],
-    "answer": 3,
-    "explanation": "「会社」は「かいしゃ」と読みます。",
-    "id": 101,
-    "lesson": 1
-  },
-  {
-    "section": "vocab",
-    "text": "「先生」の読み方はどれですか。",
-    "options": [
-      "せんさい",
-      "ぜんせい",
-      "せんしょう",
-      "せんせい"
-    ],
-    "answer": 3,
-    "explanation": "「先生」は「せんせい」と読みます。",
-    "id": 102,
-    "lesson": 2
-  },
-  {
-    "section": "vocab",
-    "text": "「学生」の読み方はどれですか。",
-    "options": [
-      "がくしょう",
-      "がっせい",
-      "かくせい",
-      "がくせい"
-    ],
-    "answer": 3,
-    "explanation": "「学生」は「がくせい」と読みます。",
-    "id": 103,
-    "lesson": 3
-  },
-  {
-    "section": "vocab",
-    "text": "「毎日」の読み方はどれですか。",
-    "options": [
-      "まいひ",
-      "まにち",
-      "まいにち",
-      "まいじつ"
-    ],
-    "answer": 2,
-    "explanation": "「毎日」は「まいにち」と読みます。",
-    "id": 104,
-    "lesson": 4
-  },
-  {
-    "section": "vocab",
-    "text": "「電車」の読み方はどれですか。",
-    "options": [
-      "でんしゃ",
-      "てんしゃ",
-      "でんじゃ",
-      "でんさ"
+      "神社に行きたい (じんじゃにいきたい)",
+      "京都へ行きたい (きょうとへいきたい)",
+      "お寺へ行きたい (おてらへいきたい)"
     ],
     "answer": 0,
-    "explanation": "「電車」は「でんしゃ」と読みます。",
-    "id": 105,
-    "lesson": 5
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1001,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p01-q01.jpg",
+      "alt": "Potongan soal 1 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「病院」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 2. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "びょいん",
-      "びょういん",
-      "びょうえん",
-      "ひょういん"
-    ],
-    "answer": 1,
-    "explanation": "「病院」は「びょういん」と読みます。",
-    "id": 106,
-    "lesson": 6
-  },
-  {
-    "section": "vocab",
-    "text": "「勉強」の読み方はどれですか。",
-    "options": [
-      "へんきょう",
-      "べんこう",
-      "べんきょう",
-      "べんぎょう"
+      "洗濯 (せんたく)",
+      "料理 (りょうり)",
+      "掃除 (そうじ)"
     ],
     "answer": 2,
-    "explanation": "「勉強」は「べんきょう」と読みます。",
-    "id": 107,
-    "lesson": 7
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1002,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p01-q02.jpg",
+      "alt": "Potongan soal 2 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「旅行」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 3. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "りょうごう",
-      "りょこう",
-      "りょごう",
-      "りょうこう"
-    ],
-    "answer": 1,
-    "explanation": "「旅行」は「りょこう」と読みます。",
-    "id": 108,
-    "lesson": 8
-  },
-  {
-    "section": "vocab",
-    "text": "「食堂」の読み方はどれですか。",
-    "options": [
-      "しょどう",
-      "しょくどう",
-      "じょくどう",
-      "しょくとう"
-    ],
-    "answer": 1,
-    "explanation": "「食堂」は「しょくどう」と読みます。",
-    "id": 109,
-    "lesson": 9
-  },
-  {
-    "section": "vocab",
-    "text": "「図書館」の読み方はどれですか。",
-    "options": [
-      "としょうかん",
-      "ずしょかん",
-      "としょかん",
-      "とじょかん"
+      "まあまあでした",
+      "よかったです",
+      "大変でした (たいへんでした)"
     ],
     "answer": 2,
-    "explanation": "「図書館」は「としょかん」と読みます。",
-    "id": 110,
-    "lesson": 10
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1003,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p02-q03.jpg",
+      "alt": "Potongan soal 3 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「新しい」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 4. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "あたらし",
-      "あらたしい",
-      "あだらしい",
-      "あたらしい"
+      "カレンダー",
+      "お菓子 (おかし）",
+      "招き猫 （まねきねこ）"
     ],
-    "answer": 3,
-    "explanation": "「新しい」は「あたらしい」と読みます。",
-    "id": 111,
-    "lesson": 11
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1004,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p02-q04.jpg",
+      "alt": "Potongan soal 4 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「古い」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 5. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "こるい",
-      "ふるえ",
-      "ふるい",
-      "ふろい"
+      "電車 （でんしゃ）",
+      "電話 （でんわ）",
+      "電池 （でんち）"
     ],
     "answer": 2,
-    "explanation": "「古い」は「ふるい」と読みます。",
-    "id": 112,
-    "lesson": 12
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1005,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p03-q05.jpg",
+      "alt": "Potongan soal 5 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「暑い」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 6. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "あさい",
-      "あつい",
-      "あっい",
-      "あづい"
-    ],
-    "answer": 1,
-    "explanation": "「暑い」は「あつい」と読みます。",
-    "id": 113,
-    "lesson": 13
-  },
-  {
-    "section": "vocab",
-    "text": "「寒い」の読み方はどれですか。",
-    "options": [
-      "さぶい",
-      "さんむい",
-      "ざむい",
-      "さむい"
-    ],
-    "answer": 3,
-    "explanation": "「寒い」は「さむい」と読みます。",
-    "id": 114,
-    "lesson": 14
-  },
-  {
-    "section": "vocab",
-    "text": "「忙しい」の読み方はどれですか。",
-    "options": [
-      "いそがし",
-      "いそかしい",
-      "いぞがしい",
-      "いそがしい"
-    ],
-    "answer": 3,
-    "explanation": "「忙しい」は「いそがしい」と読みます。",
-    "id": 115,
-    "lesson": 15
-  },
-  {
-    "section": "vocab",
-    "text": "「便利」の読み方はどれですか。",
-    "options": [
-      "べんい",
-      "へんり",
-      "べんり",
-      "べんれい"
-    ],
-    "answer": 2,
-    "explanation": "「便利」は「べんり」と読みます。",
-    "id": 116,
-    "lesson": 16
-  },
-  {
-    "section": "vocab",
-    "text": "「有名」の読み方はどれですか。",
-    "options": [
-      "ゆうまい",
-      "ゆうめい",
-      "ゆうみょう",
-      "ゆめい"
-    ],
-    "answer": 1,
-    "explanation": "「有名」は「ゆうめい」と読みます。",
-    "id": 117,
-    "lesson": 17
-  },
-  {
-    "section": "vocab",
-    "text": "「親切」の読み方はどれですか。",
-    "options": [
-      "しんぜつ",
-      "しんさつ",
-      "しんせつ",
-      "じんせつ"
-    ],
-    "answer": 2,
-    "explanation": "「親切」は「しんせつ」と読みます。",
-    "id": 118,
-    "lesson": 18
-  },
-  {
-    "section": "vocab",
-    "text": "「住所」の読み方はどれですか。",
-    "options": [
-      "じゅしょう",
-      "じゅうしょ",
-      "じゅしょ",
-      "じゅうじょ"
-    ],
-    "answer": 1,
-    "explanation": "「住所」は「じゅうしょ」と読みます。",
-    "id": 119,
-    "lesson": 19
-  },
-  {
-    "section": "vocab",
-    "text": "「運転」の読み方はどれですか。",
-    "options": [
-      "うんてい",
-      "おんてん",
-      "うんてん",
-      "うんでん"
-    ],
-    "answer": 2,
-    "explanation": "「運転」は「うんてん」と読みます。",
-    "id": 120,
-    "lesson": 20
-  },
-  {
-    "section": "vocab",
-    "text": "「説明」の読み方はどれですか。",
-    "options": [
-      "ぜつめい",
-      "せつまい",
-      "せっめい",
-      "せつめい"
-    ],
-    "answer": 3,
-    "explanation": "「説明」は「せつめい」と読みます。",
-    "id": 121,
-    "lesson": 21
-  },
-  {
-    "section": "vocab",
-    "text": "「準備」の読み方はどれですか。",
-    "options": [
-      "しゅんび",
-      "じゅんび",
-      "じゅび",
-      "じゅんぴ"
-    ],
-    "answer": 1,
-    "explanation": "「準備」は「じゅんび」と読みます。",
-    "id": 122,
-    "lesson": 22
-  },
-  {
-    "section": "vocab",
-    "text": "「連絡」の読み方はどれですか。",
-    "options": [
-      "れんろく",
-      "ねんらく",
-      "れんらく",
-      "れんがく"
-    ],
-    "answer": 2,
-    "explanation": "「連絡」は「れんらく」と読みます。",
-    "id": 123,
-    "lesson": 23
-  },
-  {
-    "section": "vocab",
-    "text": "「経験」の読み方はどれですか。",
-    "options": [
-      "けんけい",
-      "けいけん",
-      "けいこん",
-      "けいげん"
-    ],
-    "answer": 1,
-    "explanation": "「経験」は「けいけん」と読みます。",
-    "id": 124,
-    "lesson": 24
-  },
-  {
-    "section": "vocab",
-    "text": "「必要」の読み方はどれですか。",
-    "options": [
-      "ひつよ",
-      "ひっよう",
-      "ひちよう",
-      "ひつよう"
-    ],
-    "answer": 3,
-    "explanation": "「必要」は「ひつよう」と読みます。",
-    "id": 125,
-    "lesson": 25
-  },
-  {
-    "section": "vocab",
-    "text": "「安全」の読み方はどれですか。",
-    "options": [
-      "あんぜ",
-      "あぜん",
-      "あんぜん",
-      "あんせん"
-    ],
-    "answer": 2,
-    "explanation": "「安全」は「あんぜん」と読みます。",
-    "id": 126,
-    "lesson": 26
-  },
-  {
-    "section": "vocab",
-    "text": "「危険」の読み方はどれですか。",
-    "options": [
-      "きこん",
-      "きけん",
-      "きげん",
-      "ぎけん"
-    ],
-    "answer": 1,
-    "explanation": "「危険」は「きけん」と読みます。",
-    "id": 127,
-    "lesson": 27
-  },
-  {
-    "section": "vocab",
-    "text": "「故障」の読み方はどれですか。",
-    "options": [
-      "こじょう",
-      "こしょう",
-      "こうしょう",
-      "こしょ"
-    ],
-    "answer": 1,
-    "explanation": "「故障」は「こしょう」と読みます。",
-    "id": 128,
-    "lesson": 28
-  },
-  {
-    "section": "vocab",
-    "text": "「受付」の読み方はどれですか。",
-    "options": [
-      "うけつけ",
-      "うけつき",
-      "うけっけ",
-      "うけづけ"
+      "ネクタイ",
+      "ワンピース",
+      "したぎ"
     ],
     "answer": 0,
-    "explanation": "「受付」は「うけつけ」と読みます。",
-    "id": 129,
-    "lesson": 29
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1006,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 6,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p03-q06.jpg",
+      "alt": "Potongan soal 6 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「案内」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 7. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "あんらい",
-      "あんねい",
-      "あんない",
-      "あない"
-    ],
-    "answer": 2,
-    "explanation": "「案内」は「あんない」と読みます。",
-    "id": 130,
-    "lesson": 30
-  },
-  {
-    "section": "vocab",
-    "text": "「申します」の読み方はどれですか。",
-    "options": [
-      "まいります",
-      "もします",
-      "もうじます",
-      "もうします"
-    ],
-    "answer": 3,
-    "explanation": "「申します」は「もうします」と読みます。",
-    "id": 131,
-    "lesson": 31
-  },
-  {
-    "section": "vocab",
-    "text": "「伺います」の読み方はどれですか。",
-    "options": [
-      "うかいます",
-      "かがいます",
-      "うがいます",
-      "うかがいます"
-    ],
-    "answer": 3,
-    "explanation": "「伺います」は「うかがいます」と読みます。",
-    "id": 132,
-    "lesson": 32
-  },
-  {
-    "section": "vocab",
-    "text": "「拝見します」の読み方はどれですか。",
-    "options": [
-      "ばいけんします",
-      "はいげんします",
-      "はいけんします",
-      "はいけします"
-    ],
-    "answer": 2,
-    "explanation": "「拝見します」は「はいけんします」と読みます。",
-    "id": 133,
-    "lesson": 33
-  },
-  {
-    "section": "vocab",
-    "text": "「参ります」の読み方はどれですか。",
-    "options": [
-      "めいります",
-      "まります",
-      "まいります",
-      "はいります"
-    ],
-    "answer": 2,
-    "explanation": "「参ります」は「まいります」と読みます。",
-    "id": 134,
-    "lesson": 34
-  },
-  {
-    "section": "vocab",
-    "text": "「大学」の意味はどれですか。",
-    "options": [
-      "電子機器",
-      "だいがく",
-      "千",
-      "会社員"
+      "夜 （よる）",
+      "朝 （あさ）",
+      "昼 （ひる）"
     ],
     "answer": 1,
-    "explanation": "「大学」の読み方は「だいがく」です。",
-    "id": 151,
-    "lesson": 1
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1007,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 7,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p04-q07.jpg",
+      "alt": "Potongan soal 7 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「机」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 8. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "つくえ",
-      "たいへんですね",
-      "びじゅつかん",
-      "べんきょうします"
-    ],
-    "answer": 0,
-    "explanation": "「机」は「つくえ」と読みます。",
-    "id": 152,
-    "lesson": 2
-  },
-  {
-    "section": "vocab",
-    "text": "「電話」の意味はどれですか。",
-    "options": [
-      "一日",
-      "でんわ",
-      "家族",
-      "木曜日"
+      "焼き鳥 （やきとり）",
+      "刺身 （さしみ）",
+      "枝豆 （えだまめ）"
     ],
     "answer": 1,
-    "explanation": "「電話」の読み方は「でんわ」です。",
-    "id": 153,
-    "lesson": 3
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1008,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 8,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p04-q08.jpg",
+      "alt": "Potongan soal 8 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「寝ます」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 9. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "りょこうようひん",
-      "うりば",
-      "よみます",
-      "ねます"
-    ],
-    "answer": 3,
-    "explanation": "「寝ます」は「ねます」と読みます。",
-    "id": 154,
-    "lesson": 4
-  },
-  {
-    "section": "vocab",
-    "text": "「一日」の意味はどれですか。",
-    "options": [
-      "ついたち",
-      "地下",
-      "彼",
-      "化粧室"
+      "倉庫 （そうこ）",
+      "食堂 （しょくどう）",
+      "更衣室 （こういしつ）"
     ],
     "answer": 0,
-    "explanation": "「一日」の読み方は「ついたち」です。",
-    "id": 155,
-    "lesson": 5
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1009,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 9,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p05-q09.jpg",
+      "alt": "Potongan soal 9 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「宿題」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 10. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "ちいさい",
-      "おわります",
-      "しゅくだい",
-      "べんり（な）"
+      "会議室 （かいぎしつ）",
+      "更衣室 （こういしつ）",
+      "給湯室 （きゅうとうしつ）"
     ],
     "answer": 2,
-    "explanation": "「宿題」は「しゅくだい」と読みます。",
-    "id": 156,
-    "lesson": 6
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1010,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 10,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p05-q10.jpg",
+      "alt": "Potongan soal 10 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「祖父母」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 11. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "切ります",
-      "健康とスポーツの日",
-      "そふぼ",
-      "子供"
+      "せんしょ",
+      "せんしゅ",
+      "せんしゅう"
     ],
     "answer": 2,
-    "explanation": "「祖父母」の読み方は「そふぼ」です。",
-    "id": 157,
-    "lesson": 7
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1011,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 11,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p05-q11.jpg",
+      "alt": "Potongan soal 11 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「新設（な）」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 12. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "たべます",
-      "しんせつ（な）",
-      "さむい",
-      "あおい"
+      "とりにく",
+      "ぶたにく",
+      "ぎゅうにく"
     ],
     "answer": 1,
-    "explanation": "「新設（な）」は「しんせつ（な）」と読みます。",
-    "id": 158,
-    "lesson": 8
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1012,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 12,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p06-q12.jpg",
+      "alt": "Potongan soal 12 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「水泳」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 13. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "すいえい",
-      "冬",
-      "他人の夫",
-      "習います"
+      "眠",
+      "熱",
+      "痛"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1013,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 13,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p06-q13.jpg",
+      "alt": "Potongan soal 13 dari PDF Basic 1"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 14. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "かんじ",
+      "つごう",
+      "すうじ"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1014,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 14,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p06-q14.jpg",
+      "alt": "Potongan soal 14 dari PDF Basic 1"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 15. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "わるい",
+      "かるい",
+      "ふるい"
     ],
     "answer": 0,
-    "explanation": "「水泳」の読み方は「すいえい」です。",
-    "id": 159,
-    "lesson": 9
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1015,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 15,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p06-q15.jpg",
+      "alt": "Potongan soal 15 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「物」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 16. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
+      "おと",
       "そと",
-      "もの",
-      "すもう",
-      "ふゆ"
+      "あと"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1016,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 16,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p06-q16.jpg",
+      "alt": "Potongan soal 16 dari PDF Basic 1"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 17. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "右方",
+      "夕方",
+      "悪方"
     ],
     "answer": 1,
-    "explanation": "「物」は「もの」と読みます。",
-    "id": 160,
-    "lesson": 10
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1017,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 17,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p07-q17.jpg",
+      "alt": "Potongan soal 17 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「封筒」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 18. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "ふうとう",
-      "カエデ",
-      "隣",
-      "八百屋"
-    ],
-    "answer": 0,
-    "explanation": "「封筒」の読み方は「ふうとう」です。",
-    "id": 161,
-    "lesson": 11
-  },
-  {
-    "section": "vocab",
-    "text": "「生け花」の読み方はどれですか。",
-    "options": [
-      "いけばな",
-      "もうすこし",
-      "たちます",
-      "ぞう"
-    ],
-    "answer": 0,
-    "explanation": "「生け花」は「いけばな」と読みます。",
-    "id": 162,
-    "lesson": 12
-  },
-  {
-    "section": "vocab",
-    "text": "「疲れます」の意味はどれですか。",
-    "options": [
-      "作家",
-      "つかれます",
-      "大変",
-      "季節"
+      "大学",
+      "合格",
+      "高校"
     ],
     "answer": 1,
-    "explanation": "「疲れます」の読み方は「つかれます」です。",
-    "id": 163,
-    "lesson": 13
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1018,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 18,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p07-q18.jpg",
+      "alt": "Potongan soal 18 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「呼びます」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 19. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "ていきけん",
-      "よびます",
-      "こうばん",
-      "あまい"
+      "音楽",
+      "薬",
+      "寝"
     ],
     "answer": 1,
-    "explanation": "「呼びます」は「よびます」と読みます。",
-    "id": 164,
-    "lesson": 14
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1019,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 19,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p07-q19.jpg",
+      "alt": "Potongan soal 19 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「美容師」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 1 — Script and Vocabulary soal 20. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "飲んだ後の効果",
-      "芸術",
-      "びようし",
-      "痛み"
-    ],
-    "answer": 2,
-    "explanation": "「美容師」の読み方は「びようし」です。",
-    "id": 165,
-    "lesson": 15
-  },
-  {
-    "section": "vocab",
-    "text": "「乗り換えます」の読み方はどれですか。",
-    "options": [
-      "くすり",
-      "つぎに",
-      "のりかえます",
-      "あけます"
-    ],
-    "answer": 2,
-    "explanation": "「乗り換えます」は「のりかえます」と読みます。",
-    "id": 166,
-    "lesson": 16
-  },
-  {
-    "section": "vocab",
-    "text": "「持って来ます」の意味はどれですか。",
-    "options": [
-      "もってきます",
-      "運転手",
-      "その後",
-      "顔"
+      "病気",
+      "病院",
+      "医者"
     ],
     "answer": 0,
-    "explanation": "「持って来ます」の読み方は「もってきます」です。",
-    "id": 167,
-    "lesson": 17
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 1.",
+    "id": 1020,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 20,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p07-q20.jpg",
+      "alt": "Potongan soal 20 dari PDF Basic 1"
+    }
   },
   {
     "section": "vocab",
-    "text": "「転ぶ」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 1. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "あつめます",
-      "ころぶ",
-      "うわぎ",
-      "あびます（を）"
+      "ききます",
+      "かきます",
+      "さきます"
     ],
     "answer": 1,
-    "explanation": "「転ぶ」は「ころぶ」と読みます。",
-    "id": 168,
-    "lesson": 18
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2001,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p01-q01.jpg",
+      "alt": "Potongan soal 1 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「泊まります」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 2. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "登ります",
-      "最近",
-      "持ち上げます",
-      "とまります（に）"
-    ],
-    "answer": 3,
-    "explanation": "「泊まります」の読み方は「とまります（に）」です。",
-    "id": 169,
-    "lesson": 19
-  },
-  {
-    "section": "vocab",
-    "text": "「調べます」の読み方はどれですか。",
-    "options": [
-      "さどう",
-      "おび",
-      "しらべます",
-      "まんざい。らくご"
-    ],
-    "answer": 2,
-    "explanation": "「調べます」は「しらべます」と読みます。",
-    "id": 170,
-    "lesson": 20
-  },
-  {
-    "section": "vocab",
-    "text": "「署長」の意味はどれですか。",
-    "options": [
-      "しょちょう",
-      "地球",
-      "都道府県",
-      "万里の長城"
-    ],
-    "answer": 0,
-    "explanation": "「署長」の読み方は「しょちょう」です。",
-    "id": 171,
-    "lesson": 21
-  },
-  {
-    "section": "vocab",
-    "text": "「お弁当」の読み方はどれですか。",
-    "options": [
-      "おべんとう",
-      "ひさしぶりですね",
-      "はし",
-      "きみ"
-    ],
-    "answer": 0,
-    "explanation": "「お弁当」は「おべんとう」と読みます。",
-    "id": 172,
-    "lesson": 22
-  },
-  {
-    "section": "vocab",
-    "text": "「信号」の意味はどれですか。",
-    "options": [
-      "月",
-      "十分",
-      "しんごう",
-      "最近"
-    ],
-    "answer": 2,
-    "explanation": "「信号」の読み方は「しんごう」です。",
-    "id": 173,
-    "lesson": 23
-  },
-  {
-    "section": "vocab",
-    "text": "「贈答の習慣」の読み方はどれですか。",
-    "options": [
-      "まわします",
-      "ぞうとうのしゅうかん",
-      "なおします",
-      "しげんごみ"
+      "ガラス",
+      "カップ",
+      "カーテン"
     ],
     "answer": 1,
-    "explanation": "「贈答の習慣」は「ぞうとうのしゅうかん」と読みます。",
-    "id": 174,
-    "lesson": 24
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2002,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p01-q02.jpg",
+      "alt": "Potongan soal 2 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「再婚します」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 3. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "幼児の遊び場",
-      "公共料金の支払い",
-      "さいこんします",
-      "親などからもらう小さな贈り物"
+      "そうじします",
+      "しょくじします",
+      "せんたくします"
     ],
     "answer": 2,
-    "explanation": "「再婚します」の読み方は「さいこんします」です。",
-    "id": 175,
-    "lesson": 25
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2003,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p02-q03.jpg",
+      "alt": "Potongan soal 3 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「別の」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 4. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "しょうせつ",
-      "たてます",
-      "しゅっさんいわい",
-      "べつの"
-    ],
-    "answer": 3,
-    "explanation": "「別の」は「べつの」と読みます。",
-    "id": 176,
-    "lesson": 26
-  },
-  {
-    "section": "vocab",
-    "text": "「サイズ直し」の意味はどれですか。",
-    "options": [
-      "サイズを直すこと",
-      "将来",
-      "次に",
-      "あります"
+      "はくぶつかん",
+      "びじゅつかん",
+      "どうぶつえん"
     ],
     "answer": 0,
-    "explanation": "「サイズ直し」は服などの大きさを直すことを意味します。",
-    "id": 177,
-    "lesson": 27
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2004,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p02-q04.jpg",
+      "alt": "Potongan soal 4 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「体育館」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 5. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "たいいくかん",
-      "われます",
-      "よごれます",
-      "すみ"
-    ],
-    "answer": 0,
-    "explanation": "「体育館」は「たいいくかん」と読みます。",
-    "id": 178,
-    "lesson": 28
-  },
-  {
-    "section": "vocab",
-    "text": "「お先にどうぞ」の意味はどれですか。",
-    "options": [
-      "飾ります",
-      "日曜大工をします",
-      "破れます",
-      "先にどうぞ"
-    ],
-    "answer": 3,
-    "explanation": "「お先にどうぞ」は相手に先に行ってもらうときの表現です。",
-    "id": 179,
-    "lesson": 29
-  },
-  {
-    "section": "vocab",
-    "text": "「相談します」の読み方はどれですか。",
-    "options": [
-      "そうだんします",
-      "こまります",
-      "おさら",
-      "こわれます"
-    ],
-    "answer": 0,
-    "explanation": "「相談します」は「そうだんします」と読みます。",
-    "id": 180,
-    "lesson": 30
-  },
-  {
-    "section": "vocab",
-    "text": "「法律学」の意味はどれですか。",
-    "options": [
-      "お金持ち",
-      "投げます",
-      "支店",
-      "ほうりつがく"
-    ],
-    "answer": 3,
-    "explanation": "「法律学」の読み方は「ほうりつがく」です。",
-    "id": 181,
-    "lesson": 31
-  },
-  {
-    "section": "vocab",
-    "text": "「お金持ち」の読み方はどれですか。",
-    "options": [
-      "きいろ",
-      "なおります（が）",
-      "おかねもち",
-      "へいてん"
-    ],
-    "answer": 2,
-    "explanation": "「お金持ち」は「おかねもち」と読みます。",
-    "id": 182,
-    "lesson": 32
-  },
-  {
-    "section": "vocab",
-    "text": "「化粧室」の意味はどれですか。",
-    "options": [
-      "熱が続きます",
-      "けしょうしつ",
-      "土木技術",
-      "健康"
-    ],
-    "answer": 1,
-    "explanation": "「化粧室」の読み方は「けしょうしつ」です。",
-    "id": 183,
-    "lesson": 33
-  },
-  {
-    "section": "vocab",
-    "text": "「まな板」の読み方はどれですか。",
-    "options": [
+      "ちゃいろ",
       "しろ",
-      "まないた",
-      "ほし",
-      "たいふう"
-    ],
-    "answer": 1,
-    "explanation": "「まな板」は「まないた」と読みます。",
-    "id": 184,
-    "lesson": 34
-  },
-  {
-    "section": "vocab",
-    "text": "「山登り」の意味はどれですか。",
-    "options": [
-      "貯金します",
-      "湿った海藻",
-      "やまのぼり",
-      "機会"
+      "ぎんいろ"
     ],
     "answer": 2,
-    "explanation": "「山登り」の読み方は「やまのぼり」です。",
-    "id": 185,
-    "lesson": 35
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2005,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p03-q05.jpg",
+      "alt": "Potongan soal 5 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「遠く」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 6. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "みなと",
-      "とおく",
-      "とち",
-      "はっけんします"
+      "けいさつかん",
+      "えきいん",
+      "うんてんしゃ"
     ],
     "answer": 1,
-    "explanation": "「遠く」は「とおく」と読みます。",
-    "id": 186,
-    "lesson": 36
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2006,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 6,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p03-q06.jpg",
+      "alt": "Potongan soal 6 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「衝突する」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 7. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "似ています",
-      "明るい赤色",
-      "日本の年中行事",
-      "しょうとつする"
-    ],
-    "answer": 3,
-    "explanation": "「衝突する」の読み方は「しょうとつする」です。",
-    "id": 187,
-    "lesson": 37
-  },
-  {
-    "section": "vocab",
-    "text": "「似ています」の読み方はどれですか。",
-    "options": [
-      "にています",
-      "あいます（が）",
-      "じかんがたちます",
-      "よごします"
+      "にんじん",
+      "たまねぎ",
+      "きゅうり"
     ],
     "answer": 0,
-    "explanation": "「似ています」は「にています」と読みます。",
-    "id": 188,
-    "lesson": 38
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2007,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 7,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p04-q07.jpg",
+      "alt": "Potongan soal 7 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「台風」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 8. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "たいふう",
-      "注意します",
-      "花模様",
-      "ほっとします"
+      "かおをあらいます",
+      "ひげをそります",
+      "おけしょうします"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2008,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 8,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p04-q08.jpg",
+      "alt": "Potongan soal 8 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 9. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "たっきゅう",
+      "やきゅう",
+      "じゅうどう"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2009,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 9,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p05-q09.jpg",
+      "alt": "Potongan soal 9 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 10. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "うんどうします",
+      "さんぽします",
+      "おしゃべりします"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2010,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 10,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p05-q10.jpg",
+      "alt": "Potongan soal 10 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 11. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "けつようび",
+      "げつようび",
+      "げつよび"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2011,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 11,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p06-q11.jpg",
+      "alt": "Potongan soal 11 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 12. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "じゅうじ",
+      "じゅじい",
+      "しゅうじ"
     ],
     "answer": 0,
-    "explanation": "「台風」の読み方は「たいふう」です。",
-    "id": 189,
-    "lesson": 39
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2012,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 12,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p06-q12.jpg",
+      "alt": "Potongan soal 12 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「体積／容積」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 13. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "きゅうに",
-      "しんせつにします",
-      "きる",
-      "たいせき／ようせき"
-    ],
-    "answer": 3,
-    "explanation": "「体積／容積」は「たいせき／ようせき」と読みます。",
-    "id": 190,
-    "lesson": 40
-  },
-  {
-    "section": "vocab",
-    "text": "「中身」の意味はどれですか。",
-    "options": [
-      "厳しい",
-      "なかみ",
-      "途中",
-      "円"
+      "なつやすみ",
+      "ひるやすみ",
+      "あきやすみ"
     ],
     "answer": 1,
-    "explanation": "「中身」の読み方は「なかみ」です。",
-    "id": 191,
-    "lesson": 41
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2013,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 13,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p06-q13.jpg",
+      "alt": "Potongan soal 13 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「削る」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 14. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "みずたま",
-      "おんがくか",
-      "けずる",
-      "ぼうねんかい"
+      "せんしゅう",
+      "らいしゅう",
+      "こんしゅう"
     ],
     "answer": 2,
-    "explanation": "「削る」は「けずる」と読みます。",
-    "id": 192,
-    "lesson": 42
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2014,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 14,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p06-q14.jpg",
+      "alt": "Potongan soal 14 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「変な」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 15. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "関係",
-      "論文",
-      "合わせます",
-      "へんな"
-    ],
-    "answer": 3,
-    "explanation": "「変な」の読み方は「へんな」です。",
-    "id": 193,
-    "lesson": 43
-  },
-  {
-    "section": "vocab",
-    "text": "「順序」の読み方はどれですか。",
-    "options": [
-      "ぐあい",
-      "こい",
-      "じゅんじょ",
-      "いやがります"
+      "こんとう",
+      "こんどう",
+      "こんど"
     ],
     "answer": 2,
-    "explanation": "「順序」は「じゅんじょ」と読みます。",
-    "id": 194,
-    "lesson": 44
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2015,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 15,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p06-q15.jpg",
+      "alt": "Potongan soal 15 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「謝ります」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 16. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "あやまります",
-      "乗ります",
-      "髪が長い",
-      "入れます"
+      "西",
+      "南",
+      "東"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2016,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 16,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p07-q16.jpg",
+      "alt": "Potongan soal 16 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 17. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "後",
+      "横",
+      "秋"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2017,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 17,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p07-q17.jpg",
+      "alt": "Potongan soal 17 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 18. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "万円",
+      "百円",
+      "千円"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2018,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 18,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p07-q18.jpg",
+      "alt": "Potongan soal 18 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 19. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "予約",
+      "予算",
+      "予定"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2019,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 19,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p07-q19.jpg",
+      "alt": "Potongan soal 19 dari PDF Basic 2"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 2 — Script and Vocabulary soal 20. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "下",
+      "上",
+      "正"
     ],
     "answer": 0,
-    "explanation": "「謝ります」の読み方は「あやまります」です。",
-    "id": 195,
-    "lesson": 45
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 2.",
+    "id": 2020,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 20,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p07-q20.jpg",
+      "alt": "Potongan soal 20 dari PDF Basic 2"
+    }
   },
   {
     "section": "vocab",
-    "text": "「向かいます」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 1. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "けしょう（を）します",
-      "じゅんじょ",
-      "むかいます",
-      "ひょうげん"
+      "しばる",
+      "つぶす",
+      "包む (つつむ)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3001,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p01-q01.jpg",
+      "alt": "Potongan soal 1 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 2. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "ストロー",
+      "チャップ",
+      "ラベル"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3002,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p01-q02.jpg",
+      "alt": "Potongan soal 2 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 3. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "取る (とる)",
+      "固める (かためる)",
+      "しばる"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3003,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p02-q03.jpg",
+      "alt": "Potongan soal 3 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 4. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "包む (つつむ)",
+      "固める (かためる)",
+      "分ける (わける)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3004,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p02-q04.jpg",
+      "alt": "Potongan soal 4 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 5. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "開ける (あける)",
+      "守る (まもる)",
+      "消す (けす）"
     ],
     "answer": 2,
-    "explanation": "「向かいます」は「むかいます」と読みます。",
-    "id": 196,
-    "lesson": 46
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3005,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p03-q05.jpg",
+      "alt": "Potongan soal 5 dari PDF Basic 3"
+    }
   },
   {
     "section": "vocab",
-    "text": "「人口」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 6. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "科学",
-      "取り合います",
-      "じんこう",
-      "救急車"
+      "津波 (つなみ)",
+      "台風 (たいふ)",
+      "火事 (かじ)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3006,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 6,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p03-q06.jpg",
+      "alt": "Potongan soal 6 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 7. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "積もる (つもる)",
+      "消える (きえる)",
+      "倒れる (たおれる)"
     ],
     "answer": 2,
-    "explanation": "「人口」の読み方は「じんこう」です。",
-    "id": 197,
-    "lesson": 47
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3007,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 7,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p04-q07.jpg",
+      "alt": "Potongan soal 7 dari PDF Basic 3"
+    }
   },
   {
     "section": "vocab",
-    "text": "「者」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 8. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "きたえる",
-      "もの",
-      "けしょう（を）します",
-      "あじがします"
+      "断水する (だんすいする)",
+      "避難する (ひなんする)",
+      "停電する (ていでんする)"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3008,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 8,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p04-q08.jpg",
+      "alt": "Potongan soal 8 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 9. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "近づく (ちかづく)",
+      "隠れる (かくれる)",
+      "離れる (はなれる)"
     ],
     "answer": 1,
-    "explanation": "「者」は「もの」と読みます。",
-    "id": 198,
-    "lesson": 48
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3009,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 9,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p05-q09.jpg",
+      "alt": "Potongan soal 9 dari PDF Basic 3"
+    }
   },
   {
     "section": "vocab",
-    "text": "「作品」の意味はどれですか。",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 10. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "お礼を言います",
-      "長男",
-      "象",
-      "さくひん"
+      "分別する (ぶんべつする)",
+      "減らす (へらす)",
+      "リサイクルする"
     ],
-    "answer": 3,
-    "explanation": "「作品」の読み方は「さくひん」です。",
-    "id": 199,
-    "lesson": 49
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3010,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 10,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p05-q10.jpg",
+      "alt": "Potongan soal 10 dari PDF Basic 3"
+    }
   },
   {
     "section": "vocab",
-    "text": "「象」の読み方はどれですか。",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 11. Pilih jawaban yang tepat berdasarkan gambar/soal.",
     "options": [
-      "がまんする",
-      "ぞう",
-      "にゅうかん",
-      "しょうがい"
+      "けす",
+      "かす",
+      "きす"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3011,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 11,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p06-q11.jpg",
+      "alt": "Potongan soal 11 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 12. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "おてら",
+      "おんど",
+      "おんせん"
     ],
     "answer": 1,
-    "explanation": "「象」は「ぞう」と読みます。",
-    "id": 200,
-    "lesson": 50
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3012,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 12,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p06-q12.jpg",
+      "alt": "Potongan soal 12 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 13. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "まい",
+      "しゅるい",
+      "さつ"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3013,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 13,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p06-q13.jpg",
+      "alt": "Potongan soal 13 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 14. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "もえる",
+      "まえる",
+      "おしえる"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3014,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 14,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p06-q14.jpg",
+      "alt": "Potongan soal 14 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 15. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "しんみ",
+      "べつい",
+      "いみ"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3015,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 15,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p06-q15.jpg",
+      "alt": "Potongan soal 15 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 16. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "しんぱい",
+      "せんぱい",
+      "しりあい"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3016,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 16,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p07-q16.jpg",
+      "alt": "Potongan soal 16 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 17. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "だいすき",
+      "たいへん",
+      "たいせつ"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3017,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 17,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p07-q17.jpg",
+      "alt": "Potongan soal 17 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 18. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "あわない",
+      "あぶない",
+      "あんない"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3018,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 18,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p07-q18.jpg",
+      "alt": "Potongan soal 18 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 19. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "くろまります",
+      "たたまります",
+      "あつまります"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3019,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 19,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p07-q19.jpg",
+      "alt": "Potongan soal 19 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 3 — Script and Vocabulary soal 20. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "すいます",
+      "ひきます",
+      "やきます"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 3.",
+    "id": 3020,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 20,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p07-q20.jpg",
+      "alt": "Potongan soal 20 dari PDF Basic 3"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 1. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "ホール",
+      "プラネタリウム",
+      "スポーツジム"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4001,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p01-q01.jpg",
+      "alt": "Potongan soal 1 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 2. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "もらう",
+      "返す (かえす)",
+      "貸す (かす)"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4002,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p01-q02.jpg",
+      "alt": "Potongan soal 2 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 3. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "トレーナー",
+      "マシン",
+      "シューズ"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4003,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p02-q03.jpg",
+      "alt": "Potongan soal 3 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 4. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "物産コーナー (ぶっさんコーナー)",
+      "ホール",
+      "プラネタリウム"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4004,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p02-q04.jpg",
+      "alt": "Potongan soal 4 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 5. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "預ける (あずける)",
+      "受け取る (うけとる)",
+      "申し込む (もうしこむ)）"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4005,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p03-q05.jpg",
+      "alt": "Potongan soal 5 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 6. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "両替する (りょうがえする)",
+      "表示する (ひょうじする)",
+      "入力する (にゅうりょくする)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4006,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 6,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p03-q06.jpg",
+      "alt": "Potongan soal 6 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 7. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "美容院 (びよういん)",
+      "理髪店 (りはつてん)",
+      "病院 (びょういん)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4007,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 7,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p04-q07.jpg",
+      "alt": "Potongan soal 7 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 8. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "鏡 (かがみ)",
+      "バリカン",
+      "洗面台 (せんめんだい)"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4008,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 8,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p04-q08.jpg",
+      "alt": "Potongan soal 8 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 9. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "相談 (そうだん)",
+      "通訳 (つうやく)",
+      "質問 (しつもん)"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4009,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 9,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p05-q09.jpg",
+      "alt": "Potongan soal 9 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 10. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "ポイントカード",
+      "キャッシュカード",
+      "ギフトカード"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4010,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 10,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p05-q10.jpg",
+      "alt": "Potongan soal 10 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 11. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "かえし",
+      "かえ",
+      "かつ"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4011,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 11,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p06-q11.jpg",
+      "alt": "Potongan soal 11 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 12. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "きいています",
+      "あいています",
+      "ひいています"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4012,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 12,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p06-q12.jpg",
+      "alt": "Potongan soal 12 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 13. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "しつもん",
+      "きんじょ",
+      "じょうほう"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4013,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 13,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p06-q13.jpg",
+      "alt": "Potongan soal 13 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 14. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "およぎます",
+      "はいります",
+      "あらいます"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4014,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 14,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p06-q14.jpg",
+      "alt": "Potongan soal 14 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 15. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "しつもん",
+      "がいこく",
+      "じどう"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4015,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 15,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p06-q15.jpg",
+      "alt": "Potongan soal 15 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 16. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "店",
+      "町",
+      "点"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4016,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 16,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p07-q16.jpg",
+      "alt": "Potongan soal 16 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 17. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "不便",
+      "便利",
+      "有名"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4017,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 17,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p07-q17.jpg",
+      "alt": "Potongan soal 17 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 18. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "右",
+      "西",
+      "左"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4018,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 18,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p07-q18.jpg",
+      "alt": "Potongan soal 18 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 19. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "料理",
+      "神社",
+      "野菜"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4019,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 19,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p07-q19.jpg",
+      "alt": "Potongan soal 19 dari PDF Basic 4"
+    }
+  },
+  {
+    "section": "vocab",
+    "text": "Simulasi JFT Basic 4 — Script and Vocabulary soal 20. Pilih jawaban yang tepat berdasarkan gambar/soal.",
+    "options": [
+      "公園",
+      "会社",
+      "仕事"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban sesuai halaman KEY ANSWER pada PDF Simulasi JFT Basic 4.",
+    "id": 4020,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 20,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p07-q20.jpg",
+      "alt": "Potongan soal 20 dari PDF Basic 4"
+    }
   }
 ]

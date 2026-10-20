@@ -120,6 +120,10 @@
     const rawType = String(v.type || 'table').toLowerCase();
     const type = /^[a-z0-9_-]+$/.test(rawType) ? rawType : 'table';
     const title = v.title ?? v.label ?? '';
+    if (type === 'image' && typeof v.src === 'string' && /^[a-zA-Z0-9_./-]+$/.test(v.src)) {
+      const alt = escapeHtml(v.alt || title || 'Gambar soal');
+      return `<figure class="jft-question-image"><img src="${escapeHtml(v.src)}" alt="${alt}" loading="lazy" style="display:block;width:100%;max-width:680px;height:auto;margin:0 auto;border-radius:12px"></figure>`;
+    }
     const heading = String(title).trim() ? `<h3>${renderJapaneseText(title)}</h3>` : '';
     if (type === 'kanji' || v.kanji) {
       return `<section class="jft-visual jft-kanji-card"><div class="jft-kanji-glyph">${renderJapaneseText(v.kanji || v.value || '')}</div><div><h3>${renderJapaneseText(v.title || '漢字 / Kanji')}</h3>${v.reading ? `<div class="jft-kanji-reading">${renderJapaneseText(v.reading)}</div>` : ''}${v.meaning ? `<p>${renderJapaneseText(v.meaning)}</p>` : ''}</div></section>`;

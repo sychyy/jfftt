@@ -1,25 +1,11 @@
-# Import bank soal JFT — tahap persiapan
+# Paket perbaikan bank soal JFT Basic
 
-## Status
-- Source code web asli dipertahankan, termasuk 4 bank soal lama.
-- PDF SIMULASI JFT BASIC 1–4 disimpan di `source_pdfs/`.
-- Tiap halaman PDF dirender menjadi gambar di `assets/imported/basicN/page-NN.jpg` agar tampilan asli dan gambar soal tidak hilang.
-- Gambar yang tertanam di PDF diekstrak ke `assets/imported/basicN/`.
-- Teks halaman hasil ekstraksi ada di `assets/imported/basicN/pages.json`.
-- Ringkasan jumlah halaman dan gambar ada di `IMPORT-INVENTORY.json`.
+Paket ini mengganti bank soal lama dengan materi dari empat PDF Simulasi JFT Basic yang diberikan. Sebelum penggantian, bank lama disimpan di folder `backup-old-question-bank/`.
 
-## Penting
-Ini adalah paket staging/backup, belum mengganti `data/questions/*.json`. Jangan hapus bank soal lama sampai soal per nomor, kunci, gambar, dan audio selesai dipetakan serta diuji di UI.
+- `data/questions/vocab.json`: 20 soal Script and Vocabulary dari setiap PDF.
+- `data/questions/grammar.json`: 10 soal Grammar dari setiap PDF dan soal Conversation and Expression yang tersedia.
+- `data/questions/listening.json`: 5 soal choukai dari setiap PDF.
+- `data/questions/reading.json`: kosong karena PDF sumber tidak memiliki bagian Reading Comprehension terpisah; soal reading lama tidak dipertahankan agar tidak bercampur dengan bank baru.
+- `assets/imported/question-crops/`: potongan gambar halaman asli untuk ditampilkan bersama soal.
 
-## Pembagian kategori awal
-- Soal 1–20 pada bagian “Script and Vocabulary” dipetakan awal ke Vocabulary.
-- Soal 21–30 pada bagian tersebut perlu dipetakan ke Grammar berdasarkan bentuk soal.
-- “Conversation and Expression” dipetakan ke Grammar/Expression.
-- Bagian Listening dipetakan ke Listening. Audio belum disertakan dalam PDF; file audio pengguna akan dicocokkan berdasarkan nomor soal.
-- PDF yang diterima belum menunjukkan bagian Reading yang berdiri sendiri. Jika ada PDF Reading, kirim terpisah.
-
-## Langkah selanjutnya
-1. Memetakan soal dan kunci jawaban per nomor dari PDF.
-2. Memasangkan gambar dengan nomor soal (bukan hanya halaman PDF).
-3. Menautkan audio choukai berdasarkan judul/nomor yang pengguna berikan.
-4. Menguji semua kategori, lalu baru mengganti bank soal lama.
+**Catatan penting:** PDF sumber tidak menyertakan audio choukai. Jalur file audio disiapkan di field `audioSrc` (mis. `assets/audio/choukai/basic1-q1.mp3`), tetapi audio tersebut belum tersedia di paket. Untuk soal yang pilihan jawabannya berupa gambar dan tidak terbaca sebagai teks, potongan halaman asli tetap disertakan.
