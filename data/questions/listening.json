@@ -1,0 +1,482 @@
+[
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "b.",
+      "Listening",
+      "C（画像）"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 1. Audio choukai belum disertakan dalam PDF.",
+    "id": 1700,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p12-q01.jpg",
+      "alt": "Potongan soal choukai 1 dari PDF Basic 1"
+    },
+    "audioSrc": "assets/audio/choukai/basic1-q1.mp3",
+    "scriptJa": "A：すみません、プレゼントを買いたいんですが。B：それなら、こちらはいかがですか。A：いいですね。これをください。",
+    "scriptId": "A: Permisi, saya ingin membeli hadiah. B: Kalau begitu, bagaimana dengan yang ini? A: Bagus. Saya beli ini.",
+    "scriptNote": "Tema pilihan barang/hadiah berdasarkan gambar; gambar pilihan perlu dicek karena potongan soal memuat beberapa ilustrasi."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "ベトナムの服",
+      "フィリピンのお茶",
+      "ベトナムのコーヒー"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 1. Audio choukai belum disertakan dalam PDF.",
+    "id": 1701,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p13-q02.jpg",
+      "alt": "Potongan soal choukai 2 dari PDF Basic 1"
+    },
+    "audioSrc": "assets/audio/choukai/basic1-q2.mp3",
+    "scriptJa": "女：トアさん、国のお土産をありがとう。男：どういたしまして。ベトナムのコーヒーです。女：うれしいです。",
+    "scriptId": "Perempuan: Terima kasih oleh-oleh dari negaramu, Toa. Laki-laki: Sama-sama. Ini kopi Vietnam. Perempuan: Saya senang.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "お父さん",
+      "お母さん",
+      "お子さん"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 1. Audio choukai belum disertakan dalam PDF.",
+    "id": 1702,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p13-q03.jpg",
+      "alt": "Potongan soal choukai 3 dari PDF Basic 1"
+    },
+    "audioSrc": "assets/audio/choukai/basic1-q3.mp3",
+    "scriptJa": "女：このプレゼント、だれにあげたんですか。男：母にあげました。誕生日だったんです。",
+    "scriptId": "Perempuan: Hadiah ini kamu berikan kepada siapa? Laki-laki: Saya berikan kepada ibu. Hari itu ulang tahunnya.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "二日酔い",
+      "胃の調子が悪い",
+      "頭が痛い"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 1. Audio choukai belum disertakan dalam PDF.",
+    "id": 1703,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p14-q04.jpg",
+      "alt": "Potongan soal choukai 4 dari PDF Basic 1"
+    },
+    "audioSrc": "assets/audio/choukai/basic1-q4.mp3",
+    "scriptJa": "医者：今日はどうしましたか。男：昨日お酒を飲みすぎて、二日酔いなんです。医者：そうですか。水を飲んで、ゆっくり休んでください。",
+    "scriptId": "Dokter: Ada keluhan apa hari ini? Laki-laki: Saya mabuk setelah minum terlalu banyak kemarin. Dokter: Begitu, ya. Minumlah air dan beristirahat.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "マッサージする",
+      "薬を飲む",
+      "温かい飲み物を飲む"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 1. Audio choukai belum disertakan dalam PDF.",
+    "id": 1704,
+    "lesson": 1,
+    "source": "SIMULASI JFT BASIC 1.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic1/p14-q05.jpg",
+      "alt": "Potongan soal choukai 5 dari PDF Basic 1"
+    },
+    "audioSrc": "assets/audio/choukai/basic1-q5.mp3",
+    "scriptJa": "女：頭が痛いんです。男：そうですか。温かい飲み物を飲んで、ゆっくり休んだほうがいいですよ。女：わかりました。",
+    "scriptId": "Perempuan: Kepala saya sakit. Laki-laki: Begitu, ya. Sebaiknya minum minuman hangat lalu istirahat dengan tenang. Perempuan: Baik.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "A（画像）",
+      "B（画像）",
+      "C（画像）"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 2. Audio choukai belum disertakan dalam PDF.",
+    "id": 2700,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/basic2/page-12.jpg",
+      "alt": "Potongan soal choukai 1 dari PDF Basic 2"
+    },
+    "audioSrc": "assets/audio/choukai/basic2-q1.mp3",
+    "scriptJa": "男：すみません、これはどうやって使いますか。女：まず、ここを押してください。それから、画面の案内を見てください。男：わかりました。",
+    "scriptId": "Laki-laki: Permisi, bagaimana cara menggunakan ini? Perempuan: Pertama, tekan bagian ini. Lalu ikuti petunjuk di layar. Laki-laki: Baik.",
+    "scriptNote": "Tema aktivitas sesuai gambar pilihan; teks gambar hasil ekstraksi kurang jelas."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "A（画像）",
+      "B（画像）",
+      "C（画像）"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 2. Audio choukai belum disertakan dalam PDF.",
+    "id": 2701,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/basic2/page-13.jpg",
+      "alt": "Potongan soal choukai 2 dari PDF Basic 2"
+    },
+    "audioSrc": "assets/audio/choukai/basic2-q2.mp3",
+    "scriptJa": "女：すみません、今何をしていますか。男：自転車を直しています。タイヤの調子が悪いんです。女：そうですか。",
+    "scriptId": "Perempuan: Permisi, sedang melakukan apa? Laki-laki: Sedang memperbaiki sepeda. Ban sepedanya bermasalah. Perempuan: Oh, begitu.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "A（画像）",
+      "B（画像）",
+      "C（画像）"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 2. Audio choukai belum disertakan dalam PDF.",
+    "id": 2702,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p15-q03.jpg",
+      "alt": "Potongan soal choukai 3 dari PDF Basic 2"
+    },
+    "audioSrc": "assets/audio/choukai/basic2-q3.mp3",
+    "scriptJa": "先生：ソムチャイさんはまだ来ていませんね。学生：はい。じゃあ、先に授業を始めますか。先生：そうしましょう。",
+    "scriptId": "Guru: Somchai belum datang, ya. Murid: Iya. Kalau begitu, kita mulai pelajaran dulu? Guru: Baik, begitu saja.",
+    "scriptNote": "Tema disusun dari ilustrasi kelas; teks soal asli pada crop tidak sepenuhnya terbaca."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "A（画像）",
+      "B（画像）",
+      "C（画像）"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 2. Audio choukai belum disertakan dalam PDF.",
+    "id": 2703,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p16-q04.jpg",
+      "alt": "Potongan soal choukai 4 dari PDF Basic 2"
+    },
+    "audioSrc": "assets/audio/choukai/basic2-q4.mp3",
+    "scriptJa": "男：あ、電気がつきません。女：スイッチを確認してみましょう。男：はい、ここですね。",
+    "scriptId": "Laki-laki: Ah, lampunya tidak menyala. Perempuan: Mari kita periksa sakelarnya. Laki-laki: Ya, di sini, ya.",
+    "scriptNote": "Tema aktivitas berdasarkan ilustrasi; perlu verifikasi dengan naskah asli jika tersedia."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "甘くておいしい",
+      "おいしい",
+      "だめ"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 2. Audio choukai belum disertakan dalam PDF.",
+    "id": 2704,
+    "lesson": 2,
+    "source": "SIMULASI JFT BASIC 2.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic2/p17-q05.jpg",
+      "alt": "Potongan soal choukai 5 dari PDF Basic 2"
+    },
+    "audioSrc": "assets/audio/choukai/basic2-q5.mp3",
+    "scriptJa": "女：この料理、どうですか。男：甘くておいしいですね。女：よかったです。",
+    "scriptId": "Perempuan: Bagaimana masakan ini? Laki-laki: Manis dan enak. Perempuan: Syukurlah.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "パソコン",
+      "エアコン",
+      "スマホ"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 3. Audio choukai belum disertakan dalam PDF.",
+    "id": 3700,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p12-q01.jpg",
+      "alt": "Potongan soal choukai 1 dari PDF Basic 3"
+    },
+    "audioSrc": "assets/audio/choukai/basic3-q1.mp3",
+    "scriptJa": "女：このエアコン、あまり冷えませんね。男：そうですね。設定を確認してみましょう。",
+    "scriptId": "Perempuan: AC ini kurang dingin, ya. Laki-laki: Betul. Mari kita periksa pengaturannya.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "水をかえる",
+      "水を使う",
+      "水を止める"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 3. Audio choukai belum disertakan dalam PDF.",
+    "id": 3701,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p12-q02.jpg",
+      "alt": "Potongan soal choukai 2 dari PDF Basic 3"
+    },
+    "audioSrc": "assets/audio/choukai/basic3-q2.mp3",
+    "scriptJa": "女：水を使ったあと、どうしますか。男：蛇口をきちんと閉めます。水をむだにしないように気をつけます。",
+    "scriptId": "Perempuan: Setelah menggunakan air, apa yang kamu lakukan? Laki-laki: Saya menutup keran dengan benar. Saya berhati-hati agar tidak membuang-buang air.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "台風",
+      "火災",
+      "地震"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 3. Audio choukai belum disertakan dalam PDF.",
+    "id": 3702,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p13-q03.jpg",
+      "alt": "Potongan soal choukai 3 dari PDF Basic 3"
+    },
+    "audioSrc": "assets/audio/choukai/basic3-q3.mp3",
+    "scriptJa": "アナウンス：これから台風が近づきます。強い風や雨に注意してください。外出はできるだけ控えてください。",
+    "scriptId": "Pengumuman: Topan akan segera mendekat. Waspadalah terhadap angin kencang dan hujan. Sebisa mungkin hindari keluar rumah.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "パソコンの充電",
+      "スマホの充電",
+      "エアコンの充電"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 3. Audio choukai belum disertakan dalam PDF.",
+    "id": 3703,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p13-q04.jpg",
+      "alt": "Potongan soal choukai 4 dari PDF Basic 3"
+    },
+    "audioSrc": "assets/audio/choukai/basic3-q4.mp3",
+    "scriptJa": "女：スマホの充電がもうすぐなくなりそうです。男：充電器を持っていますか。女：いいえ、持っていないんです。",
+    "scriptId": "Perempuan: Baterai ponselku sebentar lagi habis. Laki-laki: Kamu membawa pengisi daya? Perempuan: Tidak, aku tidak membawanya.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "A（画像）",
+      "B（画像）",
+      "C（画像）"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 3. Audio choukai belum disertakan dalam PDF.",
+    "id": 3704,
+    "lesson": 3,
+    "source": "SIMULASI JFT BASIC 3.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic3/p14-q05.jpg",
+      "alt": "Potongan soal choukai 5 dari PDF Basic 3"
+    },
+    "audioSrc": "assets/audio/choukai/basic3-q5.mp3",
+    "scriptJa": "男：火事です！まず、ドアを開けて外へ逃げてください。女：わかりました。男：エレベーターは使わないでください。",
+    "scriptId": "Laki-laki: Kebakaran! Pertama, buka pintu dan segera keluar. Perempuan: Baik. Laki-laki: Jangan gunakan lift.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "２週間ぐらい",
+      "１週間ぐらい",
+      "3週間ぐらい"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 4. Audio choukai belum disertakan dalam PDF.",
+    "id": 4700,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 1,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p12-q01.jpg",
+      "alt": "Potongan soal choukai 1 dari PDF Basic 4"
+    },
+    "audioSrc": "assets/audio/choukai/basic4-q1.mp3",
+    "scriptJa": "女：修理はどのくらいかかりますか。男：二週間ぐらいです。女：わかりました。お願いします。",
+    "scriptId": "Perempuan: Berapa lama perbaikannya? Laki-laki: Sekitar dua minggu. Perempuan: Baik, tolong dikerjakan.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "10円",
+      "50円",
+      "０円"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 4. Audio choukai belum disertakan dalam PDF.",
+    "id": 4701,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 2,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p12-q02.jpg",
+      "alt": "Potongan soal choukai 2 dari PDF Basic 4"
+    },
+    "audioSrc": "assets/audio/choukai/basic4-q2.mp3",
+    "scriptJa": "女：自転車の修理はいくらですか。男：今回は無料です。女：本当ですか。ありがとうございます。",
+    "scriptId": "Perempuan: Berapa biaya perbaikan sepeda? Laki-laki: Kali ini gratis. Perempuan: Benarkah? Terima kasih.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "昨日の夜/10日 20:00-21:00",
+      "明日の夜/10日 21:00-22:00",
+      "明日の夜/10日 19:00-21:00"
+    ],
+    "answer": 2,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 4. Audio choukai belum disertakan dalam PDF.",
+    "id": 4702,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 3,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p13-q03.jpg",
+      "alt": "Potongan soal choukai 3 dari PDF Basic 4"
+    },
+    "audioSrc": "assets/audio/choukai/basic4-q3.mp3",
+    "scriptJa": "女：荷物はいつ届きますか。男：明日の夜、七時から九時の間に届きます。女：わかりました。その時間は家にいます。",
+    "scriptId": "Perempuan: Kapan paketnya akan tiba? Laki-laki: Besok malam, antara pukul tujuh sampai sembilan. Perempuan: Baik, saya akan ada di rumah saat itu.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "こうげんのまち",
+      "観光地",
+      "大町"
+    ],
+    "answer": 1,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 4. Audio choukai belum disertakan dalam PDF.",
+    "id": 4703,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 4,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p13-q04.jpg",
+      "alt": "Potongan soal choukai 4 dari PDF Basic 4"
+    },
+    "audioSrc": "assets/audio/choukai/basic4-q4.mp3",
+    "scriptJa": "旅行者：この町はどんな町ですか。案内人：有名な観光地です。きれいな景色や古い建物がありますよ。",
+    "scriptId": "Wisatawan: Kota seperti apa ini? Pemandu: Ini tempat wisata terkenal. Ada pemandangan indah dan bangunan tua.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  },
+  {
+    "section": "listening",
+    "text": "音声を聞いて、正しい答えを選んでください。",
+    "options": [
+      "肉、魚",
+      "豚肉、野菜",
+      "トーフ"
+    ],
+    "answer": 0,
+    "explanation": "Kunci jawaban disalin dari halaman KEY ANSWER pada PDF Simulasi JFT Basic 4. Audio choukai belum disertakan dalam PDF.",
+    "id": 4704,
+    "lesson": 4,
+    "source": "SIMULASI JFT BASIC 4.pdf",
+    "sourceQuestion": 5,
+    "visual": {
+      "type": "image",
+      "src": "assets/imported/question-crops/basic4/p14-q05.jpg",
+      "alt": "Potongan soal choukai 5 dari PDF Basic 4"
+    },
+    "audioSrc": "assets/audio/choukai/basic4-q5.mp3",
+    "scriptJa": "女：何を食べるのが好きですか。男：肉や魚が好きです。女：どうしてですか。男：おいしくて、力が出るからです。",
+    "scriptId": "Perempuan: Kamu suka makan apa? Laki-laki: Saya suka daging dan ikan. Perempuan: Kenapa? Laki-laki: Karena enak dan memberi tenaga.",
+    "scriptNote": "Naskah latihan buatan berdasarkan tema gambar/pilihan; bukan transkrip audio asli."
+  }
+]
