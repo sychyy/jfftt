@@ -1,0 +1,42 @@
+/* Minimal, text-free loading animation inspired by the supplied GIF. */
+#jft-page-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  display: grid;
+  place-items: center;
+  background: #fff;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity .22s ease, visibility .22s ease;
+}
+#jft-page-loader.is-leaving {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+#jft-page-loader .jft-loader-bars {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 11px;
+  height: 30px;
+}
+#jft-page-loader .jft-loader-bar {
+  display: block;
+  width: 34px;
+  height: 20px;
+  border-radius: 11px 4px 11px 4px;
+  transform-origin: center;
+  animation: jft-bar-breathe 1.05s ease-in-out infinite;
+}
+#jft-page-loader .jft-loader-bar:nth-child(1) { background: #7764f8; animation-delay: 0s; }
+#jft-page-loader .jft-loader-bar:nth-child(2) { background: #f4a9c1; animation-delay: .14s; }
+#jft-page-loader .jft-loader-bar:nth-child(3) { background: #f5d3bd; animation-delay: .28s; }
+@keyframes jft-bar-breathe {
+  0%, 60%, 100% { transform: translateY(0) scale(1); opacity: .72; }
+  30% { transform: translateY(-4px) scale(1.04); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #jft-page-loader, #jft-page-loader * { animation: none !important; transition-duration: .01ms !important; }
+}
