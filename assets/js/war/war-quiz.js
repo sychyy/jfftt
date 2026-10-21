@@ -9,6 +9,12 @@ const fmt=s=>`${String(Math.floor(Math.max(0,s)/60)).padStart(2,'0')}:${String(M
 const scoreOf=(c,t)=>t?Math.round(c/t*250):0;const rank=s=>s===250?'S':s>=200?'A':s>=150?'B':s>=100?'C':'D';
 function toast(msg,duration=2200){const host=document.getElementById('warToastContainer');if(!host)return;const d=document.createElement('div');d.className='bg-slate-900 text-white px-4 py-2 rounded-xl text-sm font-bold shadow-[3px_3px_0_#181818]';d.textContent=msg;host.appendChild(d);setTimeout(()=>d.remove(),duration)}
 function redirectWithToast(msg,url='war.html'){toast(msg,1800);setTimeout(()=>{location.href=url},1800)}
+function kanjiKanaToRomaji(input){
+ let h=String(input||'').replace(/[～〜]/g,'').replace(/（.*?）/g,'').replace(/[ァ-ヶ]/g,c=>String.fromCharCode(c.charCodeAt(0)-0x60));
+ const m={'あ':'a','い':'i','う':'u','え':'e','お':'o','か':'ka','き':'ki','く':'ku','け':'ke','こ':'ko','さ':'sa','し':'shi','す':'su','せ':'se','そ':'so','た':'ta','ち':'chi','つ':'tsu','て':'te','と':'to','な':'na','に':'ni','ぬ':'nu','ね':'ne','の':'no','は':'ha','ひ':'hi','ふ':'fu','へ':'he','ほ':'ho','ま':'ma','み':'mi','む':'mu','め':'me','も':'mo','や':'ya','ゆ':'yu','よ':'yo','ら':'ra','り':'ri','る':'ru','れ':'re','ろ':'ro','わ':'wa','を':'o','ん':'n','が':'ga','ぎ':'gi','ぐ':'gu','げ':'ge','ご':'go','ざ':'za','じ':'ji','ず':'zu','ぜ':'ze','ぞ':'zo','だ':'da','ぢ':'ji','づ':'zu','で':'de','ど':'do','ば':'ba','び':'bi','ぶ':'bu','べ':'be','ぼ':'bo','ぱ':'pa','ぴ':'pi','ぷ':'pu','ぺ':'pe','ぽ':'po','ぁ':'a','ぃ':'i','ぅ':'u','ぇ':'e','ぉ':'o','ゃ':'ya','ゅ':'yu','ょ':'yo'};
+ const d={'きゃ':'kya','きゅ':'kyu','きょ':'kyo','しゃ':'sha','しゅ':'shu','しょ':'sho','ちゃ':'cha','ちゅ':'chu','ちょ':'cho','にゃ':'nya','にゅ':'nyu','にょ':'nyo','ひゃ':'hya','ひゅ':'hyu','ひょ':'hyo','みゃ':'mya','みゅ':'myu','みょ':'myo','りゃ':'rya','りゅ':'ryu','りょ':'ryo','ぎゃ':'gya','ぎゅ':'gyu','ぎょ':'gyo','じゃ':'ja','じゅ':'ju','じょ':'jo','びゃ':'bya','びゅ':'byu','びょ':'byo','ぴゃ':'pya','ぴゅ':'pyu','ぴょ':'pyo'};
+ let out='';for(let i=0;i<h.length;i++){let c=h[i],two=h.slice(i,i+2);if(d[two]){out+=d[two];i++;continue}if(c==='っ'){let n=d[h.slice(i+1,i+3)]||m[h[i+1]]||'';out+=n[0]||'';continue}if(c==='ー'){out+=(out.match(/[aeiou](?!.*[aeiou])/)||[''])[0];continue}if(c==='/'||c==='／'){out+=' / ';continue}if(c==='ん'&&/[あいうえおやゆよ]/.test(h[i+1]||''))out+="n'";else out+=m[c]??(c===' '?' ':'');}return out.trim();
+}
 function sectionName(s){return SECTIONS[s]?.[0]||s||'-'}
 async function init(){
  const raw=sessionStorage.getItem('jft_war_session');if(!raw){location.href='war.html';return}try{session=JSON.parse(raw)}catch{location.href='war.html';return}
@@ -27,7 +33,7 @@ async function init(){
    const baseBank=await response.json();
    const canonicalEntries=new Set(baseBank.map(x=>JSON.stringify([Number(x.chapter),x.kanji,x.kana,x.meaning])));
    const seenKanji=new Set();
-   questions=requestedIds.filter(q=>{if(!q||typeof q!=='object'||q.type!=='kanji'||!canonicalEntries.has(JSON.stringify([Number(q.chapter),q.kanji,q.kana,q.meaning]))||!Array.isArray(q.options)||q.options.length!==4||!Number.isInteger(Number(q.answer))||Number(q.answer)<0||Number(q.answer)>=q.options.length)return false;const key=JSON.stringify([Number(q.chapter),String(q.kanji||'').normalize('NFKC'),String(q.kana||'').normalize('NFKC'),String(q.meaning||'').normalize('NFKC').toLowerCase()]);if(seenKanji.has(key))return false;seenKanji.add(key);return true;});
+   questions=requestedIds.filter(q=>{if(!q||typeof q!=='object'||q.type!=='kanji'||!canonicalEntries.has(JSON.stringify([Number(q.chapter),q.kanji,q.kana,q.meaning]))||!Array.isArray(q.options)||q.options.length!==4)return false;const key=JSON.stringify([Number(q.chapter),String(q.kanji||'').normalize('NFKC'),String(q.kana||'').normalize('NFKC'),String(q.meaning||'').normalize('NFKC').toLowerCase()]);if(seenKanji.has(key))return false;seenKanji.add(key);return true;});
    questions=questions.map(q=>{const answerText=q.answer_mode==='romaji'?kanjiKanaToRomaji(q.kana):String(q.meaning||'').trim();const answer=q.options.findIndex(x=>String(x).normalize('NFKC').toLowerCase()===answerText.normalize('NFKC').toLowerCase());return {...q,section:'kanji',answer};});
    if(questions.some(q=>q.answer<0)){redirectWithToast('Daftar soal Kanji room tidak memiliki kunci yang valid. Minta host memulai War baru.');return}
  }else{
@@ -81,11 +87,11 @@ function renderQuestion(){
   const questionEl=document.getElementById('quiz-question');
   const listeningAudioEnabled=localStorage.getItem('jft_listening_audio')!=='off';
   const questionForDisplay=q.section==='listening'?{...q,visual:null}:q;
-  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div id="kanjiHint" class="text-base font-bold text-slate-600 mt-3 hidden"></div><button type="button" id="kanjiHintToggle" class="mt-3 px-4 py-2 rounded-xl border-2 border-slate-900 bg-yellow-200 text-sm font-black shadow-[2px_2px_0_#181818]">${q.answer_mode==='romaji'?'Lihat arti':'Lihat hiragana'}</button><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay):`<div class="jft-question-text">${esc(q.text||'')}</div>`); 
+  questionEl.innerHTML=q.type==='kanji'?`<div class="text-center py-7"><div class="text-xs font-black uppercase tracking-widest text-slate-400 mb-4">Kosakata Kanji</div><div class="japanese-text text-5xl sm:text-7xl font-black leading-tight">${esc(q.kanji||'')}</div><div id="kanjiHint" class="text-base font-bold text-slate-600 mt-3 hidden"></div><button type="button" id="kanjiHintToggle" class="mt-3 px-4 py-2 rounded-xl border-2 border-slate-900 bg-yellow-200 text-sm font-black shadow-[2px_2px_0_#181818]">Lihat</button><div class="text-xs text-slate-400 mt-4">Bab ${esc(q.chapter||'')}</div></div>`:(window.JFTQuestionBank?.renderQuestionMarkup?window.JFTQuestionBank.renderQuestionMarkup(questionForDisplay):`<div class="jft-question-text">${esc(q.text||'')}</div>`); 
   if(q.type==='kanji'){
     const hint=document.getElementById('kanjiHint'),toggle=document.getElementById('kanjiHintToggle');
-    const hintText=q.answer_mode==='romaji'?String(q.meaning||''):`${String(q.kana||'')} · ${String(q.romaji||'')}`;
-    toggle.onclick=()=>{const visible=hint.classList.toggle('hidden')===false;hint.textContent=visible?hintText:'';toggle.textContent=visible?'Sembunyikan':(q.answer_mode==='romaji'?'Lihat arti':'Lihat hiragana');};
+    const hintText=q.answer_mode==='romaji'?String(q.meaning||''):`${String(q.kana||'')} · ${kanjiKanaToRomaji(q.kana)}`;
+    toggle.onclick=()=>{const visible=hint.classList.toggle('hidden')===false;hint.textContent=visible?hintText:'';toggle.textContent=visible?'Sembunyikan':'Lihat';};
   }
   questionEl.classList.remove('jft-question-enter');void questionEl.offsetWidth;questionEl.classList.add('jft-question-enter');
   const a=document.getElementById('btn-play-audio'),t=document.getElementById('btn-show-transcript'),fb=document.getElementById('audio-transcript-fallback');
